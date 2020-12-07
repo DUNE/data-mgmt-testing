@@ -1,0 +1,78 @@
+{
+  "_index": "rucio-transfers-v0-2020.01",
+  "_type": "logs",
+  "_id": "oQwD5m8BJzS0YkGfrTfI",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "host": {
+      "name": "c5bb5a1b2c9f"
+    },
+    "tool-id": "rucio-conveyor",
+    "created_at": "2020-01-27 07:59:49",
+    "beat_origin": {
+      "hostname": "c5bb5a1b2c9f",
+      "name": "c5bb5a1b2c9f",
+      "version": "6.3.0"
+    },
+    "scope": "protodune-sp",
+    "request-id": "870508cc85e8403b8a8f1c37253318e5",
+    "submitted_at": "2020-01-25 23:15:08",
+    "@version": "1",
+    "transfer-id": "8755599e-3fc8-11ea-b043-02163e006de7",
+    "reason": "",
+    "transferred_at": "2020-01-27 07:54:37",
+    "checksum-adler": "a0a5425c",
+    "dst-rse": "RAL_ECHO",
+    "kafka": {
+      "consumer_group": "store_rucio_logstash_prod",
+      "offset": 1551213,
+      "topic": "ingest.rucio.transfers",
+      "key": null,
+      "partition": 0,
+      "timestamp": 1580111998294
+    },
+    "previous-request-id": "021f3a12154b4d1994b72caf5a3d9456",
+    "src-url": "srm://fndca4a.fnal.gov:8443/srm/managerv2?SFN=/pnfs/fnal.gov/usr/dune/tape_backed/dunepro/protodune/np04/beam/detector/None/raw/04/99/67/08/np04_raw_run004157_0001_dl1.root",
+    "@timestamp": "2020-01-27T07:59:49.000Z",
+    "duration": 1726,
+    "name": "np04_raw_run004157_0001_dl1.root",
+    "transfer-endpoint": "https://fts3-public.cern.ch:8446",
+    "dst-type": "DISK",
+    "bytes": 8272229736,
+    "protocol": "gsiftp",
+    "src-rse": "FNAL_DCACHE",
+    "dst-url": "gsiftp://gridftp.echo.stfc.ac.uk:2811/dune:/protodune/RSE/protodune-sp/5d/13/np04_raw_run004157_0001_dl1.root",
+    "event_type": "transfer-done",
+    "started_at": "2020-01-27 07:25:51",
+    "landscape": {
+      "ingestIndex": "rucio_transfer",
+      "ingestId": "",
+      "ingestType": "rucio_transfer"
+    },
+    "src-type": "TAPE",
+    "activity": "User Subscriptions",
+    "transfer-link": "https://fts3-public.cern.ch:8449/fts3/ftsmon/#/job/8755599e-3fc8-11ea-b043-02163e006de7",
+    "file-size": 8272229736
+  },
+  "fields": {
+    "@timestamp": [
+      "2020-01-27T07:59:49.000Z"
+    ],
+    "submitted_at": [
+      "2020-01-25T23:15:08.000Z"
+    ],
+    "created_at": [
+      "2020-01-27T07:59:49.000Z"
+    ],
+    "started_at": [
+      "2020-01-27T07:25:51.000Z"
+    ],
+    "transferred_at": [
+      "2020-01-27T07:54:37.000Z"
+    ]
+  },
+  "sort": [
+    1580111989000
+  ]
+}

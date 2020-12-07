@@ -1,0 +1,78 @@
+{
+  "_index": "rucio-transfers-v0-2020.01",
+  "_type": "logs",
+  "_id": "Ts4D5m8BB7gmVRVEOIuD",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "host": {
+      "name": "c5bb5a1b2c9f"
+    },
+    "tool-id": "rucio-conveyor",
+    "created_at": "2020-01-27 07:59:26",
+    "beat_origin": {
+      "hostname": "c5bb5a1b2c9f",
+      "name": "c5bb5a1b2c9f",
+      "version": "6.3.0"
+    },
+    "scope": "protodune-sp",
+    "request-id": "eab4bbf3e5d3448987b194ea90c0e891",
+    "submitted_at": "2020-01-25 22:01:30",
+    "@version": "1",
+    "transfer-id": "3dc1c1d2-3fbe-11ea-9ebb-02163e00a0d4",
+    "reason": "",
+    "transferred_at": "2020-01-27 07:55:17",
+    "checksum-adler": "f09f9343",
+    "dst-rse": "RAL_ECHO",
+    "kafka": {
+      "consumer_group": "store_rucio_logstash_prod",
+      "offset": 1551209,
+      "topic": "ingest.rucio.transfers",
+      "key": null,
+      "partition": 0,
+      "timestamp": 1580111968268
+    },
+    "previous-request-id": "00d0b88b16dd4ee08446178e673123c9",
+    "src-url": "srm://srm-public.cern.ch:8443/srm/managerv2?SFN=/castor/cern.ch/neutplatform/protodune/rawdata/np04/detector/None/raw/04/81/39/71/np04_raw_run003044_0006_dl4.root",
+    "@timestamp": "2020-01-27T07:59:26.000Z",
+    "duration": 3575,
+    "name": "np04_raw_run003044_0006_dl4.root",
+    "transfer-endpoint": "https://fts3-public.cern.ch:8446",
+    "dst-type": "DISK",
+    "bytes": 8202728921,
+    "protocol": "gsiftp",
+    "src-rse": "CERN_PDUNE_CASTOR",
+    "dst-url": "gsiftp://gridftp.echo.stfc.ac.uk:2811/dune:/protodune/RSE/protodune-sp/91/1e/np04_raw_run003044_0006_dl4.root",
+    "event_type": "transfer-done",
+    "started_at": "2020-01-27 06:55:42",
+    "landscape": {
+      "ingestIndex": "rucio_transfer",
+      "ingestId": "",
+      "ingestType": "rucio_transfer"
+    },
+    "src-type": "TAPE",
+    "activity": "User Subscriptions",
+    "transfer-link": "https://fts3-public.cern.ch:8449/fts3/ftsmon/#/job/3dc1c1d2-3fbe-11ea-9ebb-02163e00a0d4",
+    "file-size": 8202728921
+  },
+  "fields": {
+    "@timestamp": [
+      "2020-01-27T07:59:26.000Z"
+    ],
+    "submitted_at": [
+      "2020-01-25T22:01:30.000Z"
+    ],
+    "created_at": [
+      "2020-01-27T07:59:26.000Z"
+    ],
+    "started_at": [
+      "2020-01-27T06:55:42.000Z"
+    ],
+    "transferred_at": [
+      "2020-01-27T07:55:17.000Z"
+    ]
+  },
+  "sort": [
+    1580111966000
+  ]
+}

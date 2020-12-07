@@ -1,0 +1,77 @@
+{
+  "_index": "rucio-transfers-v0-2020.01",
+  "_type": "logs",
+  "_id": "c84C5m8BB7gmVRVEnD1C",
+  "_version": 1,
+  "_score": null,
+  "_source": {
+    "host": {
+      "name": "c5bb5a1b2c9f"
+    },
+    "tool-id": "rucio-conveyor",
+    "created_at": "2020-01-27 07:58:44",
+    "beat_origin": {
+      "hostname": "c5bb5a1b2c9f",
+      "name": "c5bb5a1b2c9f",
+      "version": "6.3.0"
+    },
+    "scope": "protodune-sp",
+    "request-id": "d9d13caee4544f7b91163afb0bcb04aa",
+    "submitted_at": "2020-01-25 00:05:48",
+    "@version": "1",
+    "transfer-id": "709625e8-3f06-11ea-80dd-02163e00d0be",
+    "reason": "",
+    "transferred_at": "2020-01-27 07:58:42",
+    "checksum-adler": "9133e13f",
+    "dst-rse": "RAL_ECHO",
+    "kafka": {
+      "consumer_group": "store_rucio_logstash_prod",
+      "offset": 1551199,
+      "topic": "ingest.rucio.transfers",
+      "key": null,
+      "partition": 0,
+      "timestamp": 1580111928242
+    },
+    "src-url": "srm://bohr3226.tier2.hep.manchester.ac.uk:8446/srm/managerv2?SFN=/dpm/tier2.hep.manchester.ac.uk/home/dune/RSE/protodune-sp/af/09/np04_raw_run005077_0043_dl7.root",
+    "@timestamp": "2020-01-27T07:58:44.000Z",
+    "duration": 992,
+    "name": "np04_raw_run005077_0043_dl7.root",
+    "transfer-endpoint": "https://fts3-public.cern.ch:8446",
+    "dst-type": "DISK",
+    "bytes": 8240796521,
+    "protocol": "gsiftp",
+    "src-rse": "MANCHESTER",
+    "dst-url": "gsiftp://gridftp.echo.stfc.ac.uk:2811/dune:/protodune/RSE/protodune-sp/af/09/np04_raw_run005077_0043_dl7.root",
+    "event_type": "transfer-done",
+    "started_at": "2020-01-27 07:42:10",
+    "landscape": {
+      "ingestIndex": "rucio_transfer",
+      "ingestId": "",
+      "ingestType": "rucio_transfer"
+    },
+    "src-type": "DISK",
+    "activity": "User Subscriptions",
+    "transfer-link": "https://fts3-public.cern.ch:8449/fts3/ftsmon/#/job/709625e8-3f06-11ea-80dd-02163e00d0be",
+    "file-size": 8240796521
+  },
+  "fields": {
+    "@timestamp": [
+      "2020-01-27T07:58:44.000Z"
+    ],
+    "submitted_at": [
+      "2020-01-25T00:05:48.000Z"
+    ],
+    "created_at": [
+      "2020-01-27T07:58:44.000Z"
+    ],
+    "started_at": [
+      "2020-01-27T07:42:10.000Z"
+    ],
+    "transferred_at": [
+      "2020-01-27T07:58:42.000Z"
+    ]
+  },
+  "sort": [
+    1580111924000
+  ]
+}
