@@ -1,0 +1,17 @@
+This is the initial software package comprising a few scripts which together are a rough demo of the network performance measurement tool our team has been working on in accordance with OSU's participation in the Deep Underground Neutrino Project.
+
+Instructions:
+
+1) Place raw JSON files containing the RUCIO output of file transfer logs in the raw folder
+
+2) Run "python newline_remover.py raw data" 
+the 1st parameter being the folder containing the raw JSON files and the second parameter being the folder where the script should output the concatonated JSON.
+
+3) Next run the script "json_parse_spike.py" and supply the parameter of the path and latest named data file in the "data" folder, something like "python json_parse_spike.py ./data/2020_12_07_07_02_01.json"
+
+4) Finally run the visualization script supplying the parameter of output file in the output directory and a new browser window will open with an interactive visualization of the network transfers. Example "python readJsonAndVisualize.py 2020_12_07_07_02_01_output.json"
+
+
+*** Alternatively ***
+
+If the data has already been generated and is still there from last time you can skip to part 4.
