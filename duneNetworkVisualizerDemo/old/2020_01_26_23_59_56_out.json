@@ -1,0 +1,11 @@
+{
+  "name": "np04_raw_run004842_0259_dl6.root",
+  "source": "MANCHESTER",
+  "destination": "RAL_ECHO",
+  "file_size": 8377606773,
+  "start_time": "2020-01-27T07:42:46.000Z",
+  "file_transfer_time": "1024.0",
+  "transfer_speed(b/s)": "65450052.9140625",
+  "transfer_speed(MB/s)": "7.802254308946431",
+  "max_usage_percentage": "0.0654500529140625"
+}

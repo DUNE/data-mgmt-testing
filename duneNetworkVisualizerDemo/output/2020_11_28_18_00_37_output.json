@@ -1,0 +1,202 @@
+{
+  "data": [
+    {
+      "name": "np04_raw_run004842_0259_dl6.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8377606773,
+      "start_time": "2020-01-27T07:42:46.000Z",
+      "file_transfer_time": "1024.0",
+      "transfer_speed(b/s)": "65450052.9140625",
+      "transfer_speed(MB/s)": "7.802254308946431",
+      "max_usage_percentage": "0.0654500529140625"
+    },
+    {
+      "name": "np04_raw_run004842_0352_dl4.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8253200696,
+      "start_time": "2020-01-27T07:36:13.000Z",
+      "file_transfer_time": "1076.0",
+      "transfer_speed(b/s)": "61362086.95910781",
+      "transfer_speed(MB/s)": "7.314930791748501",
+      "max_usage_percentage": "0.06136208695910781"
+    },
+    {
+      "name": "np04_raw_run003045_0006_dl10.root",
+      "source": "CERN_PDUNE_CASTOR",
+      "destination": "RAL_ECHO",
+      "file_size": 8195114699,
+      "start_time": "2020-01-27T06:59:14.000Z",
+      "file_transfer_time": "3536.0",
+      "transfer_speed(b/s)": "18540983.481900454",
+      "transfer_speed(MB/s)": "2.2102574684501235",
+      "max_usage_percentage": "0.018540983481900454"
+    },
+    {
+      "name": "np04_raw_run005005_0001_dl3.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 4424844,
+      "start_time": "2020-01-27T07:55:59.000Z",
+      "file_transfer_time": "11.0",
+      "transfer_speed(b/s)": "3218068.3636363638",
+      "transfer_speed(MB/s)": "0.3836236433549361",
+      "max_usage_percentage": "0.003218068363636364"
+    },
+    {
+      "name": "np04_raw_run005077_0043_dl7.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8240796521,
+      "start_time": "2020-01-27T07:42:10.000Z",
+      "file_transfer_time": "992.0",
+      "transfer_speed(b/s)": "66458036.45967742",
+      "transfer_speed(MB/s)": "7.922415311298063",
+      "max_usage_percentage": "0.06645803645967742"
+    },
+    {
+      "name": "np04_raw_run004823_0070_dl7.root",
+      "source": "IMPERIAL",
+      "destination": "RAL_ECHO",
+      "file_size": 8387424283,
+      "start_time": "2020-01-27T07:55:52.000Z",
+      "file_transfer_time": "1.0",
+      "transfer_speed(b/s)": "67099394264.0",
+      "transfer_speed(MB/s)": "7998.8711194992065",
+      "max_usage_percentage": "67.099394264"
+    },
+    {
+      "name": "np04_raw_run004842_0317_dl9.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8394923254,
+      "start_time": "2020-01-27T07:37:32.000Z",
+      "file_transfer_time": "973.0",
+      "transfer_speed(b/s)": "69023007.22713257",
+      "transfer_speed(MB/s)": "8.228183654204914",
+      "max_usage_percentage": "0.06902300722713257"
+    },
+    {
+      "name": "np04_raw_run004842_0104_dl3.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8394408364,
+      "start_time": "2020-01-27T07:36:12.000Z",
+      "file_transfer_time": "933.0",
+      "transfer_speed(b/s)": "71977778.04072884",
+      "transfer_speed(MB/s)": "8.580419783679108",
+      "max_usage_percentage": "0.07197777804072884"
+    },
+    {
+      "name": "np04_raw_run004842_0320_dl7.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8403704865,
+      "start_time": "2020-01-27T07:41:53.000Z",
+      "file_transfer_time": "964.0",
+      "transfer_speed(b/s)": "69740289.33609958",
+      "transfer_speed(MB/s)": "8.313690344822357",
+      "max_usage_percentage": "0.06974028933609958"
+    },
+    {
+      "name": "np04_raw_run004842_0056_dl6.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8404930742,
+      "start_time": "2020-01-27T07:35:22.000Z",
+      "file_transfer_time": "969.0",
+      "transfer_speed(b/s)": "69390553.08152735",
+      "transfer_speed(MB/s)": "8.27199853438465",
+      "max_usage_percentage": "0.06939055308152736"
+    },
+    {
+      "name": "np04_raw_run005077_0032_dl12.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8256073750,
+      "start_time": "2020-01-27T07:36:49.000Z",
+      "file_transfer_time": "996.0",
+      "transfer_speed(b/s)": "66313845.381526105",
+      "transfer_speed(MB/s)": "7.905226395312083",
+      "max_usage_percentage": "0.0663138453815261"
+    },
+    {
+      "name": "np04_raw_run004157_0001_dl1.root",
+      "source": "FNAL_DCACHE",
+      "destination": "RAL_ECHO",
+      "file_size": 8272229736,
+      "start_time": "2020-01-27T07:25:51.000Z",
+      "file_transfer_time": "1726.0",
+      "transfer_speed(b/s)": "38341736.899188876",
+      "transfer_speed(MB/s)": "4.57069121589528",
+      "max_usage_percentage": "0.03834173689918888"
+    },
+    {
+      "name": "np04_raw_run002944_0013_dl4.root",
+      "source": "CERN_PDUNE_CASTOR",
+      "destination": "RAL_ECHO",
+      "file_size": 8246356250,
+      "start_time": "2020-01-27T06:53:55.000Z",
+      "file_transfer_time": "3629.0",
+      "transfer_speed(b/s)": "18178795.811518326",
+      "transfer_speed(MB/s)": "2.1670813335798176",
+      "max_usage_percentage": "0.018178795811518326"
+    },
+    {
+      "name": "np04_raw_run004693_0021_dl4.root",
+      "source": "CERN_PDUNE_CASTOR",
+      "destination": "RAL_ECHO",
+      "file_size": 8398559204,
+      "start_time": "2020-01-27T06:59:56.000Z",
+      "file_transfer_time": "3222.0",
+      "transfer_speed(b/s)": "20853033.4053383",
+      "transfer_speed(MB/s)": "2.485875297229087",
+      "max_usage_percentage": "0.020853033405338298"
+    },
+    {
+      "name": "np04_raw_run004693_0043_dl3.root",
+      "source": "CERN_PDUNE_CASTOR",
+      "destination": "RAL_ECHO",
+      "file_size": 8403408687,
+      "start_time": "2020-01-27T07:02:08.000Z",
+      "file_transfer_time": "3104.0",
+      "transfer_speed(b/s)": "21658269.81185567",
+      "transfer_speed(MB/s)": "2.581866957170447",
+      "max_usage_percentage": "0.02165826981185567"
+    },
+    {
+      "name": "np04_raw_run003044_0006_dl4.root",
+      "source": "CERN_PDUNE_CASTOR",
+      "destination": "RAL_ECHO",
+      "file_size": 8202728921,
+      "start_time": "2020-01-27T06:55:42.000Z",
+      "file_transfer_time": "3575.0",
+      "transfer_speed(b/s)": "18355757.026013985",
+      "transfer_speed(MB/s)": "2.1881767542378885",
+      "max_usage_percentage": "0.018355757026013986"
+    },
+    {
+      "name": "np04_raw_run004842_0022_dl3.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8380358154,
+      "start_time": "2020-01-27T07:38:33.000Z",
+      "file_transfer_time": "930.0",
+      "transfer_speed(b/s)": "72089102.4",
+      "transfer_speed(MB/s)": "8.59369068145752",
+      "max_usage_percentage": "0.07208910240000001"
+    },
+    {
+      "name": "np04_raw_run004842_0226_dl1.root",
+      "source": "MANCHESTER",
+      "destination": "RAL_ECHO",
+      "file_size": 8395421953,
+      "start_time": "2020-01-27T07:36:49.000Z",
+      "file_transfer_time": "973.0",
+      "transfer_speed(b/s)": "69027107.52723536",
+      "transfer_speed(MB/s)": "8.228672448067112",
+      "max_usage_percentage": "0.06902710752723536"
+    }
+  ]
+}

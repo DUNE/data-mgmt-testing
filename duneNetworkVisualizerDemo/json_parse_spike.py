@@ -32,15 +32,14 @@ def get_dict_form(json_lines):
 def get_speeds(transfers):
     speed_info = []
     for transfer in transfers:
+        if transfer["_source"]["event_type"] != "transfer-done":
+            transfers.remove(transfer)
+            continue
         #Try/except that was supposed to catch and remove the wrong types of
         #JSONs. Didn't account for a LOT of potential issues like errors.
         #Needs rewriting to handle those.
         #Also pulls the (transfer request?) creation time
-        try:
-            c_time = transfer["fields"]["created_at"][0].replace('Z','')
-        except:
-            transfers.remove(transfer)
-            pass
+        c_time = transfer["fields"]["created_at"][0].replace('Z','')
         #Pulls the (transfer request?) submission time, the transfer start time,
         #and the transfer end time, as well as the file size
         sub_time = transfer["fields"]["submitted_at"][0].replace('Z','')
@@ -93,6 +92,11 @@ def get_speeds(transfers):
         #Calculates the transfer speed from the transfer start to end time and
         #the file size
         transfer_speed = f_size/len_arr[2]
+
+        #Filters out transfers with abnormally short transfer times
+        if len_arr[2] < 10.0 or len_arr[2] > 12 * 60 * 60:
+            transfers.remove(transfer)
+            continue
 
         #Fills our speed information dictionary for this JSON object
         info = {
