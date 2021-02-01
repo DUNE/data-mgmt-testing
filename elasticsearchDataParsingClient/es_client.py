@@ -28,5 +28,12 @@ es_template = {
 
 res = client.search_template(index = index, body = es_template)
 
+output_string = ""
+
+#Formats for the previously made JSON parser
 for result in res:
-    print(str(res))
+    output_string += str(result) + "\n"
+
+f = open(output_file, "w+")
+f.write(output_string)
+f.close()
