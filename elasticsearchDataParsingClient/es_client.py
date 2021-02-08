@@ -32,7 +32,7 @@ es_template = {
             "match": {
                 "event_type" : "transfer-done"
             }
-        }
+        #}
     }
 }
 
@@ -48,12 +48,12 @@ def get_speeds(transfers):
         #JSONs. Didn't account for a LOT of potential issues like errors.
         #Needs rewriting to handle those.
         #Also pulls the (transfer request?) creation time
-        c_time = transfer["fields"]["created_at"][0].replace('Z','')
+        c_time = transfer["_source"]["created_at"]
         #Pulls the (transfer request?) submission time, the transfer start time,
         #and the transfer end time, as well as the file size
-        sub_time = transfer["fields"]["submitted_at"][0].replace('Z','')
-        start_time = transfer["fields"]["started_at"][0].replace('Z','')
-        fin_time = transfer["fields"]["transferred_at"][0].replace('Z','')
+        sub_time = transfer["_source"]["submitted_at"]
+        start_time = transfer["_source"]["started_at"]
+        fin_time = transfer["_source"]["transferred_at"]
         f_size = float(transfer["_source"]["bytes"]) * 8
 
         #Places our relevant times into an array for processing
@@ -67,9 +67,8 @@ def get_speeds(transfers):
         for i in range(len(time_arr)-1):
             #Gets our times from the JSON's format into a workable form
             #First divides
-            split_1 = time_arr[i].split('T')
-            split_2 = time_arr[i + 1].split('T')
-
+            split_1 = time_arr[i].split()
+            split_2 = time_arr[i + 1].split()
             #Splits the hour-minute-second portion into individual pieces
             #Note: In the future, with stupidly long transmissions, we may
             #need to account for days, but I doubt it.
@@ -101,12 +100,10 @@ def get_speeds(transfers):
         #Calculates the transfer speed from the transfer start to end time and
         #the file size
         transfer_speed = f_size/len_arr[2]
-
         #Filters out transfers with abnormally short transfer times
         if len_arr[2] < 10.0 or len_arr[2] > 12 * 60 * 60:
             transfers.remove(transfer)
             continue
-
         #Fills our speed information dictionary for this JSON object
         info = {
             "creation_to_submission": len_arr[0],
@@ -134,7 +131,7 @@ def compile_info(transfers, speed_info):
             "source": transfers[i]["_source"]["src-rse"],
             "destination": transfers[i]["_source"]["dst-rse"],
             "file_size": transfers[i]["_source"]["file-size"],
-            "start_time": transfers[i]["fields"]["started_at"][0],
+            "start_time": transfers[i]["_source"]["started_at"],
             "file_transfer_time": str(speed_info[i]["file_transfer_time"]),
             "transfer_speed(b/s)": str(speed_info[i]["transfer_speed(b/s)"]),
             "transfer_speed(MB/s)": str(speed_info[i]["transfer_speed(MB/s)"]),
@@ -145,12 +142,34 @@ def compile_info(transfers, speed_info):
     #Returns the output list
     return json_strings
 
-data_in = client.search(index = index, body=es_template)
+data_in = client.search(index = index, body=es_template)["hits"]["hits"]
 
-speeds, data_in = get_speeds(data_in)
+if(len(data_in) == 0):
+    print("Error: No finished transfers found in specified date range")
+    speeds = []
+else:
+    speeds, data_in = get_speeds(data_in)
+
+if(len(speeds) == 0):
+    print("Error: No transfers fitting required parameters found")
+    error_out = {
+        "name" : "ERROR",
+        "source" : "ERROR",
+        "destination" : "ERROR",
+        "file_size" : 0,
+        "start_time" : "1970-01-01 00:00:00",
+        "file_transfer_time" : "0.0",
+        "transfer_speed(b/s)" : "0.0",
+        "transfer_speed(MB/s)" : "0.0",
+        "max_usage_percentage" : "0.0"
+    }
+    f = open(output_file, "w+")
+    f.write(json.dumps({"data" : error_out}, indent=2))
+    f.close()
+    exit()
+    
 info = compile_info(data_in, speeds)
-res = dicts_to_json(info)
-jres = json.dumps({"data": res}, indent=2)
+jres = json.dumps({"data": info}, indent=2)
 
 f = open(output_file, "w+")
 f.write(jres)
