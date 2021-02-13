@@ -13,7 +13,7 @@ max_speed = 100000000000 #100 gb/s
 
 y,m,d = sys.argv[1].split('/')
 
-output_file = sys.argv[2]
+output_file = "out.json"
 
 es_cluster = "https://fifemon-es.fnal.gov"
 index = f"rucio-transfers-v0-{y}.{m}"
@@ -167,7 +167,7 @@ if(len(speeds) == 0):
     f.write(json.dumps({"data" : error_out}, indent=2))
     f.close()
     exit()
-    
+
 info = compile_info(data_in, speeds)
 jres = json.dumps({"data": info}, indent=2)
 
