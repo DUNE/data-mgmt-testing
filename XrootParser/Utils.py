@@ -20,11 +20,44 @@ def jsonReader(configfile):
 
 
 # clean up a record from elastic search - require file_id and drop prestage activities.
+
+def fileFinder(source):
+  if "file_url" in source:
+    tmp = source["file_url"].replace("https://","")
+    tmp = tmp.replace("root://","")
+    tmp = tmp.split("/")[0]
+    tmp = tmp.split(":")[0]
+    #print (tmp)
+    source["file_location"] = tmp
+    
+  return source
+
+def siteFinder(source):
+  
+  knownsites = [".gov",".fr",".es",".br",".edu",".in",".cz",".uk",".fr",".ch",".nl"]
+  specials = {"dice":"dice.bristol.uk","CRUSH":"crush.syracuse.edu","gridpp.rl.ac.uk":"gridpp.rl.ac.uk","comp20-":"lancaster.uk","discovery":"nmsu.edu","nid":"nersc.lbnl.gov","wn-2":"unibe-lhcp.bern.ch","qmul":"esc.qmul.uk" }
+  if "node" in source:
+    node = source["node"]
+    for s in specials:
+      if s in node:
+        source["site"] = specials[s]
+        return source
+    if not "." in node:
+      return source
+    country = "."+node.split(".")[-1]
+    #print ("country guess",country)
+    if country in knownsites:
+      source["site"]= node[node.find(".")+1:]
+      return source
+    else:
+      print ("unidentified site",node,specials)
+  return source
+  
 def Cleaner(info):
 
   drops = ["kafka","type","station","@version"]
-  dropevents = ["start_cache_check","end_cache_check","end_stage_file","file_staged","update_process_state","end_process"]
-
+  dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error"]
+ 
   #print ('info',info)
   clean = []
   layer1 = info["hits"]
@@ -37,13 +70,14 @@ def Cleaner(info):
       continue
     for a in drops:
       source.pop(a)
-    
+      
     source["timestamp"] = human2number(source["@timestamp"])
     
     if not "file_id" in source:
       continue
-    if "file_url" in source:
-      source["file_location"] = source["file_url"].split(":")[1][2:]
+    source = fileFinder(source)
+    source = siteFinder(source)
+        
     if( count < 2):
       jsonprint (source)
     clean.append(source)
@@ -77,15 +111,19 @@ def getProjectInfo(projectID):
   urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-2021.0*/_search?q=experiment:dune%20and%20project_name:ID&size=10000"
   theurl = urltemplate.replace("ID",projectID)
   print (theurl)
-  result = requests.get(theurl)
+  try:
+    result = requests.get(theurl)
+  except:
+    print("request failed - maybe you need the VPN")
+    result={}
   return json.loads(result.text)
 
 # get list of sam project ID's to send to GetProjectInfo
 
-def samProjectIDs(begin,end):
+def samProjectIDs(begin,end,n=10):
   result = []
   projects = samweb.listProjects(user="dunepro",started_after=begin,started_before=end)
-  for bp in list(projects):
+  for bp in list(projects)[0:n]:
     p = bp.decode('UTF-8')
     print ("project",p)
     if "prestage" in p:
@@ -96,12 +134,90 @@ def samProjectIDs(begin,end):
     #print (summary)
   return result
   
+# remove records we don't need
+  
 def cleanRecord(record,uselist):
   newrecord = record
   for key in record:
     if key not in uselist:
       newrecord.pop(key)
   return newrecord
+      
+# build a map with timestamps sorted
+def buildMap(records):
+  infomap = {}
+  sortedmap = {}
+  for record in records:
+    if type(record) != type({}):
+      print ("strange record",record)
+      continue
+    pid = record["project_id"]
+    fid = record["file_id"]
+    t = record["timestamp"]
+    if type(pid) == type([]):
+      print ("strange type",pid,type(pid),type(1))
+      pid = pid[0]
+      record["project_id"] = pid
+      jsonprint (record)
+      continue
+    
+    if pid not in infomap.keys():
+      infomap[pid] = {}
+      sortedmap[pid] = {}
+    if fid not in infomap[pid]:
+      infomap[pid][fid] = {}
+      sortedmap[pid][fid] = []
+    infomap[pid][fid][t] = record
+    
+      
+    
+  for p in infomap:
+      for f in infomap[p]:
+        times = infomap[p][f].keys()
+        # try to recover missing information from one of the records
+        file_size = None
+        for t in times:
+          if "file_size" in infomap[p][f][t]:
+            file_size = infomap[p][f][t]["file_size"]
+        sortedtimes = sorted(times)
+        #print ("sorted times", times, sortedtimes)
+        for s in range(0,len(sortedtimes)):
+          if "file_size" not in infomap[p][f][sortedtimes[s]] and file_size != None:
+            infomap[p][f][sortedtimes[s]]["file_size"] = file_size
+          
+  return sortedmap
+      
+def sequence(info):
+  actions = []
+  for pid in info:
+    for fid in info[pid]:
+      records = info[pid][fid]
+      sum = {}
+      f = 0
+      for r in records:
+        if r["file_state"] == "delivered":
+          records.pop(r)
+      if(len(records) < 1):
+        continue
+       
+      first = records[0]
+      last = records[-1]
+      #print (first)
+      #print (last)
+      sum = first
+      #print (sum["file_size"])
+      sum["actions"] = len(records)
+      sum["last_file_state"]=last["file_state"]
+      sum["last_timestamp"]=last["timestamp"]
+      sum["duration"]=last["timestamp"]-first["timestamp"]
+      if "file_size" in sum and "duration" in sum and sum["file_size"] != None and sum["duration"] != 0:
+        sum["rate"]=sum["file_size"]/sum["duration"]*0.000001
+      actions.append(sum)
+      jsonprint (sum)
+  return actions
+  
+      
+    
       
   
 
@@ -111,10 +227,22 @@ def test():
 #  print (test,human2number(test),number2human(human2number(test)))
 #  new = jsonReader("494483.json")
 #  print ("result",Cleaner(new)[3])
- # a =  (getProjectInfo("494483"))
+#  a =  (getProjectInfo("494483"))
 #  b = Cleaner(a)
 #  jsonprint(b)
-  jsonprint(samProjectIDs("2021-01-01","2021-02-15"))
+  result = buildMap(samProjectIDs("2021-01-01","2021-02-15",100000))
+  f = open("results.json",'w')
+  s  = json.dumps(result, indent=4)
+  f.write(s)
+  f.close()
+  f = open("results.json",'r')
+  info = json.load(f)
+  new = sequence(info)
+  g = open("summary.json",'w')
+  s = json.dumps(new,indent=4)
+  g.write(s)
+  g.close()
+  
   
 
   
