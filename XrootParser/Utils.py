@@ -1,4 +1,4 @@
-#!/usr/local/opt/python/libexec/bin/python
+# !/usr/local/opt/python/libexec/bin/python
 import os,sys,csv,string,json,datetime,dateutil
 import requests
 
@@ -145,6 +145,7 @@ def cleanRecord(record,uselist):
       
 # build a map with timestamps sorted
 def buildMap(records):
+# sort the records into buckets by project_id, file_id and timestamp
   infomap = {}
   sortedmap = {}
   for record in records:
@@ -168,9 +169,7 @@ def buildMap(records):
       infomap[pid][fid] = {}
       sortedmap[pid][fid] = []
     infomap[pid][fid][t] = record
-    
-      
-    
+# make a sorted list of times that share the file_size info
   for p in infomap:
       for f in infomap[p]:
         times = infomap[p][f].keys()
@@ -184,6 +183,7 @@ def buildMap(records):
         for s in range(0,len(sortedtimes)):
           if "file_size" not in infomap[p][f][sortedtimes[s]] and file_size != None:
             infomap[p][f][sortedtimes[s]]["file_size"] = file_size
+          sortedmap[p][f].append ( infomap[p][f][sortedtimes[s]])
           
   return sortedmap
       
@@ -194,11 +194,11 @@ def sequence(info):
       records = info[pid][fid]
       sum = {}
       f = 0
-      for r in records:
-        if r["file_state"] == "delivered":
-          records.pop(r)
-      if(len(records) < 1):
-        continue
+#      for r in records:
+#        if r["file_state"] == "delivered":
+#          records.pop(r)
+#      if(len(records) < 1):
+#        continue
        
       first = records[0]
       last = records[-1]
@@ -230,7 +230,7 @@ def test():
 #  a =  (getProjectInfo("494483"))
 #  b = Cleaner(a)
 #  jsonprint(b)
-  result = buildMap(samProjectIDs("2021-01-01","2021-02-15",100000))
+  result = buildMap(samProjectIDs("2021-02-01","2021-02-15",1000))
   f = open("results.json",'w')
   s  = json.dumps(result, indent=4)
   f.write(s)
