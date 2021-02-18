@@ -258,7 +258,7 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
   f = open("results.json",'r')
   info = json.load(f)
   new = sequence(info)
-  g = open("summary.json",'w')
+  g = open("summary_%s_%s.json"%(first,last),'w')
   s = json.dumps(new,indent=4)
   g.write(s)
   g.close()
