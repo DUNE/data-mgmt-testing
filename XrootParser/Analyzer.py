@@ -15,27 +15,41 @@ def getListOfTypes(data,key):
     if val in l:
       continue
     l = np.append(l,val)
-  c = np.array(l)
-  return c
+  m = {}
+  for i in range(0,len(l)):
+    m[l[i]] = i+1
+    
+  return m
 
 def analyze(data):
   sites = getListOfTypes(data,"site")
   disks = getListOfTypes(data,"file_location")
   ns = len(sites)
   nd = len(disks)
-  cross = ROOT.TH2F("cross","transfer;disk,cpu",ns,0,ns,nd,0,nd)
-  for bin in range(1,ns+1):
-    cross.GetXaxis().SetBinLabel(bin, sites[bin-1]);
-  for bin in range(1,nd+1):
-    cross.GetYaxis().SetBinLabel(bin, disks[bin-1]);
-    
+  print ("sites",sites)
+  print ("disks",disks)
+  cross = ROOT.TH2F("cross","transfer;disk,cpu",ns+1,0,ns+1,nd+1,0,nd+1)
+  for bin in sites:
+    cross.GetXaxis().SetBinLabel(sites[bin], bin);
+    print("label",sites[bin],bin)
+  for bin in disks:
+    cross.GetYaxis().SetBinLabel(disks[bin], bin);
+    print("label",disks[bin],bin)
   for item in data:
+    if "site" not in item or "file_location" not in item:
+      #print("missing: ",item["node"])
+      continue
     site = item["site"]
+    isite = float(sites[site])-.5
     disk = item["file_location"]
-    print ("item",site,disk)
-    cross.Fill(site,item)
-  
-  cross.Draw()
+    idisk = float(disks[disk])-.5
+    #print (type(isite),type(idisk))
+    print ("item",site,isite,disk,idisk)
+    cross.Fill(isite,idisk,1.0)
+  c = ROOT.TCanvas()
+  cross.Print("ALL")
+  cross.Draw("COLZ")
+  c.Print("traffic.png")
   
   
   
