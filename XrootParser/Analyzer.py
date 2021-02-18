@@ -35,6 +35,8 @@ def analyze(data):
   for bin in disks:
     cross.GetYaxis().SetBinLabel(disks[bin], bin);
     print("label",disks[bin],bin)
+  cross.GetXaxis().LabelsOption("v");
+  #cross.GetYaxis().LabelsOption("v");
   for item in data:
     if "site" not in item or "file_location" not in item:
       #print("missing: ",item["node"])
@@ -47,16 +49,9 @@ def analyze(data):
     print ("item",site,isite,disk,idisk)
     cross.Fill(isite,idisk,1.0)
   c = ROOT.TCanvas()
-  xlow = 0.
-  xhigh = ns*1.1
-  ylow = 0.
-  yhigh = nd*1.1
-  xmid = (xhigh+xlow)/2.
-  xwid = (xhigh-xlow)
-  ywid = (yhigh-ylow)
-  ytop = yhigh+ywid*.1
-  c.Range(xlow-xwid*.3,ylow-.3*ywid,xhigh+xwid*.2,yhigh+ywid*.2)
-
+  c.SetLeftMargin(0.2)
+  c.SetBottomMargin(0.2)
+  c.SetRightMargin(0.1)
   cross.Print("ALL")
   cross.Draw("COLZ")
   c.Print("traffic.png")
