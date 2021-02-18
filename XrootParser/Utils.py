@@ -62,8 +62,9 @@ def siteFinder(source):
   
 def Cleaner(info):
 
-  drops = ["kafka","type","station","@version"]
+  drops = ["type","station","@version"]
   dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error"]
+  drops = []
   
  
   #print ('info',info)
@@ -174,6 +175,8 @@ def buildMap(records):
     if type(record) != type({}):
       print ("strange record",record)
       continue
+    if "project_id" not in record or "file_id" not in record:
+      continue
     pid = record["project_id"]
     fid = record["file_id"]
     t = record["timestamp"]
@@ -200,11 +203,19 @@ def buildMap(records):
         for t in times:
           if "file_size" in infomap[p][f][t]:
             file_size = infomap[p][f][t]["file_size"]
+          else:
+            if file_size == None:
+              md = samweb.getMetadata(f)
+              file_size = md["file_size"]
+              #print ("fix filesize",f,file_size)
+           # else:
+              #print ("recover filesize",f,file_size)
+            infomap[p][f][t]["file_size"] = file_size
         sortedtimes = sorted(times)
         #print ("sorted times", times, sortedtimes)
         for s in range(0,len(sortedtimes)):
-          if "file_size" not in infomap[p][f][sortedtimes[s]] and file_size != None:
-            infomap[p][f][sortedtimes[s]]["file_size"] = file_size
+#          if "file_size" not in infomap[p][f][sortedtimes[s]] and file_size != None:
+#            infomap[p][f][sortedtimes[s]]["file_size"] = file_size
           sortedmap[p][f].append ( infomap[p][f][sortedtimes[s]])
           
   return sortedmap
@@ -240,18 +251,32 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
 #  b = Cleaner(a)
 #  jsonprint(b)
   ids = getProjectList(first,last,n)
-  
+  # first get the info
   info = findProjectInfo(ids)
+  e = open("raw_%s_%s.json"%(first,last),'w')
+  s = json.dumps(info, indent=2)
+  e.write(s)
+  e.close
+  info = None
+  
+  # then make it into a map
+  e = open("raw_%s_%s.json"%(first,last),'r')
+  info = json.load(e)
   result = buildMap(info)
+  info = None
   f = open("results_%s_%s.json"%(first,last),'w')
-  s  = json.dumps(result, indent=4)
+  s  = json.dumps(result, indent=2)
   f.write(s)
   f.close()
+  result = None
+  
+  # then use the time sorted info to record first and last actions for each file
+  
   f = open("results_%s_%s.json"%(first,last),'r')
   info = json.load(f)
   new = sequence(info)
   g = open("summary_%s_%s.json"%(first,last),'w')
-  s = json.dumps(new,indent=4)
+  s = json.dumps(new,indent=2)
   g.write(s)
   g.close()
   
