@@ -1,6 +1,6 @@
 #!/usr/local/opt/python/libexec/bin/python
 import os,sys,csv,string,json,datetime,dateutil
-import requests
+
 import ROOT
 
 from datetime import date,timezone,datetime
