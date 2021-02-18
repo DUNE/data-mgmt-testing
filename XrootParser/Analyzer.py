@@ -55,9 +55,10 @@ def analyze(data):
   
 
 
+if __name__ == '__main__':
 
-f = open("summary.json","r")
-data = json.load(f)
-sites = getListOfTypes(data,"site")
-print (sites)
-analyze(data)
+  f = open(sys.argv[1],"r")
+  data = json.load(f)
+  sites = getListOfTypes(data,"site")
+  print (sites)
+  analyze(data)
