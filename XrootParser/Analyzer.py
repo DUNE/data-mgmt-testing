@@ -46,12 +46,13 @@ def analyze(data):
     disk = item["file_location"]
     idisk = float(disks[disk])-.5
     #print (type(isite),type(idisk))
-    print ("item",site,isite,disk,idisk)
+    #print ("item",site,isite,disk,idisk)
     cross.Fill(isite,idisk,1.0)
+  ROOT.gStyle.SetOptStat(1)
   c = ROOT.TCanvas()
   c.SetLeftMargin(0.2)
   c.SetBottomMargin(0.2)
-  c.SetRightMargin(0.1)
+  c.SetRightMargin(0.15)
   cross.Print("ALL")
   cross.Draw("COLZ")
   c.Print("traffic.png")
