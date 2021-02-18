@@ -2,6 +2,7 @@
 import os,sys,csv,string,json,datetime,dateutil
 import requests
 
+
 from datetime import date,timezone,datetime
 from dateutil import parser
 
@@ -23,11 +24,14 @@ def jsonReader(configfile):
 
 def fileFinder(source):
   if "file_url" in source:
+    if "eos" in source["file_url"]:
+      source["file_location"] = "eospublic.cern.ch"
+      return source
     tmp = source["file_url"].replace("https://","")
     tmp = tmp.replace("root://","")
     tmp = tmp.split("/")[0]
     tmp = tmp.split(":")[0]
-    #print (tmp)
+#    print ("file",tmp)
     source["file_location"] = tmp
     
   return source
@@ -52,12 +56,15 @@ def siteFinder(source):
     else:
       print ("unidentified site",node,specials)
       source["site"] = "mystery-site"
+  else:
+    source["site"] = "unknown"
   return source
   
 def Cleaner(info):
 
   drops = ["kafka","type","station","@version"]
   dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error"]
+  
  
   #print ('info',info)
   clean = []
@@ -79,7 +86,7 @@ def Cleaner(info):
     source = fileFinder(source)
     source = siteFinder(source)
         
-    if( count < 2):
+    if( count < 2 or "eos" in source["file_location"]):
       jsonprint (source)
     clean.append(source)
   return clean
@@ -133,9 +140,7 @@ def getProjectList(begin,end,n=10):
       cleaned.append(p)
     # limit the lists
     c += 1
-    
-    
-  print ("cleaned",cleaned[0:min(len(cleaned),n)])
+    #print ("cleaned",cleaned[0:min(len(cleaned),n)])
   return cleaned[0:min(len(cleaned),n)]
     
 
@@ -211,16 +216,8 @@ def sequence(info):
       records = info[pid][fid]
       sum = {}
       f = 0
-#      for r in records:
-#        if r["file_state"] == "delivered":
-#          records.pop(r)
-#      if(len(records) < 1):
-#        continue
-       
       first = records[0]
-      last = records[-1]
-      #print (first)
-      #print (last)
+      last = records[len(records)-1]
       sum = first
       #print (sum["file_size"])
       sum["actions"] = len(records)
@@ -230,13 +227,8 @@ def sequence(info):
       if "file_size" in sum and "duration" in sum and sum["file_size"] != None and sum["duration"] != 0:
         sum["rate"]=sum["file_size"]/sum["duration"]*0.000001
       actions.append(sum)
-      jsonprint (sum)
+      #jsonprint (sum)
   return actions
-  
-      
-    
-      
-  
 
 # test the stuff above
 def test(first = "2021-02-01", last = "2021-02-15", n=10000):
@@ -255,7 +247,7 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
   s  = json.dumps(result, indent=4)
   f.write(s)
   f.close()
-  f = open("results.json",'r')
+  f = open("results_%s_%s.json"%(first,last),'r')
   info = json.load(f)
   new = sequence(info)
   g = open("summary_%s_%s.json"%(first,last),'w')
