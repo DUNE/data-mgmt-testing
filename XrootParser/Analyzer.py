@@ -48,7 +48,7 @@ def analyze(data):
     #print (type(isite),type(idisk))
     #print ("item",site,isite,disk,idisk)
     cross.Fill(isite,idisk,1.0)
-  ROOT.gStyle.SetOptStat(1)
+  ROOT.gStyle.SetOptStat(0)
   c = ROOT.TCanvas()
   c.SetLeftMargin(0.2)
   c.SetBottomMargin(0.2)
