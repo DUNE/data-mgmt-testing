@@ -47,6 +47,16 @@ def analyze(data):
     print ("item",site,isite,disk,idisk)
     cross.Fill(isite,idisk,1.0)
   c = ROOT.TCanvas()
+  xlow = 0.
+  xhigh = ns*1.1
+  ylow = 0.
+  yhigh = nd*1.1
+  xmid = (xhigh+xlow)/2.
+  xwid = (xhigh-xlow)
+  ywid = (yhigh-ylow)
+  ytop = yhigh+ywid*.1
+  c.Range(xlow-xwid*.3,ylow-.3*ywid,xhigh+xwid*.2,yhigh+ywid*.2)
+
   cross.Print("ALL")
   cross.Draw("COLZ")
   c.Print("traffic.png")
