@@ -1,4 +1,4 @@
-# !/usr/local/opt/python/libexec/bin/python
+#!/usr/local/opt/python/libexec/bin/python
 import os,sys,csv,string,json,datetime,dateutil
 import requests
 
@@ -108,7 +108,7 @@ def number2human(stamp):
 # get info from the sam-events elasticsearch for a given project
 def getProjectInfo(projectID):
  
-  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-2021.0*/_search?q=experiment:dune%20and%20project_name:ID&size=10000"
+  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-202*/_search?q=experiment:dune%20and%20project_name:ID&size=10000"
   theurl = urltemplate.replace("ID",projectID)
   print (theurl)
   try:
@@ -120,11 +120,27 @@ def getProjectInfo(projectID):
 
 # get list of sam project ID's to send to GetProjectInfo
 
-def samProjectIDs(begin,end,n=10):
+def getProjectList(begin,end,n=10):
+  cleaned = []
+  projects = samweb.listProjects(started_after=begin,started_before=end)
+  c = 0
+  for i in range(0,len(projects)):
+    p = projects[i].decode('UTF-8')
+    if "prestage" in p:
+      continue
+    if c < n:
+      cleaned.append(p)
+    # limit the lists
+    c += 1
+    
+    
+  print ("cleaned",cleaned[0:min(len(cleaned),n)])
+  return cleaned[0:min(len(cleaned),n)]
+    
+
+def findProjectInfo(projects):
   result = []
-  projects = samweb.listProjects(user="dunepro",started_after=begin,started_before=end)
-  for bp in list(projects)[0:n]:
-    p = bp.decode('UTF-8')
+  for p in projects:
     print ("project",p)
     if "prestage" in p:
       print ("skip prestage",p )
@@ -222,7 +238,7 @@ def sequence(info):
   
 
 # test the stuff above
-def test():
+def test(first = "2021-02-01", last = "2021-02-15", n=10000):
 #  test = "2021-02-01T01:59:00.804Z"
 #  print (test,human2number(test),number2human(human2number(test)))
 #  new = jsonReader("494483.json")
@@ -230,7 +246,10 @@ def test():
 #  a =  (getProjectInfo("494483"))
 #  b = Cleaner(a)
 #  jsonprint(b)
-  result = buildMap(samProjectIDs("2021-02-01","2021-02-15",1000))
+  ids = getProjectList(first,last,n)
+  
+  info = findProjectInfo(ids)
+  result = buildMap(info)
   f = open("results.json",'w')
   s  = json.dumps(result, indent=4)
   f.write(s)
@@ -243,7 +262,12 @@ def test():
   g.write(s)
   g.close()
   
-  
+if __name__ == '__main__':
 
-  
-test()
+  if len(sys.argv) < 3:
+    print (" need data range <first> <last> ")
+    sys.exit(1)
+  n = 1000000
+  if len(sys.argv) >= 4:
+    n = int(sys.argv[3])
+  test(sys.argv[1],sys.argv[2],n)
