@@ -28,6 +28,7 @@ def analyze(data):
   nd = len(disks)
   print ("sites",sites)
   print ("disks",disks)
+  ROOT.gStyle.SetOptStat(0)
   cross = ROOT.TH2F("cross","transfer;disk,cpu",ns+1,0,ns+1,nd+1,0,nd+1)
   for bin in sites:
     cross.GetXaxis().SetBinLabel(sites[bin], bin);
@@ -48,7 +49,7 @@ def analyze(data):
     #print (type(isite),type(idisk))
     #print ("item",site,isite,disk,idisk)
     cross.Fill(isite,idisk,1.0)
-  ROOT.gStyle.SetOptStat(0)
+  
   c = ROOT.TCanvas()
   c.SetLeftMargin(0.2)
   c.SetBottomMargin(0.2)
