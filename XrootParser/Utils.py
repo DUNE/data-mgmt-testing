@@ -251,6 +251,7 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
 #  b = Cleaner(a)
 #  jsonprint(b)
   ids = getProjectList(first,last,n)
+  print ("this many projects",len(ids)s)
   # first get the info
   info = findProjectInfo(ids)
   e = open("raw_%s_%s.json"%(first,last),'w')
