@@ -48,7 +48,11 @@ def analyze(start_date,end_date,delta ):
   out_name = "%s_%s_"%(start_date,end_date)
   while start_range < end_date:
     end_range = start_range + delta
-    inputfile = open("summary_%s_%s.json"%(start_range,end_range),'r')
+    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
+    if not os.path.exists(inputfilename):
+      start_range += delta
+      continue
+    inputfile = open(inputfilename,'r')
     start_range += delta
     data = json.load(inputfile)
     sites = getListOfTypes(data,"site",sites)
@@ -80,7 +84,13 @@ def analyze(start_date,end_date,delta ):
   start_range = start_date
   while start_range < end_date:
     end_range = start_range + delta
-    inputfile = open("summary_%s_%s.json"%(start_range,end_range),'r')
+    
+    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
+    if not os.path.exists(inputfilename):
+      start_range += delta
+      continue
+    inputfile = open(inputfilename,'r')
+     
     start_range += delta
     data = json.load(inputfile)
     for item in data:
@@ -123,14 +133,15 @@ def analyze(start_date,end_date,delta ):
   c.SetLogy(0)
   total = consumed.Clone("total")
   total.Add(skipped)
-  efficiency = consumed.Clone("efficiency")
-  efficiency.SetTitle("success rate")
+  efficiency = consumed.Clone("efficiency ")
+  efficiency.SetTitle("success rate "+out_name)
   efficiency.Divide(total)
   efficiency.Draw("COLZ")
   c.Print(out_name+"efficiency.png")
   c.SetLogz(1)
   rate.SetMaximum(100.)
   rate.Divide(consumed)
+  rate.SetTitle(rate.GetTitle()+" " + out_name)
   rate.Draw("COLZ")
   c.Print(out_name+"rate.png")
   
@@ -141,6 +152,6 @@ if __name__ == '__main__':
    
  
   start_date = date(2021, 2, 1)
-  end_date = date(2021, 2, 3)
+  end_date = date(2021, 2, 12)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
