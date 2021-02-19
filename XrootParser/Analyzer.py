@@ -10,7 +10,7 @@ from datetime import date,datetime,timedelta
 from dateutil import parser
 
 def getListOfTypes(data,key,inlist):
-  l = inlist
+  l = inlist.keys()
   for item in data:
     if not key in item:
       continue
@@ -41,14 +41,14 @@ def analyze(start_date,end_date,delta ):
 
 # first get lists of variables
 
-  sites = []
-  disks = []
-  users = []
+  sites = {}
+  disks = {}
+  users = {}
   start_range = start_date
   out_name = "%s_%s_"%(start_date,end_date)
   while start_range < end_date:
     end_range = start_range + delta
-    inputfile = open("summary_%s_%s.json"%(start_date,end_range),'r')
+    inputfile = open("summary_%s_%s.json"%(start_range,end_range),'r')
     start_range += delta
     data = json.load(inputfile)
     sites = getListOfTypes(data,"site",sites)
@@ -140,7 +140,7 @@ if __name__ == '__main__':
 
    
  
-  start_date = date(2021, 2, 8)
-  end_date = date(2021, 2, 9)
+  start_date = date(2021, 2, 1)
+  end_date = date(2021, 2, 3)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
