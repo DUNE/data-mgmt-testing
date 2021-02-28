@@ -204,8 +204,8 @@ def buildMap(records):
         application = None
         version = None
         Campaign = None
-        if "DUNE.Campaign" in md:
-          campaign = md["DUNE.Campaign"]
+        if "DUNE.campaign" in md:
+          campaign = md["DUNE.campaign"]
         if "application" in md:
           application = md["application"]["name"]
           version = md["application"]["version"]
