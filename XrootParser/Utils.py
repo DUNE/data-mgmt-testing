@@ -60,12 +60,11 @@ def siteFinder(source):
     source["site"] = "unknown"
   return source
   
-def Cleaner(info):
+def Cleaner(info,projectmeta):
 
   drops = ["type","station","@version","kafka"]
   dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error"]
-  
-  
+  drops += ["files in snapshot", "first_name","group_id","group_name","last_name","person_id","processes","project_desc","project_end_time","station_id"]
  
   #print ('info',info)
   clean = []
@@ -77,8 +76,7 @@ def Cleaner(info):
     source = item["_source"]
     if source["event"] in dropevents:
       continue
-    for a in drops:
-      source.pop(a)
+    
       
     source["timestamp"] = human2number(source["@timestamp"])
     
@@ -86,6 +84,13 @@ def Cleaner(info):
       continue
     source = fileFinder(source)
     source = siteFinder(source)
+    # add project metadata
+    for meta in projectmeta:
+      source[meta] = projectmeta[meta]
+    # clean out stuff we don't need
+    for a in drops:
+      if a in source:
+        source.pop(a)
         
     if( count < 2 or "eos" in source["file_location"]):
       jsonprint (source)
@@ -144,6 +149,15 @@ def getProjectList(begin,end,n=10):
     #print ("cleaned",cleaned[0:min(len(cleaned),n)])
   return cleaned[0:min(len(cleaned),n)]
     
+def getProjectMeta(p):
+  md = samweb.projectSummary(p)
+  
+  processes = md["processes"]
+  application = processes[0]["application"]["name"]
+  brief = md
+  brief["processes"] = None
+  brief["application"]=application
+  return brief
 
 def findProjectInfo(projects):
   result = []
@@ -152,7 +166,10 @@ def findProjectInfo(projects):
     if "prestage" in p:
       print ("skip prestage",p )
       continue
-    result += Cleaner(getProjectInfo(p))
+    record =  Cleaner(getProjectInfo(p),getProjectMeta(p))
+    
+    result += record
+      
     #//summary = samweb.projectSummary(p)
     #print (summary)
   return result
@@ -201,21 +218,18 @@ def buildMap(records):
         # try to recover missing information from one of the records
         md = samweb.getMetadata(f)
         file_size = md["file_size"]
-        application = None
+         
         version = None
         Campaign = None
         if "DUNE.campaign" in md:
           campaign = md["DUNE.campaign"]
-        if "application" in md:
-          application = md["application"]["name"]
-          version = md["application"]["version"]
+        
         data_tier = md["data_tier"]
         
         for t in times:
           infomap[p][f][t]["file_size"] = file_size
           infomap[p][f][t]["Campaign"] = Campaign
-          infomap[p][f][t]["application"] = application
-          infomap[p][f][t]["version"] = version
+          
           infomap[p][f][t]["data_tier"] = data_tier
         sortedtimes = sorted(times)
         #print ("sorted times", times, sortedtimes)
@@ -249,15 +263,10 @@ def sequence(info):
 
 # test the stuff above
 def test(first = "2021-02-01", last = "2021-02-15", n=10000):
-#  test = "2021-02-01T01:59:00.804Z"
-#  print (test,human2number(test),number2human(human2number(test)))
-#  new = jsonReader("494483.json")
-#  print ("result",Cleaner(new)[3])
-#  a =  (getProjectInfo("494483"))
-#  b = Cleaner(a)
-#  jsonprint(b)
+
   ids = getProjectList(first,last,n)
   print ("this many projects",len(ids))
+  getProjectMeta(ids[1])
   # first get the info
   info = findProjectInfo(ids)
   e = open("raw_%s_%s.json"%(first,last),'w')
@@ -271,16 +280,16 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
   info = json.load(e)
   result = buildMap(info)
   info = None
-  f = open("results_%s_%s.json"%(first,last),'w')
-  s  = json.dumps(result, indent=2)
-  f.write(s)
-  f.close()
-  result = None
+  #f = open("results_%s_%s.json"%(first,last),'w')
+ # s  = json.dumps(result, indent=2)
+  #f.write(s)
+  #f.close()
+  #result = None
   
   # then use the time sorted info to record first and last actions for each file
   
-  f = open("results_%s_%s.json"%(first,last),'r')
-  info = json.load(f)
+ # f = open("results_%s_%s.json"%(first,last),'r')
+  info = result
   new = sequence(info)
   g = open("summary_%s_%s.json"%(first,last),'w')
   s = json.dumps(new,indent=2)
