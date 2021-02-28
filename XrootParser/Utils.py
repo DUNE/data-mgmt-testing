@@ -62,9 +62,9 @@ def siteFinder(source):
   
 def Cleaner(info):
 
-  drops = ["type","station","@version"]
+  drops = ["type","station","@version","kafka"]
   dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error"]
-  drops = []
+  
   
  
   #print ('info',info)
@@ -199,18 +199,24 @@ def buildMap(records):
       for f in infomap[p]:
         times = infomap[p][f].keys()
         # try to recover missing information from one of the records
-        file_size = None
+        md = samweb.getMetadata(f)
+        file_size = md["file_size"]
+        application = None
+        version = None
+        Campaign = None
+        if "DUNE.campaign" in md:
+          campaign = md["DUNE.campaign"]
+        if "application" in md:
+          application = md["application"]["name"]
+          version = md["application"]["version"]
+        data_tier = md["data_tier"]
+        
         for t in times:
-          if "file_size" in infomap[p][f][t]:
-            file_size = infomap[p][f][t]["file_size"]
-          else:
-            if file_size == None:
-              md = samweb.getMetadata(f)
-              file_size = md["file_size"]
-              #print ("fix filesize",f,file_size)
-           # else:
-              #print ("recover filesize",f,file_size)
-            infomap[p][f][t]["file_size"] = file_size
+          infomap[p][f][t]["file_size"] = file_size
+          infomap[p][f][t]["Campaign"] = Campaign
+          infomap[p][f][t]["application"] = application
+          infomap[p][f][t]["version"] = version
+          infomap[p][f][t]["data_tier"] = data_tier
         sortedtimes = sorted(times)
         #print ("sorted times", times, sortedtimes)
         for s in range(0,len(sortedtimes)):
