@@ -1,25 +1,53 @@
 #!/usr/bin/env python3
+
+#Sys needed for arguments
 import sys
+
+#JSON needed to process incoming Elasticsearch results
+#and for output formatting for easier use by webserver.
 import json
-import pprint
+
+#ElasticSearch API is needed (alternatively commands could be manually written
+#with REST Python API) for interaction with Fermilab's ElasticSearch system
 from elasticsearch import Elasticsearch
 
-printer = pprint.PrettyPrinter(indent=4)
+#Argparse will be used for proper argument handling in the long-term. 
+import argparse as ap
+
+
+#Started code for future use.
+#parser = ap.ArgumentParser()
+#parser.add_argument()
 
 #Hard-coded value for what we think we remember the connection speed
 #being. Used to calculate our network use percentage.
 #Needs refining
 max_speed = 100000000000 #100 gb/s
 
-y,m,d = sys.argv[1].split('/')
+#How many search results we want to return.
+#Capping search results at 2,500 since API documentation recommends keeping searches
+#relatively small and stepping through with search_after instead of using massive search
+#volumes and scroll.
+search_size = 2500
 
+#Last supplied command line argument should be a date
+#of the form yyyy/mm/dd
+y,m,d = sys.argv[-1].split('/')
+
+#Hardcoded output file name
 output_file = "out.json"
 
+#URL of the DUNE Elasticsearch cluster
 es_cluster = "https://fifemon-es.fnal.gov"
+
+#Index for the specified month
 index = f"rucio-transfers-v0-{y}.{m}"
 
+#Makes the Elasticsearch client
 client = Elasticsearch([es_cluster])
 
+#Search template for Elasticsearch client
+#Still needs to be made to work with date range
 es_template = {
     "query" : {
         #"bool" : {
@@ -35,6 +63,15 @@ es_template = {
         #}
     }
 }
+
+
+
+
+#End of initial variable and template setup
+
+#Beginning of function definitions
+
+
 
 #Function to calculate the relevant times and speeds from each transfer
 #in our list of JSONS (which at this point have been converted to dictionaries)
@@ -142,14 +179,30 @@ def compile_info(transfers, speed_info):
     #Returns the output list
     return json_strings
 
-data_in = client.search(index = index, body=es_template)["hits"]["hits"]
 
+#End of function definitions
+
+#Start of main process
+
+
+#TODO: Add code to make sure we're not trying to search future dates
+
+#Runs a single search for the Elasticsearch client
+data_in = client.search(index = index, body=es_template, size=search_size)["hits"]["hits"]
+
+
+#Makes sure that there is at least one transfer in the specified date range.
+#Skips the next step in the process if that's the case, which lets our next
+#bit of error handling exit the program.
 if(len(data_in) == 0):
     print("Error: No finished transfers found in specified date range")
     speeds = []
 else:
     speeds, data_in = get_speeds(data_in)
 
+#Checks that we have at least one valid transfer in the specified date range.
+#Writes a static error JSON to the output file if no transfers are found,
+#and then exits.
 if(len(speeds) == 0):
     print("Error: No transfers fitting required parameters found")
     error_out = {
@@ -168,6 +221,9 @@ if(len(speeds) == 0):
     f.close()
     exit()
 
+
+#Compiles all of our information to JSON objects and then dumps them
+#as a single JSON object to our output file.
 info = compile_info(data_in, speeds)
 jres = json.dumps({"data": info}, indent=2)
 
