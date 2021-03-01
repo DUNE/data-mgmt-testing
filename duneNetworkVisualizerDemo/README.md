@@ -20,5 +20,8 @@ If no paramters are supplied, or incorrect form it will default to 2020/12/01.
 
 Ex: **sh startEverything.sh 2021/02/01**
 
+Then within a minute or so a browser window should launch with the network visualization.
+
+
 
 To stop: run "sh stopEverything.sh"
