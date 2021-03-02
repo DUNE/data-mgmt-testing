@@ -1,0 +1,24 @@
+#map {
+  background-color: #5a5e63;
+}
+
+.legend{
+  height: 50px;
+  background-color: #5a5e63;
+}
+
+.rsm-svg {
+  max-height: 800px;
+  max-width: 1000px;
+}
+
+.basicColumn {
+  flex: 25%;
+  padding: 5px;
+}
+
+/* Clear floats after the columns */
+.basicRow {
+  display: flex;
+  flex-wrap: wrap;
+}
