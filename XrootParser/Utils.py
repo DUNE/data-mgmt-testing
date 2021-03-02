@@ -64,7 +64,7 @@ def Cleaner(info,projectmeta):
 
   drops = ["type","station","@version","kafka"]
   dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error"]
-  drops += ["files in snapshot", "first_name","group_id","group_name","last_name","person_id","processes","project_desc","project_end_time","station_id"]
+  drops += ["files in snapshot", "first_name","group_id","group_name","last_name","person_id","processes","project_desc","station_id","dataset_def_id","experiment","process_id","file_name","event_time"]
  
   #print ('info',info)
   clean = []
@@ -81,6 +81,8 @@ def Cleaner(info,projectmeta):
     source["timestamp"] = human2number(source["@timestamp"])
     
     if not "file_id" in source:
+      continue
+    if "file_state" in source and source["file_state"] == "delivered":
       continue
     source = fileFinder(source)
     source = siteFinder(source)
@@ -153,10 +155,12 @@ def getProjectMeta(p):
   md = samweb.projectSummary(p)
   
   processes = md["processes"]
-  application = processes[0]["application"]["name"]
+  
   brief = md
   brief["processes"] = None
-  brief["application"]=application
+  if len(processes) > 0:
+    application = processes[0]["application"]["name"]
+    brief["application"]=application
   return brief
 
 def findProjectInfo(projects):
@@ -240,6 +244,8 @@ def buildMap(records):
           
   return sortedmap
       
+# log first and last records and calculate duration
+
 def sequence(info):
   actions = []
   for pid in info:

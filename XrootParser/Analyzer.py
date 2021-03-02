@@ -2,7 +2,7 @@
 # works with python2
 import os,sys,csv,string,json,datetime,dateutil
 import math
-DUNEPRO=False  # only dunepro
+DUNEPRO=True  # only dunepro
 xroot = True  # only xrootd urls
 # loop over a range of input json files and histogram data flow vs various characteristics
 # inputs are start and end dates, requires that summary files for those inputs be made by Utils.py
@@ -62,7 +62,8 @@ def setYLabels(h,labels):
 def setXLabels(h,labels):
   for bin in labels:
     h.GetXaxis().SetBinLabel(labels[bin], bin);
-    h.GetXaxis().LabelsOption("v");
+    if len(labels) > 6:
+      h.GetXaxis().LabelsOption("v");
     
 def setXYLabels(h,x,y):
   setXLabels(h,x)
@@ -77,6 +78,7 @@ def analyze(start_date,end_date,delta ):
   users = {}
   dates = {}
   states = {}
+  apps = {"unknown":0}
   start_range = start_date
   if (not DUNEPRO):
     out_name = "user_%s_%s"%(start_date,end_date)
@@ -93,6 +95,7 @@ def analyze(start_date,end_date,delta ):
     inputfile = open(inputfilename,'r')
     start_range += delta
     data = json.load(inputfile)
+    apps = getListOfTypes(data,"application",apps)
     sites = getListOfTypes(data,"site",sites)
     states = getListOfTypes(data,"last_file_state",states)
     disks = getListOfTypes(data,"file_location",disks)
@@ -108,6 +111,7 @@ def analyze(start_date,end_date,delta ):
   nd = len(disks)
   nu = len(users)
   ndt = len(dates)
+  na = len(apps)
   print ("sites",sites)
   print ("disks",disks)
   print ("dates",dates)
@@ -122,8 +126,12 @@ def analyze(start_date,end_date,delta ):
   setXYLabels(state,states,sites)
   consumed = ROOT.TH2F("consumed","consumed",nd,0,nd,ns,0,ns)
   setXYLabels(consumed,disks,sites)
+  consumed_by_app = ROOT.TH2F("consumed_by_app","consumed",na,0,na,ns,0,ns)
+  setXYLabels(consumed_by_app,apps,sites)
   rate = ROOT.TH2F("rate","rate for consumed, MB/s",nd,0,nd,ns,0,ns)
   setXYLabels(rate,disks,sites)
+  rate_by_app = ROOT.TH2F("rate_by_app","rate for consumed, by app, MB/s",na,0,na,ns,0,ns)
+  setXYLabels(rate_by_app,apps,sites)
   ratelog10 = ROOT.TH2F("rates","rate for consumed, MB/s;;Log10 Rate",24,-3,3.,ns,0,ns)
   setYLabels(ratelog10,sites)
   skipped = ROOT.TH2F("skipped","skipped",nd,0,nd,ns,0,ns)
@@ -180,6 +188,9 @@ def analyze(start_date,end_date,delta ):
       if "rate" not in item:
         continue
       finalstate = item["last_file_state"]
+      application = "unknown"
+      if "application" in item:
+        application = item["application"]
       
       isite = float(sites[site])-.5
       disk = item["file_location"]
@@ -189,13 +200,14 @@ def analyze(start_date,end_date,delta ):
       date = item["@timestamp"][0:10]
       idate = float(dates[date])-.5
       istate = float(states[finalstate]) -.5
+      iapp = float(apps[application]) -.5
       #print (type(isite),type(idisk))
       #print ("item",site,isite,disk,idisk)
       
       state.Fill(istate,isite,1.0)
       duration = item["duration"]
-      #if duration < 10:
-      #  continue
+      if duration < 10:
+        continue
       if finalstate not in ["consumed","skipped"]:
         continue
       count += 1
@@ -204,10 +216,13 @@ def analyze(start_date,end_date,delta ):
       
       totalbytes_date.Fill(idate,item["file_size"]*0.000000001)
       if(item["last_file_state"] == "consumed"):
-        consumed.Fill(idisk,isite,1.0)
-        totalbytes_user.Fill(iuser, item["file_size"]*0.000000001)
-        if duration > 10:
+       
+          consumed.Fill(idisk,isite,1.0)
+          consumed_by_app.Fill(iapp,isite,1.0)
+          totalbytes_user.Fill(iuser, item["file_size"]*0.000000001)
+        
           rate.Fill(idisk,isite,item["rate"])
+          rate_by_app.Fill(iapp,isite,item["rate"])
           ratelog10.Fill(math.log10(item["rate"]),isite,1.)
       if(item["last_file_state"] == "skipped" or item["last_file_state"] == "transferred"):
         skipped.Fill(idisk,isite,1.0)
@@ -230,6 +245,8 @@ def analyze(start_date,end_date,delta ):
   
   
   cross.Draw("COLZ")
+
+  cross.Draw("TEXT SAME")
   c.Print(out_name+"_traffic.png")
   state.Draw("COLZ")
   state.Draw("TEXT SAME")
@@ -280,6 +297,14 @@ def analyze(start_date,end_date,delta ):
   ROOT.gStyle.SetPaintTextFormat("5.2f")
   rate.Draw("TEXT SAME")
   c.Print(out_name+"_rate.png")
+  rate_by_app.SetMaximum(100.)
+  rate_by_app.Divide(consumed_by_app)
+  rate_by_app.SetTitle(rate_by_app.GetTitle()+" " + out_name)
+  rate_by_app.Draw("COLZ")
+  ROOT.gStyle.SetPaintTextFormat("5.2f")
+  rate_by_app.Draw("TEXT SAME")
+  c.Print(out_name+"_rate_by_app.png")
+  
   c.SetLogz(0)
   ratelog10.Draw("BOX")
   c.Print(out_name+"_ratelog10.png")
@@ -290,7 +315,7 @@ if __name__ == '__main__':
 
    
  
-  start_date = date(2021, 2, 1)
-  end_date = date(2021, 2, 18)
+  start_date = date(2021,2 , 20)
+  end_date = date(2021, 3, 1)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
