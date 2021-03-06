@@ -50,17 +50,21 @@ client = Elasticsearch([es_cluster])
 #Still needs to be made to work with date range
 es_template = {
     "query" : {
-        #"bool" : {
-        "range" : {
-            "@timestamp" : {
-                "gte" : f"2020-12-01",
-                "lte" : f"2020-12-31"
+        "bool" : {
+            "filter" : {
+                "range" : {
+                    "@timestamp" : {
+                        "gte" : f"{y}-{m}-{d}",
+                        "lte" : f"{y}-{m}-{d}"
+                    }
+                }
+            },
+            "must" : {
+                "match": {
+                     "event_type" : "transfer-done"
+                }
             }
-        },
-        #},
-        #"match": {
-        #    "event_type" : "transfer-done"
-        #}
+        }
     }
 }
 
