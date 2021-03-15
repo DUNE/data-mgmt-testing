@@ -2,7 +2,7 @@
 # works with python2
 import os,sys,csv,string,json,datetime,dateutil
 import math
-DUNEPRO=True  # only dunepro
+DUNEPRO=False  # only dunepro
 xroot = True  # only xrootd urls
 # loop over a range of input json files and histogram data flow vs various characteristics
 # inputs are start and end dates, requires that summary files for those inputs be made by Utils.py
@@ -155,6 +155,8 @@ def analyze(start_date,end_date,delta ):
 #  setXLabels(totalbytes,sites)
   cross.GetXaxis().LabelsOption("v");
   cross.GetYaxis().LabelsOption("v");
+  
+  summary = []
   start_range = start_date
   days = 0.0
   count = 0
@@ -162,31 +164,36 @@ def analyze(start_date,end_date,delta ):
     end_range = start_range + delta
     
     inputfilename = "summary_%s_%s.json"%(start_range,end_range)
-   
+    
     if not os.path.exists(inputfilename):
       start_range += delta
       continue
     inputfile = open(inputfilename,'r')
+    print ("read ",inputfilename)
     days += 1.0
     start_range += delta
     data = json.load(inputfile)
     for item in data:
+      sumrec={}
+      
       if not xroot and "root:" in item["file_url"]:
+         
         continue
       if xroot and "http:" in item["file_url"]:
         continue
-      if item["username"] == "dunepro" and not DUNEPRO :
-        continue
-      if not item["username"] == "dunepro" and DUNEPRO :
-        continue
+      
       if "site" not in item or "file_location" not in item:
-        #print("missing: ",item["node"])
+        #print("missing: ",item["site"])
         continue
       
       
       site = countrify(item["site"])
+      if "duration" not in item:
+        continue
       if "rate" not in item:
         continue
+      #rate = item["file_size"]/item["duration"]/1000000.
+      #print ("got here")
       finalstate = item["last_file_state"]
       application = "unknown"
       if "application" in item:
@@ -206,6 +213,30 @@ def analyze(start_date,end_date,delta ):
       
       state.Fill(istate,isite,1.0)
       duration = item["duration"]
+      sumrec["disk"] = disk
+      sumrec["user"] = user
+      sumrec["date"] = date
+      process_id = 0
+      if "process_id" in item:
+        sumrec["process_id"] = item["process_id"]
+      sumrec["timestamp"] = item["@timestamp"]
+      sumrec["duration"] = duration
+      sumrec["file_size"] = item["file_size"]
+      sumrec["username"] = user
+      sumrec["application"] = application
+      sumrec["final_state"] = finalstate
+      sumrec["site"] = site
+      sumrec["rate"] = item["rate"]
+      sumrec["project_name"] = item["project_name"]
+      sumrec["file_name"] = os.path.basename(item["file_url"])
+      sumrec["data_tier"] = item["data_tier"]
+      sumrec["node"] = item["node"]
+      print (sumrec)
+      summary.append(sumrec)
+      if item["username"] == "dunepro" and not DUNEPRO :
+        continue
+      if not item["username"] == "dunepro" and DUNEPRO :
+        continue
       if duration < 10:
         continue
       if finalstate not in ["consumed","skipped"]:
@@ -228,6 +259,21 @@ def analyze(start_date,end_date,delta ):
         skipped.Fill(idisk,isite,1.0)
         totalbytes_user_failed.Fill(iuser, item["file_size"]*0.000000001)
     data = None
+  
+  if len(summary) <= 0:
+    print ( " nothing going")
+    sys.exit(1)
+    
+  header = summary[0].keys()
+   
+  try:
+      with open(out_name+".csv", 'w') as csvfile:
+          writer = csv.DictWriter(csvfile, fieldnames=header)
+          writer.writeheader()
+          for data in summary:
+              writer.writerow(data)
+  except IOError:
+      print("I/O error")
   
   cross.Scale(1./days)
   state.Scale(1./days)
@@ -315,7 +361,7 @@ if __name__ == '__main__':
 
    
  
-  start_date = date(2021,2 , 20)
-  end_date = date(2021, 3, 1)
+  start_date = date(2021,1 , 1)
+  end_date = date(2021, 3, 15)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
