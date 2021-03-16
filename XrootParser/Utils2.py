@@ -72,34 +72,42 @@ def Cleaner(info,projectmeta):
   layer1 = info["hits"]
   layer2 = layer1["hits"]
   count = 0
+  print ("got the data",len(layer2))
   for item in layer2:
     count += 1
     source = item["_source"]
     if source["event"] in dropevents:
+      #print ("drop event",source["eventq"])
       continue
     
     if source["project_id"] != project_id:
-      #print (" got the wrong project? ",project_id, source["project_id"])
+      print (" got the wrong project? ",project_id, source["project_id"],source["@timestamp"])
       continue
     source["timestamp"] = human2number(source["@timestamp"])
     
     if not "file_id" in source:
+      #print ("No file_id")
       continue
     if "file_state" in source and source["file_state"] == "delivered":
+      #print ("drop delivered")
       continue
+    #print ("got here",len(source))
     source = fileFinder(source)
     source = siteFinder(source)
+    #print ("got here",len(source))
     # add project metadata
     for meta in projectmeta:
       source[meta] = projectmeta[meta]
+    #print ("got here with meta",len(source))
     # clean out stuff we don't need
     for a in drops:
       if a in source:
         source.pop(a)
-        
+    #print ("after clean",len(source))
     if( count < 2 or "eos" in source["file_location"]):
       jsonprint (source)
     clean.append(source)
+    print (" size of clean record ",len(clean))
   return clean
   
 # print a dictionary as pretty json
@@ -127,14 +135,15 @@ def number2human(stamp):
 # get info from the sam-events elasticsearch for a given project
 def getProjectInfo(projectID):
  
-  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-202*/_search?q=experiment:dune%20and%20project_id:ID&size=10000"
-  theurl = urltemplate.replace("ID","%s"%projectID)
+  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-2021*/_search?q=experiment:dune%%20and%%20project_id:%s&size=10000"%(projectID)
+  theurl = urltemplate
   print (theurl)
   try:
     result = requests.get(theurl)
   except:
     print("request failed - maybe you need the VPN")
     result={}
+  print ("size of result ", len(result.text))
   return json.loads(result.text)
 
 # get list of sam project ID's to send to GetProjectInfo
@@ -181,6 +190,7 @@ def findProjectInfo(projects,tag="date"):
     
     id = m["project_id"]
     record =  Cleaner(getProjectInfo(id),m)
+    print (" made a record",len(record))
     outname = "raw_%s_%d.jsonl"%(tag,id)
     with jsonlines.open(outname, mode='w') as writer:
       for i in record:
@@ -265,7 +275,7 @@ def cleanRecord(record,uselist):
 # log first and last records and calculate duration
 
 def sequence(firstdate,lastdate,ids):
-  print (ids)
+  #print (ids)
   actions = []
   for pid in ids:
   # build a small map for each project
@@ -282,6 +292,7 @@ def sequence(firstdate,lastdate,ids):
           record[fid] = {}
         record[fid][t] = obj
     reader.close()
+    
     for fid in record:
       times = record[fid].keys()
       sortedtimes = sorted(times)
