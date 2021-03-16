@@ -80,12 +80,7 @@ def analyze(start_date,end_date,delta ):
   states = {}
   apps = {"unknown":0}
   start_range = start_date
-  if (not DUNEPRO):
-    out_name = "user_%s_%s"%(start_date,end_date)
-  else:
-    out_name = "dunepro_%s_%s"%(start_date,end_date)
-  if not xroot:
-       out_name = out_name + "_notxroot"
+  
   while start_range < end_date:
     end_range = start_range + delta
     inputfilename = "summary_%s_%s.json"%(start_range,end_range)
@@ -101,9 +96,19 @@ def analyze(start_date,end_date,delta ):
     disks = getListOfTypes(data,"file_location",disks)
     users = getListOfTypes(data,"username",users)
     dates = getListOfDates(data,dates)
+    
     if DUNEPRO:
       users = {"dunepro":1}
     inputfile.close()
+  print (dates)
+  firstday = start_date
+  lastday = end_date
+  if (not DUNEPRO):
+    out_name = "user_%s_%s"%(firstday,lastday)
+  else:
+    out_name = "dunepro_%s_%s"%(firstday,lastday)
+  if not xroot:
+       out_name = out_name + "_notxroot"
   print (sites)
   #sites = sorted(sites,reverse=True)
   print (sites)
@@ -120,9 +125,9 @@ def analyze(start_date,end_date,delta ):
   nstate = len(states)
   ROOT.gStyle.SetOptStat(0)
   
-  cross = ROOT.TH2F("cross","transfer/day",nd,0,nd,ns,0,ns)
+  cross = ROOT.TH2F("cross","transfers",nd,0,nd,ns,0,ns)
   setXYLabels(cross,disks,sites)
-  state = ROOT.TH2F("state","transfer/day",nstate,0,nstate,ns,0,ns)
+  state = ROOT.TH2F("state","transfers",nstate,0,nstate,ns,0,ns)
   setXYLabels(state,states,sites)
   consumed = ROOT.TH2F("consumed","consumed",nd,0,nd,ns,0,ns)
   setXYLabels(consumed,disks,sites)
@@ -136,11 +141,11 @@ def analyze(start_date,end_date,delta ):
   setYLabels(ratelog10,sites)
   skipped = ROOT.TH2F("skipped","skipped",nd,0,nd,ns,0,ns)
   setXYLabels(skipped,disks,sites)
-  totalbytes = ROOT.TH1F("totalbytes_size","GB/day",ns,0,ns )
+  totalbytes = ROOT.TH1F("totalbytes_size","GB",ns,0,ns )
   setXLabels(totalbytes,sites)
-  totalbytes_user = ROOT.TH1F("totalbytes_user","consumed GB/day",nu,0,nu )
+  totalbytes_user = ROOT.TH1F("totalbytes_user","consumed GB",nu,0,nu )
   setXLabels(totalbytes_user,users)
-  totalbytes_user_failed = ROOT.TH1F("totalbytes_user_failed","skipped GB/day",nu,0,nu )
+  totalbytes_user_failed = ROOT.TH1F("totalbytes_user_failed","skipped GB",nu,0,nu )
   setXLabels(totalbytes_user_failed,users)
   totalbytes_date = ROOT.TH1F("totalbytes_date","GB/day",ndt,0,ndt )
   setXLabels(totalbytes_date,dates)
@@ -231,7 +236,11 @@ def analyze(start_date,end_date,delta ):
       sumrec["file_name"] = os.path.basename(item["file_url"])
       sumrec["data_tier"] = item["data_tier"]
       sumrec["node"] = item["node"]
-      print (sumrec)
+      if "campaign" in item:
+        sumrec["campaign"] = item["campaign"]
+      else:
+        sumrec["campaign"] = None
+      #print (sumrec)
       summary.append(sumrec)
       if item["username"] == "dunepro" and not DUNEPRO :
         continue
@@ -275,11 +284,11 @@ def analyze(start_date,end_date,delta ):
   except IOError:
       print("I/O error")
   
-  cross.Scale(1./days)
-  state.Scale(1./days)
-  totalbytes.Scale(1./days)
-  totalbytes_user.Scale(1./days)
-  totalbytes_user_failed.Scale(1./days)
+ # cross.Scale(1./days)
+ # state.Scale(1./days)
+ # totalbytes.Scale(1./days)
+ # totalbytes_user.Scale(1./days)
+ # totalbytes_user_failed.Scale(1./days)
   c = ROOT.TCanvas()
   c.SetLeftMargin(0.2)
   c.SetBottomMargin(0.2)
