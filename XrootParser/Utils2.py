@@ -203,64 +203,64 @@ def cleanRecord(record,uselist):
   return newrecord
       
 # build a map with timestamps sorted
-def buildMap(records):
-# sort the records into buckets by project_id, file_id and timestamp
-  infomap = {}
-  sortedmap = {}
-  for record in records:
-    if type(record) != type({}):
-      print ("strange record",record)
-      continue
-    if "project_id" not in record or "file_id" not in record:
-      continue
-    pid = record["project_id"]
-    fid = record["file_id"]
-    t = record["timestamp"]
-    if type(pid) == type([]):
-      print ("strange type",pid,type(pid),type(1))
-      pid = pid[0]
-      record["project_id"] = pid
-      jsonprint (record)
-      continue
-    
-    if pid not in infomap.keys():
-      infomap[pid] = {}
-      sortedmap[pid] = {}
-    if fid not in infomap[pid]:
-      infomap[pid][fid] = {}
-      sortedmap[pid][fid] = []
-    if t in infomap[pid][fid]:
-      print ("duplicate record",pid,fid,t)
-      continue
-    infomap[pid][fid][t] = record
-# make a sorted list of times that share the file_size info
-  for p in infomap:
-      for f in infomap[p]:
-        times = infomap[p][f].keys()
-        # try to recover missing information from one of the records
-        md = samweb.getMetadata(f)
-        file_size = md["file_size"]
-         
-        version = None
-        campaign = None
-        if "DUNE.campaign" in md:
-          campaign = md["DUNE.campaign"]
-        
-        data_tier = md["data_tier"]
-        
-        for t in times:
-          infomap[p][f][t]["file_size"] = file_size
-          infomap[p][f][t]["Campaign"] = campaign
-          
-          infomap[p][f][t]["data_tier"] = data_tier
-        sortedtimes = sorted(times)
-        #print ("sorted times", times, sortedtimes)
-        for s in range(0,len(sortedtimes)):
-#          if "file_size" not in infomap[p][f][sortedtimes[s]] and file_size != None:
-#            infomap[p][f][sortedtimes[s]]["file_size"] = file_size
-          sortedmap[p][f].append ( infomap[p][f][sortedtimes[s]])
-          
-  return sortedmap
+#def buildMap(records):
+## sort the records into buckets by project_id, file_id and timestamp
+#  infomap = {}
+#  sortedmap = {}
+#  for record in records:
+#    if type(record) != type({}):
+#      print ("strange record",record)
+#      continue
+#    if "project_id" not in record or "file_id" not in record:
+#      continue
+#    pid = record["project_id"]
+#    fid = record["file_id"]
+#    t = record["timestamp"]
+#    if type(pid) == type([]):
+#      print ("strange type",pid,type(pid),type(1))
+#      pid = pid[0]
+#      record["project_id"] = pid
+#      jsonprint (record)
+#      continue
+#
+#    if pid not in infomap.keys():
+#      infomap[pid] = {}
+#      sortedmap[pid] = {}
+#    if fid not in infomap[pid]:
+#      infomap[pid][fid] = {}
+#      sortedmap[pid][fid] = []
+#    if t in infomap[pid][fid]:
+#      print ("duplicate record",pid,fid,t)
+#      continue
+#    infomap[pid][fid][t] = record
+## make a sorted list of times that share the file_size info
+#  for p in infomap:
+#      for f in infomap[p]:
+#        times = infomap[p][f].keys()
+#        # try to recover missing information from one of the records
+#        md = samweb.getMetadata(f)
+#        file_size = md["file_size"]
+#
+#        version = None
+#        campaign = None
+#        if "DUNE.campaign" in md:
+#          campaign = md["DUNE.campaign"]
+#
+#        data_tier = md["data_tier"]
+#
+#        for t in times:
+#          infomap[p][f][t]["file_size"] = file_size
+#          infomap[p][f][t]["Campaign"] = campaign
+#
+#          infomap[p][f][t]["data_tier"] = data_tier
+#        sortedtimes = sorted(times)
+#        #print ("sorted times", times, sortedtimes)
+#        for s in range(0,len(sortedtimes)):
+##          if "file_size" not in infomap[p][f][sortedtimes[s]] and file_size != None:
+##            infomap[p][f][sortedtimes[s]]["file_size"] = file_size
+#          sortedmap[p][f].append ( infomap[p][f][sortedtimes[s]])
+#
+#  return sortedmap
       
 # log first and last records and calculate duration
 
@@ -299,7 +299,7 @@ def sequence(firstdate,lastdate,ids):
       
       sum["data_tier"] = md["data_tier"]
       campaign = None
-      if "campaign" in md:
+      if "DUNE.campaign" in md:
         sum["campaign"] = md["DUNE.campaign"]
       sum["actions"] = len(record[fid])
       sum["last_file_state"]=last["file_state"]
