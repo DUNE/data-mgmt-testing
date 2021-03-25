@@ -11,9 +11,8 @@ import json
 #with REST Python API) for interaction with Fermilab's ElasticSearch system
 from elasticsearch import Elasticsearch
 
-#Argparse will be used for proper argument handling in the long-term. 
-import argparse as ap
-
+#Argparse will be used for proper argument handling in the long-term.
+#import argparse as ap
 
 #Started code for future use.
 #parser = ap.ArgumentParser()
