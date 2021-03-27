@@ -91,7 +91,6 @@ es_template = {
 #dictionary for conversion to JSON and export.
 def compile_info(transfers, speed_info):
     json_strings = []
-
     #Compiles each dictionary
     for i in range(len(transfers)):
         new_json = {
@@ -114,6 +113,7 @@ def compile_info(transfers, speed_info):
 #in our list of JSONS (which at this point have been converted to dictionaries)
 def get_speeds(transfers):
     speed_info = []
+    to_remove = []
     for transfer in transfers:
         if transfer["_source"]["event_type"] != "transfer-done":
             transfers.remove(transfer)
@@ -176,7 +176,7 @@ def get_speeds(transfers):
         transfer_speed = f_size/len_arr[2]
         #Filters out transfers with abnormally short transfer times
         if len_arr[2] < 10.0 or len_arr[2] > 12 * 60 * 60:
-            transfers.remove(transfer)
+            to_remove.append(transfer)
             continue
         #Fills our speed information dictionary for this JSON object
         info = {
@@ -191,6 +191,8 @@ def get_speeds(transfers):
         speed_info.append(info)
     #Returns the speed info and the transfer array (in case it's been modified
     #and had badly formatted stuff or incorrect request types removed)
+    for transfer in to_remove:
+        transfers.remove(transfer)
     if len(transfers) > 0:
         return compile_info(transfers, speed_info)
     else:
@@ -241,8 +243,8 @@ else:
     f.close()
 
 
-processed_records = len(info)
-print (f"{processed_records} records processed")
+#processed_records = len(info)
+#print (f"{processed_records} records processed")
 
 #Makes sure that there is at least one transfer in the specified date range.
 #Skips the next step in the process if that's the case, which lets our next
