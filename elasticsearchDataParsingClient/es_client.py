@@ -23,6 +23,7 @@ from elasticsearch import Elasticsearch
 #Needs refining
 max_speed = 100000000000 #100 gb/s
 
+
 #How many search results we want to return.
 #Capping search results at 2,500 since API documentation recommends keeping searches
 #relatively small and stepping through with search_after instead of using massive search
@@ -191,7 +192,7 @@ def get_speeds(transfers):
     #Returns the speed info and the transfer array (in case it's been modified
     #and had badly formatted stuff or incorrect request types removed)
     if len(transfers) > 0:
-        return compile_info(speed_info, transfers)
+        return compile_info(transfers, speed_info)
     else:
         return []
 
@@ -219,25 +220,29 @@ def scroll(es, idx, body, scroll):
 #data_in = client.search(index = index, body=es_template, size=search_size)["hits"]["hits"]
 
 f = open(output_file, "w+")
-data = scroll(client, index, "2m")
-if len(data) == 0:
-    print("Warning: No finished transfers found in specified date range")
+#data = scroll(client, index, es_template, "2m")
+#if len(data) == 0:
+#    print("Warning: No finished transfers found in specified date range")
+#    f.write(json.dumps({"data" : error_out}, indent=2))
+#    f.close()
+#else:
+info = []
+for data in scroll(client, index, es_template, "2m"):
+    info += get_speeds(data)
+if len(info) == 0:
+    print("Error: No transfers fitting required parameters found")
+    f = open(output_file, "w+")
     f.write(json.dumps({"data" : error_out}, indent=2))
     f.close()
 else:
-    info = []
-    while len(data):
-        info += get_speeds(data)
-    if len(info) == 0:
-        print("Error: No transfers fitting required parameters found")
-        f = open(output_file, "w+")
-        f.write(json.dumps({"data" : error_out}, indent=2))
-        f.close()
-    else:
-        jres = json.dumps({"data": info}, indent=2)
-        f = open(output_file, "w+")
-        f.write(jres)
-        f.close()
+    jres = json.dumps({"data": info}, indent=2)
+    f = open(output_file, "w+")
+    f.write(jres)
+    f.close()
+
+
+processed_records = len(info)
+print (f"{processed_records} records processed")
 
 #Makes sure that there is at least one transfer in the specified date range.
 #Skips the next step in the process if that's the case, which lets our next
