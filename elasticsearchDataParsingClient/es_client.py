@@ -11,6 +11,8 @@ import json
 #with REST Python API) for interaction with Fermilab's ElasticSearch system
 from elasticsearch import Elasticsearch
 
+from datetime import datetime
+
 #Argparse will be used for proper argument handling in the long-term.
 #import argparse as ap
 
@@ -46,8 +48,20 @@ error_out = {
 #of the form yyyy/mm/dd
 y,m,d = sys.argv[-1].split('/')
 
+
+today = datetime.today()
+target_date = datetime.strptime(sys.argv[-1], "%Y/%m/%d")
+
 #Hardcoded output file name
 output_file = "out.json"
+
+
+if target_date > today:
+    print("Error: Cannot read data from future dates")
+    f = open(output_file, "w+")
+    f.write(json.dumps({"data" : error_out}, indent=2))
+    f.close()
+    exit()
 
 #URL of the DUNE Elasticsearch cluster
 es_cluster = "https://fifemon-es.fnal.gov"
