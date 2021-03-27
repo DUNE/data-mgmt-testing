@@ -29,6 +29,18 @@ max_speed = 100000000000 #100 gb/s
 #volumes and scroll.
 search_size = 2500
 
+error_out = {
+    "name" : "ERROR",
+    "source" : "ERROR",
+    "destination" : "ERROR",
+    "file_size" : 0,
+    "start_time" : "1970-01-01 00:00:00",
+    "file_transfer_time" : "0.0",
+    "transfer_speed(b/s)" : "0.0",
+    "transfer_speed(MB/s)" : "0.0",
+    "max_usage_percentage" : "0.0"
+}
+
 #Last supplied command line argument should be a date
 #of the form yyyy/mm/dd
 y,m,d = sys.argv[-1].split('/')
@@ -74,7 +86,28 @@ es_template = {
 
 #Beginning of function definitions
 
+#Function to compile all of our transfer info and speed info into a
+#dictionary for conversion to JSON and export.
+def compile_info(transfers, speed_info):
+    json_strings = []
 
+    #Compiles each dictionary
+    for i in range(len(transfers)):
+        new_json = {
+            "name": transfers[i]["_source"]["name"],
+            "source": transfers[i]["_source"]["src-rse"],
+            "destination": transfers[i]["_source"]["dst-rse"],
+            "file_size": transfers[i]["_source"]["file-size"],
+            "start_time": transfers[i]["_source"]["started_at"],
+            "file_transfer_time": str(speed_info[i]["file_transfer_time"]),
+            "transfer_speed(b/s)": str(speed_info[i]["transfer_speed(b/s)"]),
+            "transfer_speed(MB/s)": str(speed_info[i]["transfer_speed(MB/s)"]),
+            "max_usage_percentage": str(speed_info[i]["max_usage_percentage"])
+        }
+        #Appends it to the output list
+        json_strings.append(new_json)
+    #Returns the output list
+    return json_strings
 
 #Function to calculate the relevant times and speeds from each transfer
 #in our list of JSONS (which at this point have been converted to dictionaries)
@@ -157,30 +190,22 @@ def get_speeds(transfers):
         speed_info.append(info)
     #Returns the speed info and the transfer array (in case it's been modified
     #and had badly formatted stuff or incorrect request types removed)
-    return speed_info, transfers
+    if len(transfers) > 0:
+        return compile_info(speed_info, transfers)
+    else:
+        return []
 
-#Function to compile all of our transfer info and speed info into a
-#dictionary for conversion to JSON and export.
-def compile_info(transfers, speed_info):
-    json_strings = []
 
-    #Compiles each dictionary
-    for i in range(len(transfers)):
-        new_json = {
-            "name": transfers[i]["_source"]["name"],
-            "source": transfers[i]["_source"]["src-rse"],
-            "destination": transfers[i]["_source"]["dst-rse"],
-            "file_size": transfers[i]["_source"]["file-size"],
-            "start_time": transfers[i]["_source"]["started_at"],
-            "file_transfer_time": str(speed_info[i]["file_transfer_time"]),
-            "transfer_speed(b/s)": str(speed_info[i]["transfer_speed(b/s)"]),
-            "transfer_speed(MB/s)": str(speed_info[i]["transfer_speed(MB/s)"]),
-            "max_usage_percentage": str(speed_info[i]["max_usage_percentage"])
-        }
-        #Appends it to the output list
-        json_strings.append(new_json)
-    #Returns the output list
-    return json_strings
+#Based on Simplernerd's tutorial here: https://simplernerd.com/elasticsearch-scroll-python/
+def scroll(es, idx, body, scroll):
+    page = es.search(index=idx, body=body, scroll=scroll, size=search_size)
+    scroll_id = page['_scroll_id']
+    hits = page['hits']['hits']
+    while len(hits):
+        yield hits
+        page = es.scroll(scroll_id=scroll_id, scroll=scroll)
+        scroll_id = page['_scroll_id']
+        hits = page['hits']['hits']
 
 
 #End of function definitions
@@ -191,45 +216,49 @@ def compile_info(transfers, speed_info):
 #TODO: Add code to make sure we're not trying to search future dates
 
 #Runs a single search for the Elasticsearch client
-data_in = client.search(index = index, body=es_template, size=search_size)["hits"]["hits"]
+#data_in = client.search(index = index, body=es_template, size=search_size)["hits"]["hits"]
 
+f = open(output_file, "w+")
+data = scroll(client, index, "2m")
+if len(data) == 0:
+    print("Warning: No finished transfers found in specified date range")
+    f.write(json.dumps({"data" : error_out}, indent=2))
+    f.close()
+else:
+    info = []
+    while len(data):
+        info += get_speeds(data)
+    if len(info) == 0:
+        print("Error: No transfers fitting required parameters found")
+        f = open(output_file, "w+")
+        f.write(json.dumps({"data" : error_out}, indent=2))
+        f.close()
+    else:
+        jres = json.dumps({"data": info}, indent=2)
+        f = open(output_file, "w+")
+        f.write(jres)
+        f.close()
 
 #Makes sure that there is at least one transfer in the specified date range.
 #Skips the next step in the process if that's the case, which lets our next
 #bit of error handling exit the program.
-if(len(data_in) == 0):
-    print("Error: No finished transfers found in specified date range")
-    speeds = []
-else:
-    speeds, data_in = get_speeds(data_in)
+#if(len(data_in) == 0):
+#    print("Error: No finished transfers found in specified date range")
+#    speeds = []
+#else:
+#    speeds, data_in = get_speeds(data_in)
 
 #Checks that we have at least one valid transfer in the specified date range.
 #Writes a static error JSON to the output file if no transfers are found,
 #and then exits.
-if(len(speeds) == 0):
-    print("Error: No transfers fitting required parameters found")
-    error_out = {
-        "name" : "ERROR",
-        "source" : "ERROR",
-        "destination" : "ERROR",
-        "file_size" : 0,
-        "start_time" : "1970-01-01 00:00:00",
-        "file_transfer_time" : "0.0",
-        "transfer_speed(b/s)" : "0.0",
-        "transfer_speed(MB/s)" : "0.0",
-        "max_usage_percentage" : "0.0"
-    }
-    f = open(output_file, "w+")
-    f.write(json.dumps({"data" : error_out}, indent=2))
-    f.close()
-    exit()
+#if(len(speeds) == 0):
+#    print("Error: No transfers fitting required parameters found")
+#    f = open(output_file, "w+")
+#    f.write(json.dumps({"data" : error_out}, indent=2))
+#    f.close()
+#    exit()
 
 
 #Compiles all of our information to JSON objects and then dumps them
 #as a single JSON object to our output file.
-info = compile_info(data_in, speeds)
-jres = json.dumps({"data": info}, indent=2)
-
-f = open(output_file, "w+")
-f.write(jres)
-f.close()
+#info = compile_info(data_in, speeds)
