@@ -1,5 +1,5 @@
 #!/usr/local/opt/python/libexec/bin/python
-import os,sys,csv,string,json,datetime,dateutil
+import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import requests
 
 
@@ -64,10 +64,11 @@ def Cleaner(info,projectmeta):
 
   drops = ["type","station","@version","kafka"]
   dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error"]
-  drops += ["files in snapshot", "first_name","group_id","group_name","last_name","person_id","processes","project_desc","station_id","dataset_def_id","experiment","process_id","file_name","event_time"]
+  drops += ["files in snapshot", "first_name","group_id","group_name","last_name","person_id","processes","project_desc","station_id","experiment","file_name","event_time"]
  
   #print ('info',info)
   clean = []
+  project_id = projectmeta["project_id"]
   layer1 = info["hits"]
   layer2 = layer1["hits"]
   count = 0
@@ -77,7 +78,9 @@ def Cleaner(info,projectmeta):
     if source["event"] in dropevents:
       continue
     
-      
+    if source["project_id"] != project_id:
+      #print (" got the wrong project? ",project_id, source["project_id"])
+      continue
     source["timestamp"] = human2number(source["@timestamp"])
     
     if not "file_id" in source:
@@ -124,8 +127,8 @@ def number2human(stamp):
 # get info from the sam-events elasticsearch for a given project
 def getProjectInfo(projectID):
  
-  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-202*/_search?q=experiment:dune%20and%20project_name:ID&size=10000"
-  theurl = urltemplate.replace("ID",projectID)
+  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-202*/_search?q=experiment:dune%20and%20project_id:ID&size=10000"
+  theurl = urltemplate.replace("ID","%s"%projectID)
   print (theurl)
   try:
     result = requests.get(theurl)
@@ -170,7 +173,9 @@ def findProjectInfo(projects):
     if "prestage" in p:
       print ("skip prestage",p )
       continue
-    record =  Cleaner(getProjectInfo(p),getProjectMeta(p))
+    m = getProjectMeta(p)
+    id = m["project_id"]
+    record =  Cleaner(getProjectInfo(id),m)
     
     result += record
       
@@ -214,6 +219,9 @@ def buildMap(records):
     if fid not in infomap[pid]:
       infomap[pid][fid] = {}
       sortedmap[pid][fid] = []
+    if t in infomap[pid][fid]:
+      print ("duplicate record",pid,fid,t)
+      continue
     infomap[pid][fid][t] = record
 # make a sorted list of times that share the file_size info
   for p in infomap:
@@ -224,7 +232,7 @@ def buildMap(records):
         file_size = md["file_size"]
          
         version = None
-        Campaign = None
+        campaign = None
         if "DUNE.campaign" in md:
           campaign = md["DUNE.campaign"]
         
@@ -232,7 +240,7 @@ def buildMap(records):
         
         for t in times:
           infomap[p][f][t]["file_size"] = file_size
-          infomap[p][f][t]["Campaign"] = Campaign
+          infomap[p][f][t]["Campaign"] = campaign
           
           infomap[p][f][t]["data_tier"] = data_tier
         sortedtimes = sorted(times)
@@ -270,18 +278,21 @@ def sequence(info):
 # test the stuff above
 def test(first = "2021-02-01", last = "2021-02-15", n=10000):
 
-  ids = getProjectList(first,last,n)
-  print ("this many projects",len(ids))
-  if len(ids) > 2:
-    getProjectMeta(ids[1])
-  # first get the info
-  info = findProjectInfo(ids)
-  e = open("raw_%s_%s.json"%(first,last),'w')
-  s = json.dumps(info, indent=2)
-  e.write(s)
-  e.close
-  info = None
-  
+#  ids = getProjectList(first,last,n)
+#  print ("this many projects",len(ids))
+#  if len(ids) > 2:
+#    getProjectMeta(ids[1])
+#  # first get the info
+#  info = findProjectInfo(ids)
+#  e = open("raw_%s_%s.json"%(first,last),'w')
+#  s = json.dumps(info, indent=2)
+#  e.write(s)
+#  with jsonlines.open("raw_%s_%s.jsonl"%(first,last), mode='w') as writer:
+#    for i in info:
+#      writer.write(i)
+#  e.close
+#  info = None
+#  
   # then make it into a map
   e = open("raw_%s_%s.json"%(first,last),'r')
   info = json.load(e)
@@ -302,6 +313,9 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
   s = json.dumps(new,indent=2)
   g.write(s)
   g.close()
+  with jsonlines.open("summary_%s_%s.jsonl"%(first,last), mode='w') as writer:
+    for i in new:
+      writer.write(i)
   
 if __name__ == '__main__':
 

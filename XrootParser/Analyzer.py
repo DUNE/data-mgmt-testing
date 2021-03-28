@@ -342,7 +342,7 @@ def analyze(start_date,end_date,delta ):
   efficiency.Divide(total)
   efficiency.Draw("COLZ NUM")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
-  efficiency.Draw("TEXT SAME")
+  efficiency.Draw("TEXT45 SAME")
   c.Print(out_name+"_efficiency.png")
   c.SetLogz(1)
   rate.SetMaximum(100.)
@@ -357,7 +357,7 @@ def analyze(start_date,end_date,delta ):
   rate_by_app.SetTitle(rate_by_app.GetTitle()+" " + out_name)
   rate_by_app.Draw("COLZ")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
-  rate_by_app.Draw("TEXT SAME")
+  rate_by_app.Draw("TEXT45 SAME")
   c.Print(out_name+"_rate_by_app.png")
   
   c.SetLogz(0)
