@@ -81,7 +81,7 @@ def Cleaner(info,projectmeta):
       continue
     
     if source["project_id"] != project_id:
-      print (" got the wrong project? ",project_id, source["project_id"],source["@timestamp"])
+      #print (" got the wrong project? ",project_id, source["project_id"],source["@timestamp"])
       continue
     source["timestamp"] = human2number(source["@timestamp"])
     
@@ -107,7 +107,7 @@ def Cleaner(info,projectmeta):
     if( count < 2 or "eos" in source["file_location"]):
       jsonprint (source)
     clean.append(source)
-    print (" size of clean record ",len(clean))
+    #print (" size of clean record ",len(clean))
   return clean
   
 # print a dictionary as pretty json
