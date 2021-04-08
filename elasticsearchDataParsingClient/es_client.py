@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-#Sys needed for arguments
-import sys
 
 #JSON needed to process incoming Elasticsearch results
 #and for output formatting for easier use by webserver.
@@ -23,7 +21,7 @@ today = datetime.today()
 #TODO: Add help info
 parser = ap.ArgumentParser()
 parser.add_argument('-S', '--start', dest="start_date", default=today.strftime("%Y/%m/%d"))
-parser.add_argument('-E', '--end', dest="end_date", default="0000/00/00")
+parser.add_argument('-E', '--end', dest="end_date", default="0")
 parser.add_argument('-R', '--rule_id', dest="rule_id")
 parser.add_argument('-U', '--user', dest="user")
 
@@ -31,11 +29,9 @@ parser.add_argument('-U', '--user', dest="user")
 args = parser.parse_args()
 
 start = args.start_date
-end = ""
-if args.end_date == "0000/00/00":
+end = args.end_date
+if end == "0":
     end = start
-
-
 
 #Hard-coded value for what we think we remember the connection speed
 #being. Used to calculate our network use percentage.
@@ -65,11 +61,16 @@ error_out = {
 
 #Last supplied command line argument should be a date
 #of the form yyyy/mm/dd
-y0,m0,d0 = args.start_date.split('/')
-y1,m1,d1 = args.end_date.split('/')
+y0,m0,d0 = start.split('/')
+y1,m1,d1 = end.split('/')
 
 
-target_date = datetime.strptime(args.end_date, "%Y/%m/%d")
+target_date = datetime.strptime(end, "%Y/%m/%d")
+start_check = datetime.strptime(start, "%Y/%m/%d")
+
+if target_date < start_check:
+    print("Error: End date smaller than start date")
+    exit()
 
 #Hardcoded output file name
 output_file = "out.json"
