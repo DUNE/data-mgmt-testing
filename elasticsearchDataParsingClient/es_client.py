@@ -86,7 +86,10 @@ if target_date > today:
 #wrapping. Everything should be in a query, exact matches
 #should be in a "must" tag, and ranges should be in a "filter" tag.
 #Both "must" and "filter" should be wrapped in a single "bool" tag.
-if args.mode == 0:
+
+mode = int(args.mode)
+
+if mode == 0:
     es_template = {
         "query" : {
             "bool" : {
@@ -112,7 +115,7 @@ if args.mode == 0:
         }
     }
 
-elif args.mode == 1 or args.mode == 3:
+elif mode == 1 or mode == 3:
     es_template = {
         "query" : {
             "bool" : {
@@ -127,18 +130,19 @@ elif args.mode == 1 or args.mode == 3:
                 "must" : {
                     "match": {
                          "event_type" : "transfer-done"
-                    }
+                    },
                 },
-                "must" : {
+                "should" : {
                     "wildcard" : {
                         "name" : "1gbtestfile.*"
                     }
-                }
+                },
+                "minimum_should_match" : 1,
             }
         }
     }
 
-elif args.mode == 2:
+elif mode == 2:
     es_template = {
         "query" : {
             "bool" : {
@@ -159,7 +163,7 @@ elif args.mode == 2:
         }
     }
 
-elif args.mode == 4:
+elif mode == 4:
     es_template = {
         "query" : {
             "bool" : {
