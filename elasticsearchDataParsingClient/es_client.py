@@ -24,6 +24,7 @@ parser.add_argument('-S', '--start', dest="start_date", default=today.strftime("
 parser.add_argument('-E', '--end', dest="end_date", default="0")
 parser.add_argument('-R', '--rule_id', dest="rule_id")
 parser.add_argument('-U', '--user', dest="user")
+parser.add_argument('-M', '--mode', dest="mode", default=0)
 
 
 args = parser.parse_args()
@@ -72,16 +73,116 @@ if target_date < start_check:
     print("Error: End date smaller than start date")
     exit()
 
-#Hardcoded output file name
-output_file = "out.json"
-
-
 if target_date > today:
     print("Error: Cannot read data from future dates")
     f = open(output_file, "w+")
     f.write(json.dumps({"data" : error_out}, indent=2))
     f.close()
     exit()
+
+
+#Search template for Elasticsearch client
+#Queries with multiple conditions need multiple levels of
+#wrapping. Everything should be in a query, exact matches
+#should be in a "must" tag, and ranges should be in a "filter" tag.
+#Both "must" and "filter" should be wrapped in a single "bool" tag.
+if args.mode == 0:
+    es_template = {
+        "query" : {
+            "bool" : {
+                "filter" : {
+                    "range" : {
+                        "@timestamp" : {
+                            "gte" : f"{y0}-{m0}-{d0}",
+                            "lte" : f"{y1}-{m1}-{d1}"
+                        }
+                    }
+                },
+                "must" : {
+                    "match": {
+                         "event_type" : "transfer-done"
+                    }
+                },
+                "must_not" : {
+                    "wildcard" : {
+                        "name" : "1gbtestfile.*"
+                    }
+                }
+            }
+        }
+    }
+
+elif args.mode == 1 or args.mode == 3:
+    es_template = {
+        "query" : {
+            "bool" : {
+                "filter" : {
+                    "range" : {
+                        "@timestamp" : {
+                            "gte" : f"{y0}-{m0}-{d0}",
+                            "lte" : f"{y1}-{m1}-{d1}"
+                        }
+                    }
+                },
+                "must" : {
+                    "match": {
+                         "event_type" : "transfer-done"
+                    }
+                },
+                "must" : {
+                    "wildcard" : {
+                        "name" : "1gbtestfile.*"
+                    }
+                }
+            }
+        }
+    }
+
+elif args.mode == 2:
+    es_template = {
+        "query" : {
+            "bool" : {
+                "filter" : {
+                    "range" : {
+                        "@timestamp" : {
+                            "gte" : f"{y0}-{m0}-{d0}",
+                            "lte" : f"{y1}-{m1}-{d1}"
+                        }
+                    }
+                },
+                "must" : {
+                    "match": {
+                         "event_type" : "transfer-done"
+                    }
+                }
+            }
+        }
+    }
+
+elif args.mode == 4:
+    es_template = {
+        "query" : {
+            "bool" : {
+                "filter" : {
+                    "range" : {
+                        "@timestamp" : {
+                            "gte" : f"{y0}-{m0}-{d0}",
+                            "lte" : f"{y1}-{m1}-{d1}"
+                        }
+                    }
+                },
+                "must" : {
+                    "match": {
+                         "event_type" : "transfer-failed"
+                    }
+                }
+            }
+        }
+    }
+
+
+#Hardcoded output file name
+output_file = "out.json"
 
 #URL of the DUNE Elasticsearch cluster
 es_cluster = "https://fifemon-es.fnal.gov"
@@ -91,33 +192,6 @@ index = f"rucio-transfers-v0-{y0}.{m0}"
 
 #Makes the Elasticsearch client
 client = Elasticsearch([es_cluster])
-
-#Search template for Elasticsearch client
-#Queries with multiple conditions need multiple levels of
-#wrapping. Everything should be in a query, exact matches
-#should be in a "must" tag, and ranges should be in a "filter" tag.
-#Both "must" and "filter" should be wrapped in a single "bool" tag.
-es_template = {
-    "query" : {
-        "bool" : {
-            "filter" : {
-                "range" : {
-                    "@timestamp" : {
-                        "gte" : f"{y0}-{m0}-{d0}",
-                        "lte" : f"{y1}-{m1}-{d1}"
-                    }
-                }
-            },
-            "must" : {
-                "match": {
-                     "event_type" : "transfer-done"
-                }
-            }
-        }
-    }
-}
-
-
 
 
 #End of initial variable and template setup
