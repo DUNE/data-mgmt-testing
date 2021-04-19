@@ -10,7 +10,8 @@ import json
 from elasticsearch import Elasticsearch
 
 #Used to check that we're not looking for dates in the future
-from datetime import datetime, timedelta
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 #Argparse will be used for proper argument handling in the long-term.
 import argparse as ap
@@ -334,14 +335,15 @@ while curr_date <= target_date:
     m =  curr_date.strftime("%m")
     #Index for the specified month
     index = f"rucio-transfers-v0-{y}.{m}"
-    for data in scroll(client, index, es_template, "2m"):
-        info = get_speeds(data)
-        if len(info) > 0:
-            data_exists = True
-        for res in info:
-            f.write(json.dumps(res, indent=2))
-            f.write(",\n")
-    curr_date += timedelta(months = 1)
+    if client.indices.exists(index=index):
+        for data in scroll(client, index, es_template, "2m"):
+            info = get_speeds(data)
+            if len(info) > 0:
+                data_exists = True
+            for res in info:
+                f.write(json.dumps(res, indent=2))
+                f.write(",\n")
+    curr_date += relativedelta(months=+1)
 #Checks to make sure we have at least one transfer during the timeframe
 #we were handed and exports the error template if not.
 if not data_exists:
