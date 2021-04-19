@@ -10,7 +10,7 @@ import json
 from elasticsearch import Elasticsearch
 
 #Used to check that we're not looking for dates in the future
-from datetime import datetime
+from datetime import datetime, timedelta
 
 #Argparse will be used for proper argument handling in the long-term.
 import argparse as ap
@@ -46,7 +46,7 @@ max_speed = 100000000000 #100 gb/s
 #Capping search results at 2,500 since API documentation recommends keeping searches
 #relatively small and stepping through with search_after instead of using massive search
 #volumes and scroll.
-search_size = 2500
+search_size = 5000
 
 error_out = {
     "name" : "ERROR",
@@ -67,11 +67,12 @@ y1,m1,d1 = end.split('/')
 
 
 target_date = datetime.strptime(end, "%Y/%m/%d")
-start_check = datetime.strptime(start, "%Y/%m/%d")
+curr_date = datetime.strptime(start, "%Y/%m/%d")
 
-if target_date < start_check:
-    print("Error: End date smaller than start date")
-    exit()
+if target_date < curr_date:
+    swap = target_date
+    target_date = curr_date
+    curr_date = swap
 
 if target_date > today:
     print("Error: Cannot read data from future dates")
@@ -79,7 +80,6 @@ if target_date > today:
     f.write(json.dumps({"data" : error_out}, indent=2))
     f.close()
     exit()
-
 
 #Search template for Elasticsearch client
 #Queries with multiple conditions need multiple levels of
@@ -141,7 +141,6 @@ elif mode == 1 or mode == 3:
             }
         }
     }
-
 elif mode == 2:
     es_template = {
         "query" : {
@@ -162,7 +161,6 @@ elif mode == 2:
             }
         }
     }
-
 elif mode == 4:
     es_template = {
         "query" : {
@@ -184,19 +182,14 @@ elif mode == 4:
         }
     }
 
-
 #Hardcoded output file name
 output_file = "out.json"
 
 #URL of the DUNE Elasticsearch cluster
 es_cluster = "https://fifemon-es.fnal.gov"
 
-#Index for the specified month
-index = f"rucio-transfers-v0-{y0}.{m0}"
-
 #Makes the Elasticsearch client
 client = Elasticsearch([es_cluster])
-
 
 #End of initial variable and template setup
 
@@ -310,7 +303,6 @@ def get_speeds(transfers):
     else:
         return []
 
-
 #Based on Simplernerd's tutorial here: https://simplernerd.com/elasticsearch-scroll-python/
 #Scrolls through all of the results in a given date range
 def scroll(es, idx, body, scroll):
@@ -330,23 +322,31 @@ def scroll(es, idx, body, scroll):
 
 #Create output file object and empty info array
 f = open(output_file, "w+")
-info = []
+f.write('{ "data" : [\n')
+
+data_exists = False
 
 #Scrolls through the ES client and adds all information to the info array
 #compile_info now runs inside of get_speeds, so data in "info" will be in its
 #final state before export.
-for data in scroll(client, index, es_template, "2m"):
-    info += get_speeds(data)
-
+while curr_date <= target_date:
+    y = curr_date.strftime("%Y")
+    m =  curr_date.strftime("%m")
+    #Index for the specified month
+    index = f"rucio-transfers-v0-{y}.{m}"
+    for data in scroll(client, index, es_template, "2m"):
+        info = get_speeds(data)
+        if len(info) > 0:
+            data_exists = True
+        for res in info:
+            f.write(json.dumps(res, indent=2))
+            f.write(",\n")
+    curr_date += timedelta(months = 1)
 #Checks to make sure we have at least one transfer during the timeframe
 #we were handed and exports the error template if not.
-if len(info) == 0:
+if not data_exists:
     print("Error: No transfers fitting required parameters found")
-    f = open(output_file, "w+")
-    f.write(json.dumps({"data" : error_out}, indent=2))
-    f.close()
-else:
-    jres = json.dumps({"data": info}, indent=2)
-    f = open(output_file, "w+")
-    f.write(jres)
-    f.close()
+    f.write(json.dumps(error_out, indent=2))
+
+f.write("]}")
+f.close()
