@@ -5,6 +5,9 @@
 #and for output formatting for easier use by webserver.
 import json
 
+import sys
+import urllib
+
 #ElasticSearch API is needed (alternatively commands could be manually written
 #with REST Python API) for interaction with Fermilab's ElasticSearch system
 from elasticsearch import Elasticsearch
@@ -13,10 +16,24 @@ from elasticsearch import Elasticsearch
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
+
+
+from urllib.request import urlopen, HTTPError, URLError
+
+
 #Argparse will be used for proper argument handling in the long-term.
 import argparse as ap
 
 today = datetime.today()
+
+
+
+print("These were the paramters passed to es_client.py: \n")
+print(sys.argv)
+print("\n")
+
+
+
 
 #Arguments for the script. Help info should explain uses
 #TODO: Add help info
@@ -43,23 +60,50 @@ if end == "0":
 max_speed = 100000000000 #100 gb/s
 
 
+#Hardcoded output file name
+output_file = "out.json"
+
+
+
 #How many search results we want to return.
 #Capping search results at 2,500 since API documentation recommends keeping searches
 #relatively small and stepping through with search_after instead of using massive search
 #volumes and scroll.
 search_size = 5000
 
-error_out = {
-    "name" : "ERROR",
-    "source" : "ERROR",
-    "destination" : "ERROR",
-    "file_size" : 0,
-    "start_time" : "1970-01-01 00:00:00",
-    "file_transfer_time" : "0.0",
-    "transfer_speed(b/s)" : "0.0",
-    "transfer_speed(MB/s)" : "0.0",
-    "max_usage_percentage" : "0.0"
-}
+
+def errorHandler(type):
+    error_out_object = [[{
+            "name" : type,
+            "source" : "ERROR",
+            "destination" : "ERROR",
+            "file_size" : 0,
+            "start_time" : "1970-01-01 00:00:00",
+            "file_transfer_time" : "0.0",
+            "transfer_speed(b/s)" : "0.0",
+            "transfer_speed(MB/s)" : "0.0",
+            "max_usage_percentage" : "0.0"
+    }]]
+
+    if os.path.exists(output_file):
+        os.remove(output_file)
+
+    with open(output_file, "w+") as f:
+        f.write(json.dumps({"data" : json.dumps(error_out_object)}, indent=2))
+    exit()
+
+
+if len(start) < 10:
+    print('start date must be in format yyyy/mm/dd')
+    errorHandler("date format")
+
+if len(end) < 10:
+    print('end date must be in format yyyy/mm/dd')
+    errorHandler("date format")
+
+
+
+
 
 #Last supplied command line argument should be a date
 #of the form yyyy/mm/dd
@@ -75,12 +119,18 @@ if target_date < curr_date:
     target_date = curr_date
     curr_date = swap
 
+
 if target_date > today:
-    print("Error: Cannot read data from future dates")
-    f = open(output_file, "w+")
-    f.write(json.dumps({"data" : error_out}, indent=2))
-    f.close()
-    exit()
+    print("Error: Cannot read data from future dates, exiting...")
+    errorHandler("future date")
+
+
+
+
+
+
+
+
 
 #Search template for Elasticsearch client
 #Queries with multiple conditions need multiple levels of
@@ -162,7 +212,7 @@ elif mode == 2:
             }
         }
     }
-elif mode == 4:
+elif mode == 4:             #failure on receiver end
     es_template = {
         "query" : {
             "bool" : {
@@ -182,12 +232,46 @@ elif mode == 4:
             }
         }
     }
+elif mode == 5:                 #failure on sender end
+    es_template = {
+        "query" : {
+            "bool" : {
+                "filter" : {
+                    "range" : {
+                        "@timestamp" : {
+                            "gte" : f"{y0}-{m0}-{d0}",
+                            "lte" : f"{y1}-{m1}-{d1}"
+                        }
+                    }
+                },
+                "must" : {
+                    "match": {
+                         "event_type" : "transfer-submission_failed"
+                    }
+                }
+            }
+        }
+    }
 
-#Hardcoded output file name
-output_file = "out.json"
+
+
+
+
+
 
 #URL of the DUNE Elasticsearch cluster
 es_cluster = "https://fifemon-es.fnal.gov"
+
+
+
+#check if network is up
+try:
+    myURL = urlopen(es_cluster)
+except HTTPError as e:
+    print("Error, couldn't contact elasticsearch db at: " + es_cluster + " , exiting...")
+    errorHandler("network down")
+
+
 
 #Makes the Elasticsearch client
 client = Elasticsearch([es_cluster])
@@ -335,20 +419,28 @@ while curr_date <= target_date:
     m =  curr_date.strftime("%m")
     #Index for the specified month
     index = f"rucio-transfers-v0-{y}.{m}"
-    if client.indices.exists(index=index):
-        for data in scroll(client, index, es_template, "2m"):
-            info = get_speeds(data)
-            if len(info) > 0:
-                data_exists = True
-            for res in info:
-                f.write(json.dumps(res, indent=2))
-                f.write(",\n")
+
+    try:
+        if client.indices.exists(index=index):  #did you mean index == index? Not sure this does anything since client exists even with no network connection?   -Lydia
+            for data in scroll(client, index, es_template, "2m"):
+                info = get_speeds(data)
+    except:
+        print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
+        f.close()
+        errorHandler("scroll error")
+
+    if len(info) > 0:
+        data_exists = True
+    for res in info:
+        f.write(json.dumps(res, indent=2))
+        f.write(",\n")
     curr_date += relativedelta(months=+1)
 #Checks to make sure we have at least one transfer during the timeframe
 #we were handed and exports the error template if not.
 if not data_exists:
     print("Error: No transfers fitting required parameters found")
-    f.write(json.dumps(error_out, indent=2))
+    f.close()
+    errorHandler("no results")
 
 f.write("]}")
 f.close()
