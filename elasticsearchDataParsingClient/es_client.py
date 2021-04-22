@@ -40,8 +40,8 @@ print("\n")
 parser = ap.ArgumentParser()
 parser.add_argument('-S', '--start', dest="start_date", default=today.strftime("%Y/%m/%d"))
 parser.add_argument('-E', '--end', dest="end_date", default="0")
-parser.add_argument('-R', '--rule_id', dest="rule_id")
-parser.add_argument('-U', '--user', dest="user")
+#parser.add_argument('-R', '--rule_id', dest="rule_id")
+#parser.add_argument('-U', '--user', dest="user")
 parser.add_argument('-M', '--mode', dest="mode", default=0)
 
 
@@ -58,10 +58,6 @@ if end == "0":
 #Only haven't because need to check if changes to JSON format would cause
 #issues with other code.
 max_speed = 100000000000 #100 gb/s
-
-
-#Hardcoded output file name
-output_file = "out.json"
 
 
 
@@ -103,10 +99,6 @@ if len(end) < 10:
 
 
 
-
-
-#Last supplied command line argument should be a date
-#of the form yyyy/mm/dd
 y0,m0,d0 = start.split('/')
 y1,m1,d1 = end.split('/')
 
@@ -125,13 +117,6 @@ if target_date > today:
     errorHandler("future date")
 
 
-
-
-
-
-
-
-
 #Search template for Elasticsearch client
 #Queries with multiple conditions need multiple levels of
 #wrapping. Everything should be in a query, exact matches
@@ -140,6 +125,12 @@ if target_date > today:
 
 mode = int(args.mode)
 
+#Mode codes:
+#   0 : All events of type "transfer-done" that are not from the regular checkup
+#   1 : All events of type "transfer-done" from the regular checkup
+#   2 : All events of type "transfer-done" regardless of whether source
+#   3 : Not currently remembered. Will work on that.
+#   4 : All events of types "transfer-failed" and "transfer-queued_failed"
 if mode == 0:
     es_template = {
         "query" : {
@@ -212,7 +203,7 @@ elif mode == 2:
             }
         }
     }
-elif mode == 4:             #failure on receiver end
+elif mode == 4:             #Checks failures
     es_template = {
         "query" : {
             "bool" : {
@@ -224,27 +215,10 @@ elif mode == 4:             #failure on receiver end
                         }
                     }
                 },
-                "must" : {
+                "should" : {
                     "match": {
                          "event_type" : "transfer-failed"
-                    }
-                }
-            }
-        }
-    }
-elif mode == 5:                 #failure on sender end
-    es_template = {
-        "query" : {
-            "bool" : {
-                "filter" : {
-                    "range" : {
-                        "@timestamp" : {
-                            "gte" : f"{y0}-{m0}-{d0}",
-                            "lte" : f"{y1}-{m1}-{d1}"
-                        }
-                    }
-                },
-                "must" : {
+                    },
                     "match": {
                          "event_type" : "transfer-submission_failed"
                     }
@@ -256,7 +230,11 @@ elif mode == 5:                 #failure on sender end
 
 
 
-
+#Hardcoded output file name
+if mode in [0, 1, 2, 3]:
+    output_file = "out.json"
+elif mode == 4:
+    output_file = "fails.json"
 
 
 #URL of the DUNE Elasticsearch cluster
@@ -300,6 +278,22 @@ def compile_info(transfers, speed_info):
         #Appends it to the output list
         json_strings.append(new_json)
     #Returns the output list
+    return json_strings
+
+def get_errs(transfers):
+    json_strings = []
+    for transfer in transfers:
+        new_json = {
+            "name": transfer["_source"]["name"],
+            "source": transfer["_source"]["src-rse"],
+            "destination": transfer["_source"]["dst-rse"],
+            "file_size": transfer["_source"]["file-size"]
+        }
+        if transfer["_source"]["event-type"] == "transfer-failed":
+            new_json["reason"] = "rx_error"
+        else:
+            new_json["reason"] = "tx_error"
+        json_strings.append(new_json)
     return json_strings
 
 #Function to calculate the relevant times and speeds from each transfer
@@ -411,6 +405,8 @@ f.write('{ "data" : [\n')
 
 data_exists = False
 
+xfer_count = 0
+
 #Scrolls through the ES client and adds all information to the info array
 #compile_info now runs inside of get_speeds, so data in "info" will be in its
 #final state before export.
@@ -419,21 +415,38 @@ while curr_date <= target_date:
     m =  curr_date.strftime("%m")
     #Index for the specified month
     index = f"rucio-transfers-v0-{y}.{m}"
-
-    try:
-        if client.indices.exists(index=index):  #did you mean index == index? Not sure this does anything since client exists even with no network connection?   -Lydia
-            for data in scroll(client, index, es_template, "2m"):
-                info = get_speeds(data)
-    except:
-        print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
-        f.close()
-        errorHandler("scroll error")
-
-    if len(info) > 0:
-        data_exists = True
-    for res in info:
-        f.write(json.dumps(res, indent=2))
-        f.write(",\n")
+    #Modes for transfer_done events with various templates
+    if mode in [0, 1, 2, 3]:
+        try:
+            if client.indices.exists(index=index):
+                for data in scroll(client, index, es_template, "5m"):
+                    info = get_speeds(data)
+                    xfer_count += len(info)
+                    if len(info) > 0:
+                        data_exists = True
+                    for res in info:
+                        f.write(json.dumps(res, indent=2))
+                        f.write(",\n")
+        except:
+            print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
+            f.close()
+            errorHandler("scroll error")
+    #Mode to process transfer_failed and transfer-queued_failed data
+    elif mode == 4:
+        try:
+            if client.indices.exists(index=index):
+                for data in scroll(client, index, es_template, "5m"):
+                    info = get_errs(data)
+                    xfer_count += len(info)
+                    if len(info) > 0:
+                        data_exists = True
+                    for res in info:
+                        f.write(json.dumps(res, indent=2))
+                        f.write(",\n")
+        except:
+            print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
+            f.close()
+            errorHandler("scroll error")
     curr_date += relativedelta(months=+1)
 #Checks to make sure we have at least one transfer during the timeframe
 #we were handed and exports the error template if not.
@@ -441,6 +454,8 @@ if not data_exists:
     print("Error: No transfers fitting required parameters found")
     f.close()
     errorHandler("no results")
+
+print(f"Period contained {xfer_count} processable records.")
 
 f.write("]}")
 f.close()
