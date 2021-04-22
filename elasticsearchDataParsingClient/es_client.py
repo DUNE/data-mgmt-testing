@@ -5,8 +5,11 @@
 #and for output formatting for easier use by webserver.
 import json
 
+import os
 import sys
 import urllib
+
+
 
 #ElasticSearch API is needed (alternatively commands could be manually written
 #with REST Python API) for interaction with Fermilab's ElasticSearch system
@@ -215,14 +218,19 @@ elif mode == 4:             #Checks failures
                         }
                     }
                 },
-                "should" : {
-                    "match": {
-                         "event_type" : "transfer-failed"
+                "should" : [
+                    {
+                        "match": {
+                             "event_type" : "transfer-failed"
+                        },
                     },
-                    "match": {
-                         "event_type" : "transfer-submission_failed"
+                    {
+                        "match": {
+                             "event_type" : "transfer-submission_failed"
+                        }
                     }
-                }
+                ],
+                "minimum_should_match" : 1
             }
         }
     }
@@ -283,17 +291,19 @@ def compile_info(transfers, speed_info):
 def get_errs(transfers):
     json_strings = []
     for transfer in transfers:
-        new_json = {
-            "name": transfer["_source"]["name"],
-            "source": transfer["_source"]["src-rse"],
-            "destination": transfer["_source"]["dst-rse"],
-            "file_size": transfer["_source"]["file-size"]
-        }
-        if transfer["_source"]["event-type"] == "transfer-failed":
-            new_json["reason"] = "rx_error"
-        else:
-            new_json["reason"] = "tx_error"
-        json_strings.append(new_json)
+        try:
+            new_json = {
+                "name": transfer["_source"]["name"],
+                "source": transfer["_source"]["src-rse"],
+                "destination": transfer["_source"]["dst-rse"]
+            }
+            if transfer["_source"]["event_type"] == "transfer-failed":
+                new_json["reason"] = "rx_error"
+            else:
+                new_json["reason"] = "tx_error"
+            json_strings.append(new_json)
+        except:
+            print(f"transfer {transfer} caused a problem")
     return json_strings
 
 #Function to calculate the relevant times and speeds from each transfer
@@ -436,7 +446,10 @@ while curr_date <= target_date:
         try:
             if client.indices.exists(index=index):
                 for data in scroll(client, index, es_template, "5m"):
-                    info = get_errs(data)
+                    try:
+                        info = get_errs(data)
+                    except:
+                        print("get_errs failed")
                     xfer_count += len(info)
                     if len(info) > 0:
                         data_exists = True
