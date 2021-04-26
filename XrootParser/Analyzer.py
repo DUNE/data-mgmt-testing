@@ -23,7 +23,7 @@ def getListOfTypes(data,key,inlist):
   for item in data:
     if not key in item:
       continue
-    val = item[key].decode('UTF-8')
+    val = item[key]#.decode('UTF-8')
     if key == "site":
       val = countrify(val)
     
@@ -44,7 +44,7 @@ def getListOfDates(data,inlist):
   for item in data:
     if not key in item:
       continue
-    val = item[key][0:10].decode('UTF-8')
+    val = item[key][0:10]#.decode('UTF-8')
     if val in l:
       continue
     l = np.append(l,val)
@@ -236,6 +236,11 @@ def analyze(start_date,end_date,delta ):
       sumrec["file_name"] = os.path.basename(item["file_url"])
       sumrec["data_tier"] = item["data_tier"]
       sumrec["node"] = item["node"]
+      sumrec["country"] = site[0:2]
+      if "fnal" in site:
+        sumrec["country"]="fnal"
+      if "cern" in site:
+        sumrec["country"]="cern"
       if "campaign" in item:
         sumrec["campaign"] = item["campaign"]
       else:
@@ -371,6 +376,6 @@ if __name__ == '__main__':
    
  
   start_date = date(2021,3 , 1)
-  end_date = date(2021, 3, 15)
+  end_date = date(2021, 4, 1)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
