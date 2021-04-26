@@ -1,6 +1,6 @@
 #!/usr/local/opt/python/libexec/bin/python
 # works with python2
-import os,sys,csv,string,json,datetime,dateutil
+import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import math
 DUNEPRO=False  # only dunepro
 xroot = True  # only xrootd urls
@@ -23,7 +23,7 @@ def getListOfTypes(data,key,inlist):
   for item in data:
     if not key in item:
       continue
-    val = item[key]#.decode('UTF-8')
+    val = item[key].decode('UTF-8')
     if key == "site":
       val = countrify(val)
     
@@ -44,7 +44,7 @@ def getListOfDates(data,inlist):
   for item in data:
     if not key in item:
       continue
-    val = item[key][0:10]#.decode('UTF-8')
+    val = item[key][0:10].decode('UTF-8')
     if val in l:
       continue
     l = np.append(l,val)
@@ -80,35 +80,36 @@ def analyze(start_date,end_date,delta ):
   states = {}
   apps = {"unknown":0}
   start_range = start_date
-  
+  if (not DUNEPRO):
+    out_name = "user_%s_%s"%(start_date,end_date)
+  else:
+    out_name = "dunepro_%s_%s"%(start_date,end_date)
+  if not xroot:
+       out_name = out_name + "_notxroot"
+  data = []
   while start_range < end_date:
     end_range = start_range + delta
-    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
+    inputfilename = "summary_%s_%s.jsonl"%(start_range,end_range)
     if not os.path.exists(inputfilename):
       start_range += delta
       continue
-    inputfile = open(inputfilename,'r')
-    start_range += delta
-    data = json.load(inputfile)
-    apps = getListOfTypes(data,"application",apps)
-    sites = getListOfTypes(data,"site",sites)
-    states = getListOfTypes(data,"last_file_state",states)
-    disks = getListOfTypes(data,"file_location",disks)
-    users = getListOfTypes(data,"username",users)
-    dates = getListOfDates(data,dates)
     
-    if DUNEPRO:
-      users = {"dunepro":1}
+    with jsonlines.open(inputfilename, mode='r') as reader:
+      for obj in reader:
+        data.append(obj)
+    
+    start_range += delta
+  
+    
+  apps = getListOfTypes(data,"application",apps)
+  sites = getListOfTypes(data,"site",sites)
+  states = getListOfTypes(data,"last_file_state",states)
+  disks = getListOfTypes(data,"file_location",disks)
+  users = getListOfTypes(data,"username",users)
+  dates = getListOfDates(data,dates)
+  if DUNEPRO:
+    users = {"dunepro":1}
     inputfile.close()
-  print (dates)
-  firstday = start_date
-  lastday = end_date
-  if (not DUNEPRO):
-    out_name = "user_%s_%s"%(firstday,lastday)
-  else:
-    out_name = "dunepro_%s_%s"%(firstday,lastday)
-  if not xroot:
-       out_name = out_name + "_notxroot"
   print (sites)
   #sites = sorted(sites,reverse=True)
   print (sites)
@@ -125,9 +126,9 @@ def analyze(start_date,end_date,delta ):
   nstate = len(states)
   ROOT.gStyle.SetOptStat(0)
   
-  cross = ROOT.TH2F("cross","transfers",nd,0,nd,ns,0,ns)
+  cross = ROOT.TH2F("cross","transfer/day",nd,0,nd,ns,0,ns)
   setXYLabels(cross,disks,sites)
-  state = ROOT.TH2F("state","transfers",nstate,0,nstate,ns,0,ns)
+  state = ROOT.TH2F("state","transfer/day",nstate,0,nstate,ns,0,ns)
   setXYLabels(state,states,sites)
   consumed = ROOT.TH2F("consumed","consumed",nd,0,nd,ns,0,ns)
   setXYLabels(consumed,disks,sites)
@@ -141,11 +142,11 @@ def analyze(start_date,end_date,delta ):
   setYLabels(ratelog10,sites)
   skipped = ROOT.TH2F("skipped","skipped",nd,0,nd,ns,0,ns)
   setXYLabels(skipped,disks,sites)
-  totalbytes = ROOT.TH1F("totalbytes_size","GB",ns,0,ns )
+  totalbytes = ROOT.TH1F("totalbytes_size","GB/day",ns,0,ns )
   setXLabels(totalbytes,sites)
-  totalbytes_user = ROOT.TH1F("totalbytes_user","consumed GB",nu,0,nu )
+  totalbytes_user = ROOT.TH1F("totalbytes_user","consumed GB/day",nu,0,nu )
   setXLabels(totalbytes_user,users)
-  totalbytes_user_failed = ROOT.TH1F("totalbytes_user_failed","skipped GB",nu,0,nu )
+  totalbytes_user_failed = ROOT.TH1F("totalbytes_user_failed","skipped GB/day",nu,0,nu )
   setXLabels(totalbytes_user_failed,users)
   totalbytes_date = ROOT.TH1F("totalbytes_date","GB/day",ndt,0,ndt )
   setXLabels(totalbytes_date,dates)
@@ -165,40 +166,33 @@ def analyze(start_date,end_date,delta ):
   start_range = start_date
   days = 0.0
   count = 0
-  while start_range < end_date:
-    end_range = start_range + delta
+#  while start_range < end_date:
+#    end_range = start_range + delta
+#
+#    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
+#
+#    if not os.path.exists(inputfilename):
+#      start_range += delta
+#      continue
+#
+#    days += 1.0
+#    start_range += delta
     
-    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
-    
-    if not os.path.exists(inputfilename):
-      start_range += delta
-      continue
-    inputfile = open(inputfilename,'r')
-    print ("read ",inputfilename)
-    days += 1.0
-    start_range += delta
-    data = json.load(inputfile)
-    for item in data:
+  for item in data:
       sumrec={}
-      
       if not xroot and "root:" in item["file_url"]:
-         
         continue
       if xroot and "http:" in item["file_url"]:
         continue
-      
+
       if "site" not in item or "file_location" not in item:
-        #print("missing: ",item["site"])
+        #print("missing: ",item["node"])
         continue
       
       
       site = countrify(item["site"])
-      if "duration" not in item:
-        continue
       if "rate" not in item:
         continue
-      #rate = item["file_size"]/item["duration"]/1000000.
-      #print ("got here")
       finalstate = item["last_file_state"]
       application = "unknown"
       if "application" in item:
@@ -236,16 +230,6 @@ def analyze(start_date,end_date,delta ):
       sumrec["file_name"] = os.path.basename(item["file_url"])
       sumrec["data_tier"] = item["data_tier"]
       sumrec["node"] = item["node"]
-      sumrec["country"] = site[0:2]
-      if "fnal" in site:
-        sumrec["country"]="fnal"
-      if "cern" in site:
-        sumrec["country"]="cern"
-      if "campaign" in item:
-        sumrec["campaign"] = item["campaign"]
-      else:
-        sumrec["campaign"] = None
-      #print (sumrec)
       summary.append(sumrec)
       if item["username"] == "dunepro" and not DUNEPRO :
         continue
@@ -272,12 +256,8 @@ def analyze(start_date,end_date,delta ):
       if(item["last_file_state"] == "skipped" or item["last_file_state"] == "transferred"):
         skipped.Fill(idisk,isite,1.0)
         totalbytes_user_failed.Fill(iuser, item["file_size"]*0.000000001)
-    data = None
+  data = None
   
-  if len(summary) <= 0:
-    print ( " nothing going")
-    sys.exit(1)
-    
   header = summary[0].keys()
    
   try:
@@ -289,11 +269,11 @@ def analyze(start_date,end_date,delta ):
   except IOError:
       print("I/O error")
   
- # cross.Scale(1./days)
- # state.Scale(1./days)
- # totalbytes.Scale(1./days)
- # totalbytes_user.Scale(1./days)
- # totalbytes_user_failed.Scale(1./days)
+  cross.Scale(1./days)
+  state.Scale(1./days)
+  totalbytes.Scale(1./days)
+  totalbytes_user.Scale(1./days)
+  totalbytes_user_failed.Scale(1./days)
   c = ROOT.TCanvas()
   c.SetLeftMargin(0.2)
   c.SetBottomMargin(0.2)
@@ -347,7 +327,7 @@ def analyze(start_date,end_date,delta ):
   efficiency.Divide(total)
   efficiency.Draw("COLZ NUM")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
-  efficiency.Draw("TEXT45 SAME")
+  efficiency.Draw("TEXT SAME")
   c.Print(out_name+"_efficiency.png")
   c.SetLogz(1)
   rate.SetMaximum(100.)
@@ -362,7 +342,7 @@ def analyze(start_date,end_date,delta ):
   rate_by_app.SetTitle(rate_by_app.GetTitle()+" " + out_name)
   rate_by_app.Draw("COLZ")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
-  rate_by_app.Draw("TEXT45 SAME")
+  rate_by_app.Draw("TEXT SAME")
   c.Print(out_name+"_rate_by_app.png")
   
   c.SetLogz(0)
@@ -375,7 +355,7 @@ if __name__ == '__main__':
 
    
  
-  start_date = date(2021,3 , 1)
-  end_date = date(2021, 4, 1)
+  start_date = date(2021,4 , 1)
+  end_date = date(2021, 4, 26)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
