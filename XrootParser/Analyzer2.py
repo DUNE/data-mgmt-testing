@@ -23,7 +23,7 @@ def getListOfTypes(data,key,inlist):
   for item in data:
     if not key in item:
       continue
-    val = item[key].decode('UTF-8')
+    val = item[key]#.decode('UTF-8')
     if key == "site":
       val = countrify(val)
     
@@ -44,7 +44,7 @@ def getListOfDates(data,inlist):
   for item in data:
     if not key in item:
       continue
-    val = item[key][0:10].decode('UTF-8')
+    val = item[key][0:10]#.decode('UTF-8')
     if val in l:
       continue
     l = np.append(l,val)
