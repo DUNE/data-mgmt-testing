@@ -1,0 +1,24 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "elasticsearch": "^16.7.2",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "json": "^10.0.0",
+    "morgan": "~1.9.1",
+    "pprint": "0.0.1",
+    "python-shell": "^2.0.3",
+    "sys": "0.0.1",
+    "xml2js": "^0.4.23",
+    "xmlhttprequest": "^1.8.0"
+  }
+}

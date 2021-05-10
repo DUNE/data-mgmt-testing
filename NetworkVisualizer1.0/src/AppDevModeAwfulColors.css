@@ -1,0 +1,110 @@
+#map {
+  background-color: #5a5e63;
+}
+
+.legend{
+  height: 50px;
+  background-color: #5a5e63;
+}
+
+/* .rsm-svg {
+  max-height: 900px;
+  max-width: 1400px;
+} */
+
+.basicColumn {
+  padding: 5px;
+}
+
+/* Clear floats after the columns */
+.basicRow {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#fixedRightCol{
+  position: fixed;
+  top: 115px;
+  right: 0;
+}
+
+#searchRangeTextRow{
+  background-color: brown;
+  margin-bottom: 5px;
+}
+
+#legendRow{
+  margin-bottom: 10px;
+}
+
+#mapTitleRow{
+  padding-bottom: 15px;
+}
+
+#statusRow{
+  background-color: purple;
+  margin-bottom: 5px;
+}
+
+#modeRow{
+  background-color: azure;
+}
+
+#mapTitleAnStatusRow{
+  background-color: orange;
+  padding: 15px;
+}
+
+#mainSectionCol{
+  padding: 15px;
+  padding-right: 40px;
+}
+
+#fixedRightCol{
+  background-color: red;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#searchButtonRow{
+  background-color: green;
+  margin-bottom: 5px;
+}
+
+#calendarRow{
+  background-color: pink;
+    margin-bottom: 5px;
+}
+
+#detailRow{
+  background-color: yellow
+}
+
+#legendRow{
+  background-color: teal
+}
+
+#legendDescriptionCol{
+  background-color: chartreuse;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+#mapRow{
+  background-color: cyan;
+  margin-top: 15px;
+  margin-bottom: 15px
+}
+
+#listRow{
+  background-color: pink
+}
+
+#sidebarCol{
+  background-color: red
+}
+
+#statusSectionCol{
+  background-color: blue
+}

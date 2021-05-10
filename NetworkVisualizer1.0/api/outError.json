@@ -1,0 +1,19 @@
+{
+    "data": [
+    {
+      "name": "ERROR",
+      "source": "ERROR",
+      "destination": "ERROR",
+      "file_size": 0,
+      "start_time": "1970-01-01 00:00:00",
+      "file_transfer_time": "0.0",
+      "transfer_speed(b/s)": "0.0",
+      "transfer_speed(MB/s)": "0.0",
+      "max_usage_percentage": "0.0"
+    },
+
+    {}
+    ]
+
+
+}
