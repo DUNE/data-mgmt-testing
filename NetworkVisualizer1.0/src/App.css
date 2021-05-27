@@ -1,215 +1,24 @@
 #map {
-  /* background-color: #5a5e63; */
-}
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins');
-
-body {
-  font-family: 'Poppins', sans-serif;
-    /* color: #ffff; */
-
-}
-
-
-.card{
-  background-color: #F2682B47;
-}
-
-#root{
-  /* background-color: grey; */
-background-image: linear-gradient(to right, #7CAED5 0%, #ffff 100%);
-
-}
-
-
-#duneLogoPic{
-  height: 60px;
-  float: right;
-}
-
-
-
-#mapTitleAnStatusRow{
-
-  padding: 15px;
-/* background-image: linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%); */
-/* background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); */
-/* background-image: linear-gradient(to right, #243949 0%, #7CAED5 100%); */
+  background-color: #5a5e63;
 }
 
 .legend{
   height: 50px;
-  /* background-color: #5a5e63; */
+  background-color: #5a5e63;
 }
 
 .rsm-svg {
-  /* max-height: 800px; */
-  /* max-width: 1400px; */
+  max-height: 800px;
+  max-width: 1000px;
 }
 
-
-#collapseLegendButton{
-  float: right;
+.basicColumn {
+  flex: 25%;
+  padding: 5px;
 }
 
 /* Clear floats after the columns */
 .basicRow {
   display: flex;
   flex-wrap: wrap;
-}
-
-.centAlignCol{
-  text-align: center;
-}
-
-.siteGraphRow{
-  height: 10px;
-}
-
-.leftAlignCol{
-  text-align: left;
-}
-
-.rightAlignCol{
-  text-align: right;
-}
-
-#mapModeSwitchCol{
-  text-align: right;
-}
-
-#titleRow{
-  margin-left: 0px;
-  margin-top: 10px;
-}
-
-
-
-#fixedRightCol{
-  position: fixed;
-  top: 88px;
-  right: 0;
-}
-
-#legendRow{
-  /* margin-bottom: 10px; */
-}
-
-#rsm-geographies {
-    max-height: 250px;
-}
-
-#mapCard{
-  padding: 15px;
-  /* height: 850px; */
-}
-
-#mapTitleRow{
-  /* padding-bottom: 15px; */
-}
-
-#searchRangeTextRow{
-  background-color: brown;
-  margin-bottom: 5px;
-}
-
-#statusRow{
-  background-color: purple;
-  margin-bottom: 5px;
-}
-
-#modeRow{
-  background-color: azure;
-}
-
-
-
-#mainSectionCol{
-
-
-}
-
-#fixedRightCol{
-  /* background-color: red; */
-  padding-left: 0px;
-  padding-top: 30px;
-  /* padding-bottom: 20px; */
-}
-
-#searchButtonRow{
-  /* background-color: green; */
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
-
-.rightSideFixed{
-  margin-top: -15px;
-}
-
-#searchCard{
-  padding: 10px;
-}
-
-#statusCard{
-  padding: 10px;
-
-}
-
-
-
-
-
-#detailCard{
-  padding: 10px;
-}
-
-/* #calendarRow{
-  background-color: pink;
-    margin-bottom: 5px;
-} */
-
-#detailRow{
-  background-color: yellow
-}
-
-#legendRow{
-  /* background-color: teal */
-}
-
-#legendCardCol{
-  /* margin-left: -15px; */
-  /* background-color: red */
-}
-
-#legendCard{
-  padding: 15px;
-  /* margin-left: -15px;
-  margin-right: -15px; */
-}
-
-/* Card{
-  background-color: red
-} */
-
-#legendDescriptionCol{
-  /* background-color: chartreuse; */
-  /* margin-bottom: 20px; */
-}
-
-#mapRow{
-  /* background-color: cyan; */
-  margin-top: 6px;
-  margin-bottom: 15px;
-}
-
-#listRow{
-  /* background-color: pink */
-}
-
-#sidebarCol{
-  background-color: red
-}
-
-#statusSectionCol{
-  background-color: blue
 }
