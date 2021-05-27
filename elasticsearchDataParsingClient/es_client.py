@@ -70,6 +70,9 @@ max_speed = 100000000000 #100 gb/s
 #volumes and scroll.
 search_size = 5000
 
+#Cutoff for how many individual results we'll allow the code to handle.
+#Anything over this limit will be processed in summary form instead.
+max_individual_results = 150000
 
 def errorHandler(type):
     error_out_object = [[{
@@ -107,7 +110,8 @@ y1,m1,d1 = end.split('/')
 
 
 target_date = datetime.strptime(end, "%Y/%m/%d")
-curr_date = datetime.strptime(start, "%Y/%m/%d")
+start_date = datetime.strptime(start, "%Y/%m/%d")
+curr_date = start_date
 
 if target_date < curr_date:
     swap = target_date
@@ -132,8 +136,9 @@ mode = int(args.mode)
 #   0 : All events of type "transfer-done" that are not from the regular checkup
 #   1 : All events of type "transfer-done" from the regular checkup
 #   2 : All events of type "transfer-done" regardless of whether source
-#   3 : Not currently remembered. Will work on that.
-#   4 : All events of types "transfer-failed" and "transfer-queued_failed"
+#   3 : All events of types "transfer-failed" and "transfer-submission_failed"
+#       from our health checkup
+#   4 : All events of types "transfer-failed" and "transfer-submission_failed"
 if mode == 0:
     es_template = {
         "query" : {
@@ -160,7 +165,7 @@ if mode == 0:
         }
     }
 
-elif mode == 1 or mode == 3:
+elif mode == 1:
     es_template = {
         "query" : {
             "bool" : {
@@ -206,6 +211,39 @@ elif mode == 2:
             }
         }
     }
+elif mode == 3:             #Checks failures exclusively from the regular health checkup
+    es_template = {
+        "query" : {
+            "bool" : {
+                "filter" : {
+                    "range" : {
+                        "@timestamp" : {
+                            "gte" : f"{y0}-{m0}-{d0}",
+                            "lte" : f"{y1}-{m1}-{d1}"
+                        }
+                    }
+                },
+                "should" : [
+                    {
+                        "match": {
+                             "event_type" : "transfer-failed"
+                        },
+                    },
+                    {
+                        "match": {
+                             "event_type" : "transfer-submission_failed"
+                        }
+                    },
+                    {
+                        "wildcard" : {
+                            "name" : "1gbtestfile.*"
+                        }
+                    }
+                ],
+                "minimum_should_match" : 2
+            }
+        }
+    }
 elif mode == 4:             #Checks failures
     es_template = {
         "query" : {
@@ -234,14 +272,16 @@ elif mode == 4:             #Checks failures
             }
         }
     }
-
+else:
+    print(f"Argument error: Mode {mode} does not exist or is not currently implemented.")
+    errorHandler("Nonexistent mode passed.")
 
 
 
 #Hardcoded output file name
-if mode in [0, 1, 2, 3]:
+if mode in [0, 1, 2]:
     output_file = "out.json"
-elif mode == 4:
+elif mode in [3, 4]:
     output_file = "fails.json"
 
 
@@ -288,6 +328,8 @@ def compile_info(transfers, speed_info):
     #Returns the output list
     return json_strings
 
+
+#Code to process failed transfer data instead of successful transfer data
 def get_errs(transfers):
     json_strings = []
     for transfer in transfers:
@@ -303,8 +345,21 @@ def get_errs(transfers):
                 new_json["reason"] = "tx_error"
             json_strings.append(new_json)
         except:
-            print(f"transfer {transfer} caused a problem")
+            print(f"Transfer {transfer} caused an issue. Ignoring.")
     return json_strings
+
+#If we're past our result cutoff, we'll output a summary of transfers
+#instead of the full results in order to avoid too many results being
+#passed to our frontend and causing processing issues.
+def result_cutoff(es, idx, body, curr_date, target_date):
+    res = 0
+    while curr_date <= target_date:
+        y = curr_date.strftime("%Y")
+        m =  curr_date.strftime("%m")
+        #Index for the specified month
+        index = f"rucio-transfers-v0-{y}.{m}"
+        res += es.count(index=index, body=body)
+    return res
 
 #Function to calculate the relevant times and speeds from each transfer
 #in our list of JSONS (which at this point have been converted to dictionaries)
@@ -404,71 +459,259 @@ def scroll(es, idx, body, scroll):
         scroll_id = page['_scroll_id']
         hits = page['hits']['hits']
 
+#Adds all entries in an array to our transfer matrix
+def add_successes_to_matrix(entries, matrix, keys):
+    for entry in entries:
+        try:
+            #First matrix index: Source RSE keys index
+            #Second matrix index: Destination RSE keys index
+            #First number: Total Gigabytes transferred for ordered pair
+            #Second number: Total transfer time for ordered pair
+            if entry["source"] not in keys:
+                matrix.append([])
+                for key in keys:
+                    matrix[-1].append([0, 0])
+                keys.append(entry["source"])
+                for i in range(len(matrix)):
+                    matrix[i].append([0, 0])
+            if entry["destination"] not in keys:
+                matrix.append([])
+                for key in keys:
+                    matrix[-1].append([0, 0])
+                keys.append(entry["destination"])
+                for i in range(len(matrix)):
+                    matrix[i].append([0, 0])
+
+            #Conversion from bits to MB, rounded to 2 places.
+            #Number of decimals is completely arbitrary
+            size = round(float(entry["file_size"])/8388608.0, 2)
+            transfer_time = float(entry["file_transfer_time"])
+
+            idx1 = keys.index(entry["source"])
+            idx2 = keys.index(entry["destination"])
+
+            matrix[idx1][idx2][0] += size
+            matrix[idx1][idx2][1] += transfer_time
+        except:
+            print(f"Error: Transfer {transfer} caused an issue. Ignoring.")
+    return matrix, keys
+
+#Adds all entries in an array to our transfer matrix
+def add_failures_to_matrix(entries, matrix, keys):
+    for entry in entries:
+        try:
+            #First matrix index: Source RSE keys index
+            #Second matrix index: Destination RSE keys index
+            #First number: Total Gigabytes transferred for ordered pair
+            #Second number: Total transfer time for ordered pair
+            if entry["source"] not in keys:
+                matrix.append([])
+                for key in keys:
+                    matrix[-1].append(0)
+                keys.append(entry["source"])
+                for i in range(len(matrix)):
+                    matrix[i].append(0)
+            if entry["destination"] not in keys:
+                matrix.append([])
+                for key in keys:
+                    matrix[-1].append(0)
+                keys.append(entry["destination"])
+                for i in range(len(matrix)):
+                    matrix[i].append(0)
+
+            #Conversion from bits to MB, rounded to 1 place.
+            #Number of decimals is completely arbitrary
+            size = 1
+
+            idx1 = keys.index(entry["source"])
+            idx2 = keys.index(entry["destination"])
+
+            matrix[idx1][idx2] += size
+        except:
+            print(f"Error: Transfer {transfer} caused an issue. Ignoring.")
+    return matrix, keys
+
+#Processes all of our transfers as individual transfers instead of summarizing
+#them
+def get_individual(mode, client, curr_date, end_date, es_template):
+    #Create output file object and empty info array
+    f = open(output_file, "w+")
+    f.write('{ "data" : [\n')
+
+    data_exists = False
+
+    xfer_count = 0
+
+    y = curr_date.strftime("%Y")
+    m =  curr_date.strftime("%m")
+    #Index for the specified month
+    index = f"rucio-transfers-v0-{y}.{m}"
+
+    final_count = result_cutoff(client, index, es_template, curr_date, end_date)
+
+    #Scrolls through the ES client and adds all information to the info array
+    #compile_info now runs inside of get_speeds, so data in "info" will be in its
+    #final state before export.
+    while curr_date <= target_date:
+        y = curr_date.strftime("%Y")
+        m =  curr_date.strftime("%m")
+        #Index for the specified month
+        index = f"rucio-transfers-v0-{y}.{m}"
+        #Modes for transfer_done events with various templates
+        if mode in [0, 1, 2, 3]:
+            try:
+                if client.indices.exists(index=index):
+                    for data in scroll(client, index, es_template, "5m"):
+                        info = get_speeds(data)
+                        xfer_count += len(info)
+                        if len(info) > 0:
+                            data_exists = True
+                        for res in info:
+                            f.write(json.dumps(res, indent=2))
+                            if not (res == info[-1] and xfer_count == final_count):
+                                f.write(",\n")
+                            else:
+                                f.write("\n")
+            except:
+                print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
+                f.close()
+                errorHandler("scroll error")
+        #Mode to process transfer_failed and transfer-submission_failed data
+        elif mode == 4:
+            try:
+                if client.indices.exists(index=index):
+                    for data in scroll(client, index, es_template, "5m"):
+                        try:
+                            info = get_errs(data)
+                        except:
+                            print("get_errs failed")
+                        xfer_count += len(info)
+                        if len(info) > 0:
+                            data_exists = True
+                        for res in info:
+                            f.write(json.dumps(res, indent=2))
+                            if not (res == info[-1] and xfer_count == final_count):
+                                f.write(",\n")
+                            else:
+                                f.write("\n")
+            except:
+                print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
+                f.close()
+                errorHandler("scroll error")
+        curr_date += relativedelta(months=+1)
+    #Checks to make sure we have at least one transfer during the timeframe
+    #we were handed and exports the error template if not.
+    if not data_exists:
+        print("Error: No transfers fitting required parameters found")
+        f.close()
+        errorHandler("no results")
+
+    print(f"Period contained {xfer_count} processable records.")
+
+    f.write("]}")
+    f.close()
+
+#Summarizes transfers instead of outputting them as individuals to avoid
+#overloading the webserver and frontend.
+def get_summary(mode, client, curr_date, end_date, es_template):
+    #Create output file object and empty info array
+    f = open(output_file, "w+")
+    f.write('{ "data" : [\n')
+
+    start_date = curr_date
+
+    data_exists = False
+
+    xfer_count = 0
+
+    matrix = []
+    keys = []
+    to_write = []
+    #Scrolls through the ES client and adds all information to the info array
+    #compile_info now runs inside of get_speeds, so data in "info" will be in its
+    #final state before export.
+    while curr_date <= target_date:
+        y = curr_date.strftime("%Y")
+        m =  curr_date.strftime("%m")
+        #Index for the specified month
+        index = f"rucio-transfers-v0-{y}.{m}"
+        #Modes for transfer_done events with various templates
+        if mode in [0, 1, 2, 3]:
+            try:
+                if client.indices.exists(index=index):
+                    for data in scroll(client, index, es_template, "5m"):
+                        entries = get_speeds(data)
+                        xfer_count += len(info)
+                        if len(info) > 0:
+                            data_exists = True
+                            matrix, keys = add_successes_to_matrix(entries, matrix, keys)
+            except:
+                print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
+                f.close()
+                errorHandler("scroll error")
+
+            for i in range(len(keys)):
+                for j in range(len(keys)):
+                    if matrix[i][j][0] == 0:
+                        continue
+                    new_entry = {
+                        "name" : f"{keys[i]}_to_{keys[j]}",
+                        "source" : keys[i],
+                        "destination" : keys[j],
+                        "file_size" : matrix[i][j][0]*1024*1024*8,
+                        "start_time" : f"{start_date.strftime("%Y")}-{start_date.strftime("%m")}-{start_date.strftime("%d")} 00:00:01",
+                        "file_transfer_time" : matrix[i][j][1],
+                        "transfer_speed(b/s)" : float(matrix[i][j][0]*1024*1024*8)/float(matrix[i][j][1]),
+                        "transfer_speed(MB/s)" : float(matrix[i][j][0])/float(matrix[i][j][1]),
+                        "max_usage_percentage" : (float(matrix[i][j][0]*1024*1024*8)/float(matrix[i][j][1]))/float(max_speed)
+                    }
+                    to_write.append(new_entry)
+
+        #Mode to process transfer_failed and transfer-submission_failed data
+        elif mode == 4:
+            try:
+                if client.indices.exists(index=index):
+                    for data in scroll(client, index, es_template, "5m"):
+                        entries = get_errs(data)
+                        xfer_count += len(info)
+                        if len(info) > 0:
+                            data_exists = True
+                            matrix, keys = add_failures_to_matrix(entries, matrix, keys)
+
+            except:
+                print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
+                f.close()
+                errorHandler("scroll error")
+        curr_date += relativedelta(months=+1)
+    #Checks to make sure we have at least one transfer during the timeframe
+    #we were handed and exports the error template if not.
+    if not data_exists:
+        print("Error: No transfers fitting required parameters found")
+        f.close()
+        errorHandler("no results")
+
+    print(f"Period contained {xfer_count} processable records.\n")
+
+    for entry in to_write:
+        f.write(json.dumps(entry, indent=2))
+        if entry != to_write[-1]:
+            f.write(",\n")
+        else:
+            f.write("\n")
+
+    f.write("]}")
+    f.close()
 
 #End of function definitions
 
 #Start of main process
 
-#Create output file object and empty info array
-f = open(output_file, "w+")
-f.write('{ "data" : [\n')
+y = curr_date.strftime("%Y")
+m =  curr_date.strftime("%m")
+#Index for the specified month
+index = f"rucio-transfers-v0-{y}.{m}"
 
-data_exists = False
-
-xfer_count = 0
-
-#Scrolls through the ES client and adds all information to the info array
-#compile_info now runs inside of get_speeds, so data in "info" will be in its
-#final state before export.
-while curr_date <= target_date:
-    y = curr_date.strftime("%Y")
-    m =  curr_date.strftime("%m")
-    #Index for the specified month
-    index = f"rucio-transfers-v0-{y}.{m}"
-    #Modes for transfer_done events with various templates
-    if mode in [0, 1, 2, 3]:
-        try:
-            if client.indices.exists(index=index):
-                for data in scroll(client, index, es_template, "5m"):
-                    info = get_speeds(data)
-                    xfer_count += len(info)
-                    if len(info) > 0:
-                        data_exists = True
-                    for res in info:
-                        f.write(json.dumps(res, indent=2))
-                        f.write(",\n")
-        except:
-            print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
-            f.close()
-            errorHandler("scroll error")
-    #Mode to process transfer_failed and transfer-queued_failed data
-    elif mode == 4:
-        try:
-            if client.indices.exists(index=index):
-                for data in scroll(client, index, es_template, "5m"):
-                    try:
-                        info = get_errs(data)
-                    except:
-                        print("get_errs failed")
-                    xfer_count += len(info)
-                    if len(info) > 0:
-                        data_exists = True
-                    for res in info:
-                        f.write(json.dumps(res, indent=2))
-                        f.write(",\n")
-        except:
-            print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
-            f.close()
-            errorHandler("scroll error")
-    curr_date += relativedelta(months=+1)
-#Checks to make sure we have at least one transfer during the timeframe
-#we were handed and exports the error template if not.
-if not data_exists:
-    print("Error: No transfers fitting required parameters found")
-    f.close()
-    errorHandler("no results")
-
-print(f"Period contained {xfer_count} processable records.")
-
-f.write("]}")
-f.close()
+if result_cutoff(es, index, es_template, curr_date, target_date) <= max_individual_results:
+    get_individual(mode, client, curr_date, end_date, es_template)
+else:
+    get_summary(mode, client, curr_date, end_date, es_template)
