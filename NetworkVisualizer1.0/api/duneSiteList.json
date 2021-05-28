@@ -19,7 +19,7 @@
             }
         ],
         "last_update": [
-            "2021-05-03T07:02:36Z"
+            "2021-05-27T18:16:21Z"
         ],
         "vo": [
             "dune"
@@ -962,6 +962,107 @@
                 "$": {
                     "latitude": "0.0",
                     "longitude": "0.0",
+                    "name": "SURFsara"
+                },
+                "service": [
+                    {
+                        "$": {
+                            "endpoint": "arc01.gina.surfsara.nl",
+                            "flavour": "ARC-CE",
+                            "hostname": "arc01.gina.surfsara.nl"
+                        },
+                        "ce_resource": [
+                            {
+                                "$": {
+                                    "etf_default": "false",
+                                    "queue": "medium"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "$": {
+                            "endpoint": "arc02.gina.surfsara.nl",
+                            "flavour": "ARC-CE",
+                            "hostname": "arc02.gina.surfsara.nl"
+                        },
+                        "ce_resource": [
+                            {
+                                "$": {
+                                    "etf_default": "false",
+                                    "queue": "medium"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "$": {
+                            "endpoint": "arc03.gina.surfsara.nl",
+                            "flavour": "ARC-CE",
+                            "hostname": "arc03.gina.surfsara.nl"
+                        },
+                        "ce_resource": [
+                            {
+                                "$": {
+                                    "etf_default": "false",
+                                    "queue": "medium"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "$": {
+                            "endpoint": "creamce.gina.sara.nl:8443/cream-pbs-medium",
+                            "flavour": "CREAM-CE",
+                            "hostname": "creamce.gina.sara.nl"
+                        }
+                    },
+                    {
+                        "$": {
+                            "endpoint": "creamce2.gina.sara.nl:8443/cream-pbs-medium",
+                            "flavour": "CREAM-CE",
+                            "hostname": "creamce2.gina.sara.nl"
+                        }
+                    },
+                    {
+                        "$": {
+                            "endpoint": "creamce3.gina.sara.nl:8443/cream-pbs-medium",
+                            "flavour": "CREAM-CE",
+                            "hostname": "creamce3.gina.sara.nl"
+                        }
+                    }
+                ],
+                "group": [
+                    {
+                        "$": {
+                            "name": "NL_SURFsara",
+                            "type": "All sites"
+                        }
+                    },
+                    {
+                        "$": {
+                            "name": "NL_SURFsara",
+                            "type": "DUNE_Site"
+                        }
+                    },
+                    {
+                        "$": {
+                            "name": "Tier-3",
+                            "type": "DUNE_Tier"
+                        }
+                    },
+                    {
+                        "$": {
+                            "name": "NL_SURFsara",
+                            "type": "Tier3s"
+                        }
+                    }
+                ]
+            },
+            {
+                "$": {
+                    "latitude": "0.0",
+                    "longitude": "0.0",
                     "name": "JINR_CONDOR_CE"
                 },
                 "service": [
@@ -1003,6 +1104,56 @@
                     {
                         "$": {
                             "name": "RU_JINR",
+                            "type": "Tier3s"
+                        }
+                    }
+                ]
+            },
+            {
+                "$": {
+                    "latitude": "41.8084",
+                    "longitude": "-72.2495",
+                    "name": "UConn-HPC"
+                },
+                "service": [
+                    {
+                        "$": {
+                            "endpoint": "osgce.storrs.hpc.uconn.edu:9619",
+                            "flavour": "HTCONDOR-CE",
+                            "hostname": "osgce.storrs.hpc.uconn.edu"
+                        },
+                        "ce_resource": [
+                            {
+                                "$": {
+                                    "etf_default": "false",
+                                    "queue": "default"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "group": [
+                    {
+                        "$": {
+                            "name": "UConn-HPC",
+                            "type": "All sites"
+                        }
+                    },
+                    {
+                        "$": {
+                            "name": "UConn-HPC",
+                            "type": "DUNE_Site"
+                        }
+                    },
+                    {
+                        "$": {
+                            "name": "Tier-3",
+                            "type": "DUNE_Tier"
+                        }
+                    },
+                    {
+                        "$": {
+                            "name": "UConn-HPC",
                             "type": "Tier3s"
                         }
                     }
