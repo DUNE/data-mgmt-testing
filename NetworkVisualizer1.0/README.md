@@ -6,9 +6,17 @@ On linux this would be something like "sudo apt-get install NPM" or "sudo dnf in
 
 **On mac use homebrew, type: "brew install node"**
 
+##Next install the "forever" package for NPM
+
+(from root or with SUDO)
+
+Ex: **sudo npm install forever -g**
+
 ##First step if you haven't run the demo thus far is to run setupEverything.sh
 
 To do first time setup run "sh setupEverything.sh"
+
+*estimated time: ~5 minuets*
 
 ##After that run the included start and stop scripts as follows:
 
@@ -18,6 +26,8 @@ Ex: **sh startEverything.sh**
 
 Then within a minute or so a browser window should launch with the network visualization.
 
+*estimated time: ~8 minuets*
 
+**At this point the software will stay running, even after logout, until stopped with the "stopEverything.sh" script is run or with the command "forever stopall"
 
 To stop: run "sh stopEverything.sh"
