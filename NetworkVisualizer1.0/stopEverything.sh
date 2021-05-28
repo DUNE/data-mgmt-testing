@@ -3,4 +3,4 @@
 forever stopall
 
 fuser -k -n tcp 3000
-fuser -k -n tpc 3001
+fuser -k -n tcp 3001
