@@ -238,8 +238,7 @@ const markers = [
   // { markerOffset: 1, name: "RAL-PP", coordinates: [51.57, -1.31] },
 ];
 
-const baseUrlBackend = "http://fermicloud129.fnal.gov:3001";
-
+const baseUrlBackend = "http://fermicloud129.fnal.gov:3000";
 const geoUrl = "./world-110m.json";
 
 function App() {

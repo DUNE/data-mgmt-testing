@@ -1,8 +1,6 @@
 #!/bin/bash
-cd api
-npm start & echo $! >> ../curPIDs &
-cd ..
-npm start & echo $! >> curPIDs &
+forever --sourceDir "api"  start -c "npm start" ./
+forever start -c "npm start" ./
 echo ""
 echo ""
 echo "Ok a browser window should pop up shortly with the interface"
