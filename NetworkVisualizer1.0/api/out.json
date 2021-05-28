@@ -1,5 +1,27 @@
 { "data" : [
 {
+  "name": "mcc11_snb_singlephase_monoenergetic_marley_clean_-ff048006-037d-46b8-9911-1075416bed23.id_30.25_g4_detsim_reco.root",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "file_size": 763727399.0,
+  "start_time": "2021-05-01 06:28:46",
+  "file_transfer_time": "30.0",
+  "transfer_speed(b/s)": "203660639.73333332",
+  "transfer_speed(MB/s)": "24.278240172068276",
+  "max_usage_percentage": "0.20366063973333332"
+},
+{
+  "name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_14351836_65_20201120T144824Z.root",
+  "source": "FNAL_DCACHE",
+  "destination": "LANCASTER",
+  "file_size": 2068125384.0,
+  "start_time": "2021-05-01 20:47:42",
+  "file_transfer_time": "79.0",
+  "transfer_speed(b/s)": "209430418.63291138",
+  "transfer_speed(MB/s)": "24.966051415552066",
+  "max_usage_percentage": "0.2094304186329114"
+},
+{
   "name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_14362244_20_20201120T225400Z.root",
   "source": "FNAL_DCACHE",
   "destination": "LANCASTER",
@@ -11,6 +33,204 @@
   "max_usage_percentage": "0.16337305089361703"
 },
 {
+  "name": "iceberg_r002153_sr01_20190710T070621_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 158956518.0,
+  "start_time": "2021-05-13 22:19:25",
+  "file_transfer_time": "36.0",
+  "transfer_speed(b/s)": "35323670.666666664",
+  "transfer_speed(MB/s)": "4.2109096844991045",
+  "max_usage_percentage": "0.03532367066666666"
+},
+{
+  "name": "iceberg_r002133_sr01_20190710T043829_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168521625.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "24.0",
+  "transfer_speed(b/s)": "56173875.0",
+  "transfer_speed(MB/s)": "6.696447730064392",
+  "max_usage_percentage": "0.056173875000000005"
+},
+{
+  "name": "iceberg_r002119_sr01_20190710T025512_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 148849284.0,
+  "start_time": "2021-05-13 22:19:15",
+  "file_transfer_time": "52.0",
+  "transfer_speed(b/s)": "22899889.846153848",
+  "transfer_speed(MB/s)": "2.7298795993511495",
+  "max_usage_percentage": "0.022899889846153848"
+},
+{
+  "name": "iceberg_r002150_sr01_20190710T064409_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 158273867.0,
+  "start_time": "2021-05-13 22:19:11",
+  "file_transfer_time": "19.0",
+  "transfer_speed(b/s)": "66641628.21052632",
+  "transfer_speed(MB/s)": "7.944301153484144",
+  "max_usage_percentage": "0.06664162821052631"
+},
+{
+  "name": "iceberg_r002197_sr01_20190710T123127_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 158956277.0,
+  "start_time": "2021-05-13 22:19:10",
+  "file_transfer_time": "14.0",
+  "transfer_speed(b/s)": "90832158.28571428",
+  "transfer_speed(MB/s)": "10.828037057604108",
+  "max_usage_percentage": "0.09083215828571428"
+},
+{
+  "name": "iceberg_r002219_sr01_20190710T151243_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170422272.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "24.0",
+  "transfer_speed(b/s)": "56807424.0",
+  "transfer_speed(MB/s)": "6.77197265625",
+  "max_usage_percentage": "0.056807424"
+},
+{
+  "name": "iceberg_r002152_sr01_20190710T065857_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168556911.0,
+  "start_time": "2021-05-13 22:19:11",
+  "file_transfer_time": "13.0",
+  "transfer_speed(b/s)": "103727329.84615384",
+  "transfer_speed(MB/s)": "12.365261297959547",
+  "max_usage_percentage": "0.10372732984615385"
+},
+{
+  "name": "iceberg_r002041_sr01_20190709T115741_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168816480.0,
+  "start_time": "2021-05-13 22:19:33",
+  "file_transfer_time": "23.0",
+  "transfer_speed(b/s)": "58718775.652173914",
+  "transfer_speed(MB/s)": "6.999823528787364",
+  "max_usage_percentage": "0.05871877565217391"
+},
+{
+  "name": "iceberg_r002045_sr01_20190709T122717_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 180489407.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "19.0",
+  "transfer_speed(b/s)": "75995539.78947368",
+  "transfer_speed(MB/s)": "9.059374307331286",
+  "max_usage_percentage": "0.07599553978947368"
+},
+{
+  "name": "iceberg_r002261_sr01_20190710T202343_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 181164572.0,
+  "start_time": "2021-05-13 22:19:16",
+  "file_transfer_time": "54.0",
+  "transfer_speed(b/s)": "26839195.85185185",
+  "transfer_speed(MB/s)": "3.1994814696135343",
+  "max_usage_percentage": "0.02683919585185185"
+},
+{
+  "name": "iceberg_r002004_sr01_20190709T072407_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168356575.0,
+  "start_time": "2021-05-13 22:19:15",
+  "file_transfer_time": "55.0",
+  "transfer_speed(b/s)": "24488229.09090909",
+  "transfer_speed(MB/s)": "2.9192243922840464",
+  "max_usage_percentage": "0.02448822909090909"
+},
+{
+  "name": "iceberg_r002101_sr01_20190710T010020_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 164181575.0,
+  "start_time": "2021-05-13 22:19:21",
+  "file_transfer_time": "41.0",
+  "transfer_speed(b/s)": "32035429.268292684",
+  "transfer_speed(MB/s)": "3.818920763527475",
+  "max_usage_percentage": "0.032035429268292684"
+},
+{
+  "name": "iceberg_r002179_sr01_20190710T101832_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170035392.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "28.0",
+  "transfer_speed(b/s)": "48581540.571428575",
+  "transfer_speed(MB/s)": "5.791370936802456",
+  "max_usage_percentage": "0.04858154057142858"
+},
+{
+  "name": "iceberg_r002203_sr01_20190710T131513_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 137810621.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "24.0",
+  "transfer_speed(b/s)": "45936873.666666664",
+  "transfer_speed(MB/s)": "5.476102073987325",
+  "max_usage_percentage": "0.04593687366666666"
+},
+{
+  "name": "iceberg_r002169_sr01_20190710T090445_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168362308.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "30.0",
+  "transfer_speed(b/s)": "44896615.46666667",
+  "transfer_speed(MB/s)": "5.352093633015951",
+  "max_usage_percentage": "0.04489661546666667"
+},
+{
+  "name": "iceberg_r002016_sr01_20190709T085252_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168044606.0,
+  "start_time": "2021-05-13 22:19:10",
+  "file_transfer_time": "19.0",
+  "transfer_speed(b/s)": "70755623.57894737",
+  "transfer_speed(MB/s)": "8.434727618568822",
+  "max_usage_percentage": "0.07075562357894737"
+},
+{
+  "name": "iceberg_r002018_sr01_20190709T090736_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168576750.0,
+  "start_time": "2021-05-13 22:19:10",
+  "file_transfer_time": "20.0",
+  "transfer_speed(b/s)": "67430700.0",
+  "transfer_speed(MB/s)": "8.038365840911865",
+  "max_usage_percentage": "0.0674307"
+},
+{
+  "name": "iceberg_r002074_sr01_20190709T160135_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 159446521.0,
+  "start_time": "2021-05-13 22:19:15",
+  "file_transfer_time": "30.0",
+  "transfer_speed(b/s)": "42519072.266666666",
+  "transfer_speed(MB/s)": "5.068668397267659",
+  "max_usage_percentage": "0.042519072266666666"
+},
+{
   "name": "iceberg_r002068_sr01_20190709T151714_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
@@ -20,6 +240,28 @@
   "transfer_speed(b/s)": "85324328.0",
   "transfer_speed(MB/s)": "10.171452522277832",
   "max_usage_percentage": "0.085324328"
+},
+{
+  "name": "iceberg_r002071_sr01_20190709T153921_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170752061.0,
+  "start_time": "2021-05-13 22:19:11",
+  "file_transfer_time": "22.0",
+  "transfer_speed(b/s)": "62091658.54545455",
+  "transfer_speed(MB/s)": "7.401902502233332",
+  "max_usage_percentage": "0.062091658545454544"
+},
+{
+  "name": "iceberg_r002117_sr01_20190710T024024_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 180546803.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "21.0",
+  "transfer_speed(b/s)": "68779734.47619048",
+  "transfer_speed(MB/s)": "8.199183282398042",
+  "max_usage_percentage": "0.06877973447619047"
 },
 {
   "name": "iceberg_r002029_sr01_20190709T102856_1_dl1.root",
@@ -55,169 +297,26 @@
   "max_usage_percentage": "0.032557573128205126"
 },
 {
-  "name": "iceberg_r002049_sr01_20190709T125703_1_dl1.root",
+  "name": "iceberg_r002266_sr01_20190710T205855_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 149102191.0,
+  "file_size": 173390633.0,
   "start_time": "2021-05-13 22:19:11",
-  "file_transfer_time": "13.0",
-  "transfer_speed(b/s)": "91755194.46153846",
-  "transfer_speed(MB/s)": "10.938071544353779",
-  "max_usage_percentage": "0.09175519446153847"
-},
-{
-  "name": "iceberg_r002074_sr01_20190709T160135_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 159446521.0,
-  "start_time": "2021-05-13 22:19:15",
-  "file_transfer_time": "30.0",
-  "transfer_speed(b/s)": "42519072.266666666",
-  "transfer_speed(MB/s)": "5.068668397267659",
-  "max_usage_percentage": "0.042519072266666666"
-},
-{
-  "name": "iceberg_r002267_sr01_20190710T210119_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168936115.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "23.0",
-  "transfer_speed(b/s)": "58760387.82608695",
-  "transfer_speed(MB/s)": "7.004784086476201",
-  "max_usage_percentage": "0.05876038782608695"
-},
-{
-  "name": "iceberg_r002071_sr01_20190709T153921_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170752061.0,
-  "start_time": "2021-05-13 22:19:11",
-  "file_transfer_time": "22.0",
-  "transfer_speed(b/s)": "62091658.54545455",
-  "transfer_speed(MB/s)": "7.401902502233332",
-  "max_usage_percentage": "0.062091658545454544"
-},
-{
-  "name": "iceberg_r002117_sr01_20190710T024024_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 180546803.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "21.0",
-  "transfer_speed(b/s)": "68779734.47619048",
-  "transfer_speed(MB/s)": "8.199183282398042",
-  "max_usage_percentage": "0.06877973447619047"
-},
-{
-  "name": "iceberg_r002016_sr01_20190709T085252_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168044606.0,
-  "start_time": "2021-05-13 22:19:10",
-  "file_transfer_time": "19.0",
-  "transfer_speed(b/s)": "70755623.57894737",
-  "transfer_speed(MB/s)": "8.434727618568822",
-  "max_usage_percentage": "0.07075562357894737"
-},
-{
-  "name": "iceberg_r002053_sr01_20190709T132642_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170411972.0,
-  "start_time": "2021-05-13 22:19:09",
-  "file_transfer_time": "12.0",
-  "transfer_speed(b/s)": "113607981.33333333",
-  "transfer_speed(MB/s)": "13.543126742045084",
-  "max_usage_percentage": "0.11360798133333333"
-},
-{
-  "name": "iceberg_r002133_sr01_20190710T043829_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168521625.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "24.0",
-  "transfer_speed(b/s)": "56173875.0",
-  "transfer_speed(MB/s)": "6.696447730064392",
-  "max_usage_percentage": "0.056173875000000005"
-},
-{
-  "name": "iceberg_r002066_sr01_20190709T150229_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170612026.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "27.0",
-  "transfer_speed(b/s)": "50551711.40740741",
-  "transfer_speed(MB/s)": "6.0262336024531615",
-  "max_usage_percentage": "0.05055171140740741"
-},
-{
-  "name": "iceberg_r002197_sr01_20190710T123127_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 158956277.0,
-  "start_time": "2021-05-13 22:19:10",
-  "file_transfer_time": "14.0",
-  "transfer_speed(b/s)": "90832158.28571428",
-  "transfer_speed(MB/s)": "10.828037057604108",
-  "max_usage_percentage": "0.09083215828571428"
-},
-{
-  "name": "iceberg_r002140_sr01_20190710T053033_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 160195929.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "21.0",
-  "transfer_speed(b/s)": "61027020.571428575",
-  "transfer_speed(MB/s)": "7.274987765720913",
-  "max_usage_percentage": "0.06102702057142858"
-},
-{
-  "name": "iceberg_r002050_sr01_20190709T130430_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 149038101.0,
-  "start_time": "2021-05-13 22:19:10",
-  "file_transfer_time": "10.0",
-  "transfer_speed(b/s)": "119230480.8",
-  "transfer_speed(MB/s)": "14.213380908966064",
-  "max_usage_percentage": "0.1192304808"
-},
-{
-  "name": "iceberg_r002153_sr01_20190710T070621_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 158956518.0,
-  "start_time": "2021-05-13 22:19:25",
-  "file_transfer_time": "36.0",
-  "transfer_speed(b/s)": "35323670.666666664",
-  "transfer_speed(MB/s)": "4.2109096844991045",
-  "max_usage_percentage": "0.03532367066666666"
-},
-{
-  "name": "iceberg_r002236_sr01_20190710T171839_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 8851358.0,
-  "start_time": "2021-05-13 22:19:12",
   "file_transfer_time": "15.0",
-  "transfer_speed(b/s)": "4720724.266666667",
-  "transfer_speed(MB/s)": "0.5627541859944661",
-  "max_usage_percentage": "0.004720724266666667"
+  "transfer_speed(b/s)": "92475004.26666667",
+  "transfer_speed(MB/s)": "11.023879559834798",
+  "max_usage_percentage": "0.09247500426666666"
 },
 {
-  "name": "iceberg_r002136_sr01_20190710T050037_1_dl1.root",
+  "name": "iceberg_r002006_sr01_20190709T073858_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 179427528.0,
-  "start_time": "2021-05-13 22:19:18",
-  "file_transfer_time": "45.0",
-  "transfer_speed(b/s)": "31898227.2",
-  "transfer_speed(MB/s)": "3.802565002441406",
-  "max_usage_percentage": "0.0318982272"
+  "file_size": 110978487.0,
+  "start_time": "2021-05-13 22:19:15",
+  "file_transfer_time": "55.0",
+  "transfer_speed(b/s)": "16142325.38181818",
+  "transfer_speed(MB/s)": "1.924315140464089",
+  "max_usage_percentage": "0.01614232538181818"
 },
 {
   "name": "iceberg_r002173_sr01_20190710T093417_1_dl1.root",
@@ -231,136 +330,37 @@
   "max_usage_percentage": "0.039722787764705884"
 },
 {
-  "name": "iceberg_r002242_sr01_20190710T180306_1_dl1.root",
+  "name": "iceberg_r002028_sr01_20190709T102131_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 158725979.0,
-  "start_time": "2021-05-13 22:19:23",
-  "file_transfer_time": "29.0",
-  "transfer_speed(b/s)": "43786476.96551724",
-  "transfer_speed(MB/s)": "5.219754810990958",
-  "max_usage_percentage": "0.04378647696551724"
-},
-{
-  "name": "iceberg_r002127_sr01_20190710T035417_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 148580023.0,
+  "file_size": 170200544.0,
   "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "24.0",
-  "transfer_speed(b/s)": "49526674.333333336",
-  "transfer_speed(MB/s)": "5.90403966108958",
-  "max_usage_percentage": "0.04952667433333333"
-},
-{
-  "name": "iceberg_r002126_sr01_20190710T034656_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169325099.0,
-  "start_time": "2021-05-13 22:19:16",
-  "file_transfer_time": "55.0",
-  "transfer_speed(b/s)": "24629105.30909091",
-  "transfer_speed(MB/s)": "2.936018146168102",
-  "max_usage_percentage": "0.02462910530909091"
-},
-{
-  "name": "iceberg_r002165_sr01_20190710T083508_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170637597.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "20.0",
-  "transfer_speed(b/s)": "68255038.8",
-  "transfer_speed(MB/s)": "8.136634683609008",
-  "max_usage_percentage": "0.0682550388"
-},
-{
-  "name": "iceberg_r002032_sr01_20190709T105107_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169879667.0,
-  "start_time": "2021-05-13 22:19:21",
-  "file_transfer_time": "41.0",
-  "transfer_speed(b/s)": "33147252.097560976",
-  "transfer_speed(MB/s)": "3.9514603731108875",
-  "max_usage_percentage": "0.033147252097560975"
-},
-{
-  "name": "iceberg_r002088_sr01_20190709T174440_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 148968032.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "41.0",
-  "transfer_speed(b/s)": "29066933.073170733",
-  "transfer_speed(MB/s)": "3.4650484410727898",
-  "max_usage_percentage": "0.029066933073170733"
-},
-{
-  "name": "iceberg_r002230_sr01_20190710T163413_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 178807398.0,
-  "start_time": "2021-05-13 22:19:18",
-  "file_transfer_time": "40.0",
-  "transfer_speed(b/s)": "35761479.6",
-  "transfer_speed(MB/s)": "4.263100576400757",
-  "max_usage_percentage": "0.03576147960000001"
-},
-{
-  "name": "iceberg_r002077_sr01_20190709T162335_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168392695.0,
-  "start_time": "2021-05-13 22:19:09",
   "file_transfer_time": "31.0",
-  "transfer_speed(b/s)": "43456179.35483871",
-  "transfer_speed(MB/s)": "5.18038026748165",
-  "max_usage_percentage": "0.043456179354838705"
+  "transfer_speed(b/s)": "43922721.03225806",
+  "transfer_speed(MB/s)": "5.235996369392641",
+  "max_usage_percentage": "0.04392272103225806"
 },
 {
-  "name": "iceberg_r002214_sr01_20190710T143618_1_dl1.root",
+  "name": "iceberg_r002274_sr01_20190710T211810_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168860706.0,
-  "start_time": "2021-05-13 22:19:23",
-  "file_transfer_time": "32.0",
-  "transfer_speed(b/s)": "42215176.5",
-  "transfer_speed(MB/s)": "5.032441198825836",
-  "max_usage_percentage": "0.0422151765"
+  "file_size": 158566615.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "33.0",
+  "transfer_speed(b/s)": "38440391.515151516",
+  "transfer_speed(MB/s)": "4.582451762575092",
+  "max_usage_percentage": "0.038440391515151516"
 },
 {
-  "name": "iceberg_r002097_sr01_20190710T003215_1_dl1.root",
+  "name": "iceberg_r002053_sr01_20190709T132642_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 159448477.0,
-  "start_time": "2021-05-13 22:19:10",
-  "file_transfer_time": "10.0",
-  "transfer_speed(b/s)": "127558781.6",
-  "transfer_speed(MB/s)": "15.206191730499267",
-  "max_usage_percentage": "0.12755878159999998"
-},
-{
-  "name": "iceberg_r002112_sr01_20190710T020328_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 158372816.0,
-  "start_time": "2021-05-13 22:19:15",
-  "file_transfer_time": "35.0",
-  "transfer_speed(b/s)": "36199500.8",
-  "transfer_speed(MB/s)": "4.315316772460937",
-  "max_usage_percentage": "0.0361995008"
-},
-{
-  "name": "iceberg_r002012_sr01_20190709T082318_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170237950.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "21.0",
-  "transfer_speed(b/s)": "64852552.38095238",
-  "transfer_speed(MB/s)": "7.73102669488816",
-  "max_usage_percentage": "0.06485255238095237"
+  "file_size": 170411972.0,
+  "start_time": "2021-05-13 22:19:09",
+  "file_transfer_time": "12.0",
+  "transfer_speed(b/s)": "113607981.33333333",
+  "transfer_speed(MB/s)": "13.543126742045084",
+  "max_usage_percentage": "0.11360798133333333"
 },
 {
   "name": "iceberg_r002027_sr01_20190709T101407_1_dl1.root",
@@ -374,94 +374,6 @@
   "max_usage_percentage": "0.03458103371428571"
 },
 {
-  "name": "iceberg_r002231_sr01_20190710T164137_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 157972925.0,
-  "start_time": "2021-05-13 22:19:10",
-  "file_transfer_time": "11.0",
-  "transfer_speed(b/s)": "114889400.0",
-  "transfer_speed(MB/s)": "13.695883750915527",
-  "max_usage_percentage": "0.11488939999999999"
-},
-{
-  "name": "iceberg_r002182_sr01_20190710T104039_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170521637.0,
-  "start_time": "2021-05-13 22:19:10",
-  "file_transfer_time": "10.0",
-  "transfer_speed(b/s)": "136417309.6",
-  "transfer_speed(MB/s)": "16.26221055984497",
-  "max_usage_percentage": "0.1364173096"
-},
-{
-  "name": "iceberg_r002152_sr01_20190710T065857_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168556911.0,
-  "start_time": "2021-05-13 22:19:11",
-  "file_transfer_time": "13.0",
-  "transfer_speed(b/s)": "103727329.84615384",
-  "transfer_speed(MB/s)": "12.365261297959547",
-  "max_usage_percentage": "0.10372732984615385"
-},
-{
-  "name": "iceberg_r002206_sr01_20190710T133715_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170283616.0,
-  "start_time": "2021-05-13 22:19:29",
-  "file_transfer_time": "35.0",
-  "transfer_speed(b/s)": "38921969.37142857",
-  "transfer_speed(MB/s)": "4.639860316685268",
-  "max_usage_percentage": "0.03892196937142857"
-},
-{
-  "name": "iceberg_r002045_sr01_20190709T122717_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 180489407.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "19.0",
-  "transfer_speed(b/s)": "75995539.78947368",
-  "transfer_speed(MB/s)": "9.059374307331286",
-  "max_usage_percentage": "0.07599553978947368"
-},
-{
-  "name": "iceberg_r002018_sr01_20190709T090736_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168576750.0,
-  "start_time": "2021-05-13 22:19:10",
-  "file_transfer_time": "20.0",
-  "transfer_speed(b/s)": "67430700.0",
-  "transfer_speed(MB/s)": "8.038365840911865",
-  "max_usage_percentage": "0.0674307"
-},
-{
-  "name": "iceberg_r002203_sr01_20190710T131513_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 137810621.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "24.0",
-  "transfer_speed(b/s)": "45936873.666666664",
-  "transfer_speed(MB/s)": "5.476102073987325",
-  "max_usage_percentage": "0.04593687366666666"
-},
-{
-  "name": "iceberg_r002239_sr01_20190710T174056_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169627435.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "17.0",
-  "transfer_speed(b/s)": "79824675.29411764",
-  "transfer_speed(MB/s)": "9.515842830433565",
-  "max_usage_percentage": "0.07982467529411764"
-},
-{
   "name": "iceberg_r002091_sr01_20190709T180646_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
@@ -473,59 +385,15 @@
   "max_usage_percentage": "0.02939438229787234"
 },
 {
-  "name": "iceberg_r002266_sr01_20190710T205855_1_dl1.root",
+  "name": "iceberg_r002250_sr01_20190710T190225_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 173390633.0,
-  "start_time": "2021-05-13 22:19:11",
-  "file_transfer_time": "15.0",
-  "transfer_speed(b/s)": "92475004.26666667",
-  "transfer_speed(MB/s)": "11.023879559834798",
-  "max_usage_percentage": "0.09247500426666666"
-},
-{
-  "name": "iceberg_r002175_sr01_20190710T094902_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 146813973.0,
-  "start_time": "2021-05-13 22:19:15",
-  "file_transfer_time": "32.0",
-  "transfer_speed(b/s)": "36703493.25",
-  "transfer_speed(MB/s)": "4.375397354364395",
-  "max_usage_percentage": "0.03670349325"
-},
-{
-  "name": "iceberg_r002261_sr01_20190710T202343_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 181164572.0,
-  "start_time": "2021-05-13 22:19:16",
-  "file_transfer_time": "54.0",
-  "transfer_speed(b/s)": "26839195.85185185",
-  "transfer_speed(MB/s)": "3.1994814696135343",
-  "max_usage_percentage": "0.02683919585185185"
-},
-{
-  "name": "iceberg_r002179_sr01_20190710T101832_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170035392.0,
+  "file_size": 154032285.0,
   "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "28.0",
-  "transfer_speed(b/s)": "48581540.571428575",
-  "transfer_speed(MB/s)": "5.791370936802456",
-  "max_usage_percentage": "0.04858154057142858"
-},
-{
-  "name": "iceberg_r002004_sr01_20190709T072407_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168356575.0,
-  "start_time": "2021-05-13 22:19:15",
-  "file_transfer_time": "55.0",
-  "transfer_speed(b/s)": "24488229.09090909",
-  "transfer_speed(MB/s)": "2.9192243922840464",
-  "max_usage_percentage": "0.02448822909090909"
+  "file_transfer_time": "24.0",
+  "transfer_speed(b/s)": "51344095.0",
+  "transfer_speed(MB/s)": "6.12069308757782",
+  "max_usage_percentage": "0.051344095"
 },
 {
   "name": "iceberg_r002222_sr01_20190710T153451_1_dl1.root",
@@ -550,279 +418,59 @@
   "max_usage_percentage": "0.0579594688"
 },
 {
-  "name": "iceberg_r002101_sr01_20190710T010020_1_dl1.root",
+  "name": "iceberg_r002231_sr01_20190710T164137_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 164181575.0,
-  "start_time": "2021-05-13 22:19:21",
-  "file_transfer_time": "41.0",
-  "transfer_speed(b/s)": "32035429.268292684",
-  "transfer_speed(MB/s)": "3.818920763527475",
-  "max_usage_percentage": "0.032035429268292684"
-},
-{
-  "name": "iceberg_r002169_sr01_20190710T090445_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168362308.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "30.0",
-  "transfer_speed(b/s)": "44896615.46666667",
-  "transfer_speed(MB/s)": "5.352093633015951",
-  "max_usage_percentage": "0.04489661546666667"
-},
-{
-  "name": "iceberg_r002041_sr01_20190709T115741_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168816480.0,
-  "start_time": "2021-05-13 22:19:33",
-  "file_transfer_time": "23.0",
-  "transfer_speed(b/s)": "58718775.652173914",
-  "transfer_speed(MB/s)": "6.999823528787364",
-  "max_usage_percentage": "0.05871877565217391"
-},
-{
-  "name": "iceberg_r002102_sr01_20190710T010243_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 148753982.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "25.0",
-  "transfer_speed(b/s)": "47601274.24",
-  "transfer_speed(MB/s)": "5.674514083862305",
-  "max_usage_percentage": "0.047601274240000005"
-},
-{
-  "name": "iceberg_r002245_sr01_20190710T182514_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170330319.0,
-  "start_time": "2021-05-13 22:19:11",
-  "file_transfer_time": "16.0",
-  "transfer_speed(b/s)": "85165159.5",
-  "transfer_speed(MB/s)": "10.152478158473969",
-  "max_usage_percentage": "0.0851651595"
-},
-{
-  "name": "iceberg_r002249_sr01_20190710T185504_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 158056520.0,
-  "start_time": "2021-05-13 22:19:11",
-  "file_transfer_time": "14.0",
-  "transfer_speed(b/s)": "90318011.42857143",
-  "transfer_speed(MB/s)": "10.766745976039342",
-  "max_usage_percentage": "0.09031801142857143"
-},
-{
-  "name": "iceberg_r002051_sr01_20190709T131153_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 43032381.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "21.0",
-  "transfer_speed(b/s)": "16393288.0",
-  "transfer_speed(MB/s)": "1.9542322158813477",
-  "max_usage_percentage": "0.016393288"
-},
-{
-  "name": "iceberg_r002006_sr01_20190709T073858_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 110978487.0,
-  "start_time": "2021-05-13 22:19:15",
-  "file_transfer_time": "55.0",
-  "transfer_speed(b/s)": "16142325.38181818",
-  "transfer_speed(MB/s)": "1.924315140464089",
-  "max_usage_percentage": "0.01614232538181818"
-},
-{
-  "name": "iceberg_r002274_sr01_20190710T211810_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 158566615.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "33.0",
-  "transfer_speed(b/s)": "38440391.515151516",
-  "transfer_speed(MB/s)": "4.582451762575092",
-  "max_usage_percentage": "0.038440391515151516"
-},
-{
-  "name": "iceberg_r002119_sr01_20190710T025512_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 148849284.0,
-  "start_time": "2021-05-13 22:19:15",
-  "file_transfer_time": "52.0",
-  "transfer_speed(b/s)": "22899889.846153848",
-  "transfer_speed(MB/s)": "2.7298795993511495",
-  "max_usage_percentage": "0.022899889846153848"
-},
-{
-  "name": "iceberg_r002001_sr01_20190709T070150_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168744519.0,
-  "start_time": "2021-05-13 22:19:16",
-  "file_transfer_time": "42.0",
-  "transfer_speed(b/s)": "32141813.14285714",
-  "transfer_speed(MB/s)": "3.8316027096339633",
-  "max_usage_percentage": "0.03214181314285714"
-},
-{
-  "name": "iceberg_r002202_sr01_20190710T130751_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170312364.0,
-  "start_time": "2021-05-13 22:19:14",
-  "file_transfer_time": "34.0",
-  "transfer_speed(b/s)": "40073497.4117647",
-  "transfer_speed(MB/s)": "4.777133156271542",
-  "max_usage_percentage": "0.040073497411764705"
-},
-{
-  "name": "iceberg_r002121_sr01_20190710T031000_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 181048172.0,
-  "start_time": "2021-05-13 22:19:21",
-  "file_transfer_time": "36.0",
-  "transfer_speed(b/s)": "40232927.11111111",
-  "transfer_speed(MB/s)": "4.7961386574639215",
-  "max_usage_percentage": "0.040232927111111115"
-},
-{
-  "name": "iceberg_r002137_sr01_20190710T050801_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169540275.0,
+  "file_size": 157972925.0,
   "start_time": "2021-05-13 22:19:10",
-  "file_transfer_time": "14.0",
-  "transfer_speed(b/s)": "96880157.14285715",
-  "transfer_speed(MB/s)": "11.549014704568046",
-  "max_usage_percentage": "0.09688015714285715"
+  "file_transfer_time": "11.0",
+  "transfer_speed(b/s)": "114889400.0",
+  "transfer_speed(MB/s)": "13.695883750915527",
+  "max_usage_percentage": "0.11488939999999999"
 },
 {
-  "name": "iceberg_r002106_sr01_20190710T011224_1_dl1.root",
+  "name": "iceberg_r002182_sr01_20190710T104039_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169792726.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "17.0",
-  "transfer_speed(b/s)": "79902459.29411764",
-  "transfer_speed(MB/s)": "9.525115405811983",
-  "max_usage_percentage": "0.07990245929411764"
+  "file_size": 170521637.0,
+  "start_time": "2021-05-13 22:19:10",
+  "file_transfer_time": "10.0",
+  "transfer_speed(b/s)": "136417309.6",
+  "transfer_speed(MB/s)": "16.26221055984497",
+  "max_usage_percentage": "0.1364173096"
 },
 {
-  "name": "iceberg_r002263_sr01_20190710T203832_1_dl1.root",
+  "name": "iceberg_r002175_sr01_20190710T094902_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 181266438.0,
-  "start_time": "2021-05-13 22:19:23",
-  "file_transfer_time": "40.0",
-  "transfer_speed(b/s)": "36253287.6",
-  "transfer_speed(MB/s)": "4.321728658676148",
-  "max_usage_percentage": "0.0362532876"
+  "file_size": 146813973.0,
+  "start_time": "2021-05-13 22:19:15",
+  "file_transfer_time": "32.0",
+  "transfer_speed(b/s)": "36703493.25",
+  "transfer_speed(MB/s)": "4.375397354364395",
+  "max_usage_percentage": "0.03670349325"
 },
 {
-  "name": "iceberg_r002086_sr01_20190709T172952_1_dl1.root",
+  "name": "iceberg_r002097_sr01_20190710T003215_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170534498.0,
-  "start_time": "2021-05-13 22:19:25",
-  "file_transfer_time": "53.0",
-  "transfer_speed(b/s)": "25741056.301886793",
-  "transfer_speed(MB/s)": "3.068573034034585",
-  "max_usage_percentage": "0.02574105630188679"
+  "file_size": 159448477.0,
+  "start_time": "2021-05-13 22:19:10",
+  "file_transfer_time": "10.0",
+  "transfer_speed(b/s)": "127558781.6",
+  "transfer_speed(MB/s)": "15.206191730499267",
+  "max_usage_percentage": "0.12755878159999998"
 },
 {
-  "name": "iceberg_r002095_sr01_20190710T002733_1_dl1.root",
+  "name": "iceberg_r002112_sr01_20190710T020328_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 164150978.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "33.0",
-  "transfer_speed(b/s)": "39794176.484848484",
-  "transfer_speed(MB/s)": "4.743835507017193",
-  "max_usage_percentage": "0.03979417648484849"
-},
-{
-  "name": "iceberg_r002146_sr01_20190710T061438_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170434010.0,
-  "start_time": "2021-05-13 22:19:25",
-  "file_transfer_time": "37.0",
-  "transfer_speed(b/s)": "36850596.75675676",
-  "transfer_speed(MB/s)": "4.392933458895297",
-  "max_usage_percentage": "0.03685059675675676"
-},
-{
-  "name": "iceberg_r002150_sr01_20190710T064409_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 158273867.0,
-  "start_time": "2021-05-13 22:19:11",
-  "file_transfer_time": "19.0",
-  "transfer_speed(b/s)": "66641628.21052632",
-  "transfer_speed(MB/s)": "7.944301153484144",
-  "max_usage_percentage": "0.06664162821052631"
-},
-{
-  "name": "iceberg_r002250_sr01_20190710T190225_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 154032285.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "24.0",
-  "transfer_speed(b/s)": "51344095.0",
-  "transfer_speed(MB/s)": "6.12069308757782",
-  "max_usage_percentage": "0.051344095"
-},
-{
-  "name": "iceberg_r002219_sr01_20190710T151243_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170422272.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "24.0",
-  "transfer_speed(b/s)": "56807424.0",
-  "transfer_speed(MB/s)": "6.77197265625",
-  "max_usage_percentage": "0.056807424"
-},
-{
-  "name": "iceberg_r002110_sr01_20190710T014842_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168514517.0,
-  "start_time": "2021-05-13 22:19:35",
-  "file_transfer_time": "20.0",
-  "transfer_speed(b/s)": "67405806.8",
-  "transfer_speed(MB/s)": "8.03539834022522",
-  "max_usage_percentage": "0.0674058068"
-},
-{
-  "name": "iceberg_r002083_sr01_20190709T170746_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 157816641.0,
-  "start_time": "2021-05-13 22:19:13",
-  "file_transfer_time": "21.0",
-  "transfer_speed(b/s)": "60120625.14285714",
-  "transfer_speed(MB/s)": "7.166937010628836",
-  "max_usage_percentage": "0.06012062514285714"
-},
-{
-  "name": "iceberg_r002118_sr01_20190710T024750_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170414824.0,
-  "start_time": "2021-05-13 22:19:18",
-  "file_transfer_time": "34.0",
-  "transfer_speed(b/s)": "40097605.64705882",
-  "transfer_speed(MB/s)": "4.7800070818732765",
-  "max_usage_percentage": "0.040097605647058825"
+  "file_size": 158372816.0,
+  "start_time": "2021-05-13 22:19:15",
+  "file_transfer_time": "35.0",
+  "transfer_speed(b/s)": "36199500.8",
+  "transfer_speed(MB/s)": "4.315316772460937",
+  "max_usage_percentage": "0.0361995008"
 },
 {
   "name": "iceberg_r002063_sr01_20190709T144023_1_dl1.root",
@@ -836,6 +484,358 @@
   "max_usage_percentage": "0.0788859648"
 },
 {
+  "name": "iceberg_r002148_sr01_20190710T062920_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168915708.0,
+  "start_time": "2021-05-13 22:19:35",
+  "file_transfer_time": "17.0",
+  "transfer_speed(b/s)": "79489744.94117647",
+  "transfer_speed(MB/s)": "9.475916021010455",
+  "max_usage_percentage": "0.07948974494117647"
+},
+{
+  "name": "iceberg_r002137_sr01_20190710T050801_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 169540275.0,
+  "start_time": "2021-05-13 22:19:10",
+  "file_transfer_time": "14.0",
+  "transfer_speed(b/s)": "96880157.14285715",
+  "transfer_speed(MB/s)": "11.549014704568046",
+  "max_usage_percentage": "0.09688015714285715"
+},
+{
+  "name": "iceberg_r002202_sr01_20190710T130751_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170312364.0,
+  "start_time": "2021-05-13 22:19:14",
+  "file_transfer_time": "34.0",
+  "transfer_speed(b/s)": "40073497.4117647",
+  "transfer_speed(MB/s)": "4.777133156271542",
+  "max_usage_percentage": "0.040073497411764705"
+},
+{
+  "name": "iceberg_r002146_sr01_20190710T061438_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170434010.0,
+  "start_time": "2021-05-13 22:19:25",
+  "file_transfer_time": "37.0",
+  "transfer_speed(b/s)": "36850596.75675676",
+  "transfer_speed(MB/s)": "4.392933458895297",
+  "max_usage_percentage": "0.03685059675675676"
+},
+{
+  "name": "iceberg_r002164_sr01_20190710T082747_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 169825705.0,
+  "start_time": "2021-05-13 22:19:33",
+  "file_transfer_time": "37.0",
+  "transfer_speed(b/s)": "36719071.35135135",
+  "transfer_speed(MB/s)": "4.37725440875904",
+  "max_usage_percentage": "0.03671907135135135"
+},
+{
+  "name": "iceberg_r002083_sr01_20190709T170746_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 157816641.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "21.0",
+  "transfer_speed(b/s)": "60120625.14285714",
+  "transfer_speed(MB/s)": "7.166937010628836",
+  "max_usage_percentage": "0.06012062514285714"
+},
+{
+  "name": "iceberg_r002077_sr01_20190709T162335_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168392695.0,
+  "start_time": "2021-05-13 22:19:09",
+  "file_transfer_time": "31.0",
+  "transfer_speed(b/s)": "43456179.35483871",
+  "transfer_speed(MB/s)": "5.18038026748165",
+  "max_usage_percentage": "0.043456179354838705"
+},
+{
+  "name": "iceberg_r002214_sr01_20190710T143618_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168860706.0,
+  "start_time": "2021-05-13 22:19:23",
+  "file_transfer_time": "32.0",
+  "transfer_speed(b/s)": "42215176.5",
+  "transfer_speed(MB/s)": "5.032441198825836",
+  "max_usage_percentage": "0.0422151765"
+},
+{
+  "name": "iceberg_r002110_sr01_20190710T014842_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168514517.0,
+  "start_time": "2021-05-13 22:19:35",
+  "file_transfer_time": "20.0",
+  "transfer_speed(b/s)": "67405806.8",
+  "transfer_speed(MB/s)": "8.03539834022522",
+  "max_usage_percentage": "0.0674058068"
+},
+{
+  "name": "iceberg_r002127_sr01_20190710T035417_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 148580023.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "24.0",
+  "transfer_speed(b/s)": "49526674.333333336",
+  "transfer_speed(MB/s)": "5.90403966108958",
+  "max_usage_percentage": "0.04952667433333333"
+},
+{
+  "name": "iceberg_r002149_sr01_20190710T063645_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168706531.0,
+  "start_time": "2021-05-13 22:19:10",
+  "file_transfer_time": "12.0",
+  "transfer_speed(b/s)": "112471020.66666667",
+  "transfer_speed(MB/s)": "13.40759046872457",
+  "max_usage_percentage": "0.11247102066666667"
+},
+{
+  "name": "iceberg_r002092_sr01_20190709T181410_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 171002002.0,
+  "start_time": "2021-05-13 22:19:16",
+  "file_transfer_time": "54.0",
+  "transfer_speed(b/s)": "25333629.925925925",
+  "transfer_speed(MB/s)": "3.0200040252120406",
+  "max_usage_percentage": "0.025333629925925926"
+},
+{
+  "name": "iceberg_r002049_sr01_20190709T125703_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 149102191.0,
+  "start_time": "2021-05-13 22:19:11",
+  "file_transfer_time": "13.0",
+  "transfer_speed(b/s)": "91755194.46153846",
+  "transfer_speed(MB/s)": "10.938071544353779",
+  "max_usage_percentage": "0.09175519446153847"
+},
+{
+  "name": "iceberg_r002206_sr01_20190710T133715_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170283616.0,
+  "start_time": "2021-05-13 22:19:29",
+  "file_transfer_time": "35.0",
+  "transfer_speed(b/s)": "38921969.37142857",
+  "transfer_speed(MB/s)": "4.639860316685268",
+  "max_usage_percentage": "0.03892196937142857"
+},
+{
+  "name": "iceberg_r002267_sr01_20190710T210119_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168936115.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "23.0",
+  "transfer_speed(b/s)": "58760387.82608695",
+  "transfer_speed(MB/s)": "7.004784086476201",
+  "max_usage_percentage": "0.05876038782608695"
+},
+{
+  "name": "iceberg_r002249_sr01_20190710T185504_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 158056520.0,
+  "start_time": "2021-05-13 22:19:11",
+  "file_transfer_time": "14.0",
+  "transfer_speed(b/s)": "90318011.42857143",
+  "transfer_speed(MB/s)": "10.766745976039342",
+  "max_usage_percentage": "0.09031801142857143"
+},
+{
+  "name": "iceberg_r002239_sr01_20190710T174056_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 169627435.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "17.0",
+  "transfer_speed(b/s)": "79824675.29411764",
+  "transfer_speed(MB/s)": "9.515842830433565",
+  "max_usage_percentage": "0.07982467529411764"
+},
+{
+  "name": "iceberg_r002050_sr01_20190709T130430_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 149038101.0,
+  "start_time": "2021-05-13 22:19:10",
+  "file_transfer_time": "10.0",
+  "transfer_speed(b/s)": "119230480.8",
+  "transfer_speed(MB/s)": "14.213380908966064",
+  "max_usage_percentage": "0.1192304808"
+},
+{
+  "name": "iceberg_r002236_sr01_20190710T171839_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 8851358.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "15.0",
+  "transfer_speed(b/s)": "4720724.266666667",
+  "transfer_speed(MB/s)": "0.5627541859944661",
+  "max_usage_percentage": "0.004720724266666667"
+},
+{
+  "name": "iceberg_r002102_sr01_20190710T010243_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 148753982.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "25.0",
+  "transfer_speed(b/s)": "47601274.24",
+  "transfer_speed(MB/s)": "5.674514083862305",
+  "max_usage_percentage": "0.047601274240000005"
+},
+{
+  "name": "iceberg_r002140_sr01_20190710T053033_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 160195929.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "21.0",
+  "transfer_speed(b/s)": "61027020.571428575",
+  "transfer_speed(MB/s)": "7.274987765720913",
+  "max_usage_percentage": "0.06102702057142858"
+},
+{
+  "name": "iceberg_r002245_sr01_20190710T182514_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170330319.0,
+  "start_time": "2021-05-13 22:19:11",
+  "file_transfer_time": "16.0",
+  "transfer_speed(b/s)": "85165159.5",
+  "transfer_speed(MB/s)": "10.152478158473969",
+  "max_usage_percentage": "0.0851651595"
+},
+{
+  "name": "iceberg_r002066_sr01_20190709T150229_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170612026.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "27.0",
+  "transfer_speed(b/s)": "50551711.40740741",
+  "transfer_speed(MB/s)": "6.0262336024531615",
+  "max_usage_percentage": "0.05055171140740741"
+},
+{
+  "name": "iceberg_r002136_sr01_20190710T050037_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 179427528.0,
+  "start_time": "2021-05-13 22:19:18",
+  "file_transfer_time": "45.0",
+  "transfer_speed(b/s)": "31898227.2",
+  "transfer_speed(MB/s)": "3.802565002441406",
+  "max_usage_percentage": "0.0318982272"
+},
+{
+  "name": "iceberg_r002051_sr01_20190709T131153_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 43032381.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "21.0",
+  "transfer_speed(b/s)": "16393288.0",
+  "transfer_speed(MB/s)": "1.9542322158813477",
+  "max_usage_percentage": "0.016393288"
+},
+{
+  "name": "iceberg_r002165_sr01_20190710T083508_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170637597.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "20.0",
+  "transfer_speed(b/s)": "68255038.8",
+  "transfer_speed(MB/s)": "8.136634683609008",
+  "max_usage_percentage": "0.0682550388"
+},
+{
+  "name": "iceberg_r002209_sr01_20190710T135920_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168790323.0,
+  "start_time": "2021-05-13 22:19:15",
+  "file_transfer_time": "44.0",
+  "transfer_speed(b/s)": "30689149.636363637",
+  "transfer_speed(MB/s)": "3.658431725068526",
+  "max_usage_percentage": "0.030689149636363638"
+},
+{
+  "name": "iceberg_r002095_sr01_20190710T002733_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 164150978.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "33.0",
+  "transfer_speed(b/s)": "39794176.484848484",
+  "transfer_speed(MB/s)": "4.743835507017193",
+  "max_usage_percentage": "0.03979417648484849"
+},
+{
+  "name": "iceberg_r002191_sr01_20190710T114712_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 158400103.0,
+  "start_time": "2021-05-13 22:19:11",
+  "file_transfer_time": "14.0",
+  "transfer_speed(b/s)": "90514344.57142857",
+  "transfer_speed(MB/s)": "10.790150710514613",
+  "max_usage_percentage": "0.09051434457142857"
+},
+{
+  "name": "iceberg_r002224_sr01_20190710T154949_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 169865402.0,
+  "start_time": "2021-05-13 22:19:09",
+  "file_transfer_time": "10.0",
+  "transfer_speed(b/s)": "135892321.6",
+  "transfer_speed(MB/s)": "16.199627113342284",
+  "max_usage_percentage": "0.1358923216"
+},
+{
+  "name": "iceberg_r002007_sr01_20190709T074621_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 192128188.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "32.0",
+  "transfer_speed(b/s)": "48032047.0",
+  "transfer_speed(MB/s)": "5.725866198539734",
+  "max_usage_percentage": "0.048032046999999994"
+},
+{
+  "name": "iceberg_r002001_sr01_20190709T070150_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168744519.0,
+  "start_time": "2021-05-13 22:19:16",
+  "file_transfer_time": "42.0",
+  "transfer_speed(b/s)": "32141813.14285714",
+  "transfer_speed(MB/s)": "3.8316027096339633",
+  "max_usage_percentage": "0.03214181314285714"
+},
+{
   "name": "iceberg_r002131_sr01_20190710T042345_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
@@ -845,6 +845,149 @@
   "transfer_speed(b/s)": "32786287.609756097",
   "transfer_speed(MB/s)": "3.9084300529666063",
   "max_usage_percentage": "0.0327862876097561"
+},
+{
+  "name": "iceberg_r002012_sr01_20190709T082318_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170237950.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "21.0",
+  "transfer_speed(b/s)": "64852552.38095238",
+  "transfer_speed(MB/s)": "7.73102669488816",
+  "max_usage_percentage": "0.06485255238095237"
+},
+{
+  "name": "iceberg_r002263_sr01_20190710T203832_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 181266438.0,
+  "start_time": "2021-05-13 22:19:23",
+  "file_transfer_time": "40.0",
+  "transfer_speed(b/s)": "36253287.6",
+  "transfer_speed(MB/s)": "4.321728658676148",
+  "max_usage_percentage": "0.0362532876"
+},
+{
+  "name": "iceberg_r002106_sr01_20190710T011224_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 169792726.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "17.0",
+  "transfer_speed(b/s)": "79902459.29411764",
+  "transfer_speed(MB/s)": "9.525115405811983",
+  "max_usage_percentage": "0.07990245929411764"
+},
+{
+  "name": "iceberg_r002088_sr01_20190709T174440_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 148968032.0,
+  "start_time": "2021-05-13 22:19:13",
+  "file_transfer_time": "41.0",
+  "transfer_speed(b/s)": "29066933.073170733",
+  "transfer_speed(MB/s)": "3.4650484410727898",
+  "max_usage_percentage": "0.029066933073170733"
+},
+{
+  "name": "iceberg_r002105_sr01_20190710T010958_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168530479.0,
+  "start_time": "2021-05-13 22:19:12",
+  "file_transfer_time": "19.0",
+  "transfer_speed(b/s)": "70960201.68421052",
+  "transfer_speed(MB/s)": "8.459115229154888",
+  "max_usage_percentage": "0.07096020168421052"
+},
+{
+  "name": "iceberg_r002086_sr01_20190709T172952_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170534498.0,
+  "start_time": "2021-05-13 22:19:25",
+  "file_transfer_time": "53.0",
+  "transfer_speed(b/s)": "25741056.301886793",
+  "transfer_speed(MB/s)": "3.068573034034585",
+  "max_usage_percentage": "0.02574105630188679"
+},
+{
+  "name": "iceberg_r002230_sr01_20190710T163413_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 178807398.0,
+  "start_time": "2021-05-13 22:19:18",
+  "file_transfer_time": "40.0",
+  "transfer_speed(b/s)": "35761479.6",
+  "transfer_speed(MB/s)": "4.263100576400757",
+  "max_usage_percentage": "0.03576147960000001"
+},
+{
+  "name": "iceberg_r002047_sr01_20190709T124202_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170444778.0,
+  "start_time": "2021-05-13 22:19:11",
+  "file_transfer_time": "19.0",
+  "transfer_speed(b/s)": "71766222.31578948",
+  "transfer_speed(MB/s)": "8.555200376008687",
+  "max_usage_percentage": "0.07176622231578947"
+},
+{
+  "name": "iceberg_r002242_sr01_20190710T180306_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 158725979.0,
+  "start_time": "2021-05-13 22:19:23",
+  "file_transfer_time": "29.0",
+  "transfer_speed(b/s)": "43786476.96551724",
+  "transfer_speed(MB/s)": "5.219754810990958",
+  "max_usage_percentage": "0.04378647696551724"
+},
+{
+  "name": "iceberg_r002032_sr01_20190709T105107_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 169879667.0,
+  "start_time": "2021-05-13 22:19:21",
+  "file_transfer_time": "41.0",
+  "transfer_speed(b/s)": "33147252.097560976",
+  "transfer_speed(MB/s)": "3.9514603731108875",
+  "max_usage_percentage": "0.033147252097560975"
+},
+{
+  "name": "iceberg_r002126_sr01_20190710T034656_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 169325099.0,
+  "start_time": "2021-05-13 22:19:16",
+  "file_transfer_time": "55.0",
+  "transfer_speed(b/s)": "24629105.30909091",
+  "transfer_speed(MB/s)": "2.936018146168102",
+  "max_usage_percentage": "0.02462910530909091"
+},
+{
+  "name": "iceberg_r002178_sr01_20190710T101110_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 181102150.0,
+  "start_time": "2021-05-13 22:19:18",
+  "file_transfer_time": "47.0",
+  "transfer_speed(b/s)": "30825897.872340426",
+  "transfer_speed(MB/s)": "3.6747333851266415",
+  "max_usage_percentage": "0.030825897872340424"
+},
+{
+  "name": "iceberg_r002118_sr01_20190710T024750_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170414824.0,
+  "start_time": "2021-05-13 22:19:18",
+  "file_transfer_time": "34.0",
+  "transfer_speed(b/s)": "40097605.64705882",
+  "transfer_speed(MB/s)": "4.7800070818732765",
+  "max_usage_percentage": "0.040097605647058825"
 },
 {
   "name": "iceberg_r002226_sr01_20190710T160439_1_dl1.root",
@@ -869,158 +1012,15 @@
   "max_usage_percentage": "0.037875023"
 },
 {
-  "name": "iceberg_r002148_sr01_20190710T062920_1_dl1.root",
+  "name": "iceberg_r002121_sr01_20190710T031000_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168915708.0,
-  "start_time": "2021-05-13 22:19:35",
-  "file_transfer_time": "17.0",
-  "transfer_speed(b/s)": "79489744.94117647",
-  "transfer_speed(MB/s)": "9.475916021010455",
-  "max_usage_percentage": "0.07948974494117647"
-},
-{
-  "name": "iceberg_r002092_sr01_20190709T181410_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 171002002.0,
-  "start_time": "2021-05-13 22:19:16",
-  "file_transfer_time": "54.0",
-  "transfer_speed(b/s)": "25333629.925925925",
-  "transfer_speed(MB/s)": "3.0200040252120406",
-  "max_usage_percentage": "0.025333629925925926"
-},
-{
-  "name": "iceberg_r002007_sr01_20190709T074621_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 192128188.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "32.0",
-  "transfer_speed(b/s)": "48032047.0",
-  "transfer_speed(MB/s)": "5.725866198539734",
-  "max_usage_percentage": "0.048032046999999994"
-},
-{
-  "name": "iceberg_r002028_sr01_20190709T102131_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170200544.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "31.0",
-  "transfer_speed(b/s)": "43922721.03225806",
-  "transfer_speed(MB/s)": "5.235996369392641",
-  "max_usage_percentage": "0.04392272103225806"
-},
-{
-  "name": "iceberg_r002178_sr01_20190710T101110_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 181102150.0,
-  "start_time": "2021-05-13 22:19:18",
-  "file_transfer_time": "47.0",
-  "transfer_speed(b/s)": "30825897.872340426",
-  "transfer_speed(MB/s)": "3.6747333851266415",
-  "max_usage_percentage": "0.030825897872340424"
-},
-{
-  "name": "iceberg_r002224_sr01_20190710T154949_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169865402.0,
-  "start_time": "2021-05-13 22:19:09",
-  "file_transfer_time": "10.0",
-  "transfer_speed(b/s)": "135892321.6",
-  "transfer_speed(MB/s)": "16.199627113342284",
-  "max_usage_percentage": "0.1358923216"
-},
-{
-  "name": "iceberg_r002149_sr01_20190710T063645_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168706531.0,
-  "start_time": "2021-05-13 22:19:10",
-  "file_transfer_time": "12.0",
-  "transfer_speed(b/s)": "112471020.66666667",
-  "transfer_speed(MB/s)": "13.40759046872457",
-  "max_usage_percentage": "0.11247102066666667"
-},
-{
-  "name": "iceberg_r002164_sr01_20190710T082747_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169825705.0,
-  "start_time": "2021-05-13 22:19:33",
-  "file_transfer_time": "37.0",
-  "transfer_speed(b/s)": "36719071.35135135",
-  "transfer_speed(MB/s)": "4.37725440875904",
-  "max_usage_percentage": "0.03671907135135135"
-},
-{
-  "name": "iceberg_r002047_sr01_20190709T124202_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170444778.0,
-  "start_time": "2021-05-13 22:19:11",
-  "file_transfer_time": "19.0",
-  "transfer_speed(b/s)": "71766222.31578948",
-  "transfer_speed(MB/s)": "8.555200376008687",
-  "max_usage_percentage": "0.07176622231578947"
-},
-{
-  "name": "iceberg_r002209_sr01_20190710T135920_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168790323.0,
-  "start_time": "2021-05-13 22:19:15",
-  "file_transfer_time": "44.0",
-  "transfer_speed(b/s)": "30689149.636363637",
-  "transfer_speed(MB/s)": "3.658431725068526",
-  "max_usage_percentage": "0.030689149636363638"
-},
-{
-  "name": "iceberg_r002105_sr01_20190710T010958_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168530479.0,
-  "start_time": "2021-05-13 22:19:12",
-  "file_transfer_time": "19.0",
-  "transfer_speed(b/s)": "70960201.68421052",
-  "transfer_speed(MB/s)": "8.459115229154888",
-  "max_usage_percentage": "0.07096020168421052"
-},
-{
-  "name": "iceberg_r002191_sr01_20190710T114712_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 158400103.0,
-  "start_time": "2021-05-13 22:19:11",
-  "file_transfer_time": "14.0",
-  "transfer_speed(b/s)": "90514344.57142857",
-  "transfer_speed(MB/s)": "10.790150710514613",
-  "max_usage_percentage": "0.09051434457142857"
-},
-{
-  "name": "iceberg_r002171_sr01_20190710T091932_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168728767.0,
-  "start_time": "2021-05-13 22:24:57",
-  "file_transfer_time": "10.0",
-  "transfer_speed(b/s)": "134983013.6",
-  "transfer_speed(MB/s)": "16.091229152679443",
-  "max_usage_percentage": "0.13498301359999998"
-},
-{
-  "name": "iceberg_r002159_sr01_20190710T075048_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169235639.0,
-  "start_time": "2021-05-13 22:24:59",
-  "file_transfer_time": "10.0",
-  "transfer_speed(b/s)": "135388511.2",
-  "transfer_speed(MB/s)": "16.13956823348999",
-  "max_usage_percentage": "0.1353885112"
+  "file_size": 181048172.0,
+  "start_time": "2021-05-13 22:19:21",
+  "file_transfer_time": "36.0",
+  "transfer_speed(b/s)": "40232927.11111111",
+  "transfer_speed(MB/s)": "4.7961386574639215",
+  "max_usage_percentage": "0.040232927111111115"
 },
 {
   "name": "iceberg_r002237_sr01_20190710T172607_1_dl1.root",
@@ -1034,15 +1034,15 @@
   "max_usage_percentage": "0.1364737848"
 },
 {
-  "name": "iceberg_r002011_sr01_20190709T081554_1_dl1.root",
+  "name": "iceberg_r002159_sr01_20190710T075048_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170290598.0,
-  "start_time": "2021-05-13 22:24:58",
-  "file_transfer_time": "14.0",
-  "transfer_speed(b/s)": "97308913.14285715",
-  "transfer_speed(MB/s)": "11.600126402718681",
-  "max_usage_percentage": "0.09730891314285715"
+  "file_size": 169235639.0,
+  "start_time": "2021-05-13 22:24:59",
+  "file_transfer_time": "10.0",
+  "transfer_speed(b/s)": "135388511.2",
+  "transfer_speed(MB/s)": "16.13956823348999",
+  "max_usage_percentage": "0.1353885112"
 },
 {
   "name": "iceberg_r002046_sr01_20190709T123440_1_dl1.root",
@@ -1054,6 +1054,17 @@
   "transfer_speed(b/s)": "104906448.0",
   "transfer_speed(MB/s)": "12.505823135375977",
   "max_usage_percentage": "0.104906448"
+},
+{
+  "name": "iceberg_r002235_sr01_20190710T171113_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 189854982.0,
+  "start_time": "2021-05-13 22:24:59",
+  "file_transfer_time": "18.0",
+  "transfer_speed(b/s)": "84379992.0",
+  "transfer_speed(MB/s)": "10.058878898620605",
+  "max_usage_percentage": "0.084379992"
 },
 {
   "name": "iceberg_r002080_sr01_20190709T164544_1_dl1.root",
@@ -1089,17 +1100,6 @@
   "max_usage_percentage": "0.10383920553846153"
 },
 {
-  "name": "iceberg_r002253_sr01_20190710T192436_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 179728693.0,
-  "start_time": "2021-05-13 22:24:58",
-  "file_transfer_time": "12.0",
-  "transfer_speed(b/s)": "119819128.66666667",
-  "transfer_speed(MB/s)": "14.283553202946981",
-  "max_usage_percentage": "0.11981912866666666"
-},
-{
   "name": "iceberg_r002273_sr01_20190710T211547_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
@@ -1109,6 +1109,17 @@
   "transfer_speed(b/s)": "97217353.23076923",
   "transfer_speed(MB/s)": "11.589211610647348",
   "max_usage_percentage": "0.09721735323076923"
+},
+{
+  "name": "iceberg_r002011_sr01_20190709T081554_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170290598.0,
+  "start_time": "2021-05-13 22:24:58",
+  "file_transfer_time": "14.0",
+  "transfer_speed(b/s)": "97308913.14285715",
+  "transfer_speed(MB/s)": "11.600126402718681",
+  "max_usage_percentage": "0.09730891314285715"
 },
 {
   "name": "iceberg_r002093_sr01_20190709T182134_1_dl1.root",
@@ -1122,26 +1133,15 @@
   "max_usage_percentage": "0.12429496145454547"
 },
 {
-  "name": "iceberg_r002235_sr01_20190710T171113_1_dl1.root",
+  "name": "iceberg_r002253_sr01_20190710T192436_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 189854982.0,
-  "start_time": "2021-05-13 22:24:59",
-  "file_transfer_time": "18.0",
-  "transfer_speed(b/s)": "84379992.0",
-  "transfer_speed(MB/s)": "10.058878898620605",
-  "max_usage_percentage": "0.084379992"
-},
-{
-  "name": "iceberg_r002198_sr01_20190710T123850_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170401751.0,
-  "start_time": "2021-05-13 22:24:59",
-  "file_transfer_time": "13.0",
-  "transfer_speed(b/s)": "104862616.0",
-  "transfer_speed(MB/s)": "12.500597953796387",
-  "max_usage_percentage": "0.104862616"
+  "file_size": 179728693.0,
+  "start_time": "2021-05-13 22:24:58",
+  "file_transfer_time": "12.0",
+  "transfer_speed(b/s)": "119819128.66666667",
+  "transfer_speed(MB/s)": "14.283553202946981",
+  "max_usage_percentage": "0.11981912866666666"
 },
 {
   "name": "iceberg_r002259_sr01_20190710T200855_1_dl1.root",
@@ -1155,15 +1155,26 @@
   "max_usage_percentage": "0.12379177672727273"
 },
 {
-  "name": "iceberg_r002258_sr01_20190710T200135_1_dl1.root",
+  "name": "iceberg_r002171_sr01_20190710T091932_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 148972625.0,
-  "start_time": "2021-05-14 00:23:59",
-  "file_transfer_time": "28.0",
-  "transfer_speed(b/s)": "42563607.14285714",
-  "transfer_speed(MB/s)": "5.073977368218558",
-  "max_usage_percentage": "0.04256360714285714"
+  "file_size": 168728767.0,
+  "start_time": "2021-05-13 22:24:57",
+  "file_transfer_time": "10.0",
+  "transfer_speed(b/s)": "134983013.6",
+  "transfer_speed(MB/s)": "16.091229152679443",
+  "max_usage_percentage": "0.13498301359999998"
+},
+{
+  "name": "iceberg_r002198_sr01_20190710T123850_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170401751.0,
+  "start_time": "2021-05-13 22:24:59",
+  "file_transfer_time": "13.0",
+  "transfer_speed(b/s)": "104862616.0",
+  "transfer_speed(MB/s)": "12.500597953796387",
+  "max_usage_percentage": "0.104862616"
 },
 {
   "name": "iceberg_r002251_sr01_20190710T190947_1_dl1.root",
@@ -1177,6 +1188,17 @@
   "max_usage_percentage": "0.05598417133333333"
 },
 {
+  "name": "iceberg_r002258_sr01_20190710T200135_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 148972625.0,
+  "start_time": "2021-05-14 00:23:59",
+  "file_transfer_time": "28.0",
+  "transfer_speed(b/s)": "42563607.14285714",
+  "transfer_speed(MB/s)": "5.073977368218558",
+  "max_usage_percentage": "0.04256360714285714"
+},
+{
   "name": "iceberg_r002043_sr01_20190709T121230_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
@@ -1186,6 +1208,127 @@
   "transfer_speed(b/s)": "24352444.0",
   "transfer_speed(MB/s)": "2.9030375480651855",
   "max_usage_percentage": "0.024352444"
+},
+{
+  "name": "iceberg_r002103_sr01_20190710T010510_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 181334173.0,
+  "start_time": "2021-05-14 08:23:50",
+  "file_transfer_time": "10.0",
+  "transfer_speed(b/s)": "145067338.4",
+  "transfer_speed(MB/s)": "17.29337434768677",
+  "max_usage_percentage": "0.1450673384"
+},
+{
+  "name": "iceberg_r002254_sr01_20190710T193159_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 147264713.0,
+  "start_time": "2021-05-14 08:23:51",
+  "file_transfer_time": "10.0",
+  "transfer_speed(b/s)": "117811770.4",
+  "transfer_speed(MB/s)": "14.04425745010376",
+  "max_usage_percentage": "0.1178117704"
+},
+{
+  "name": "iceberg_r002244_sr01_20190710T181751_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 169576198.0,
+  "start_time": "2021-05-14 08:23:51",
+  "file_transfer_time": "10.0",
+  "transfer_speed(b/s)": "135660958.4",
+  "transfer_speed(MB/s)": "16.17204647064209",
+  "max_usage_percentage": "0.1356609584"
+},
+{
+  "name": "iceberg_r002062_sr01_20190709T143258_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 44078967.0,
+  "start_time": "2021-05-14 08:23:51",
+  "file_transfer_time": "11.0",
+  "transfer_speed(b/s)": "32057430.545454547",
+  "transfer_speed(MB/s)": "3.8215435201471504",
+  "max_usage_percentage": "0.03205743054545455"
+},
+{
+  "name": "iceberg_r002022_sr01_20190709T093713_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 178855125.0,
+  "start_time": "2021-05-14 08:29:50",
+  "file_transfer_time": "11.0",
+  "transfer_speed(b/s)": "130076454.54545455",
+  "transfer_speed(MB/s)": "15.506321733648127",
+  "max_usage_percentage": "0.13007645454545455"
+},
+{
+  "name": "iceberg_r002154_sr01_20190710T071342_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 190133824.0,
+  "start_time": "2021-05-14 08:29:48",
+  "file_transfer_time": "16.0",
+  "transfer_speed(b/s)": "95066912.0",
+  "transfer_speed(MB/s)": "11.33285903930664",
+  "max_usage_percentage": "0.095066912"
+},
+{
+  "name": "iceberg_r002111_sr01_20190710T015606_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168626934.0,
+  "start_time": "2021-05-14 08:29:48",
+  "file_transfer_time": "14.0",
+  "transfer_speed(b/s)": "96358248.0",
+  "transfer_speed(MB/s)": "11.486798286437988",
+  "max_usage_percentage": "0.096358248"
+},
+{
+  "name": "iceberg_r002024_sr01_20190709T095200_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 168991483.0,
+  "start_time": "2021-05-14 08:29:49",
+  "file_transfer_time": "15.0",
+  "transfer_speed(b/s)": "90128790.93333334",
+  "transfer_speed(MB/s)": "10.744189135233562",
+  "max_usage_percentage": "0.09012879093333334"
+},
+{
+  "name": "iceberg_r002176_sr01_20190710T095622_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 179691770.0,
+  "start_time": "2021-05-14 08:29:49",
+  "file_transfer_time": "12.0",
+  "transfer_speed(b/s)": "119794513.33333333",
+  "transfer_speed(MB/s)": "14.280618826548258",
+  "max_usage_percentage": "0.11979451333333332"
+},
+{
+  "name": "iceberg_r002031_sr01_20190709T104344_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170587992.0,
+  "start_time": "2021-05-14 08:29:49",
+  "file_transfer_time": "16.0",
+  "transfer_speed(b/s)": "85293996.0",
+  "transfer_speed(MB/s)": "10.167836666107178",
+  "max_usage_percentage": "0.085293996"
+},
+{
+  "name": "iceberg_r002262_sr01_20190710T203109_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 148550360.0,
+  "start_time": "2021-05-14 08:29:49",
+  "file_transfer_time": "13.0",
+  "transfer_speed(b/s)": "91415606.15384616",
+  "transfer_speed(MB/s)": "10.897589463454027",
+  "max_usage_percentage": "0.09141560615384615"
 },
 {
   "name": "iceberg_r002185_sr01_20190710T110247_1_dl1.root",
@@ -1199,15 +1342,26 @@
   "max_usage_percentage": "0.0906652835"
 },
 {
-  "name": "iceberg_r002240_sr01_20190710T174817_1_dl1.root",
+  "name": "iceberg_r002123_sr01_20190710T032448_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170572272.0,
-  "start_time": "2021-05-14 08:29:50",
-  "file_transfer_time": "12.0",
-  "transfer_speed(b/s)": "113714848.0",
-  "transfer_speed(MB/s)": "13.555866241455078",
-  "max_usage_percentage": "0.113714848"
+  "file_size": 180900592.0,
+  "start_time": "2021-05-14 08:29:48",
+  "file_transfer_time": "13.0",
+  "transfer_speed(b/s)": "111323441.23076923",
+  "transfer_speed(MB/s)": "13.27078833946815",
+  "max_usage_percentage": "0.11132344123076923"
+},
+{
+  "name": "iceberg_r002065_sr01_20190709T145507_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 169561895.0,
+  "start_time": "2021-05-14 08:29:48",
+  "file_transfer_time": "15.0",
+  "transfer_speed(b/s)": "90433010.66666667",
+  "transfer_speed(MB/s)": "10.780454953511557",
+  "max_usage_percentage": "0.09043301066666666"
 },
 {
   "name": "iceberg_r002009_sr01_20190709T080109_1_dl1.root",
@@ -1232,17 +1386,6 @@
   "max_usage_percentage": "0.12291041963636365"
 },
 {
-  "name": "iceberg_r002065_sr01_20190709T145507_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169561895.0,
-  "start_time": "2021-05-14 08:29:48",
-  "file_transfer_time": "15.0",
-  "transfer_speed(b/s)": "90433010.66666667",
-  "transfer_speed(MB/s)": "10.780454953511557",
-  "max_usage_percentage": "0.09043301066666666"
-},
-{
   "name": "iceberg_r002161_sr01_20190710T080536_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
@@ -1252,6 +1395,17 @@
   "transfer_speed(b/s)": "113752578.0",
   "transfer_speed(MB/s)": "13.560364007949829",
   "max_usage_percentage": "0.11375257800000001"
+},
+{
+  "name": "iceberg_r002240_sr01_20190710T174817_1_dl1.root",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_US_BNL_SDCC",
+  "file_size": 170572272.0,
+  "start_time": "2021-05-14 08:29:50",
+  "file_transfer_time": "12.0",
+  "transfer_speed(b/s)": "113714848.0",
+  "transfer_speed(MB/s)": "13.555866241455078",
+  "max_usage_percentage": "0.113714848"
 },
 {
   "name": "iceberg_r002227_sr01_20190710T161204_1_dl1.root",
@@ -1265,116 +1419,6 @@
   "max_usage_percentage": "0.07555004505263156"
 },
 {
-  "name": "iceberg_r002022_sr01_20190709T093713_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 178855125.0,
-  "start_time": "2021-05-14 08:29:50",
-  "file_transfer_time": "11.0",
-  "transfer_speed(b/s)": "130076454.54545455",
-  "transfer_speed(MB/s)": "15.506321733648127",
-  "max_usage_percentage": "0.13007645454545455"
-},
-{
-  "name": "iceberg_r002123_sr01_20190710T032448_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 180900592.0,
-  "start_time": "2021-05-14 08:29:48",
-  "file_transfer_time": "13.0",
-  "transfer_speed(b/s)": "111323441.23076923",
-  "transfer_speed(MB/s)": "13.27078833946815",
-  "max_usage_percentage": "0.11132344123076923"
-},
-{
-  "name": "iceberg_r002103_sr01_20190710T010510_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 181334173.0,
-  "start_time": "2021-05-14 08:23:50",
-  "file_transfer_time": "10.0",
-  "transfer_speed(b/s)": "145067338.4",
-  "transfer_speed(MB/s)": "17.29337434768677",
-  "max_usage_percentage": "0.1450673384"
-},
-{
-  "name": "iceberg_r002244_sr01_20190710T181751_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 169576198.0,
-  "start_time": "2021-05-14 08:23:51",
-  "file_transfer_time": "10.0",
-  "transfer_speed(b/s)": "135660958.4",
-  "transfer_speed(MB/s)": "16.17204647064209",
-  "max_usage_percentage": "0.1356609584"
-},
-{
-  "name": "iceberg_r002176_sr01_20190710T095622_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 179691770.0,
-  "start_time": "2021-05-14 08:29:49",
-  "file_transfer_time": "12.0",
-  "transfer_speed(b/s)": "119794513.33333333",
-  "transfer_speed(MB/s)": "14.280618826548258",
-  "max_usage_percentage": "0.11979451333333332"
-},
-{
-  "name": "iceberg_r002154_sr01_20190710T071342_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 190133824.0,
-  "start_time": "2021-05-14 08:29:48",
-  "file_transfer_time": "16.0",
-  "transfer_speed(b/s)": "95066912.0",
-  "transfer_speed(MB/s)": "11.33285903930664",
-  "max_usage_percentage": "0.095066912"
-},
-{
-  "name": "iceberg_r002262_sr01_20190710T203109_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 148550360.0,
-  "start_time": "2021-05-14 08:29:49",
-  "file_transfer_time": "13.0",
-  "transfer_speed(b/s)": "91415606.15384616",
-  "transfer_speed(MB/s)": "10.897589463454027",
-  "max_usage_percentage": "0.09141560615384615"
-},
-{
-  "name": "iceberg_r002062_sr01_20190709T143258_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 44078967.0,
-  "start_time": "2021-05-14 08:23:51",
-  "file_transfer_time": "11.0",
-  "transfer_speed(b/s)": "32057430.545454547",
-  "transfer_speed(MB/s)": "3.8215435201471504",
-  "max_usage_percentage": "0.03205743054545455"
-},
-{
-  "name": "iceberg_r002254_sr01_20190710T193159_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 147264713.0,
-  "start_time": "2021-05-14 08:23:51",
-  "file_transfer_time": "10.0",
-  "transfer_speed(b/s)": "117811770.4",
-  "transfer_speed(MB/s)": "14.04425745010376",
-  "max_usage_percentage": "0.1178117704"
-},
-{
-  "name": "iceberg_r002111_sr01_20190710T015606_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168626934.0,
-  "start_time": "2021-05-14 08:29:48",
-  "file_transfer_time": "14.0",
-  "transfer_speed(b/s)": "96358248.0",
-  "transfer_speed(MB/s)": "11.486798286437988",
-  "max_usage_percentage": "0.096358248"
-},
-{
   "name": "iceberg_r002270_sr01_20190710T210830_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
@@ -1386,26 +1430,15 @@
   "max_usage_percentage": "0.089610774"
 },
 {
-  "name": "iceberg_r002024_sr01_20190709T095200_1_dl1.root",
+  "name": "iceberg_r001705_sr01_20190701T213909_1_dl1.root",
   "source": "FNAL_DCACHE",
   "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 168991483.0,
-  "start_time": "2021-05-14 08:29:49",
-  "file_transfer_time": "15.0",
-  "transfer_speed(b/s)": "90128790.93333334",
-  "transfer_speed(MB/s)": "10.744189135233562",
-  "max_usage_percentage": "0.09012879093333334"
-},
-{
-  "name": "iceberg_r002031_sr01_20190709T104344_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 170587992.0,
-  "start_time": "2021-05-14 08:29:49",
-  "file_transfer_time": "16.0",
-  "transfer_speed(b/s)": "85293996.0",
-  "transfer_speed(MB/s)": "10.167836666107178",
-  "max_usage_percentage": "0.085293996"
+  "file_size": 6202012442.0,
+  "start_time": "2021-05-14 08:33:39",
+  "file_transfer_time": "236.0",
+  "transfer_speed(b/s)": "210237709.8983051",
+  "transfer_speed(MB/s)": "25.0622880337602",
+  "max_usage_percentage": "0.2102377098983051"
 },
 {
   "name": "iceberg_r001588_sr01_20190628T175306_1_dl1.root",
@@ -1417,17 +1450,6 @@
   "transfer_speed(b/s)": "126712755.63636364",
   "transfer_speed(MB/s)": "15.105337576432662",
   "max_usage_percentage": "0.12671275563636364"
-},
-{
-  "name": "iceberg_r001705_sr01_20190701T213909_1_dl1.root",
-  "source": "FNAL_DCACHE",
-  "destination": "DUNE_US_BNL_SDCC",
-  "file_size": 6202012442.0,
-  "start_time": "2021-05-14 08:33:39",
-  "file_transfer_time": "236.0",
-  "transfer_speed(b/s)": "210237709.8983051",
-  "transfer_speed(MB/s)": "25.0622880337602",
-  "max_usage_percentage": "0.2102377098983051"
 },
 {
   "name": "03248_000_lro.mid",

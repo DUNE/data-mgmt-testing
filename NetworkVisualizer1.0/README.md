@@ -42,6 +42,6 @@ After which a browser window should launch with the network visualization.
 <br>
 <br>
 
-**At this point the software will stay running, even after logout, until stopped with the "stopEverything.sh" script is run or with the command "forever stopall"**
+**At this point the software will stay running, even after logout, until stopped with the "stopEverything.sh" script is run**
 
-To stop: run "sh stopEverything.sh"
+To stop: run **"sh stopEverything.sh"**
