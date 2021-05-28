@@ -2,7 +2,7 @@
 
 ## Step 0, ensure NPM and Python3 are installed on the host machine:
 
-On linux this would be something like: "sudo apt-get install NPM", "sudo dnf install NPM", "yum install NPM", etc... Whatever package manager you use.
+On linux run something like (package manager dependant): "sudo apt-get install NPM", "sudo dnf install NPM", "yum install NPM", etc...
 <br>
 Similiar syntax for python "sudo apt-get install Python3", "sudo dnf install Python3", "yum install Python3", etc...
 
