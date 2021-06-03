@@ -6,8 +6,10 @@ export NVM_DIR="$HOME/.nvm" [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" [ -
 
 nvm install node
 echo ""
-echo "installed NODE version: ${node --version}"
-echo "installed NPM version: ${npm --version}"
+echo "installed NODE version:" 
+node --version
+echo "installed NPM version:" 
+npm --version
 echo ""
 
 npm install --prefix
