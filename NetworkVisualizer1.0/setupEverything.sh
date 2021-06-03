@@ -7,9 +7,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 nvm install node
-node --version
-npm --version
-
+echo "installed NODE version: " node --version
+echo "installed NPM version: " npm --version
 
 npm install --prefix
 echo ""
@@ -21,4 +20,8 @@ cd ..
 echo ""
 echo ""
 echo ""
+
+echo "doing NPM updates..."
+npm update
+
 echo "Installation finished, hopefully that all worked, now try running startEverything.sh"
