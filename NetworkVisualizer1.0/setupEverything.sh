@@ -8,8 +8,8 @@ export NVM_DIR="$HOME/.nvm"
 
 nvm install node
 echo ""
-echo "installed NODE version: " ${node --version}
-echo "installed NPM version: " ${npm --version}
+echo "installed NODE version: ${node --version}"
+echo "installed NPM version: ${npm --version}"
 echo ""
 
 npm install --prefix
