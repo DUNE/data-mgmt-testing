@@ -124,7 +124,7 @@ const markers = [
   },
   {
     markerOffset: 1,
-    otherName: "GPGRID",
+    otherName: "FNAL_DCACHE_TEST",
     name: "FNAL_DCACHE",
     coordinates: [-88.27, 41.84],
   },
@@ -158,6 +158,18 @@ const markers = [
     otherName: "",
     name: "CERN_PDUNE_EOS",
     coordinates: [6.04, 46.23],
+  },
+  {
+    markerOffset: 1,
+    otherName: "US_FNAL",
+    name: "GPGRID",
+    coordinates: [-39,16],
+  },
+  {
+    markerOffset: 1,
+    otherName:"RAL-PP",
+    name:"UKI-SOUTHGRID-RALLPP",
+    coordinates: [-1.31,51.57],
   },
   {
     markerOffset: 1,
@@ -226,8 +238,7 @@ const markers = [
   // { markerOffset: 1, name: "RAL-PP", coordinates: [51.57, -1.31] },
 ];
 
-const baseUrlBackend = "http://fermicloud129.fnal.gov:3001";
-
+const baseUrlBackend = "http://fermicloud129.fnal.gov:3000";
 const geoUrl = "./world-110m.json";
 
 function App() {
@@ -292,7 +303,7 @@ function App() {
     console.log(
       "fetching DUNE site date from backend fermicloud129.fnal.gov:3001/getsites"
     );
-    fetch("http://localhost:3001" + "/getsites")
+    fetch("http://fermicloud129.fnal.gov:3001"+"/getsites")
       .then((res) => res.json())
       .then((res) => {
         //res.root.atp_site[0].$.latitude
@@ -377,7 +388,7 @@ function App() {
         dateParameters.toString()
     );
 
-    fetch("http://localhost:3001" + "/test?" + dateParameters.toString())
+    fetch("http://fermicloud129.fnal.gov:3001" + "/test?" + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())
@@ -385,7 +396,7 @@ function App() {
         let allTransferedAmount = 0;
 
         console.log("result: ");
-        console.log(res.data[0]);
+        console.log(res.data);
 
         if (
           res.data[0].hasOwnProperty("name") &&
@@ -394,17 +405,17 @@ function App() {
           //TODO: modify this so that if the search fails we don't crash, maybe try/accept or if statement
 
 
-          var sourceLocationAlt = passedSites[0].name;
-          var destinationLocationAlt = passedSites[0].name;
-          var mysteryCoordinates = passedSites[0].coordinates;
+          var sourceLocationAlt = "None"; 
+          var destinationLocationAlt = "None";
+          var mysteryCoordinates = [42,42];
 
           const mappedTransfers = res.data.map((entry) => {
             const sourceLocation = passedSites.find(
-              (location) => entry.source === location.name
+              (location) => entry.source === location.name | entry.source === location.otherName
             );
 
             const destinationLocation = passedSites.find(
-              (location) => entry.destination === location.name
+              (location) => entry.destination === location.name | entry.destination === location.otherName
             );
 
             const speedInMB = parseFloat(entry["transfer_speed(MB/s)"]).toFixed(

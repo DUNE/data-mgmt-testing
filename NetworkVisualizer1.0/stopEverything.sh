@@ -1,11 +1,10 @@
 #!/bin/bash
-input="curPIDs"
-while IFS= read -r line
-do
-    kill "$line"
-done < "$input"
 
-rm curPIDs
-    
+export NVM_DIR="$HOME/.nvm" 
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" 
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-pkill -f node
+forever stopall
+
+fuser -k -n tcp 3000
+fuser -k -n tcp 3001
