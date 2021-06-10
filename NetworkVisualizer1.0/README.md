@@ -1,15 +1,16 @@
 # Dune data visualizer Alpha
 
-## Step 0, ensure NPM and Python3 are installed on the host machine:
+## Step 0, ensure GIT, NPM and Python3 are installed on the host machine:
 
-On linux run something like (package manager dependant): "sudo apt-get install NPM", "sudo dnf install NPM", "yum install NPM", etc...
+On linux run something like (package manager dependant): "sudo apt install NPM", "sudo dnf install NPM", "yum install NPM", etc...
 <br>
-Similiar syntax for python "sudo apt-get install Python3", "sudo dnf install Python3", "yum install Python3", etc...
+Similiar syntax for python "sudo apt install Python3", "sudo dnf install Python3", "yum install Python3", etc...
+<br>
+Something like "sudo apt install git", etc...
 
-**On mac use homebrew, type: "brew install node"**
+## Step 1, run GIT clone this repo onto the machine that will host the network visualizer tool:
 
-<br>
-<br>
+In a terminal type "git clone https://github.com/DUNE/data-mgmt-testing.git"
 
 ## Next install the "forever" package for NPM
 
@@ -20,9 +21,11 @@ Ex: **sudo npm install forever -g**
 <br>
 <br>
 
-## First step if you haven't run the demo thus far is to run setupEverything.sh
+## Now CD into the data-mgmt-testing directory that was cloned earlier
 
-To do first time setup run "sh setupEverything.sh"
+## Running for the first time, use the script setupEverything.sh, located in /data-mgmt-testing/NetworkVisualizer1.0/
+
+To do first time setup run "sh setupEverything.sh" in the aforementioned directory
 
 *estimated time: ~5 minuets*
 
