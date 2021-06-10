@@ -268,7 +268,7 @@ def analyze(start_date,end_date,delta ):
               writer.writerow(data)
   except IOError:
       print("I/O error")
-  
+  days = len(dates)
   cross.Scale(1./days)
   state.Scale(1./days)
   totalbytes.Scale(1./days)
