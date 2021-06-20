@@ -388,6 +388,7 @@ def analyze(start_date,end_date,delta ):
   speeds = ROOT.TFile.Open(out_name+"_speeds.root","RECREATE")
   stat = np.zeros(4)
   remstat = np.zeros(4)
+  r = open(out_name+"_stats.csv",'w')
   for app in apptiming:
     apptiming[app].Write()
     remtiming[app].Write()
@@ -410,7 +411,13 @@ def analyze(start_date,end_date,delta ):
     ratio = remmean/mean
     if nrem < 100 or n < 100:
       ratio = 0.0
-    print ("%20s %10d %5.2f -%5.2f +%5.2f %10d %5.2f -%5.2f +%5.2f  ratio = %5.2f"%(app,n,mean,varminus,varplus,nrem,remmean,remvarminus,remvarplus,ratio))
+    if nrem == 0:
+      remmean = 0.0
+    if n == 0:
+      mean = 0.0
+    str = "%20s\t%10d\t %5.2f\t -\t%5.2f\t +\t%5.2f\t %10d\t %5.2f\t -\t%5.2f\t +\t%5.2f\t  ratio = \t%5.2f"%(app,n,mean,varminus,varplus,nrem,remmean,remvarminus,remvarplus,ratio)
+    print (str)
+    r.write(str+"\n")
     c.SetLogz(0)
     leg = ROOT.TLegend(0.5,0.8,0.8,0.9)
     leg.AddEntry(remtiming[app],"non-FNAL")
@@ -426,7 +433,7 @@ def analyze(start_date,end_date,delta ):
     c.Print("pix/"+app+".png")
     
   
-    
+  r.close()
   speeds.Close()
 
 if __name__ == '__main__':
