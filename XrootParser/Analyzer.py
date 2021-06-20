@@ -124,7 +124,14 @@ def analyze(start_date,end_date,delta ):
   print ("states",states)
   nstate = len(states)
   ROOT.gStyle.SetOptStat(0)
+  apptiming = {}
+  remtiming = {}
+  for app in apps:
+    apptiming[app] = ROOT.TH1D(app,"log10 timing for app %s at FNAL; Log10  of streaming rate, MB/sec"%app,50,-2.,3.)
+    remtiming[app] = ROOT.TH1D(app+"_rem","log10 timing for app %s; Log10 of streaming rate, MB/sec"%app,50,-2.,3.)
+    
   
+    
   cross = ROOT.TH2F("cross","transfers",nd,0,nd,ns,0,ns)
   setXYLabels(cross,disks,sites)
   state = ROOT.TH2F("state","transfers",nstate,0,nstate,ns,0,ns)
@@ -237,8 +244,17 @@ def analyze(start_date,end_date,delta ):
       sumrec["data_tier"] = item["data_tier"]
       sumrec["node"] = item["node"]
       sumrec["country"] = site[0:2]
+      myrate = item["rate"]
+      # get intrinsic rate
+      if not "us" in sumrec["country"] and not "fnal" in sumrec["node"] and finalstate == "consumed":
+        if duration > 10 and "fnal" in disk:
+          remtiming[application].Fill(math.log10(myrate))
       if "fnal" in site:
         sumrec["country"]="fnal"
+      if "fnal" in site and finalstate=="consumed":
+        if duration > 10 and "fnal" in disk:
+          apptiming[application].Fill(math.log10(myrate))
+      
       if "cern" in site:
         sumrec["country"]="cern"
       if "campaign" in item:
@@ -369,13 +385,55 @@ def analyze(start_date,end_date,delta ):
   ratelog10.Draw("BOX")
   c.Print(out_name+"_ratelog10.png")
   print ("total count is ",count)
-
+  speeds = ROOT.TFile.Open(out_name+"_speeds.root","RECREATE")
+  stat = np.zeros(4)
+  remstat = np.zeros(4)
+  for app in apptiming:
+    apptiming[app].Write()
+    remtiming[app].Write()
+    n = apptiming[app].GetEntries()
+    if n< 100 and remtiming[app].GetEntries() < 100:
+      continue
+    apptiming[app].GetStats(stat)
+    mean = math.pow(10,apptiming[app].GetMean())
+    varplus =  math.pow(10,apptiming[app].GetMean()+apptiming[app].GetStdDev()) -mean
+    varminus = mean - math.pow(10,apptiming[app].GetMean()-apptiming[app].GetStdDev())
+    nrem = remtiming[app].GetEntries()
+    remtiming[app].GetStats(stat)
+    remmean = math.pow(10,remtiming[app].GetMean())
+    remvarplus =  math.pow(10,remtiming[app].GetMean()+remtiming[app].GetStdDev()) -remmean
+    remvarminus = remmean - math.pow(10,remtiming[app].GetMean()-remtiming[app].GetStdDev())
+#f    print (math.pow(10,apptiming[app].GetMean()-apptiming[app].GetStdDev()),mean)
+    #print ("%20s %10d %5.2f -%5.2f +%5.2f "%(app,n,mean,varminus,varplus))
+    
+#f    print (math.pow(10,apptiming[app].GetMean()-apptiming[app].GetStdDev()),mean)
+    ratio = remmean/mean
+    if nrem < 100 or n < 100:
+      ratio = 0.0
+    print ("%20s %10d %5.2f -%5.2f +%5.2f %10d %5.2f -%5.2f +%5.2f  ratio = %5.2f"%(app,n,mean,varminus,varplus,nrem,remmean,remvarminus,remvarplus,ratio))
+    c.SetLogz(0)
+    leg = ROOT.TLegend(0.5,0.8,0.8,0.9)
+    leg.AddEntry(remtiming[app],"non-FNAL")
+    leg.AddEntry(apptiming[app],"FNAL")
+    max = apptiming[app].GetMaximum()
+    if remtiming[app].GetMaximum() > max:
+      max = remtiming[app].GetMaximum()
+    remtiming[app].SetMaximum(max*1.2)
+    remtiming[app].Draw("hist")
+    apptiming[app].SetLineColor(2)
+    apptiming[app].Draw("same hist")
+    leg.Draw()
+    c.Print("pix/"+app+".png")
+    
+  
+    
+  speeds.Close()
 
 if __name__ == '__main__':
 
    
  
   start_date = date(2021,1 , 1)
-  end_date = date(2021, 5, 31)
+  end_date = date(2021, 6, 30)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
