@@ -84,7 +84,6 @@ def errorHandler(type):
             "file_transfer_time" : "0.0",
             "transfer_speed(b/s)" : "0.0",
             "transfer_speed(MB/s)" : "0.0",
-            "max_usage_percentage" : "0.0"
     }]]
 
     if os.path.exists(output_file):
@@ -132,7 +131,7 @@ if target_date > today:
 
 mode = int(args.mode)
 
-#Mode codes:
+#Search mode codes:
 #   0 : All events of type "transfer-done" that are not from the regular checkup
 #   1 : All events of type "transfer-done" from the regular checkup
 #   2 : All events of type "transfer-done" regardless of whether source
@@ -321,7 +320,6 @@ def compile_info(transfers, speed_info):
             "file_transfer_time": str(speed_info[i]["file_transfer_time"]),
             "transfer_speed(b/s)": str(speed_info[i]["transfer_speed(b/s)"]),
             "transfer_speed(MB/s)": str(speed_info[i]["transfer_speed(MB/s)"]),
-            "max_usage_percentage": str(speed_info[i]["max_usage_percentage"])
         }
         #Appends it to the output list
         json_strings.append(new_json)
@@ -343,6 +341,7 @@ def get_errs(transfers):
                 new_json["reason"] = "rx_error"
             else:
                 new_json["reason"] = "tx_error"
+            new_json["count"] = 1
             json_strings.append(new_json)
         except:
             print(f"Transfer {transfer} caused an issue. Ignoring.")
@@ -433,8 +432,7 @@ def get_speeds(transfers):
             "submission_to_started": len_arr[1],
             "file_transfer_time": len_arr[2],
             "transfer_speed(b/s)": transfer_speed,
-            "transfer_speed(MB/s)": f_size/8/len_arr[2]/1024/1024,
-            "max_usage_percentage": transfer_speed/max_speed*100
+            "transfer_speed(MB/s)": f_size/8/len_arr[2]/1024/1024
         }
         #Appends the dictionary to our array of output dictionaries.
         speed_info.append(info)
@@ -505,28 +503,38 @@ def add_failures_to_matrix(entries, matrix, keys):
             #First number: Total Gigabytes transferred for ordered pair
             #Second number: Total transfer time for ordered pair
             if entry["source"] not in keys:
-                matrix.append([])
+                matrix[0].append([])
+                matrix[1].append([])
                 for key in keys:
-                    matrix[-1].append(0)
+                    matrix[0][-1].append(0)
+                    matrix[1][-1].append(0)
                 keys.append(entry["source"])
-                for i in range(len(matrix)):
-                    matrix[i].append(0)
+                for i in range(len(matrix[0])):
+                    matrix[0][i].append(0)
+                    matrix[1][i].append(0)
             if entry["destination"] not in keys:
-                matrix.append([])
+                matrix[0].append([])
+                matrix[1].append([])
                 for key in keys:
-                    matrix[-1].append(0)
+                    matrix[0][-1].append(0)
+                    matrix[1][-1].append(0)
                 keys.append(entry["destination"])
-                for i in range(len(matrix)):
-                    matrix[i].append(0)
+                for i in range(len(matrix[0])):
+                    matrix[0][i].append(0)
+                    matrix[1][i].append(0)
 
             #Conversion from bits to MB, rounded to 1 place.
             #Number of decimals is completely arbitrary
             size = 1
 
+            if entry["reason"] == "tx_error":
+                idx0 = 0
+            else:
+                idx0 = 1
             idx1 = keys.index(entry["source"])
             idx2 = keys.index(entry["destination"])
 
-            matrix[idx1][idx2] += size
+            matrix[idx0][idx1][idx2] += 1
         except:
             print(f"Error: Transfer {transfer} caused an issue. Ignoring.")
     return matrix, keys
@@ -625,6 +633,8 @@ def get_summary(mode, client, curr_date, end_date, es_template):
     xfer_count = 0
 
     matrix = []
+    if mode in [3, 4]:
+        matrix = [[]]
     keys = []
     to_write = []
     #Scrolls through the ES client and adds all information to the info array
@@ -636,7 +646,7 @@ def get_summary(mode, client, curr_date, end_date, es_template):
         #Index for the specified month
         index = f"rucio-transfers-v0-{y}.{m}"
         #Modes for transfer_done events with various templates
-        if mode in [0, 1, 2, 3]:
+        if mode in [0, 1, 2]:
             try:
                 if client.indices.exists(index=index):
                     for data in scroll(client, index, es_template, "5m"):
@@ -662,13 +672,12 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                         "start_time" : f"{start_date.strftime("%Y")}-{start_date.strftime("%m")}-{start_date.strftime("%d")} 00:00:01",
                         "file_transfer_time" : matrix[i][j][1],
                         "transfer_speed(b/s)" : float(matrix[i][j][0]*1024*1024*8)/float(matrix[i][j][1]),
-                        "transfer_speed(MB/s)" : float(matrix[i][j][0])/float(matrix[i][j][1]),
-                        "max_usage_percentage" : (float(matrix[i][j][0]*1024*1024*8)/float(matrix[i][j][1]))/float(max_speed)
+                        "transfer_speed(MB/s)" : float(matrix[i][j][0])/float(matrix[i][j][1])
                     }
                     to_write.append(new_entry)
 
         #Mode to process transfer_failed and transfer-submission_failed data
-        elif mode == 4:
+        elif mode in [3, 4]:
             try:
                 if client.indices.exists(index=index):
                     for data in scroll(client, index, es_template, "5m"):
@@ -682,6 +691,32 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                 print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
                 f.close()
                 errorHandler("scroll error")
+            for i in range(len(keys)):
+                for j in range(len(keys)):
+                    if matrix[0][i][j] == 0:
+                        continue
+                    new_entry = {
+                        "name" : f"{keys[i]}_to_{keys[j]}",
+                        "source" : keys[i],
+                        "destination" : keys[j],
+                        "reason" : "tx_error",
+                        "count" : matrix[0][keys[i]][keys[j]]
+                        }
+                    to_write.append(new_entry)
+
+            for i in range(len(keys)):
+                for j in range(len(keys)):
+                    if matrix[1][i][j] == 0:
+                        continue
+                    new_entry = {
+                        "name" : f"{keys[i]}_to_{keys[j]}",
+                        "source" : keys[i],
+                        "destination" : keys[j],
+                        "reason" : "rx_error",
+                        "count" : matrix[1][keys[i]][keys[j]]
+                        }
+                    to_write.append(new_entry)
+
         curr_date += relativedelta(months=+1)
     #Checks to make sure we have at least one transfer during the timeframe
     #we were handed and exports the error template if not.
@@ -692,14 +727,11 @@ def get_summary(mode, client, curr_date, end_date, es_template):
 
     print(f"Period contained {xfer_count} processable records.\n")
 
-    for entry in to_write:
+    for entry in to_write[0:-1]:
         f.write(json.dumps(entry, indent=2))
-        if entry != to_write[-1]:
-            f.write(",\n")
-        else:
-            f.write("\n")
-
-    f.write("]}")
+        f.write(",\n")
+    f.write(json.dumps(to_write[-1], indent=2))
+    f.write("\n]}")
     f.close()
 
 #End of function definitions
