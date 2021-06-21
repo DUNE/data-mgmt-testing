@@ -271,57 +271,8 @@ else:
 #Hardcoded output file name
 if mode in [0, 1, 2]:
     output_file = "out.json"
-    cutoff_template = es_template = {
-        "query" : {
-            "bool" : {
-                "filter" : {
-                    "range" : {
-                        "@timestamp" : {
-                            "gte" : f"{y0}-{m0}-{d0}",
-                            "lte" : f"{y1}-{m1}-{d1}"
-                        }
-                    }
-                },
-                "should" : [
-                    {
-                        "match": {
-                            "event_type" : "transfer-done"
-                        }
-                    }
-                ],
-                "minimum_should_match" : 1
-            }
-        }
-    }
 elif mode in [3, 4]:
     output_file = "fails.json"
-    cutoff_template = {
-        "query" : {
-            "bool" : {
-                "filter" : {
-                    "range" : {
-                        "@timestamp" : {
-                            "gte" : f"{y0}-{m0}-{d0}",
-                            "lte" : f"{y1}-{m1}-{d1}"
-                        }
-                    }
-                },
-                "should" : [
-                    {
-                        "match": {
-                             "event_type" : "transfer-failed"
-                        },
-                    },
-                    {
-                        "match": {
-                             "event_type" : "transfer-submission_failed"
-                        }
-                    }
-                ],
-                "minimum_should_match" : 1
-            }
-        }
-    }
 
 
 #URL of the DUNE Elasticsearch cluster
@@ -385,7 +336,7 @@ def get_errs(transfers):
             json_strings.append(new_json)
         except:
             print(f"Transfer {transfer} caused an issue. Ignoring.")
-    print("Processed errors")
+#    print("Processed errors")
     return json_strings
 
 #If we're past our result cutoff, we'll output a summary of transfers
@@ -396,19 +347,22 @@ def result_cutoff(es, idx, body, curr_date, target_date):
     global es_cluster
     new_curr_date = curr_date
     while new_curr_date <= target_date:
-        y = curr_date.strftime("%Y")
-        m =  curr_date.strftime("%m")
+        y = new_curr_date.strftime("%Y")
+        m =  new_curr_date.strftime("%m")
         #Index for the specified month
         index = f"rucio-transfers-v0-{y}.{m}"
 
+        try:
         #Using curl as a workaround for authorization issues with es.count
         #res += es.count(index=index, body=body)
-        curl_res = os.popen(f"curl -XGET '{es_cluster}/{index}/_count?pretty' -H 'Content-Type:application/json' -d '{json.dumps(body, indent=2)}'").read()
-        count_dict = json.loads(curl_res)
-        #print(f"Count dict: {str(count_dict)}")
-        res += int(count_dict["count"])
+            curl_res = os.popen(f"curl -XGET '{es_cluster}/{index}/_count?pretty' -H 'Content-Type:application/json' -d '{json.dumps(body, indent=2)}'").read()
+            count_dict = json.loads(curl_res)
+            print(f"Count dict: {str(count_dict)}")
+            res += int(count_dict["count"])
+        except:
+            print(f"No results found at index {index}")
         new_curr_date += relativedelta(months=+1)
-    #print(f"Found {res} results")
+    print(f"Found {res} results")
     return res
 
 #Function to calculate the relevant times and speeds from each transfer
@@ -533,7 +487,7 @@ def add_successes_to_matrix(entries, matrix, keys):
 
             #Conversion from bits to MB, rounded to 2 places.
             #Number of decimals is completely arbitrary
-            size = round(float(entry["file_size"])/8388608.0, 2)
+            size = int(entry["file_size"])/1048576
             transfer_time = float(entry["file_transfer_time"])
 
             idx1 = keys.index(entry["source"])
@@ -720,10 +674,10 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                         "name" : f"{keys[i]}_to_{keys[j]}",
                         "source" : keys[i],
                         "destination" : keys[j],
-                        "file_size" : matrix[i][j][0]*1024*1024*8,
+                        "file_size" : matrix[i][j][0],
                         "start_time" : f"{y}-{m}-{d} 00:00:01",
                         "file_transfer_time" : matrix[i][j][1],
-                        "transfer_speed(b/s)" : float(matrix[i][j][0]*1024*1024*8)/float(matrix[i][j][1]),
+#                        "transfer_speed(b/s)" : float(matrix[i][j][0]*1024*1024*8)/float(matrix[i][j][1]),
                         "transfer_speed(MB/s)" : float(matrix[i][j][0])/float(matrix[i][j][1])
                     }
                     to_write.append(new_entry)
@@ -800,7 +754,7 @@ m =  curr_date.strftime("%m")
 #Index for the specified month
 index = f"rucio-transfers-v0-{y}.{m}"
 
-if result_cutoff(client, index, cutoff_template, curr_date, target_date) <= max_individual_results:
+if result_cutoff(client, index, es_template, curr_date, target_date) <= max_individual_results:
     get_individual(mode, client, curr_date, target_date, es_template)
 else:
     get_summary(mode, client, curr_date, target_date, es_template)
