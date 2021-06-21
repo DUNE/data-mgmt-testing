@@ -352,12 +352,18 @@ def get_errs(transfers):
 #passed to our frontend and causing processing issues.
 def result_cutoff(es, idx, body, curr_date, target_date):
     res = 0
+    global es_cluster
     while curr_date <= target_date:
         y = curr_date.strftime("%Y")
         m =  curr_date.strftime("%m")
         #Index for the specified month
         index = f"rucio-transfers-v0-{y}.{m}"
-        res += es.count(index=index, body=body)
+
+        #Using curl as a workaround for authorization issues with es.count
+        #res += es.count(index=index, body=body)
+        curl_res = os.popen(f"curl -XGET '{es_cluster}/{index}/_count?pretty' -H 'Content-Type:application/json' -d '{json.dumps(body, indent=2)}'").read()
+        count_dict = json.loads(curl_res)
+        res += int(count_dict["count"])
     return res
 
 #Function to calculate the relevant times and speeds from each transfer
