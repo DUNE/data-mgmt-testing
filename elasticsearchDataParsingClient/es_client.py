@@ -664,12 +664,15 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                 for j in range(len(keys)):
                     if matrix[i][j][0] == 0:
                         continue
+                    y = start_date.strftime("%Y")
+                    m = start_date.strftime("%m")
+                    d = start_date.strftime("%d")
                     new_entry = {
                         "name" : f"{keys[i]}_to_{keys[j]}",
                         "source" : keys[i],
                         "destination" : keys[j],
                         "file_size" : matrix[i][j][0]*1024*1024*8,
-                        "start_time" : f"{start_date.strftime("%Y")}-{start_date.strftime("%m")}-{start_date.strftime("%d")} 00:00:01",
+                        "start_time" : f"{y}-{m}-{d} 00:00:01",
                         "file_transfer_time" : matrix[i][j][1],
                         "transfer_speed(b/s)" : float(matrix[i][j][0]*1024*1024*8)/float(matrix[i][j][1]),
                         "transfer_speed(MB/s)" : float(matrix[i][j][0])/float(matrix[i][j][1])
@@ -743,7 +746,7 @@ m =  curr_date.strftime("%m")
 #Index for the specified month
 index = f"rucio-transfers-v0-{y}.{m}"
 
-if result_cutoff(es, index, es_template, curr_date, target_date) <= max_individual_results:
+if result_cutoff(client, index, es_template, curr_date, target_date) <= max_individual_results:
     get_individual(mode, client, curr_date, end_date, es_template)
 else:
     get_summary(mode, client, curr_date, end_date, es_template)
