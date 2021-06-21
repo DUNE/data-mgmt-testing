@@ -68,11 +68,11 @@ max_speed = 100000000000 #100 gb/s
 #Capping search results at 2,500 since API documentation recommends keeping searches
 #relatively small and stepping through with search_after instead of using massive search
 #volumes and scroll.
-search_size = 5000
+search_size = 7500
 
 #Cutoff for how many individual results we'll allow the code to handle.
 #Anything over this limit will be processed in summary form instead.
-max_individual_results = 150000
+max_individual_results = 5000
 
 def errorHandler(type):
     error_out_object = [[{
@@ -345,6 +345,7 @@ def get_errs(transfers):
             json_strings.append(new_json)
         except:
             print(f"Transfer {transfer} caused an issue. Ignoring.")
+    print("Processed errors")
     return json_strings
 
 #If we're past our result cutoff, we'll output a summary of transfers
@@ -353,7 +354,8 @@ def get_errs(transfers):
 def result_cutoff(es, idx, body, curr_date, target_date):
     res = 0
     global es_cluster
-    while curr_date <= target_date:
+    new_curr_date = curr_date
+    while new_curr_date <= target_date:
         y = curr_date.strftime("%Y")
         m =  curr_date.strftime("%m")
         #Index for the specified month
@@ -363,7 +365,10 @@ def result_cutoff(es, idx, body, curr_date, target_date):
         #res += es.count(index=index, body=body)
         curl_res = os.popen(f"curl -XGET '{es_cluster}/{index}/_count?pretty' -H 'Content-Type:application/json' -d '{json.dumps(body, indent=2)}'").read()
         count_dict = json.loads(curl_res)
+        #print(f"Count dict: {str(count_dict)}")
         res += int(count_dict["count"])
+        new_curr_date += relativedelta(months=+1)
+    #print(f"Found {res} results")
     return res
 
 #Function to calculate the relevant times and speeds from each transfer
@@ -502,7 +507,9 @@ def add_successes_to_matrix(entries, matrix, keys):
 
 #Adds all entries in an array to our transfer matrix
 def add_failures_to_matrix(entries, matrix, keys):
+    #print(f"Keys are: {str(keys)}")
     for entry in entries:
+        #print(f"Trying entry: {entry}")
         try:
             #First matrix index: Source RSE keys index
             #Second matrix index: Destination RSE keys index
@@ -640,7 +647,7 @@ def get_summary(mode, client, curr_date, end_date, es_template):
 
     matrix = []
     if mode in [3, 4]:
-        matrix = [[]]
+        matrix = [[],[]]
     keys = []
     to_write = []
     #Scrolls through the ES client and adds all information to the info array
@@ -657,8 +664,8 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                 if client.indices.exists(index=index):
                     for data in scroll(client, index, es_template, "5m"):
                         entries = get_speeds(data)
-                        xfer_count += len(info)
-                        if len(info) > 0:
+                        xfer_count += len(entries)
+                        if len(entries) > 0:
                             data_exists = True
                             matrix, keys = add_successes_to_matrix(entries, matrix, keys)
             except:
@@ -689,12 +696,17 @@ def get_summary(mode, client, curr_date, end_date, es_template):
         elif mode in [3, 4]:
             try:
                 if client.indices.exists(index=index):
+                    #print("Index exists")
                     for data in scroll(client, index, es_template, "5m"):
+                        #print("Scrolled")
                         entries = get_errs(data)
-                        xfer_count += len(info)
-                        if len(info) > 0:
+                        xfer_count += len(entries)
+                        #print(f"Transfer count: {len(entries)}")
+                        if len(entries) > 0:
                             data_exists = True
+                           # print(f"Matrix: {str(matrix)}")
                             matrix, keys = add_failures_to_matrix(entries, matrix, keys)
+                           # print(f"TX matrix: {str(matrix[0])}\nRX matrix: {str(matrix[1])}\n")
 
             except:
                 print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
@@ -709,7 +721,7 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                         "source" : keys[i],
                         "destination" : keys[j],
                         "reason" : "tx_error",
-                        "count" : matrix[0][keys[i]][keys[j]]
+                        "count" : matrix[0][i][j]
                         }
                     to_write.append(new_entry)
 
@@ -722,7 +734,7 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                         "source" : keys[i],
                         "destination" : keys[j],
                         "reason" : "rx_error",
-                        "count" : matrix[1][keys[i]][keys[j]]
+                        "count" : matrix[1][i][j]
                         }
                     to_write.append(new_entry)
 
@@ -753,6 +765,6 @@ m =  curr_date.strftime("%m")
 index = f"rucio-transfers-v0-{y}.{m}"
 
 if result_cutoff(client, index, es_template, curr_date, target_date) <= max_individual_results:
-    get_individual(mode, client, curr_date, end_date, es_template)
+    get_individual(mode, client, curr_date, target_date, es_template)
 else:
-    get_summary(mode, client, curr_date, end_date, es_template)
+    get_summary(mode, client, curr_date, target_date, es_template)
