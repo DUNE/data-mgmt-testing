@@ -55,17 +55,8 @@ end = args.end_date
 if end == "0":
     end = start
 
-#Hard-coded value for what we think we remember the connection speed
-#being. Used to calculate our network use percentage.
-#Completely inaccurate and was never actually used. Should likely be removed.
-#Only haven't because need to check if changes to JSON format would cause
-#issues with other code.
-max_speed = 100000000000 #100 gb/s
-
-
-
 #How many search results we want to return.
-#Capping search results at 2,500 since API documentation recommends keeping searches
+#Capping search results at 7,500 since API documentation recommends keeping searches
 #relatively small and stepping through with search_after instead of using massive search
 #volumes and scroll.
 search_size = 7500
@@ -280,8 +271,57 @@ else:
 #Hardcoded output file name
 if mode in [0, 1, 2]:
     output_file = "out.json"
+    cutoff_template = es_template = {
+        "query" : {
+            "bool" : {
+                "filter" : {
+                    "range" : {
+                        "@timestamp" : {
+                            "gte" : f"{y0}-{m0}-{d0}",
+                            "lte" : f"{y1}-{m1}-{d1}"
+                        }
+                    }
+                },
+                "should" : [
+                    {
+                        "match": {
+                            "event_type" : "transfer-done"
+                        }
+                    }
+                ],
+                "minimum_should_match" : 1
+            }
+        }
+    }
 elif mode in [3, 4]:
     output_file = "fails.json"
+    cutoff_template = {
+        "query" : {
+            "bool" : {
+                "filter" : {
+                    "range" : {
+                        "@timestamp" : {
+                            "gte" : f"{y0}-{m0}-{d0}",
+                            "lte" : f"{y1}-{m1}-{d1}"
+                        }
+                    }
+                },
+                "should" : [
+                    {
+                        "match": {
+                             "event_type" : "transfer-failed"
+                        },
+                    },
+                    {
+                        "match": {
+                             "event_type" : "transfer-submission_failed"
+                        }
+                    }
+                ],
+                "minimum_should_match" : 1
+            }
+        }
+    }
 
 
 #URL of the DUNE Elasticsearch cluster
@@ -568,8 +608,6 @@ def get_individual(mode, client, curr_date, end_date, es_template):
     #Index for the specified month
     index = f"rucio-transfers-v0-{y}.{m}"
 
-    final_count = result_cutoff(client, index, es_template, curr_date, end_date)
-
     #Scrolls through the ES client and adds all information to the info array
     #compile_info now runs inside of get_speeds, so data in "info" will be in its
     #final state before export.
@@ -579,7 +617,7 @@ def get_individual(mode, client, curr_date, end_date, es_template):
         #Index for the specified month
         index = f"rucio-transfers-v0-{y}.{m}"
         #Modes for transfer_done events with various templates
-        if mode in [0, 1, 2, 3]:
+        if mode in [0, 1, 2]:
             try:
                 if client.indices.exists(index=index):
                     for data in scroll(client, index, es_template, "5m"):
@@ -588,17 +626,16 @@ def get_individual(mode, client, curr_date, end_date, es_template):
                         if len(info) > 0:
                             data_exists = True
                         for res in info:
-                            f.write(json.dumps(res, indent=2))
-                            if not (res == info[-1] and xfer_count == final_count):
+                            if not (res == info[0] and xfer_count == len(info)):
                                 f.write(",\n")
-                            else:
-                                f.write("\n")
+                            f.write(json.dumps(res, indent=2))
+                        f.write("\n")
             except:
                 print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
                 f.close()
                 errorHandler("scroll error")
         #Mode to process transfer_failed and transfer-submission_failed data
-        elif mode == 4:
+        elif mode in [3, 4]:
             try:
                 if client.indices.exists(index=index):
                     for data in scroll(client, index, es_template, "5m"):
@@ -610,11 +647,10 @@ def get_individual(mode, client, curr_date, end_date, es_template):
                         if len(info) > 0:
                             data_exists = True
                         for res in info:
-                            f.write(json.dumps(res, indent=2))
-                            if not (res == info[-1] and xfer_count == final_count):
+                            if not (res == info[0] and xfer_count == len(info)):
                                 f.write(",\n")
-                            else:
-                                f.write("\n")
+                            f.write(json.dumps(res, indent=2))
+                        f.write("\n")
             except:
                 print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
                 f.close()
@@ -764,7 +800,7 @@ m =  curr_date.strftime("%m")
 #Index for the specified month
 index = f"rucio-transfers-v0-{y}.{m}"
 
-if result_cutoff(client, index, es_template, curr_date, target_date) <= max_individual_results:
+if result_cutoff(client, index, cutoff_template, curr_date, target_date) <= max_individual_results:
     get_individual(mode, client, curr_date, target_date, es_template)
 else:
     get_summary(mode, client, curr_date, target_date, es_template)
