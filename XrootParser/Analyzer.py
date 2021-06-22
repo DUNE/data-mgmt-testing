@@ -83,7 +83,7 @@ def analyze(start_date,end_date,delta ):
   
   while start_range < end_date:
     end_range = start_range + delta
-    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
+    inputfilename = "data/summary_%s_%s.json"%(start_range,end_range)
     if not os.path.exists(inputfilename):
       start_range += delta
       continue
@@ -175,7 +175,7 @@ def analyze(start_date,end_date,delta ):
   while start_range < end_date:
     end_range = start_range + delta
     
-    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
+    inputfilename = "data/summary_%s_%s.json"%(start_range,end_range)
     
     if not os.path.exists(inputfilename):
       start_range += delta
@@ -216,7 +216,11 @@ def analyze(start_date,end_date,delta ):
       idisk = float(disks[disk])-.5
       user = item["username"]
       iuser = float(users[user])-.5
+      
       date = item["@timestamp"][0:10]
+      if date not in dates:
+        print ("missing this date",date)
+        continue
       idate = float(dates[date])-.5
       istate = float(states[finalstate]) -.5
       iapp = float(apps[application]) -.5
@@ -389,6 +393,10 @@ def analyze(start_date,end_date,delta ):
   stat = np.zeros(4)
   remstat = np.zeros(4)
   r = open(out_name+"_stats.csv",'w')
+  
+  str = "%20s\t%10s\t %5s\t -\t%5s\t +\t%5s\t %10s\t %5s\t -\t%5s\t +\t%5s\t  ratio = \t%5s"%("application","n FNAL","mean","1sig","1sig","nremote","mean","1sig","1sig","ratio")
+  print (str)
+  r.write(str+"\n")
   for app in apptiming:
     apptiming[app].Write()
     remtiming[app].Write()
