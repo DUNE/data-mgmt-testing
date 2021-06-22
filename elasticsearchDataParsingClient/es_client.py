@@ -8,7 +8,7 @@ import json
 import os
 import sys
 import urllib
-
+import time
 
 
 #ElasticSearch API is needed (alternatively commands could be manually written
@@ -29,6 +29,11 @@ import argparse as ap
 
 today = datetime.today()
 
+program_init = time.perf_counter()
+
+cutoff_time = 0
+scroll_time = 0
+io_time = 0
 
 
 print("These were the paramters passed to es_client.py: \n")
@@ -63,7 +68,8 @@ search_size = 7500
 
 #Cutoff for how many individual results we'll allow the code to handle.
 #Anything over this limit will be processed in summary form instead.
-max_individual_results = 5000
+
+max_individual_results = 10000
 
 def errorHandler(type):
     error_out_object = [[{
@@ -306,11 +312,11 @@ def compile_info(transfers, speed_info):
             "name": transfers[i]["_source"]["name"],
             "source": transfers[i]["_source"]["src-rse"],
             "destination": transfers[i]["_source"]["dst-rse"],
-            "file_size": transfers[i]["_source"]["file-size"],
+            "file_size": int(transfers[i]["_source"]["file-size"]),
             "start_time": transfers[i]["_source"]["started_at"],
             "file_transfer_time": str(speed_info[i]["file_transfer_time"]),
-            "transfer_speed(b/s)": str(speed_info[i]["transfer_speed(b/s)"]),
-            "transfer_speed(MB/s)": str(speed_info[i]["transfer_speed(MB/s)"]),
+           # "transfer_speed(b/s)": str(speed_info[i]["transfer_speed(b/s)"]),
+            "transfer_speed(MB/s)": str(round(speed_info[i]["transfer_speed(MB/s)"],2)),
         }
         #Appends it to the output list
         json_strings.append(new_json)
@@ -345,6 +351,8 @@ def get_errs(transfers):
 def result_cutoff(es, idx, body, curr_date, target_date):
     res = 0
     global es_cluster
+    global cutoff_time
+    start = time.perf_counter()
     new_curr_date = curr_date
     while new_curr_date <= target_date:
         y = new_curr_date.strftime("%Y")
@@ -363,11 +371,14 @@ def result_cutoff(es, idx, body, curr_date, target_date):
             print(f"No results found at index {index}")
         new_curr_date += relativedelta(months=+1)
     print(f"Found {res} results")
+    end = time.perf_counter()
+    cutoff_time += end - start
     return res
 
 #Function to calculate the relevant times and speeds from each transfer
 #in our list of JSONS (which at this point have been converted to dictionaries)
 def get_speeds(transfers):
+    start = time.perf_counter()
     speed_info = []
     to_remove = []
     for transfer in transfers:
@@ -381,7 +392,7 @@ def get_speeds(transfers):
         sub_time = transfer["_source"]["submitted_at"]
         start_time = transfer["_source"]["started_at"]
         fin_time = transfer["_source"]["transferred_at"]
-        f_size = float(transfer["_source"]["bytes"]) * 8
+        f_size = float(transfer["_source"]["bytes"])
 
         #Places our relevant times into an array for processing
         time_arr = [c_time, sub_time, start_time, fin_time]
@@ -436,8 +447,8 @@ def get_speeds(transfers):
             "creation_to_submission": len_arr[0],
             "submission_to_started": len_arr[1],
             "file_transfer_time": len_arr[2],
-            "transfer_speed(b/s)": transfer_speed,
-            "transfer_speed(MB/s)": f_size/8/len_arr[2]/1024/1024
+         #   "transfer_speed(b/s)": round(transfer_speed*8),
+            "transfer_speed(MB/s)": f_size/len_arr[2]/1024/1024
         }
         #Appends the dictionary to our array of output dictionaries.
         speed_info.append(info)
@@ -445,6 +456,8 @@ def get_speeds(transfers):
     #and had badly formatted stuff or incorrect request types removed)
     for transfer in to_remove:
         transfers.remove(transfer)
+    end = time.perf_counter()
+    #print(f"get_speeds took {end - start} seconds")
     if len(transfers) > 0:
         return compile_info(transfers, speed_info)
     else:
@@ -453,17 +466,23 @@ def get_speeds(transfers):
 #Based on Simplernerd's tutorial here: https://simplernerd.com/elasticsearch-scroll-python/
 #Scrolls through all of the results in a given date range
 def scroll(es, idx, body, scroll):
+    global scroll_time
     page = es.search(index=idx, body=body, scroll=scroll, size=search_size)
     scroll_id = page['_scroll_id']
     hits = page['hits']['hits']
     while len(hits):
         yield hits
+        start = time.perf_counter()
         page = es.scroll(scroll_id=scroll_id, scroll=scroll)
+        end = time.perf_counter()
+        #print(f"Scroll took {end-start} seconds")
+        scroll_time += end-start
         scroll_id = page['_scroll_id']
         hits = page['hits']['hits']
 
 #Adds all entries in an array to our transfer matrix
 def add_successes_to_matrix(entries, matrix, keys):
+    start = time.perf_counter()
     for entry in entries:
         try:
             #First matrix index: Source RSE keys index
@@ -487,21 +506,25 @@ def add_successes_to_matrix(entries, matrix, keys):
 
             #Conversion from bits to MB, rounded to 2 places.
             #Number of decimals is completely arbitrary
-            size = int(entry["file_size"])/1048576
+            size = int(entry["file_size"])
             transfer_time = float(entry["file_transfer_time"])
 
             idx1 = keys.index(entry["source"])
             idx2 = keys.index(entry["destination"])
 
-            matrix[idx1][idx2][0] += size
+            matrix[idx1][idx2][0] += size/1045876
             matrix[idx1][idx2][1] += transfer_time
         except:
             print(f"Error: Transfer {transfer} caused an issue. Ignoring.")
+    end = time.perf_counter()
+    #print(f"Success matrix modification took {end-start} seconds")
+    #print(keys)
     return matrix, keys
 
 #Adds all entries in an array to our transfer matrix
 def add_failures_to_matrix(entries, matrix, keys):
     #print(f"Keys are: {str(keys)}")
+    start = time.perf_counter()
     for entry in entries:
         #print(f"Trying entry: {entry}")
         try:
@@ -544,11 +567,14 @@ def add_failures_to_matrix(entries, matrix, keys):
             matrix[idx0][idx1][idx2] += 1
         except:
             print(f"Error: Transfer {transfer} caused an issue. Ignoring.")
+    end = time.perf_counter()
+    #print(f"Failure matrix modification took {end-start} seconds")
     return matrix, keys
 
 #Processes all of our transfers as individual transfers instead of summarizing
 #them
 def get_individual(mode, client, curr_date, end_date, es_template):
+    global io_time
     #Create output file object and empty info array
     f = open(output_file, "w+")
     f.write('{ "data" : [\n')
@@ -579,11 +605,15 @@ def get_individual(mode, client, curr_date, end_date, es_template):
                         xfer_count += len(info)
                         if len(info) > 0:
                             data_exists = True
+                        start = time.perf_counter()
                         for res in info:
                             if not (res == info[0] and xfer_count == len(info)):
                                 f.write(",\n")
                             f.write(json.dumps(res, indent=2))
                         f.write("\n")
+                        end = time.perf_counter()
+                        io_time += end - start
+                        #print(f"File IO took {end - start} seconds")
             except:
                 print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
                 f.close()
@@ -594,17 +624,23 @@ def get_individual(mode, client, curr_date, end_date, es_template):
                 if client.indices.exists(index=index):
                     for data in scroll(client, index, es_template, "5m"):
                         try:
+                            #start = time.perf_counter()
                             info = get_errs(data)
+                            #end = time.perf_counter()
+                            #print(f"get_errs took {end - start} seconds")
                         except:
                             print("get_errs failed")
                         xfer_count += len(info)
                         if len(info) > 0:
                             data_exists = True
+                        start = time.perf_counter()
                         for res in info:
                             if not (res == info[0] and xfer_count == len(info)):
                                 f.write(",\n")
                             f.write(json.dumps(res, indent=2))
                         f.write("\n")
+                        end = time.perf_counter()
+                        io_time += end - start
             except:
                 print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
                 f.close()
@@ -625,6 +661,7 @@ def get_individual(mode, client, curr_date, end_date, es_template):
 #Summarizes transfers instead of outputting them as individuals to avoid
 #overloading the webserver and frontend.
 def get_summary(mode, client, curr_date, end_date, es_template):
+    global io_time
     #Create output file object and empty info array
     f = open(output_file, "w+")
     f.write('{ "data" : [\n')
@@ -662,25 +699,7 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                 print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
                 f.close()
                 errorHandler("scroll error")
-
-            for i in range(len(keys)):
-                for j in range(len(keys)):
-                    if matrix[i][j][0] == 0:
-                        continue
-                    y = start_date.strftime("%Y")
-                    m = start_date.strftime("%m")
-                    d = start_date.strftime("%d")
-                    new_entry = {
-                        "name" : f"{keys[i]}_to_{keys[j]}",
-                        "source" : keys[i],
-                        "destination" : keys[j],
-                        "file_size" : matrix[i][j][0],
-                        "start_time" : f"{y}-{m}-{d} 00:00:01",
-                        "file_transfer_time" : matrix[i][j][1],
-#                        "transfer_speed(b/s)" : float(matrix[i][j][0]*1024*1024*8)/float(matrix[i][j][1]),
-                        "transfer_speed(MB/s)" : float(matrix[i][j][0])/float(matrix[i][j][1])
-                    }
-                    to_write.append(new_entry)
+            #print(f"Success string writing took {end - start} seconds")
 
         #Mode to process transfer_failed and transfer-submission_failed data
         elif mode in [3, 4]:
@@ -702,31 +721,6 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                 print("Error: Uncaught error when looping through scroll, couldn't process response (if any), exiting...")
                 f.close()
                 errorHandler("scroll error")
-            for i in range(len(keys)):
-                for j in range(len(keys)):
-                    if matrix[0][i][j] == 0:
-                        continue
-                    new_entry = {
-                        "name" : f"{keys[i]}_to_{keys[j]}",
-                        "source" : keys[i],
-                        "destination" : keys[j],
-                        "reason" : "tx_error",
-                        "count" : matrix[0][i][j]
-                        }
-                    to_write.append(new_entry)
-
-            for i in range(len(keys)):
-                for j in range(len(keys)):
-                    if matrix[1][i][j] == 0:
-                        continue
-                    new_entry = {
-                        "name" : f"{keys[i]}_to_{keys[j]}",
-                        "source" : keys[i],
-                        "destination" : keys[j],
-                        "reason" : "rx_error",
-                        "count" : matrix[1][i][j]
-                        }
-                    to_write.append(new_entry)
 
         curr_date += relativedelta(months=+1)
     #Checks to make sure we have at least one transfer during the timeframe
@@ -736,14 +730,63 @@ def get_summary(mode, client, curr_date, end_date, es_template):
         f.close()
         errorHandler("no results")
 
-    print(f"Period contained {xfer_count} processable records.\n")
+    if mode in [0, 1, 2]:
+        for i in range(len(keys)):
+            for j in range(len(keys)):
+                if matrix[i][j][0] == 0:
+                    continue
+                y = start_date.strftime("%Y")
+                m = start_date.strftime("%m")
+                d = start_date.strftime("%d")
+                new_entry = {
+                    "name" : f"{keys[i]}_to_{keys[j]}",
+                    "source" : keys[i],
+                    "destination" : keys[j],
+                    "file_size" : matrix[i][j][0]*1048576,
+                    "start_time" : f"{y}-{m}-{d} 00:00:01",
+                    "file_transfer_time" : matrix[i][j][1],
+#                        "transfer_speed(b/s)" : float(matrix[i][j][0]*1024*1024*8)/float(matrix[i][j][1]),
+                    "transfer_speed(MB/s)" : round(float(matrix[i][j][0])/float(matrix[i][j][1]),2)
+                }
+                to_write.append(new_entry)
+    elif mode in [3, 4]:
+        for i in range(len(keys)):
+            for j in range(len(keys)):
+                if matrix[0][i][j] == 0:
+                    continue
+                new_entry = {
+                    "name" : f"{keys[i]}_to_{keys[j]}",
+                    "source" : keys[i],
+                    "destination" : keys[j],
+                    "reason" : "tx_error",
+                    "count" : matrix[0][i][j]
+                    }
+                to_write.append(new_entry)
 
+        for i in range(len(keys)):
+            for j in range(len(keys)):
+                if matrix[1][i][j] == 0:
+                    continue
+                new_entry = {
+                    "name" : f"{keys[i]}_to_{keys[j]}",
+                    "source" : keys[i],
+                    "destination" : keys[j],
+                    "reason" : "rx_error",
+                    "count" : matrix[1][i][j]
+                    }
+                to_write.append(new_entry)
+
+    print(f"Period contained {xfer_count} processable records.\n")
+    start = time.perf_counter()
     for entry in to_write[0:-1]:
         f.write(json.dumps(entry, indent=2))
         f.write(",\n")
     f.write(json.dumps(to_write[-1], indent=2))
     f.write("\n]}")
     f.close()
+    end = time.perf_counter()
+    io_time += end - start
+    #print(f"File IO took {end - start} seconds")
 
 #End of function definitions
 
@@ -758,3 +801,14 @@ if result_cutoff(client, index, es_template, curr_date, target_date) <= max_indi
     get_individual(mode, client, curr_date, target_date, es_template)
 else:
     get_summary(mode, client, curr_date, target_date, es_template)
+
+program_end = time.perf_counter()
+
+tot_time = program_end - program_init
+other_time = tot_time - cutoff_time - scroll_time - io_time
+
+print(f"Overall program time: {round(tot_time,2)} seconds")
+print(f"---Total cutoff check time: {round(cutoff_time,2)} seconds, {round(cutoff_time/tot_time*100,2)}%")
+print(f"---Total scroll time: {round(scroll_time,2)} seconds, {round(scroll_time/tot_time*100,2)}%")
+print(f"---Total file IO time: {round(io_time,2)} seconds, {round(io_time/tot_time*100,2)}%")
+print(f"---Other time usage: {round(other_time,2)}, {round(other_time/tot_time*100,2)}%")
