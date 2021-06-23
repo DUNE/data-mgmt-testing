@@ -489,7 +489,7 @@ if not data_exists:
 
 print(f"Period contained {xfer_count} processable records.")
 
-#the JSON output was wrong and crashing, so this removes the last trailling comma 
+#the JSON output was wrong and crashing, so this removes the last trailling comma
 f.seek(0, os.SEEK_END)
 f.seek(f.tell()-2, os.SEEK_SET)
 f.truncate()

@@ -41,6 +41,7 @@ import "./App.css";
 
 var resultsFound = false;
 var siteUnclicked = true;
+var failuresFound = false;
 
 const srGraphOptions = {
   scales: {
@@ -237,12 +238,13 @@ const markers = [
   // { markerOffset: 1, name: "QMUL", coordinates: [-0.041, 51.523] },
   // { markerOffset: 1, name: "RAL-PP", coordinates: [51.57, -1.31] },
 ];
-
-const baseUrlBackend = "http://fermicloud129.fnal.gov:3000";
 const geoUrl = "./world-110m.json";
 
 function App() {
+
+
   const [transfers, settransfers] = useState([]);
+  const [failures, setfailures] = useState([]);
   const [individualSiteData, setIndividualSiteData] = useState([]);
 
   const [dateRange, setDateRange] = useState({
@@ -299,11 +301,20 @@ function App() {
     return srGraphData;
   };
 
+
+
+
+
+
+
+
+
+
   const parseSiteList = () => {
     console.log(
-      "fetching DUNE site date from backend fermicloud129.fnal.gov:3001/getsites"
+      "fetching DUNE site date from backend http://127.0.0.1:3001/getsites"
     );
-    fetch("http://fermicloud129.fnal.gov:3001"+"/getsites")
+    fetch("http://127.0.0.1:3001/getsites")
       .then((res) => res.json())
       .then((res) => {
         //res.root.atp_site[0].$.latitude
@@ -365,8 +376,26 @@ function App() {
         // console.log(res.root.atp_site[0].group[1].$.name)
 
         parseTransfers(mappedSites);
+
+        if (showFailureMode){
+          console.log("getting transfers")
+          parseTransfers(mappedSites);
+        }
+        else {
+          console.log("getting failures")
+          parseFailures(mappedSites);
+        }
       });
   };
+
+
+
+
+
+
+
+
+
 
   const parseTransfers = (passedSites) => {
     resultsFound = false;
@@ -384,11 +413,11 @@ function App() {
     });
 
     console.log(
-      "fetching transfer data from: fermicloud129.fnal.gov:3001/test?" +
+      "fetching transfer data from: http://127.0.0.1:3001/test?" +
         dateParameters.toString()
     );
 
-    fetch("http://fermicloud129.fnal.gov:3001" + "/test?" + dateParameters.toString())
+    fetch("http://127.0.0.1:3001/test?" + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())
@@ -405,7 +434,7 @@ function App() {
           //TODO: modify this so that if the search fails we don't crash, maybe try/accept or if statement
 
 
-          var sourceLocationAlt = "None"; 
+          var sourceLocationAlt = "None";
           var destinationLocationAlt = "None";
           var mysteryCoordinates = [42,42];
 
@@ -524,9 +553,199 @@ function App() {
           console.log(resultsFound);
         }
 
-        resetCalendarDateClick();
+        //resetCalendarDateClick();
       });
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const parseFailures = (passedSites) => {
+    resultsFound = false;
+
+    if (dateRange.to === undefined) {
+      dateRange.to = dateRange.from;
+    }
+
+    setSavedStartDate(dateFormatConverter(dateRange.from));
+    setSavedEndDate(dateFormatConverter(dateRange.to));
+
+    var dateParameters = new URLSearchParams({
+      startDate: dateFormatConverter(dateRange.from),
+      endDate: dateFormatConverter(dateRange.to),
+    });
+
+    console.log(
+      "fetching failure data from: http://127.0.0.1:3001/allFails?" +
+        dateParameters.toString()
+    );
+
+    fetch("http://127.0.0.1:3001/allFails?" + dateParameters.toString())
+      //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
+
+      .then((res) => res.json())
+      .then((res) => {
+        let totalNumberFailed = 0;
+
+        console.log("result: ");
+        console.log(res.data);
+
+        if (
+          res.data[0].hasOwnProperty("name") &&
+          res.data[0].source !== "ERROR"
+        ) {
+          //TODO: modify this so that if the search fails we don't crash, maybe try/accept or if statement
+
+
+          var sourceLocationAlt = "None";
+          var destinationLocationAlt = "None";
+          var mysteryCoordinates = [42,42];
+
+          const mappedFailures = res.data.map((entry) => {
+            const sourceLocation = passedSites.find(
+              (location) => entry.source === location.name | entry.source === location.otherName
+            );
+
+            const destinationLocation = passedSites.find(
+              (location) => entry.destination === location.name | entry.destination === location.otherName
+            );
+
+            const failureCount = entry.count
+
+            totalNumberFailed += failureCount;
+
+            // console.log(entry.file_size)
+
+            if (!sourceLocation && !destinationLocation) {
+              return {
+                from: sourceLocationAlt,
+                to: destinationLocationAlt,
+                fromCoord: mysteryCoordinates,
+                toCoord: mysteryCoordinates,
+                failCount:failureCount
+              };
+            } else if (!sourceLocation) {
+              return {
+                from: sourceLocationAlt,
+                to: destinationLocation.name,
+                fromCoord: mysteryCoordinates,
+                toCoord: destinationLocation.coordinates,
+                failCount:failureCount
+              };
+            } else if (!destinationLocation) {
+              return {
+                from: sourceLocation.name,
+                to: destinationLocationAlt,
+                fromCoord: sourceLocation.coordinates,
+                toCoord: mysteryCoordinates,
+                failCount:failureCount
+              };
+            } else {
+              return {
+                from: sourceLocation.name,
+                to: destinationLocation.name,
+                fromCoord: sourceLocation.coordinates,
+                toCoord: destinationLocation.coordinates,
+                failCount:failureCount
+              };
+            }
+          });
+
+          console.log("mapped failures: ");
+          console.log(mappedFailures);
+
+          setfailures(mappedFailures);
+
+          console.log(markers)
+
+
+          // console.log("collection site objects:");
+          // console.log(collectionOfSiteObjects);
+
+          // collectionOfSiteObjects.forEach((entry) => {
+          //   res.data
+          //     .filter((jsonThing) => {
+          //       return jsonThing.source === entry.name;
+          //     })
+          //     // .forEach((item, i) => {
+          //     //   entry.totalSent += item.file_size / 1048576; //dividing the total bytes into megabytes 1024 b to kb, 1024 kb to mb
+          //     // });
+          //
+          //   res.data
+          //     .filter((jsonThing) => {
+          //       return jsonThing.destination === entry.name;
+          //     })
+          //     // .forEach((item, i) => {
+          //     //   entry.totalReceived += item.file_size / 1048576; //dividing the total bytes into megabytes 1024 b to kb, 1024 kb to mb
+          //     // });
+          //
+          //   entry.fractionOfSendErrors = entry.totalSent / allTransferedAmount;
+          //   entry.fractionOfRecErrors = entry.totalReceived / allTransferedAmount;
+          //
+          //   entry.totalSent = parseFloat(entry.totalSent).toFixed(2);
+          //   entry.totalReceived = parseFloat(entry.totalReceived).toFixed(2);
+          //   entry.fractionOfDataSent = parseFloat(
+          //     entry.fractionOfDataSent
+          //   ).toFixed(4);
+          // });
+
+          // resultsFound = true;
+          // // console.log("Results found:")
+          // // console.log(collectionOfSiteObjects);
+          //
+          // setIndividualSiteData(collectionOfSiteObjects);
+        }
+        else {
+          // failuresFound = false;
+          // console.log("No results returned for DUNE transfers");
+          // console.log(resultsFound);
+        }
+
+
+      });
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const proccessTransferAndCollapse = () => {
     parseSiteList();
@@ -536,6 +755,31 @@ function App() {
   const collapseLegend = () => {
     toggleLegendCard();
   };
+
+  const changeLegendText = () => {
+
+    if (legendOpen) {
+      return "Hide Legend"
+    }
+    else {
+      return "Show Legend"
+    }
+  }
+
+  const changeFailureText = () => {
+
+    if (!showFailureMode) {
+      return "View Failed Transfers"
+    }
+    else {
+      return "View Completed Transfers"
+    }
+  }
+
+  const getFailures = () => {
+    console.log(showFailureMode)
+    parseSiteList();
+  }
 
   const [tooltip, setTooltip] = useState("");
   const [mapPosition, setMapPosition] = useState({
@@ -557,15 +801,141 @@ function App() {
   const renderMap = () => {
     console.log("checking, failure mode is: " + showFailureMode);
     if (!showFailureMode) {
-      renderTransferMap();
+      return renderTransferMap();
     } else {
-      renderFailMap();
+      return renderFailMap();
     }
   };
 
+
+
+
+
   const renderFailMap = () => {
-    return <p>fail mode map will go here </p>;
+    return                     <div id={"map"}>
+                          <ComposableMap data-tip=""   projectionConfig={{
+    scale: 155,
+    rotation: [-11, 0, 0],
+  }}
+  width={800}
+  height={375}
+  style={{ width: "100%", height: "auto" }}  >
+
+                            <ZoomableGroup
+                              zoom={0.90}
+                              center={[0, 0]}
+                              onMoveEnd={setMapPosition}
+                            >
+                              <Geographies geography={geoUrl}>
+                                {({ geographies }) =>
+                                  geographies.map((geo) => (
+                                    <Geography
+                                      key={geo.rsmKey}
+                                      geography={geo}
+                                      fill="#9998A3"
+                                      stroke="#EAEAEC"
+                                    />
+                                  ))
+                                }
+                              </Geographies>
+                              {failures.map((oneOfThem, i) => {
+                                return (
+                                  <Line
+                                    key={i}
+                                    to={oneOfThem.toCoord}
+                                    from={oneOfThem.fromCoord}
+                                    stroke="#fdff33"
+                                    strokeWidth={1}
+                                    onMouseEnter={() => {
+                                      // setTooltip(`Last AVG speed: ${oneOfThem.speedInMB} MB/s`);       //need to consider what, if any, we want to put in tooltip over transfer line
+                                    }}
+                                    onMouseLeave={() => {
+                                      setTooltip("");
+                                    }}
+                                  />
+                                );
+                              })}
+                              //could add another line here ^ to show ration of send
+                              vs recieve between individual sites but it's one
+                              within another not side by side so doesn't look great.
+                              {individualSiteData.map(
+                                (
+                                  {
+                                    name,
+                                    coordinates,
+                                    markerOffset,
+                                    fractionOfSendErrors,
+                                    fractionOfRecErrors
+                                  },
+                                  i
+                                ) => (
+                                  <Marker
+                                    key={i}
+                                    coordinates={coordinates}
+                                    onClick={() => {
+                                      //alert("click action here");
+                                      //alert("radius click")
+                                    }}
+                                  >
+                                    <circle
+                                      r={40 * fractionOfSendErrors}
+                                      fill="rgba(255,0,0,0.4)"
+                                    />{" "}
+                                    //send fraction circle
+                                    <circle
+                                      r={40 * fractionOfRecErrors}
+                                      fill="rgba(12,123,220,0.4)"
+                                    />{" "}
+                                    //recieve fraction circle
+                                  </Marker>
+                                )
+                              )}
+                              {individualSiteData.map(
+                                (
+                                  {
+                                    name,
+                                    coordinates,
+                                    markerOffset,
+                                    fractionOfSendErrors,
+                                    fractionOfRecErrors,
+                                  },
+                                  i
+                                ) => (
+                                  <Marker
+                                    key={i}
+                                    coordinates={coordinates}
+                                    onClick={() => {
+                                      setSelectedSiteIndex(i);
+                                    }}
+                                    onMouseEnter={() => {
+                                      setTooltip(
+                                        // `${name}<br> TX: ${totalSent} MB <br>  RX: ${totalReceived} MB`
+                                      );
+                                    }}
+                                    onMouseLeave={() => {
+                                      setTooltip("");
+                                    }}
+                                  >
+                                    <circle
+                                      r={2.2 / mapPosition.zoom}
+                                      fill="rgba(75,0,146,1)"
+                                    />
+                                  </Marker>
+                                )
+                              )}
+                            </ZoomableGroup>
+                          </ComposableMap>
+                        </div>
   };
+
+
+
+
+
+
+
+
+
 
   const renderTransferMap = () => {
     return                     <div id={"map"}>
@@ -687,6 +1057,8 @@ function App() {
                         </div>
   };
 
+
+
   return (
     <div class="container-fluid">
       <div class="row">
@@ -722,7 +1094,7 @@ function App() {
                         <CardTitle class="cardTitle" tag="h5">
                           Legend
                           <Button id="collapseLegendButton" color="primary" onClick={collapseLegend}>
-                            Collapse Legend
+                            {changeLegendText()}
                           </Button>
                         </CardTitle>
                       </div>
@@ -841,14 +1213,9 @@ function App() {
                         </CardTitle>
                       </div>
                       <div class="col-md-3" id="mapModeSwitchCol">
-                        <Button
-                          color="primary"
-                          onClick={console.log(
-                            "in future this will switch map view"
-                          )}
-                        >
-                          Toggle Failure View
-                        </Button>
+                      <Button id="getFailuresButton" color="primary" onClick={() => {toggleFailMode(); getFailures();}}>
+                        {changeFailureText()}
+                      </Button>
                       </div>
                     </div>
 
@@ -861,7 +1228,7 @@ function App() {
 
                     <div class="row">
                       <div class="col-md-12">
-                        {renderTransferMap()}
+                        {renderMap()}
                         <ReactTooltip html={true}>{tooltip}</ReactTooltip>
                       </div>
                     </div>
@@ -992,35 +1359,10 @@ function App() {
                                 </Button>
                               </div>
                               <div class="col-md-9 centAlignCol">
-                                <Dropdown
-                                  isOpen={dropdownOpen}
-                                  toggle={toggleDropDown}
-                                  onClick={console.log(
-                                    "will set mode in future"
-                                  )}
-                                >
-                                  <DropdownToggle caret>
-                                    Select Transfer Mode
-                                  </DropdownToggle>
-                                  <DropdownMenu>
-                                    <DropdownItem value="0">
-                                      Global Transfers Completed
-                                    </DropdownItem>
-                                    <DropdownItem value="4">
-                                      Global Transfers Failed
-                                    </DropdownItem>
-                                    <DropdownItem divider />
-                                    <DropdownItem header>
-                                      Diagnostic Mode Tests{" "}
-                                    </DropdownItem>
-                                    <DropdownItem value="1">
-                                      Only Test Mode Done
-                                    </DropdownItem>
-                                    <DropdownItem value="4">
-                                      Only Test Mode Failed
-                                    </DropdownItem>
-                                  </DropdownMenu>
-                                </Dropdown>
+
+
+
+
                               </div>
                             </div>
 
