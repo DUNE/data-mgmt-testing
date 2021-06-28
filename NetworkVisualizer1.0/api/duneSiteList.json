@@ -19,7 +19,7 @@
             }
         ],
         "last_update": [
-            "2021-05-28T22:36:26Z"
+            "2021-06-23T08:09:42Z"
         ],
         "vo": [
             "dune"
@@ -650,6 +650,20 @@
                                 }
                             }
                         ]
+                    },
+                    {
+                        "$": {
+                            "endpoint": "picperfsonar-bandwidth.pic.es",
+                            "flavour": "Bandwidth",
+                            "hostname": "picperfsonar-bandwidth.pic.es"
+                        }
+                    },
+                    {
+                        "$": {
+                            "endpoint": "picperfsonar-latency.pic.es",
+                            "flavour": "Latency",
+                            "hostname": "picperfsonar-latency.pic.es"
+                        }
                     },
                     {
                         "$": {
