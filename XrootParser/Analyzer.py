@@ -1,6 +1,6 @@
 #!/usr/local/opt/python/libexec/bin/python
 # works with python2
-import os,sys,csv,string,json,datetime,dateutil
+import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import math
 DUNEPRO=False  # only dunepro
 xroot = True  # only xrootd urls
@@ -72,7 +72,7 @@ def setXYLabels(h,x,y):
 def analyze(start_date,end_date,delta ):
 
 # first get lists of variables
-
+  
   sites = {}
   disks = {}
   users = {}
@@ -306,8 +306,25 @@ def analyze(start_date,end_date,delta ):
           writer.writeheader()
           for data in summary:
               writer.writerow(data)
+              
   except IOError:
-      print("I/O error")
+      print("csv I/O error")
+  try:
+      g = open("digest_%s.json"%(out_name),'w')
+      s = json.dumps(summary,indent=2)
+      g.write(s)
+  except IOError:
+      print("json I/O error")
+      
+  try:
+    with jsonlines.open("digest_%s.jsonl"%(out_name), mode='w') as writer:
+      for i in summary:
+        writer.write(i)
+        
+  except IOError:
+      print("jsonl I/O error")
+      
+  
   
  # cross.Scale(1./days)
  # state.Scale(1./days)
@@ -327,17 +344,17 @@ def analyze(start_date,end_date,delta ):
   cross.Draw("COLZ")
 
   cross.Draw("TEXT SAME")
-  c.Print(out_name+"_traffic.png")
+  c.Print("pix/"+out_name+"_traffic.png")
   state.Draw("COLZ")
   state.Draw("TEXT SAME")
-  c.Print(out_name+"_states.png")
+  c.Print("pix/"+out_name+"_states.png")
   
   
   c.SetLogz(0)
   c.SetLogy(1)
   totalbytes.SetMinimum(1.)
   totalbytes.Draw("")
-  c.Print(out_name+"_totalbytes_site.png")
+  c.Print("pix/"+out_name+"_totalbytes_site.png")
   leg = ROOT.TLegend(0.75,0.75,0.85,0.87)
   leg.SetBorderSize(0)
   
@@ -354,11 +371,11 @@ def analyze(start_date,end_date,delta ):
   leg.SetFillColor(0)
   leg.Draw("same")
   
-  c.Print(out_name+"_totalbytes_user.png")
+  c.Print("pix/"+out_name+"_totalbytes_user.png")
   
   
   totalbytes_date.Draw()
-  c.Print(out_name+"_totalbytes_date.png")
+  c.Print("pix/"+out_name+"_totalbytes_date.png")
   c.SetLogy(0)
   total = consumed.Clone("total")
   total.Add(skipped)
@@ -368,7 +385,7 @@ def analyze(start_date,end_date,delta ):
   efficiency.Draw("COLZ NUM")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
   efficiency.Draw("TEXT45 SAME")
-  c.Print(out_name+"_efficiency.png")
+  c.Print("pix/"+out_name+"_efficiency.png")
   c.SetLogz(1)
   rate.SetMaximum(100.)
   rate.Divide(consumed)
@@ -376,23 +393,23 @@ def analyze(start_date,end_date,delta ):
   rate.Draw("COLZ")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
   rate.Draw("TEXT SAME")
-  c.Print(out_name+"_rate.png")
+  c.Print("pix/"+out_name+"_rate.png")
   rate_by_app.SetMaximum(100.)
   rate_by_app.Divide(consumed_by_app)
   rate_by_app.SetTitle(rate_by_app.GetTitle()+" " + out_name)
   rate_by_app.Draw("COLZ")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
   rate_by_app.Draw("TEXT45 SAME")
-  c.Print(out_name+"_rate_by_app.png")
+  c.Print("pix/"+out_name+"_rate_by_app.png")
   
   c.SetLogz(0)
   ratelog10.Draw("BOX")
-  c.Print(out_name+"_ratelog10.png")
+  c.Print("pix/"+out_name+"_ratelog10.png")
   print ("total count is ",count)
   speeds = ROOT.TFile.Open(out_name+"_speeds.root","RECREATE")
   stat = np.zeros(4)
   remstat = np.zeros(4)
-  r = open(out_name+"_stats.csv",'w')
+  r = open("pix/"+out_name+"_stats.csv",'w')
   
   str = "%20s\t%10s\t %5s\t -\t%5s\t +\t%5s\t %10s\t %5s\t -\t%5s\t +\t%5s\t  ratio = \t%5s"%("application","n FNAL","mean","1sig","1sig","nremote","mean","1sig","1sig","ratio")
   print (str)
@@ -447,8 +464,15 @@ def analyze(start_date,end_date,delta ):
 if __name__ == '__main__':
 
    
- 
-  start_date = date(2021,1 , 1)
+  if not os.path.exists("./data"):
+    print (" expects data to have been moved to ./data directiory")
+    sys.exit(1)
+  if not os.path.exists("./pix"):
+    print (" making a pix directory")
+    os.mkdir("./pix")
+
+    
+  start_date = date(2021,6 , 1)
   end_date = date(2021, 6, 30)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
