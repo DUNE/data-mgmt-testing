@@ -2,7 +2,7 @@
 import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import requests
 
-DEBUG=True
+
 from datetime import date,timezone,datetime
 from dateutil import parser
 
@@ -76,47 +76,38 @@ def Cleaner(info,projectmeta):
   for item in layer2:
     count += 1
     source = item["_source"]
-    #if DEBUG:
-      #print ("an event", source["event"])
     if source["event"] in dropevents:
-      #if DEBUG:
-      #  print ("drop event",source["event"])
+      #print ("drop event",source["eventq"])
       continue
     
     if source["project_id"] != project_id:
-      if DEBUG:
-        print (" got the wrong project? ",project_id, source["project_id"],source["@timestamp"])
-        print (source)
+      #print (" got the wrong project? ",project_id, source["project_id"],source["@timestamp"])
       continue
     source["timestamp"] = human2number(source["@timestamp"])
     
     if not "file_id" in source:
-      if DEBUG:
-        print ("No file_id")
+      #print ("No file_id")
       continue
     if "file_state" in source and source["file_state"] == "delivered":
       #print ("drop delivered")
       continue
-    if DEBUG:
-      print ("got here",len(source))
+    #print ("got here",len(source))
     source = fileFinder(source)
     source = siteFinder(source)
     #print ("got here",len(source))
     # add project metadata
     for meta in projectmeta:
       source[meta] = projectmeta[meta]
-      if DEBUG: print ("got here with meta",len(source))
+    #print ("got here with meta",len(source))
     # clean out stuff we don't need
     for a in drops:
       if a in source:
         source.pop(a)
-    if DEBUG:
-      print ("after clean",len(source))
+    #print ("after clean",len(source))
     if( count < 2 or "eos" in source["file_location"]):
       jsonprint (source)
     clean.append(source)
-    if DEBUG:
-      print (" size of clean record ",len(clean))
+    #print (" size of clean record ",len(clean))
   return clean
   
 # print a dictionary as pretty json
@@ -144,7 +135,7 @@ def number2human(stamp):
 # get info from the sam-events elasticsearch for a given project
 def getProjectInfo(projectID):
  
-  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-2021.05/_search?q=experiment:dune%%20and%%20project_id:%s&size=10000"%(projectID)
+  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-2021*/_search?q=experiment:dune%%20and%%20project_id:%s&size=10000"%(projectID)
   theurl = urltemplate
   print (theurl)
   try:
@@ -186,6 +177,8 @@ def getProjectMeta(pname):
   if len(processes) > 0:
     application = processes[0]["application"]["name"]
     brief["application"]=application
+    version = processes[0]["application"]["version"]
+    brief["version"] = version
   return brief
 
 def findProjectInfo(projects,tag="date"):
@@ -316,9 +309,7 @@ def sequence(firstdate,lastdate,ids):
       sum = first
       sum["file_size"] = file_size
       #print (sum["file_size"])
-      if not "data_tier" in md:
-        print (" no data-tier - this is strange ", md)
-        continue
+      
       sum["data_tier"] = md["data_tier"]
       campaign = None
       if "DUNE.campaign" in md:
