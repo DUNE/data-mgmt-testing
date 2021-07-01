@@ -1,3 +1,4 @@
+//Developed by Lydia Brynmoor
 import React from "react";
 import ReactDOM from "react-dom";
 // import "./index.css";
