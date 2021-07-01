@@ -210,7 +210,11 @@ def analyze(start_date,end_date,delta ):
       application = "unknown"
       if "application" in item:
         application = item["application"]
-      
+      version = "unknown"
+      if "version" in item:
+        version = item["version"]
+      if "." in version:
+        version = "invalid"
       isite = float(sites[site])-.5
       disk = item["file_location"]
       idisk = float(disks[disk])-.5
@@ -240,6 +244,7 @@ def analyze(start_date,end_date,delta ):
       sumrec["file_size"] = item["file_size"]
       sumrec["username"] = user
       sumrec["application"] = application
+      sumrec["version"] = version
       sumrec["final_state"] = finalstate
       sumrec["site"] = site
       sumrec["rate"] = item["rate"]
@@ -472,7 +477,7 @@ if __name__ == '__main__':
     os.mkdir("./pix")
 
     
-  start_date = date(2021,6 , 1)
-  end_date = date(2021, 6, 30)
+  start_date = date(2021,5 , 1)
+  end_date = date(2021, 5, 30)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
