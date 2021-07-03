@@ -476,8 +476,13 @@ if __name__ == '__main__':
     print (" making a pix directory")
     os.mkdir("./pix")
 
-    
-  start_date = date(2021,5 , 1)
-  end_date = date(2021, 5, 30)
+  
+  start_date = date(2021,1 , 1)
+  end_date = date(2021, 1, 30)
+  if len(sys.argv) == 3:
+    start = sys.argv[1].split("-")
+    end = sys.argv[2].split("-")
+    start_date = date(int(start[0]), int(start[1]) ,int(start[2]))
+    end_date = date(int(end[0]), int(end[1]) ,int(end[2]))
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)
