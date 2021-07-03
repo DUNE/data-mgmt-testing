@@ -2,6 +2,7 @@
 # works with python2
 import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import math
+durationcut = 100
 DUNEPRO=False  # only dunepro
 xroot = True  # only xrootd urls
 # loop over a range of input json files and histogram data flow vs various characteristics
@@ -255,13 +256,15 @@ def analyze(start_date,end_date,delta ):
       sumrec["country"] = site[0:2]
       myrate = item["rate"]
       # get intrinsic rate
+      if duration < durationcut:
+        continue
       if not "us" in sumrec["country"] and not "fnal" in sumrec["node"] and finalstate == "consumed":
-        if duration > 10 and "fnal" in disk:
+        if  "fnal" in disk:
           remtiming[application].Fill(math.log10(myrate))
       if "fnal" in site:
         sumrec["country"]="fnal"
       if "fnal" in site and finalstate=="consumed":
-        if duration > 10 and "fnal" in disk:
+        if "fnal" in disk:
           apptiming[application].Fill(math.log10(myrate))
       
       if "cern" in site:
@@ -272,12 +275,11 @@ def analyze(start_date,end_date,delta ):
         sumrec["campaign"] = None
       #print (sumrec)
       summary.append(sumrec)
-      if item["username"] == "dunepro" and not DUNEPRO :
-        continue
-      if not item["username"] == "dunepro" and DUNEPRO :
-        continue
-      if duration < 10:
-        continue
+#      if item["username"] == "dunepro" and not DUNEPRO :
+#        continue
+#      if not item["username"] == "dunepro" and DUNEPRO :
+#        continue
+#     
       if finalstate not in ["consumed","skipped"]:
         continue
       count += 1
@@ -460,7 +462,7 @@ def analyze(start_date,end_date,delta ):
     apptiming[app].SetLineColor(2)
     apptiming[app].Draw("same hist")
     leg.Draw()
-    c.Print("pix/"+app+".png")
+    c.Print("pix/"+out_name+"_"+app+".png")
     
   
   r.close()
