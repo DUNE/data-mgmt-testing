@@ -39,7 +39,7 @@ def fileFinder(source):
 def siteFinder(source):
   
   knownsites = [".gov",".fr",".es",".br",".edu",".in",".cz",".uk",".fr",".ch",".nl",".ru"]
-  specials = {"dice":"dice.bristol.uk","CRUSH":"crush.syracuse.edu","gridpp.rl.ac.uk":"gridpp.rl.ac.uk","comp20-":"lancaster.uk","discovery":"nmsu.edu","nid":"nersc.lbnl.gov","wn-2":"unibe-lhcp.bern.ch","qmul":"esc.qmul.uk","uct2":"uct2-mwt2.uchicago.edu","nubes.stfc.ac.uk":"nubes.stfc.ac.uk","unl.edu":"unl.edu","wn0":"sheffield.uk","wn1":"sheffield.uk","wn2":"sheffield.uk"}
+  specials = {"dice":"dice.bristol.uk","CRUSH":"crush.syracuse.edu","gridpp.rl.ac.uk":"gridpp.rl.ac.uk","comp20-":"lancaster.uk","discovery":"nmsu.edu","nid":"nersc.lbnl.gov","wn-2":"unibe-lhcp.bern.ch","qmul":"esc.qmul.uk","uct2":"uct2-mwt2.uchicago.edu","nubes.stfc.ac.uk":"nubes.stfc.ac.uk","unl.edu":"unl.edu","wn0":"sheffield.uk","wn1":"sheffield.uk","wn2":"sheffield.uk","local-":"pr"}
   if "node" in source:
     node = source["node"]
     for s in specials:
@@ -61,7 +61,7 @@ def siteFinder(source):
   return source
   
 def Cleaner(info,projectmeta):
-
+  print ("Start Cleaner ", projectmeta)
   drops = ["type","station","@version","kafka"]
   dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error"]
   drops += ["files in snapshot", "first_name","group_id","group_name","last_name","person_id","processes","project_desc","station_id","experiment","file_name","event_time"]
@@ -142,9 +142,9 @@ def number2human(stamp):
     
     
 # get info from the sam-events elasticsearch for a given project
-def getProjectInfo(projectID):
- 
-  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-2021.05/_search?q=experiment:dune%%20and%%20project_id:%s&size=10000"%(projectID)
+def getProjectInfo(projectID,datestring):
+  #print (datestring[0:4],datestring[5:7])
+  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-%4s.%2s/_search?q=experiment:dune%%20and%%20project_id:%s&size=10000"%(datestring[0:4],datestring[5:7],projectID)
   theurl = urltemplate
   print (theurl)
   try:
@@ -196,9 +196,9 @@ def findProjectInfo(projects,tag="date"):
     if "prestage" in m["project_name"]:
       print ("skip prestage",p )
       continue
-    
+    print ("FindProject",m)
     id = m["project_id"]
-    record =  Cleaner(getProjectInfo(id),m)
+    record =  Cleaner(getProjectInfo(id,m["project_start_time"]),m)
     print (" made a record",len(record))
     outname = "raw_%s_%d.jsonl"%(tag,id)
     with jsonlines.open(outname, mode='w') as writer:
