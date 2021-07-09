@@ -391,8 +391,11 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
   #info = result
   new = sequence(first,last,pids)
   g = open("%s_summary_%s_%s.json"%(expt,first,last),'w')
+ 
+   
   s = json.dumps(new,indent=2)
   g.write(s)
+  
   g.close()
   with jsonlines.open("%s_summary_%s_%s.jsonl"%(expt,first,last), mode='w') as writer:
     for i in new:
