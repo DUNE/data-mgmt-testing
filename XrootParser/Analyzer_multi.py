@@ -178,7 +178,7 @@ def analyze(start_date,end_date,delta , expt):
     end_range = start_range + delta
     
     inputfilename = "data/%s_summary_%s_%s.json"%(expt,start_range,end_range)
-    
+    print ("read ",inputfilename)
     if not os.path.exists(inputfilename):
       start_range += delta
       continue
@@ -260,12 +260,12 @@ def analyze(start_date,end_date,delta , expt):
       if duration < durationcut:
         continue
       if not "us" in sumrec["country"] and not "fnal" in sumrec["node"] and finalstate == "consumed":
-        if  "fnal" in disk:
+        if  "fnal" in disk or "gsiftp" in disk:
           remtiming[application].Fill(math.log10(myrate))
       if "fnal" in site:
         sumrec["country"]="fnal"
       if "fnal" in site and finalstate=="consumed":
-        if "fnal" in disk:
+        if "fnal" in disk or "gsiftp" in disk:
           apptiming[application].Fill(math.log10(myrate))
       
       if "cern" in site:
@@ -482,7 +482,7 @@ if __name__ == '__main__':
   
   start_date = date(2021,1 , 1)
   end_date = date(2021, 1, 30)
-  if len(sys.argv) == 3:
+  if len(sys.argv) >= 3:
     start = sys.argv[1].split("-")
     end = sys.argv[2].split("-")
     start_date = date(int(start[0]), int(start[1]) ,int(start[2]))

@@ -5,10 +5,8 @@ import requests
 DEBUG=True
 from datetime import date,timezone,datetime
 from dateutil import parser
-expt = "minerva"
-
 import samweb_client
-samweb = samweb_client.SAMWebClient(experiment=expt)
+
 
 # read in the json from a file
 def jsonReader(configfile):
@@ -159,7 +157,7 @@ def number2human(stamp):
     
     
 # get info from the sam-events elasticsearch for a given project
-def getProjectInfo(projectID,datestring):
+def getProjectInfo(expt, projectID,datestring):
   #print (datestring[0:4],datestring[5:7])
   urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-%4s.%2s/_search?q=experiment:%s%%20and%%20project_id:%s&size=10000"%(datestring[0:4],datestring[5:7],expt,projectID)
   theurl = urltemplate
@@ -179,7 +177,8 @@ def getProjectInfo(projectID,datestring):
 
 # get list of sam project ID's to send to GetProjectInfo
 
-def getProjectList(begin,end,n=10):
+def getProjectList(expt,begin,end,n=10):
+  samweb = samweb_client.SAMWebClient(experiment=expt)
   cleaned = []
   names = []
   projects = samweb.listProjects(started_after=begin,started_before=end)
@@ -198,7 +197,8 @@ def getProjectList(begin,end,n=10):
     #print ("cleaned",cleaned[0:min(len(cleaned),n)])
   return [cleaned[0:min(len(cleaned),n)],names[0:min(len(cleaned),n)]]
 
-def getProjectMeta(pname):
+def getProjectMeta(expt,pname):
+  samweb = samweb_client.SAMWebClient(experiment=expt)
   md = samweb.projectSummary(pname)
   
   processes = md["processes"]
@@ -212,19 +212,19 @@ def getProjectMeta(pname):
     brief["application"]=application
   return brief
 
-def findProjectInfo(projects,tag="date"):
+def findProjectInfo(expt, projects,tag="date"):
   result = []
   for p in projects:
-    m = getProjectMeta(p)
+    m = getProjectMeta(expt,p)
     #print ("project",p,m)
     if "prestage" in m["project_name"]:
       print ("skip prestage",p )
       continue
     print ("FindProject",m)
     id = m["project_id"]
-    record =  Cleaner(getProjectInfo(id,m["project_start_time"]),m)
+    record =  Cleaner(getProjectInfo(expt,id,m["project_start_time"]),m)
     print (" made a record",len(record))
-    outname = "%s_raw_%s_%d.jsonl"%(expt,tag,id)
+    outname = "data/%s_raw_%s_%d.jsonl"%(expt,tag,id)
     with jsonlines.open(outname, mode='w') as writer:
       for i in record:
         writer.write(i)
@@ -307,14 +307,15 @@ def cleanRecord(record,uselist):
       
 # log first and last records and calculate duration
 
-def sequence(firstdate,lastdate,ids):
+def sequence(expt,firstdate,lastdate,ids):
+  samweb = samweb_client.SAMWebClient(experiment=expt)
   #print (ids)
   actions = []
   for pid in ids:
   # build a small map for each project
     record = {}
     print (pid)
-    fname = "%s_raw_%s_%s_%d.jsonl"%(expt,firstdate,lastdate,pid)
+    fname = "data/%s_raw_%s_%s_%d.jsonl"%(expt,firstdate,lastdate,pid)
     print ("fname",fname)
     with jsonlines.open(fname, mode='r') as reader:
       for obj in reader:
@@ -358,9 +359,10 @@ def sequence(firstdate,lastdate,ids):
   return actions
 
 # test the stuff above
-def test(first = "2021-02-01", last = "2021-02-15", n=10000):
+def test(expt, first = "2021-02-01", last = "2021-02-15",  n=10000):
+  
   tag= first+"_"+last
-  [pids,names] = getProjectList(first,last,n)
+  [pids,names] = getProjectList(expt,first,last,n)
   print (pids)
 #  print ("this many projects",len(pids))
 #  if len(pids) > 2:
@@ -368,7 +370,7 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
 # first get the info
   print (names)
 
-  info = findProjectInfo(names,tag)
+  info = findProjectInfo(expt,names,tag)
 #  e = open("raw_%s_%s.json"%(first,last),'w')
 #  s = json.dumps(info, indent=2)
 #  e.write(s)
@@ -389,19 +391,22 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
   
 
   #info = result
-  new = sequence(first,last,pids)
-  g = open("%s_summary_%s_%s.json"%(expt,first,last),'w')
+  new = sequence(expt,first,last,pids)
+  g = open("data/%s_summary_%s_%s.json"%(expt,first,last),'w')
  
    
   s = json.dumps(new,indent=2)
   g.write(s)
   
   g.close()
-  with jsonlines.open("%s_summary_%s_%s.jsonl"%(expt,first,last), mode='w') as writer:
+  with jsonlines.open("data/%s_summary_%s_%s.jsonl"%(expt,first,last), mode='w') as writer:
     for i in new:
       writer.write(i)
   
 if __name__ == '__main__':
+  
+  
+
 
   if len(sys.argv) < 3:
     print (" need data range <first> <last> ")
@@ -409,4 +414,9 @@ if __name__ == '__main__':
   n = 1000000
   if len(sys.argv) >= 4:
     n = int(sys.argv[3])
-  test(sys.argv[1],sys.argv[2],n)
+  if len(sys.argv) >= 5:
+    expt = sys.argv[4]
+  else:
+    expt = "dune"
+  
+  test(expt, sys.argv[1],sys.argv[2],n)
