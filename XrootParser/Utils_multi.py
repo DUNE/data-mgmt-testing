@@ -364,6 +364,7 @@ def sequence(expt,firstdate,lastdate,ids):
       md = samweb.getMetadata(fid)
       file_size = md["file_size"]
       file_type = md["file_type"]
+       
       sum = {}
       
       f = 0
@@ -374,9 +375,10 @@ def sequence(expt,firstdate,lastdate,ids):
       sum["file_type"] = file_type
       #print (sum["file_size"])
       if not "data_tier" in md:
-        print (" no data-tier - this is strange ", md)
-        continue
-      sum["data_tier"] = md["data_tier"]
+        print (" no data_tier - this is strange ", md)
+        sum["data_tier"] = "unknown"
+      else:
+        sum["data_tier"] = md["data_tier"]
       campaign = None
       if "DUNE.campaign" in md:
         sum["campaign"] = md["DUNE.campaign"]
