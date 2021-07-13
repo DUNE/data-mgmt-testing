@@ -244,6 +244,8 @@ def analyze(start_date,end_date,delta , expt):
       sumrec["timestamp"] = item["@timestamp"]
       sumrec["duration"] = duration
       sumrec["file_size"] = item["file_size"]
+      if "file_type" in item: # added in later. 
+      sumrec["file_type"] = item["file_type"]
       sumrec["username"] = user
       sumrec["application"] = application
       sumrec["version"] = version

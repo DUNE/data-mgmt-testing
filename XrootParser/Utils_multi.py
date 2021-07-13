@@ -363,7 +363,7 @@ def sequence(expt,firstdate,lastdate,ids):
       sortedtimes = sorted(times)
       md = samweb.getMetadata(fid)
       file_size = md["file_size"]
-      
+      file_type = md["file_type"]
       sum = {}
       
       f = 0
@@ -371,6 +371,7 @@ def sequence(expt,firstdate,lastdate,ids):
       last = record[fid][sortedtimes[len(times)-1]]
       sum = first
       sum["file_size"] = file_size
+      sum["file_type"] = file_type
       #print (sum["file_size"])
       if not "data_tier" in md:
         print (" no data-tier - this is strange ", md)
