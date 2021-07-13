@@ -491,7 +491,7 @@ if __name__ == '__main__':
   else:
     print ("expects YYYY-MM-DD YYYY-MM-DD for start and end dates, using default dates",start_date,end_date)
   delta = timedelta(days=1)
-  if len(sys.argv) >=4:
+  if len(sys.argv) >=3:
     expt = sys.argv[3]
   else:
     print ("assuming you want expt==dune")

@@ -402,7 +402,7 @@ def test(expt, first = "2021-02-01", last = "2021-02-15",  n=10000):
   print (names)
 
   findProjectInfo(expt,names,tag)
-  "
+  
 #  e = open("raw_%s_%s.json"%(first,last),'w')
 #  s = json.dumps(info, indent=2)
 #  e.write(s)
