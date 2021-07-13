@@ -471,7 +471,7 @@ def analyze(start_date,end_date,delta , expt):
 
 if __name__ == '__main__':
 
-   
+  
   if not os.path.exists("./data"):
     print (" expects data to have been moved to ./data directiory")
     sys.exit(1)
@@ -479,6 +479,7 @@ if __name__ == '__main__':
     print (" making a pix directory")
     os.mkdir("./pix")
 
+  # determine the dates
   
   start_date = date(2021,1 , 1)
   end_date = date(2021, 1, 30)
@@ -487,9 +488,12 @@ if __name__ == '__main__':
     end = sys.argv[2].split("-")
     start_date = date(int(start[0]), int(start[1]) ,int(start[2]))
     end_date = date(int(end[0]), int(end[1]) ,int(end[2]))
+  else:
+    print ("expects YYYY-MM-DD YYYY-MM-DD for start and end dates, using default dates",start_date,end_date)
   delta = timedelta(days=1)
   if len(sys.argv) >=4:
     expt = sys.argv[3]
   else:
+    print ("assuming you want expt==dune")
     expt = "dune"
   analyze(start_date,end_date,delta,expt)

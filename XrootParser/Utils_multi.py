@@ -2,7 +2,7 @@
 import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import requests
 
-DEBUG=True
+DEBUG=False
 from datetime import date,timezone,datetime
 from dateutil import parser
 import samweb_client
@@ -160,6 +160,13 @@ def number2human(stamp):
 def getProjectInfo(expt, projectID,datestring):
   #print (datestring[0:4],datestring[5:7])
   urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-%4s.%2s/_search?q=experiment:%s%%20and%%20project_id:%s&size=10000"%(datestring[0:4],datestring[5:7],expt,projectID)
+  
+  nextmonth = (int(datestring[5:7])+1)%12
+  nextyear = (int(datestring[0:4]))
+  if nextmonth == 1:
+    nextyear += 1
+  snextmonth=str(nextmonth).zfill(2)
+  urltemplate2 = "https://fifemon-es.fnal.gov/sam-events-v1-%4s.%2s/_search?q=experiment:%s%%20and%%20project_id:%s&size=10000"%(nextyear,snextmonth,expt,projectID)
   theurl = urltemplate
   print (theurl)
   try:
@@ -171,9 +178,23 @@ def getProjectInfo(expt, projectID,datestring):
     print("request failed - maybe you need the VPN")
     result={}
   print ("size of result ", len(result.text))
+  result2 = {}
+  theurl = urltemplate2
+  print (theurl)
+  try:
+    result2 = requests.get(theurl)
+  except:
+    print("request failed - maybe you need the VPN")
+    result2={}
+  if "Forbidden" in result2.text:
+    print("request failed - maybe you need the VPN")
+    result2={}
+  print ("size of result2 ", len(result2.text))
+  #print (result2.text)
   if DEBUG:
-    print ("result", result.text)
-  return json.loads(result.text)
+    print ("result2", result2.text)
+  
+  return [json.loads(result.text),json.loads(result2.text)]
 
 # get list of sam project ID's to send to GetProjectInfo
 
@@ -222,19 +243,26 @@ def findProjectInfo(expt, projects,tag="date"):
       continue
     print ("FindProject",m)
     id = m["project_id"]
-    record =  Cleaner(getProjectInfo(expt,id,m["project_start_time"]),m)
-    print (" made a record",len(record))
+    answer = getProjectInfo(expt,id,m["project_start_time"])
+    
+    record1 =  Cleaner(answer[0],m)
+    record2 =  Cleaner(answer[1],m)
+    
+    print (" made a record",len(record1),len(record2))
     outname = "data/%s_raw_%s_%d.jsonl"%(expt,tag,id)
     with jsonlines.open(outname, mode='w') as writer:
-      for i in record:
+      for i in record1:
+        writer.write(i)
+      for i in record2:
         writer.write(i)
     print ("wrote a record to ",outname)
-    result += record
+    #result += record1
+    #result += record2
       
     #//summary = samweb.projectSummary(p)
     #print (summary)
     writer.close()
-  return result
+  #return result
   
 # remove records we don't need
   
@@ -317,6 +345,9 @@ def sequence(expt,firstdate,lastdate,ids):
     print (pid)
     fname = "data/%s_raw_%s_%s_%d.jsonl"%(expt,firstdate,lastdate,pid)
     print ("fname",fname)
+    if not os.path.exists(fname):
+      print ("raw file ",fname," seems not to exist")
+    
     with jsonlines.open(fname, mode='r') as reader:
       for obj in reader:
         fid = obj["file_id"]
@@ -370,7 +401,8 @@ def test(expt, first = "2021-02-01", last = "2021-02-15",  n=10000):
 # first get the info
   print (names)
 
-  info = findProjectInfo(expt,names,tag)
+  findProjectInfo(expt,names,tag)
+  "
 #  e = open("raw_%s_%s.json"%(first,last),'w')
 #  s = json.dumps(info, indent=2)
 #  e.write(s)
@@ -391,6 +423,7 @@ def test(expt, first = "2021-02-01", last = "2021-02-15",  n=10000):
   
 
   #info = result
+  # this reads it back from output files.
   new = sequence(expt,first,last,pids)
   g = open("data/%s_summary_%s_%s.json"%(expt,first,last),'w')
  
