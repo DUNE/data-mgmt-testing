@@ -70,7 +70,7 @@ def setXYLabels(h,x,y):
   setXLabels(h,x)
   setYLabels(h,y)
 
-def analyze(start_date,end_date,delta ):
+def analyze(start_date,end_date,delta , expt):
 
 # first get lists of variables
   
@@ -84,11 +84,12 @@ def analyze(start_date,end_date,delta ):
   
   while start_range < end_date:
     end_range = start_range + delta
-    inputfilename = "data/summary_%s_%s.json"%(start_range,end_range)
+    inputfilename = "data/%s_summary_%s_%s.json"%(expt,start_range,end_range)
     if not os.path.exists(inputfilename):
       start_range += delta
       continue
     inputfile = open(inputfilename,'r')
+    print ("input:",inputfilename)
     start_range += delta
     data = json.load(inputfile)
     apps = getListOfTypes(data,"application",apps)
@@ -105,9 +106,9 @@ def analyze(start_date,end_date,delta ):
   firstday = start_date
   lastday = end_date
   if (not DUNEPRO):
-    out_name = "user_%s_%s"%(firstday,lastday)
+    out_name = "%s_all_%s_%s"%(expt,firstday,lastday)
   else:
-    out_name = "dunepro_%s_%s"%(firstday,lastday)
+    out_name = "%s_dunepro_%s_%s"%(expt,firstday,lastday)
   if not xroot:
        out_name = out_name + "_notxroot"
   print (sites)
@@ -176,8 +177,8 @@ def analyze(start_date,end_date,delta ):
   while start_range < end_date:
     end_range = start_range + delta
     
-    inputfilename = "data/summary_%s_%s.json"%(start_range,end_range)
-    
+    inputfilename = "data/%s_summary_%s_%s.json"%(expt,start_range,end_range)
+    print ("read ",inputfilename)
     if not os.path.exists(inputfilename):
       start_range += delta
       continue
@@ -243,6 +244,8 @@ def analyze(start_date,end_date,delta ):
       sumrec["timestamp"] = item["@timestamp"]
       sumrec["duration"] = duration
       sumrec["file_size"] = item["file_size"]
+      if "file_type" in item: # added in later.
+        sumrec["file_type"] = item["file_type"]
       sumrec["username"] = user
       sumrec["application"] = application
       sumrec["version"] = version
@@ -259,12 +262,12 @@ def analyze(start_date,end_date,delta ):
       if duration < durationcut:
         continue
       if not "us" in sumrec["country"] and not "fnal" in sumrec["node"] and finalstate == "consumed":
-        if  "fnal" in disk:
+        if  "fnal" in disk or "gsiftp" in disk:
           remtiming[application].Fill(math.log10(myrate))
       if "fnal" in site:
         sumrec["country"]="fnal"
       if "fnal" in site and finalstate=="consumed":
-        if "fnal" in disk:
+        if "fnal" in disk or "gsiftp" in disk:
           apptiming[application].Fill(math.log10(myrate))
       
       if "cern" in site:
@@ -470,7 +473,7 @@ def analyze(start_date,end_date,delta ):
 
 if __name__ == '__main__':
 
-   
+  
   if not os.path.exists("./data"):
     print (" expects data to have been moved to ./data directiory")
     sys.exit(1)
@@ -478,13 +481,21 @@ if __name__ == '__main__':
     print (" making a pix directory")
     os.mkdir("./pix")
 
+  # determine the dates
   
   start_date = date(2021,1 , 1)
   end_date = date(2021, 1, 30)
-  if len(sys.argv) == 3:
+  if len(sys.argv) >= 3:
     start = sys.argv[1].split("-")
     end = sys.argv[2].split("-")
     start_date = date(int(start[0]), int(start[1]) ,int(start[2]))
     end_date = date(int(end[0]), int(end[1]) ,int(end[2]))
+  else:
+    print ("expects YYYY-MM-DD YYYY-MM-DD for start and end dates, using default dates",start_date,end_date)
   delta = timedelta(days=1)
-  analyze(start_date,end_date,delta)
+  if len(sys.argv) >=3:
+    expt = sys.argv[3]
+  else:
+    print ("assuming you want expt==dune")
+    expt = "dune"
+  analyze(start_date,end_date,delta,expt)

@@ -1,8 +1,7 @@
 #!/usr/local/opt/python/libexec/bin/python
 # works with python2
-import os,sys,csv,string,json,datetime,dateutil,jsonlines
+import os,sys,csv,string,json,datetime,dateutil
 import math
-durationcut = 100
 DUNEPRO=False  # only dunepro
 xroot = True  # only xrootd urls
 # loop over a range of input json files and histogram data flow vs various characteristics
@@ -73,7 +72,7 @@ def setXYLabels(h,x,y):
 def analyze(start_date,end_date,delta ):
 
 # first get lists of variables
-  
+
   sites = {}
   disks = {}
   users = {}
@@ -84,7 +83,7 @@ def analyze(start_date,end_date,delta ):
   
   while start_range < end_date:
     end_range = start_range + delta
-    inputfilename = "data/summary_%s_%s.json"%(start_range,end_range)
+    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
     if not os.path.exists(inputfilename):
       start_range += delta
       continue
@@ -125,14 +124,7 @@ def analyze(start_date,end_date,delta ):
   print ("states",states)
   nstate = len(states)
   ROOT.gStyle.SetOptStat(0)
-  apptiming = {}
-  remtiming = {}
-  for app in apps:
-    apptiming[app] = ROOT.TH1D(app,"log10 timing for app %s at FNAL; Log10  of streaming rate, MB/sec"%app,50,-2.,3.)
-    remtiming[app] = ROOT.TH1D(app+"_rem","log10 timing for app %s; Log10 of streaming rate, MB/sec"%app,50,-2.,3.)
-    
   
-    
   cross = ROOT.TH2F("cross","transfers",nd,0,nd,ns,0,ns)
   setXYLabels(cross,disks,sites)
   state = ROOT.TH2F("state","transfers",nstate,0,nstate,ns,0,ns)
@@ -176,7 +168,7 @@ def analyze(start_date,end_date,delta ):
   while start_range < end_date:
     end_range = start_range + delta
     
-    inputfilename = "data/summary_%s_%s.json"%(start_range,end_range)
+    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
     
     if not os.path.exists(inputfilename):
       start_range += delta
@@ -211,21 +203,13 @@ def analyze(start_date,end_date,delta ):
       application = "unknown"
       if "application" in item:
         application = item["application"]
-      version = "unknown"
-      if "version" in item:
-        version = item["version"]
-      if "." in version:
-        version = "invalid"
+      
       isite = float(sites[site])-.5
       disk = item["file_location"]
       idisk = float(disks[disk])-.5
       user = item["username"]
       iuser = float(users[user])-.5
-      
       date = item["@timestamp"][0:10]
-      if date not in dates:
-        print ("missing this date",date)
-        continue
       idate = float(dates[date])-.5
       istate = float(states[finalstate]) -.5
       iapp = float(apps[application]) -.5
@@ -245,7 +229,6 @@ def analyze(start_date,end_date,delta ):
       sumrec["file_size"] = item["file_size"]
       sumrec["username"] = user
       sumrec["application"] = application
-      sumrec["version"] = version
       sumrec["final_state"] = finalstate
       sumrec["site"] = site
       sumrec["rate"] = item["rate"]
@@ -254,19 +237,8 @@ def analyze(start_date,end_date,delta ):
       sumrec["data_tier"] = item["data_tier"]
       sumrec["node"] = item["node"]
       sumrec["country"] = site[0:2]
-      myrate = item["rate"]
-      # get intrinsic rate
-      if duration < durationcut:
-        continue
-      if not "us" in sumrec["country"] and not "fnal" in sumrec["node"] and finalstate == "consumed":
-        if  "fnal" in disk:
-          remtiming[application].Fill(math.log10(myrate))
       if "fnal" in site:
         sumrec["country"]="fnal"
-      if "fnal" in site and finalstate=="consumed":
-        if "fnal" in disk:
-          apptiming[application].Fill(math.log10(myrate))
-      
       if "cern" in site:
         sumrec["country"]="cern"
       if "campaign" in item:
@@ -275,11 +247,12 @@ def analyze(start_date,end_date,delta ):
         sumrec["campaign"] = None
       #print (sumrec)
       summary.append(sumrec)
-#      if item["username"] == "dunepro" and not DUNEPRO :
-#        continue
-#      if not item["username"] == "dunepro" and DUNEPRO :
-#        continue
-#     
+      if item["username"] == "dunepro" and not DUNEPRO :
+        continue
+      if not item["username"] == "dunepro" and DUNEPRO :
+        continue
+      if duration < 10:
+        continue
       if finalstate not in ["consumed","skipped"]:
         continue
       count += 1
@@ -313,25 +286,8 @@ def analyze(start_date,end_date,delta ):
           writer.writeheader()
           for data in summary:
               writer.writerow(data)
-              
   except IOError:
-      print("csv I/O error")
-  try:
-      g = open("digest_%s.json"%(out_name),'w')
-      s = json.dumps(summary,indent=2)
-      g.write(s)
-  except IOError:
-      print("json I/O error")
-      
-  try:
-    with jsonlines.open("digest_%s.jsonl"%(out_name), mode='w') as writer:
-      for i in summary:
-        writer.write(i)
-        
-  except IOError:
-      print("jsonl I/O error")
-      
-  
+      print("I/O error")
   
  # cross.Scale(1./days)
  # state.Scale(1./days)
@@ -351,17 +307,17 @@ def analyze(start_date,end_date,delta ):
   cross.Draw("COLZ")
 
   cross.Draw("TEXT SAME")
-  c.Print("pix/"+out_name+"_traffic.png")
+  c.Print(out_name+"_traffic.png")
   state.Draw("COLZ")
   state.Draw("TEXT SAME")
-  c.Print("pix/"+out_name+"_states.png")
+  c.Print(out_name+"_states.png")
   
   
   c.SetLogz(0)
   c.SetLogy(1)
   totalbytes.SetMinimum(1.)
   totalbytes.Draw("")
-  c.Print("pix/"+out_name+"_totalbytes_site.png")
+  c.Print(out_name+"_totalbytes_site.png")
   leg = ROOT.TLegend(0.75,0.75,0.85,0.87)
   leg.SetBorderSize(0)
   
@@ -378,11 +334,11 @@ def analyze(start_date,end_date,delta ):
   leg.SetFillColor(0)
   leg.Draw("same")
   
-  c.Print("pix/"+out_name+"_totalbytes_user.png")
+  c.Print(out_name+"_totalbytes_user.png")
   
   
   totalbytes_date.Draw()
-  c.Print("pix/"+out_name+"_totalbytes_date.png")
+  c.Print(out_name+"_totalbytes_date.png")
   c.SetLogy(0)
   total = consumed.Clone("total")
   total.Add(skipped)
@@ -392,7 +348,7 @@ def analyze(start_date,end_date,delta ):
   efficiency.Draw("COLZ NUM")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
   efficiency.Draw("TEXT45 SAME")
-  c.Print("pix/"+out_name+"_efficiency.png")
+  c.Print(out_name+"_efficiency.png")
   c.SetLogz(1)
   rate.SetMaximum(100.)
   rate.Divide(consumed)
@@ -400,91 +356,26 @@ def analyze(start_date,end_date,delta ):
   rate.Draw("COLZ")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
   rate.Draw("TEXT SAME")
-  c.Print("pix/"+out_name+"_rate.png")
+  c.Print(out_name+"_rate.png")
   rate_by_app.SetMaximum(100.)
   rate_by_app.Divide(consumed_by_app)
   rate_by_app.SetTitle(rate_by_app.GetTitle()+" " + out_name)
   rate_by_app.Draw("COLZ")
   ROOT.gStyle.SetPaintTextFormat("5.2f")
   rate_by_app.Draw("TEXT45 SAME")
-  c.Print("pix/"+out_name+"_rate_by_app.png")
+  c.Print(out_name+"_rate_by_app.png")
   
   c.SetLogz(0)
   ratelog10.Draw("BOX")
-  c.Print("pix/"+out_name+"_ratelog10.png")
+  c.Print(out_name+"_ratelog10.png")
   print ("total count is ",count)
-  speeds = ROOT.TFile.Open(out_name+"_speeds.root","RECREATE")
-  stat = np.zeros(4)
-  remstat = np.zeros(4)
-  r = open("pix/"+out_name+"_stats.csv",'w')
-  
-  str = "%20s\t%10s\t %5s\t -\t%5s\t +\t%5s\t %10s\t %5s\t -\t%5s\t +\t%5s\t  ratio = \t%5s"%("application","n FNAL","mean","1sig","1sig","nremote","mean","1sig","1sig","ratio")
-  print (str)
-  r.write(str+"\n")
-  for app in apptiming:
-    apptiming[app].Write()
-    remtiming[app].Write()
-    n = apptiming[app].GetEntries()
-    if n< 100 and remtiming[app].GetEntries() < 100:
-      continue
-    apptiming[app].GetStats(stat)
-    mean = math.pow(10,apptiming[app].GetMean())
-    varplus =  math.pow(10,apptiming[app].GetMean()+apptiming[app].GetStdDev()) -mean
-    varminus = mean - math.pow(10,apptiming[app].GetMean()-apptiming[app].GetStdDev())
-    nrem = remtiming[app].GetEntries()
-    remtiming[app].GetStats(stat)
-    remmean = math.pow(10,remtiming[app].GetMean())
-    remvarplus =  math.pow(10,remtiming[app].GetMean()+remtiming[app].GetStdDev()) -remmean
-    remvarminus = remmean - math.pow(10,remtiming[app].GetMean()-remtiming[app].GetStdDev())
-#f    print (math.pow(10,apptiming[app].GetMean()-apptiming[app].GetStdDev()),mean)
-    #print ("%20s %10d %5.2f -%5.2f +%5.2f "%(app,n,mean,varminus,varplus))
-    
-#f    print (math.pow(10,apptiming[app].GetMean()-apptiming[app].GetStdDev()),mean)
-    ratio = remmean/mean
-    if nrem < 100 or n < 100:
-      ratio = 0.0
-    if nrem == 0:
-      remmean = 0.0
-    if n == 0:
-      mean = 0.0
-    str = "%20s\t%10d\t %5.2f\t -\t%5.2f\t +\t%5.2f\t %10d\t %5.2f\t -\t%5.2f\t +\t%5.2f\t  ratio = \t%5.2f"%(app,n,mean,varminus,varplus,nrem,remmean,remvarminus,remvarplus,ratio)
-    print (str)
-    r.write(str+"\n")
-    c.SetLogz(0)
-    leg = ROOT.TLegend(0.5,0.8,0.8,0.9)
-    leg.AddEntry(remtiming[app],"non-FNAL")
-    leg.AddEntry(apptiming[app],"FNAL")
-    max = apptiming[app].GetMaximum()
-    if remtiming[app].GetMaximum() > max:
-      max = remtiming[app].GetMaximum()
-    remtiming[app].SetMaximum(max*1.2)
-    remtiming[app].Draw("hist")
-    apptiming[app].SetLineColor(2)
-    apptiming[app].Draw("same hist")
-    leg.Draw()
-    c.Print("pix/"+out_name+"_"+app+".png")
-    
-  
-  r.close()
-  speeds.Close()
+
 
 if __name__ == '__main__':
 
    
-  if not os.path.exists("./data"):
-    print (" expects data to have been moved to ./data directiory")
-    sys.exit(1)
-  if not os.path.exists("./pix"):
-    print (" making a pix directory")
-    os.mkdir("./pix")
-
-  
-  start_date = date(2021,1 , 1)
-  end_date = date(2021, 1, 30)
-  if len(sys.argv) == 3:
-    start = sys.argv[1].split("-")
-    end = sys.argv[2].split("-")
-    start_date = date(int(start[0]), int(start[1]) ,int(start[2]))
-    end_date = date(int(end[0]), int(end[1]) ,int(end[2]))
+ 
+  start_date = date(2021,4 , 1)
+  end_date = date(2021, 4, 26)
   delta = timedelta(days=1)
   analyze(start_date,end_date,delta)

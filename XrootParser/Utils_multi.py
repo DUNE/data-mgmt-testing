@@ -2,12 +2,11 @@
 import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import requests
 
-DEBUG=True
+DEBUG=False
 from datetime import date,timezone,datetime
 from dateutil import parser
-
 import samweb_client
-samweb = samweb_client.SAMWebClient(experiment='dune')
+
 
 # read in the json from a file
 def jsonReader(configfile):
@@ -60,17 +59,28 @@ def siteFinder(source):
     source["site"] = "unknown"
   return source
   
+# merge the elasticsearch and project info and remove events/fields we don't need
+
 def Cleaner(info,projectmeta):
-  print ("Start Cleaner ", projectmeta)
+  if DEBUG:
+    print ("Start Cleaner ", projectmeta)
   drops = ["type","station","@version","kafka"]
-  dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error"]
+  
+  dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error","delivered"]
   drops += ["files in snapshot", "first_name","group_id","group_name","last_name","person_id","processes","project_desc","station_id","experiment","file_name","event_time"]
  
   #print ('info',info)
   clean = []
   project_id = projectmeta["project_id"]
+  if not "hits" in info:
+      print ("no hits in layer0")
+      return {}
+    
   layer1 = info["hits"]
   layer2 = layer1["hits"]
+  if not "hits" in layer1:  # minerva data fails this
+    print ("no hits in this layer")
+    return {}
   count = 0
   print ("got the data",len(layer2))
   for item in layer2:
@@ -88,17 +98,22 @@ def Cleaner(info,projectmeta):
         print (" got the wrong project? ",project_id, source["project_id"],source["@timestamp"])
         print (source)
       continue
+      
     source["timestamp"] = human2number(source["@timestamp"])
     
     if not "file_id" in source:
       if DEBUG:
         print ("No file_id")
       continue
-    if "file_state" in source and source["file_state"] == "delivered":
-      #print ("drop delivered")
-      continue
+      
+#      version 3 move to dropevents?
+#    if "file_state" in source and source["file_state"] == "delivered":
+#      #print ("drop delivered")
+#      continue
+      
     if DEBUG:
       print ("got here",len(source))
+      
     source = fileFinder(source)
     source = siteFinder(source)
     #print ("got here",len(source))
@@ -142,9 +157,16 @@ def number2human(stamp):
     
     
 # get info from the sam-events elasticsearch for a given project
-def getProjectInfo(projectID,datestring):
+def getProjectInfo(expt, projectID,datestring):
   #print (datestring[0:4],datestring[5:7])
-  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-%4s.%2s/_search?q=experiment:dune%%20and%%20project_id:%s&size=10000"%(datestring[0:4],datestring[5:7],projectID)
+  urltemplate = "https://fifemon-es.fnal.gov/sam-events-v1-%4s.%2s/_search?q=experiment:%s%%20and%%20project_id:%s&size=10000"%(datestring[0:4],datestring[5:7],expt,projectID)
+  
+  nextmonth = (int(datestring[5:7])+1)%12
+  nextyear = (int(datestring[0:4]))
+  if nextmonth == 1:
+    nextyear += 1
+  snextmonth=str(nextmonth).zfill(2)
+  urltemplate2 = "https://fifemon-es.fnal.gov/sam-events-v1-%4s.%2s/_search?q=experiment:%s%%20and%%20project_id:%s&size=10000"%(nextyear,snextmonth,expt,projectID)
   theurl = urltemplate
   print (theurl)
   try:
@@ -152,12 +174,32 @@ def getProjectInfo(projectID,datestring):
   except:
     print("request failed - maybe you need the VPN")
     result={}
+  if "Forbidden" in result.text:
+    print("request failed - maybe you need the VPN")
+    result={}
   print ("size of result ", len(result.text))
-  return json.loads(result.text)
+  result2 = {}
+  theurl = urltemplate2
+  print (theurl)
+  try:
+    result2 = requests.get(theurl)
+  except:
+    print("request failed - maybe you need the VPN")
+    result2={}
+  if "Forbidden" in result2.text:
+    print("request failed - maybe you need the VPN")
+    result2={}
+  print ("size of result2 ", len(result2.text))
+  #print (result2.text)
+  if DEBUG:
+    print ("result2", result2.text)
+  
+  return [json.loads(result.text),json.loads(result2.text)]
 
 # get list of sam project ID's to send to GetProjectInfo
 
-def getProjectList(begin,end,n=10):
+def getProjectList(expt,begin,end,n=10):
+  samweb = samweb_client.SAMWebClient(experiment=expt)
   cleaned = []
   names = []
   projects = samweb.listProjects(started_after=begin,started_before=end)
@@ -176,7 +218,8 @@ def getProjectList(begin,end,n=10):
     #print ("cleaned",cleaned[0:min(len(cleaned),n)])
   return [cleaned[0:min(len(cleaned),n)],names[0:min(len(cleaned),n)]]
 
-def getProjectMeta(pname):
+def getProjectMeta(expt,pname):
+  samweb = samweb_client.SAMWebClient(experiment=expt)
   md = samweb.projectSummary(pname)
   
   processes = md["processes"]
@@ -185,32 +228,41 @@ def getProjectMeta(pname):
   brief["processes"] = None
   if len(processes) > 0:
     application = processes[0]["application"]["name"]
+    version = processes[0]["application"]["version"]
+    brief["version"]=version
     brief["application"]=application
   return brief
 
-def findProjectInfo(projects,tag="date"):
+def findProjectInfo(expt, projects,tag="date"):
   result = []
   for p in projects:
-    m = getProjectMeta(p)
+    m = getProjectMeta(expt,p)
     #print ("project",p,m)
     if "prestage" in m["project_name"]:
       print ("skip prestage",p )
       continue
     print ("FindProject",m)
     id = m["project_id"]
-    record =  Cleaner(getProjectInfo(id,m["project_start_time"]),m)
-    print (" made a record",len(record))
-    outname = "raw_%s_%d.jsonl"%(tag,id)
+    answer = getProjectInfo(expt,id,m["project_start_time"])
+    
+    record1 =  Cleaner(answer[0],m)
+    record2 =  Cleaner(answer[1],m)
+    
+    print (" made a record",len(record1),len(record2))
+    outname = "data/%s_raw_%s_%d.jsonl"%(expt,tag,id)
     with jsonlines.open(outname, mode='w') as writer:
-      for i in record:
+      for i in record1:
+        writer.write(i)
+      for i in record2:
         writer.write(i)
     print ("wrote a record to ",outname)
-    result += record
+    #result += record1
+    #result += record2
       
     #//summary = samweb.projectSummary(p)
     #print (summary)
     writer.close()
-  return result
+  #return result
   
 # remove records we don't need
   
@@ -283,15 +335,19 @@ def cleanRecord(record,uselist):
       
 # log first and last records and calculate duration
 
-def sequence(firstdate,lastdate,ids):
+def sequence(expt,firstdate,lastdate,ids):
+  samweb = samweb_client.SAMWebClient(experiment=expt)
   #print (ids)
   actions = []
   for pid in ids:
   # build a small map for each project
     record = {}
     print (pid)
-    fname = "raw_%s_%s_%d.jsonl"%(firstdate,lastdate,pid)
+    fname = "data/%s_raw_%s_%s_%d.jsonl"%(expt,firstdate,lastdate,pid)
     print ("fname",fname)
+    if not os.path.exists(fname):
+      print ("raw file ",fname," seems not to exist")
+    
     with jsonlines.open(fname, mode='r') as reader:
       for obj in reader:
         fid = obj["file_id"]
@@ -307,7 +363,8 @@ def sequence(firstdate,lastdate,ids):
       sortedtimes = sorted(times)
       md = samweb.getMetadata(fid)
       file_size = md["file_size"]
-      
+      file_type = md["file_type"]
+       
       sum = {}
       
       f = 0
@@ -315,11 +372,13 @@ def sequence(firstdate,lastdate,ids):
       last = record[fid][sortedtimes[len(times)-1]]
       sum = first
       sum["file_size"] = file_size
+      sum["file_type"] = file_type
       #print (sum["file_size"])
       if not "data_tier" in md:
-        print (" no data-tier - this is strange ", md)
-        continue
-      sum["data_tier"] = md["data_tier"]
+        print (" no data_tier - this is strange ", md)
+        sum["data_tier"] = "unknown"
+      else:
+        sum["data_tier"] = md["data_tier"]
       campaign = None
       if "DUNE.campaign" in md:
         sum["campaign"] = md["DUNE.campaign"]
@@ -334,9 +393,10 @@ def sequence(firstdate,lastdate,ids):
   return actions
 
 # test the stuff above
-def test(first = "2021-02-01", last = "2021-02-15", n=10000):
+def test(expt, first = "2021-02-01", last = "2021-02-15",  n=10000):
+  
   tag= first+"_"+last
-  [pids,names] = getProjectList(first,last,n)
+  [pids,names] = getProjectList(expt,first,last,n)
   print (pids)
 #  print ("this many projects",len(pids))
 #  if len(pids) > 2:
@@ -344,7 +404,8 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
 # first get the info
   print (names)
 
-  info = findProjectInfo(names,tag)
+  findProjectInfo(expt,names,tag)
+  
 #  e = open("raw_%s_%s.json"%(first,last),'w')
 #  s = json.dumps(info, indent=2)
 #  e.write(s)
@@ -365,16 +426,23 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
   
 
   #info = result
-  new = sequence(first,last,pids)
-  g = open("summary_%s_%s.json"%(first,last),'w')
+  # this reads it back from output files.
+  new = sequence(expt,first,last,pids)
+  g = open("data/%s_summary_%s_%s.json"%(expt,first,last),'w')
+ 
+   
   s = json.dumps(new,indent=2)
   g.write(s)
+  
   g.close()
-  with jsonlines.open("summary_%s_%s.jsonl"%(first,last), mode='w') as writer:
+  with jsonlines.open("data/%s_summary_%s_%s.jsonl"%(expt,first,last), mode='w') as writer:
     for i in new:
       writer.write(i)
   
 if __name__ == '__main__':
+  
+  
+
 
   if len(sys.argv) < 3:
     print (" need data range <first> <last> ")
@@ -382,4 +450,9 @@ if __name__ == '__main__':
   n = 1000000
   if len(sys.argv) >= 4:
     n = int(sys.argv[3])
-  test(sys.argv[1],sys.argv[2],n)
+  if len(sys.argv) >= 5:
+    expt = sys.argv[4]
+  else:
+    expt = "dune"
+  
+  test(expt, sys.argv[1],sys.argv[2],n)
