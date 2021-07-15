@@ -101,8 +101,8 @@ function checkIfResultsFound() {
   }
 }
 
+//Sites not properly listed in the CRIC database at the time of coding
 //longitude first, then latitude
-
 const markers = [
   // { markerOffset: 1, otherName:"", name: "Atlantis", coordinates: [-43, 32.6] },
 
@@ -243,7 +243,8 @@ const geoUrl = "./world-110m.json";
 
 function App() {
 
-
+  //Sets up objects used throughout the app that need to maintain an internal
+  //state between calls
   const [transfers, settransfers] = useState([]);
   const [failures, setfailures] = useState([]);
   const [individualSiteData, setIndividualSiteData] = useState([]);
@@ -255,10 +256,15 @@ function App() {
   const [savedStartDate, setSavedStartDate] = useState();
   const [savedEndDate, setSavedEndDate] = useState();
 
+  //Resets the "DateRange" object created earlier to a default of undefined
   const resetCalendarDateClick = () => {
     setDateRange({ from: undefined, to: undefined });
   };
 
+  //If no or only one day has been selected, then sets the date range
+  //to a range that is bounded by the "from" and "to" days.
+  //If "to" has already been selected, then the date range gets reset
+  //before anything else happens.
   const handleDateClick = (day) => {
     if (dateRange.to) {
       resetCalendarDateClick();
@@ -268,6 +274,9 @@ function App() {
     }
   };
 
+//Pulls the specific data regarding how much data a given site (selected via a
+//passed index for a passed list of site data) and processes into a new format
+//describing display parameters
   const populateSiteGraph = (passedSiteIndex, passedSites) => {
     // console.log(passedSites[passedSiteIndex].name + " recieve ratio: " + passedSites[passedSiteIndex].fractionOfDataReceived)
 
@@ -310,7 +319,8 @@ function App() {
 
 
 
-
+  //Sets up the site list based on CRIC data and hardcoded overrides
+  //then
   const parseSiteList = () => {
     console.log(
       "fetching DUNE site date from backend http://127.0.0.1:3001/getsites"
@@ -400,11 +410,13 @@ function App() {
 
   const parseTransfers = (passedSites) => {
     resultsFound = false;
-
+    //Ensures that if we're only passing one day to the backend, we don't
+    //pass it any undefined values
     if (dateRange.to === undefined) {
       dateRange.to = dateRange.from;
     }
 
+    //Updates our two persistent date objects
     setSavedStartDate(dateFormatConverter(dateRange.from));
     setSavedEndDate(dateFormatConverter(dateRange.to));
 
@@ -418,6 +430,8 @@ function App() {
         dateParameters.toString()
     );
 
+    //Passes date parameters to and calls the routed script that calls the backend
+    //python script, then waits for completion
     fetch("http://127.0.0.1:3001/test?" + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
@@ -428,13 +442,16 @@ function App() {
         console.log("result: ");
         console.log(res.data);
 
+        //Checks that the "name" property exists in our JSON (effectively
+        //checking for correct formatting) and makes sure that it hasn't been
+        //passed the "There's been an error" template
         if (
           res.data[0].hasOwnProperty("name") &&
           res.data[0].source !== "ERROR"
         ) {
           //TODO: modify this so that if the search fails we don't crash, maybe try/accept or if statement
 
-
+          //Processes all sent transfers
           var sourceLocationAlt = "None";
           var destinationLocationAlt = "None";
           var mysteryCoordinates = [42,42];
@@ -452,10 +469,14 @@ function App() {
               2
             );
 
+            //Tracks the total amount of data transferred for this time period
+            //independent of sites
             allTransferedAmount += entry.file_size;
 
             // console.log(entry.file_size)
 
+            //Checks for issues with the data and reformats it for
+            //writing to the map
             if (!sourceLocation && !destinationLocation) {
               return {
                 from: sourceLocationAlt,
@@ -547,6 +568,8 @@ function App() {
           // console.log("Results found:")
           // console.log(collectionOfSiteObjects);
 
+          //Sets the state object holding our search results to the new
+          //results we just processed
           setIndividualSiteData(collectionOfSiteObjects);
         } else {
           resultsFound = false;
@@ -580,10 +603,11 @@ function App() {
 
 
 
-
+  //Parses through a set of failed transfer data
   const parseFailures = (passedSites) => {
     resultsFound = false;
 
+    //Makes sure we don't pass something undefined to our search
     if (dateRange.to === undefined) {
       dateRange.to = dateRange.from;
     }
@@ -591,6 +615,7 @@ function App() {
     setSavedStartDate(dateFormatConverter(dateRange.from));
     setSavedEndDate(dateFormatConverter(dateRange.to));
 
+    //Sets up our date parameters
     var dateParameters = new URLSearchParams({
       startDate: dateFormatConverter(dateRange.from),
       endDate: dateFormatConverter(dateRange.to),
@@ -601,6 +626,8 @@ function App() {
         dateParameters.toString()
     );
 
+    //Passes our date parameters to the routed script that calls the es_client script
+    //in failures mode, then waits for completion
     fetch("http://127.0.0.1:3001/allFails?" + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
@@ -611,6 +638,8 @@ function App() {
         console.log("result: ");
         console.log(res.data);
 
+        //Checks to make sure we have a properly formatted, non-error
+        //template
         if (
           res.data[0].hasOwnProperty("name") &&
           res.data[0].source !== "ERROR"
@@ -636,7 +665,8 @@ function App() {
             totalNumberFailed += failureCount;
 
             // console.log(entry.file_size)
-
+            //Reformats the data depending on which locations in the transfer
+            //were valid/known
             if (!sourceLocation && !destinationLocation) {
               return {
                 from: sourceLocationAlt,
@@ -856,9 +886,9 @@ function App() {
                                   />
                                 );
                               })}
-                              //could add another line here ^ to show ration of send
-                              vs recieve between individual sites but it's one
-                              within another not side by side so doesn't look great.
+                              //could add another line here ^ to show ratio of send
+                              //vs recieve between individual sites but it's one
+                              //within another not side by side so doesn't look great.
                               {individualSiteData.map(
                                 (
                                   {
@@ -983,8 +1013,8 @@ function App() {
                                 );
                               })}
                               //could add another line here ^ to show ration of send
-                              vs recieve between individual sites but it's one
-                              within another not side by side so doesn't look great.
+                              //vs recieve between individual sites but it's one
+                              //within another not side by side so doesn't look great.
                               {individualSiteData.map(
                                 (
                                   {

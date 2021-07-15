@@ -6,9 +6,9 @@ const fs = require("fs");
 
 
 
+//Runs es_client.py in "All failures" mode
 function runPython(callback, startDate, endDate) {
   const spawn = require("child_process").spawn;
-
   const process = spawn("python3", [
   "./es_client.py",
   "-S", startDate,
@@ -27,6 +27,7 @@ function runPython(callback, startDate, endDate) {
     console.log("_________Python Begin\n\n" + data.toString() + "\n_________Python End\n");
   });
 
+  //Waits for the Python process to close
   process.on("close", (code) => {
     callback();
   });

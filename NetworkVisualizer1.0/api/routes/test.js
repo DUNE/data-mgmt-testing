@@ -5,7 +5,9 @@ const fs = require("fs");
 
 
 
-
+//Runs es_client.py in its default mode, mode 0. Mode 0 returns all successful
+//transfers within a given date range not involved in our regular network
+//health checkup
 function runPython(callback, startDate, endDate) {
   const spawn = require("child_process").spawn;
 
