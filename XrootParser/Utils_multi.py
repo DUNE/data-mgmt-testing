@@ -3,6 +3,7 @@ import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import requests
 
 DEBUG=False
+ALL=False
 from datetime import date,timezone,datetime
 from dateutil import parser
 import samweb_client
@@ -38,7 +39,7 @@ def fileFinder(source):
 def siteFinder(source):
   
   knownsites = [".gov",".fr",".es",".br",".edu",".in",".cz",".uk",".fr",".ch",".nl",".ru"]
-  specials = {"dice":"dice.bristol.uk","CRUSH":"crush.syracuse.edu","gridpp.rl.ac.uk":"gridpp.rl.ac.uk","comp20-":"lancaster.uk","discovery":"nmsu.edu","nid":"nersc.lbnl.gov","wn-2":"unibe-lhcp.bern.ch","qmul":"esc.qmul.uk","uct2":"uct2-mwt2.uchicago.edu","nubes.stfc.ac.uk":"nubes.stfc.ac.uk","unl.edu":"unl.edu","wn0":"sheffield.uk","wn1":"sheffield.uk","wn2":"sheffield.uk","local-":"pr"}
+  specials = {"dice":"dice.bristol.uk","CRUSH":"crush.syracuse.edu","gridpp.rl.ac.uk":"gridpp.rl.ac.uk","comp20-":"lancaster.uk","discovery":"nmsu.edu","nid":"nersc.lbnl.gov","wn-2":"unibe-lhcp.bern.ch","qmul":"esc.qmul.uk","uct2":"uct2-mwt2.uchicago.edu","nubes.stfc.ac.uk":"nubes.stfc.ac.uk","unl.edu":"unl.edu","wn0":"sheffield.uk","wn1":"sheffield.uk","wn2":"sheffield.uk","local-":"uprm.edu","compute-1-5.local":"uprm.edu","sandy-0-0.local":"uprm.edu"}
   if "node" in source:
     node = source["node"]
     for s in specials:
@@ -66,7 +67,8 @@ def Cleaner(info,projectmeta):
     print ("Start Cleaner ", projectmeta)
   drops = ["type","station","@version","kafka"]
   
-  dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error","delivered"]
+  # these are not file actions so ignore them
+  dropevents = ["start_cache_check","end_cache_check","start_stage_file","end_stage_file","file_staged","update_process_state","end_process","handle_storage_system_error","end_project","establish_process","start_project","get_file_list"]
   drops += ["files in snapshot", "first_name","group_id","group_name","last_name","person_id","processes","project_desc","station_id","experiment","file_name","event_time"]
  
   #print ('info',info)
@@ -90,21 +92,26 @@ def Cleaner(info,projectmeta):
       #print ("an event", source["event"])
     if source["event"] in dropevents:
       #if DEBUG:
-      #  print ("drop event",source["event"])
+      print ("on the drops list ",source["event"])
+     
       continue
-    
+    if "project_id" not in source:
+      print (" this event has no project id ",source)
+      continue
     if source["project_id"] != project_id:
       if DEBUG:
         print (" got the wrong project? ",project_id, source["project_id"],source["@timestamp"])
         print (source)
-      continue
+      if not ALL:
+        continue
       
     source["timestamp"] = human2number(source["@timestamp"])
     
     if not "file_id" in source:
       if DEBUG:
         print ("No file_id")
-      continue
+      if not ALL:
+        continue
       
 #      version 3 move to dropevents?
 #    if "file_state" in source and source["file_state"] == "delivered":
@@ -127,9 +134,12 @@ def Cleaner(info,projectmeta):
         source.pop(a)
     if DEBUG:
       print ("after clean",len(source))
-    if( count < 2 or "eos" in source["file_location"]):
-      jsonprint (source)
-    clean.append(source)
+    if "file_location" in source:
+      if( count < 2 or "eos" in source["file_location"]):
+        jsonprint (source)
+      clean.append(source)
+    else:
+      print ("no file location in record",source)
     if DEBUG:
       print (" size of clean record ",len(clean))
   return clean
@@ -204,9 +214,13 @@ def getProjectList(expt,begin,end,n=10):
   names = []
   projects = samweb.listProjects(started_after=begin,started_before=end)
   c = 0
+  
   for i in range(0,len(projects)):
+    
     p = projects[i].decode('UTF-8')
-    if "prestage" in p:
+    print ("this project is ",i,len(projects),p)
+    if "prestage" in p :
+      print (" This is prestage, skip", p)
       continue
     md = samweb.projectSummary(p)
     pid = md["project_id"]
@@ -238,7 +252,8 @@ def findProjectInfo(expt, projects,tag="date"):
   for p in projects:
     m = getProjectMeta(expt,p)
     #print ("project",p,m)
-    if "prestage" in m["project_name"]:
+    if "prestage" in m["project_name"] and not ALL:
+    
       print ("skip prestage",p )
       continue
     print ("FindProject",m)
