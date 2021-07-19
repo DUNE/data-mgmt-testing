@@ -1,0 +1,347 @@
+---
+output:
+  slidy_presentation:
+    font_adjustment: -4
+---
+
+```{r, echo=F}
+# Adjust path and file below as needed
+path <- "/home/gilligas/DUNE/Network/Data/"
+file <- "user_2021-06-01_2021-06-28.csv"
+#file <- "user_2021-05-01_2021-05-30.csv"
+```
+
+```{r, echo=F, message=F}
+##################################################
+############### LOAD PACKAGES HERE ###############
+##################################################
+
+library(tidyverse)
+library(latex2exp)
+
+###################################################
+################ READ IN DATA HERE ################
+###################################################
+
+# Read in data
+data <- read.csv(paste0(path,file))
+
+# Get beginning and end dates
+dates <- as.POSIXct(data$date)
+minDate <- min(dates)
+maxDate <- max(dates)
+```
+
+```{r, echo=F}
+################################################
+################ DATA FILTERING ################ 
+################################################
+
+# Filter on duration and final_state. Add app use count.
+data2 <- data %>%
+  filter(duration > 100, final_state == "consumed") %>%
+  add_count(application, sort=T, name = "count") %>%
+  group_by(application, site) %>%
+  add_count(name= "app*site count") %>%
+  ungroup() %>%
+  mutate("% of app counts"=`app*site count`/`count`)
+
+# Filtering to top 10 represented applications
+app_count <- data2 %>% count(application, sort=T, name = "count")
+data2 <- filter(data2, count > app_count$count[11])
+
+# Changes factor levels on apps to reflect app representation
+app_count$application <- factor(app_count$application, 
+                                levels = app_count$application)
+data2$application <- factor(data2$application,
+                            levels = app_count$application)
+```
+
+# Number of Transfers per Application
+
+```{r, echo=F, fig.height=6, fig.width=9}
+app_count$topten <- c(rep("yes",10),rep("no",nrow(app_count)-10))
+app_count$tens <- ceiling(log10(app_count$count))
+
+ggplot(app_count, aes(count, application, fill=topten)) +
+  geom_bar(stat = "identity") + 
+  geom_label(mapping = aes(x=count + count*tens^(1/3)/3, y=application, 
+                           label=format(count,big.mark=","), color=topten),
+            size=3, fill = "white", label.padding = unit(0.15, "lines")) +
+  scale_x_log10(expand=expansion(mult = c(0, .1))) +
+  ggtitle(paste0("Number of transfers per application",
+                 "\n  start: ",minDate,"\n  end:  ",maxDate,
+                 "\n    duration > 100 s\n    final_state",
+                 " = consumed")) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("#AF272F","#004C97")) +
+  scale_color_manual(values = c("#AF272F","#004C97"))
+```
+
+```{r, echo=F}
+# Get count, mean, and median rates by site*application pair
+plotData <- data2 %>% 
+  add_count(application, site, name = "count") %>%
+  group_by(application, site, country, count) %>%
+  summarise_at(vars(rate), list(`rate mean` = mean, 
+                                `rate median` = median)) %>%
+  ungroup()
+
+# Get max count, mean, and median per site*application pair
+maxes <- plotData %>% 
+  add_count(application) %>%
+  group_by(application, n) %>%
+  summarise_at(vars(`rate mean`), 
+               list(`max mean` = max)) %>%
+  ungroup() %>%
+  mutate(plotData %>%
+           add_count(application) %>%
+           group_by(application, n) %>%
+           summarise_at(vars(`rate median`), 
+                        list(`max median` = max)) %>%
+           ungroup()) %>%
+  mutate(plotData %>%
+           add_count(application) %>%
+           group_by(application, n) %>%
+           summarise_at(vars(count), list(`max count` = max)) %>%
+           ungroup())
+
+# Construct normalized mean, medians, and counts per application*site pair
+plotData <- plotData %>%
+  mutate(`normalized rate mean` = `rate mean`/
+           rep(maxes$`max mean`,maxes$n)) %>%
+  mutate(`normalized rate median` = `rate median`/
+           rep(maxes$`max median`,maxes$n)) %>%
+  mutate(`normalized count` = count/
+           rep(maxes$`max count`,maxes$n))
+
+```
+
+# Streaming Rates for Top 10 Streamed Apps from > 1 Site
+
+```{r, fig.height=9, fig.width=10, echo=F}
+# Get applications with >1 streaming site
+boxplotApps <- data2 %>% 
+  count(application, site) %>% 
+  count(application, sort = T) %>% 
+  filter(n > 1) %>%
+  pull(application)
+
+# Get max percentage rounded up to multiple of 10%
+ncap <- ceiling(10*(max(data2 %>% 
+      filter(application %in% boxplotApps) %>%
+      pull(`% of app counts`))))/10
+
+# Create box plot
+ggplot(data2 %>% filter(application %in% boxplotApps)) +
+  geom_boxplot(mapping = aes(rate, site, fill = 100*`% of app counts`)) +
+  scale_fill_gradient2(low = "#3B9AB2",
+                       mid = "#EBCC2A",
+                       high = "#F21A00",
+                       midpoint = 100*ncap/2,
+                       breaks = seq(0,100*ncap,10), na.value="grey85",
+                       limits = c(0,100*ncap)) +
+  guides(fill=guide_colorbar(
+    title="site's %\nof total\napplication\nstreams",
+    frame.colour="black",
+    ticks.colour="black",
+    title.theme=element_text(size=12),
+    barheight = unit(.3, "npc"),
+    barwidth = unit(.02, "npc"))) +
+  geom_point(plotData %>% filter(application %in% boxplotApps),
+             mapping = aes(`rate mean`, site), 
+             shape = 23, fill = "#EBCC2A", size = 2.5) +
+  theme_bw() +
+  ggtitle(paste0("Streaming rates",
+                 "\n  start: ",minDate,"\n  end:  ",maxDate,
+                 "\n    duration > 100 s\n    final_state",
+                 " = consumed\n    applications with > 1 site from top 10")) +
+  facet_wrap(~application, ncol = 5, scales = "free_x") + 
+  xlab("rate (MB/s)")
+```
+
+# Number of Transfers per App*Site for top 10 Apps
+
+```{r, fig.height=8.5, fig.width=8.5, echo=F}
+ggplot(plotData,aes(application, site)) +
+  geom_tile(aes(fill = `normalized count`), color = "black") +
+  scale_fill_gradient2(low = "#3B9AB2",
+                       mid = "#EBCC2A",
+                       high = "#F21A00",
+                       midpoint = 0.5,
+                       breaks = seq(0,1,0.1), na.value="grey85",
+                       limits = c(0,1)) +
+  theme_bw() + 
+  ggtitle(paste0("Transfer counts",
+                 "\n  start: ",minDate,"\n  end:  ",maxDate,
+                 "\n    duration > 100 s\n    final_state = consumed",
+                 "\n    top 10 applications")) +
+  theme(axis.text.x = element_text(angle=-35, size=9, vjust=0.5, hjust=0.01)) +
+  guides(fill=guide_colorbar(
+    title=TeX("\\frac{count(site_{i},app_{j})}{count(app_{j})^{max}}"),
+    frame.colour="black",
+    ticks.colour="black",
+    title.theme=element_text(size=12),
+    barheight = unit(.3, "npc"),
+    barwidth = unit(.02, "npc"))) +
+  geom_text(plotData,
+            mapping=aes(application,site,
+                        label=formatC(`count`,big.mark=",")),
+            size=2.7)
+```
+
+# Streaming Rate Averages for App*Site for top 10 Apps
+
+## All Countries
+
+```{r, fig.height=8.5, fig.width=8.5, echo=F}
+# Add column for facet_wrap aesthetics
+plotData <- plotData %>%
+  mutate("all" = rep("all", nrow(plotData)))
+
+# Plot for all countries, background for select countries
+allcountries <- ggplot(plotData,aes(application, site)) +
+  geom_tile(aes(fill = `normalized rate mean`), color = "black") +
+  scale_fill_gradient2(low = "#3B9AB2",
+                       mid = "#EBCC2A",
+                       high = "#F21A00",
+                       midpoint = 0.5,
+                       breaks = seq(0,1,0.1), na.value="grey85",
+                       limits = c(0,1)) +
+  theme_bw() + 
+  ggtitle(paste0("Streaming rate averages",
+                 "\n  start: ",minDate,"\n  end:  ",maxDate,
+                 "\n    duration > 100 s\n    final_state = consumed",
+                 "\n    top 10 applications")) +
+  theme(axis.text.x = element_text(angle=-35, size=9, vjust=0.5, hjust=0.01)) +
+  guides(fill=guide_colorbar(
+    title=TeX("\\frac{rate(site_{i},app_{j})_{avg}}{rate(app_{j})_{avg}^{max}}"),
+    frame.colour="black",
+    ticks.colour="black",
+    title.theme=element_text(size=12),
+    barheight = unit(.3, "npc"),
+    barwidth = unit(.02, "npc"))) +
+  geom_text(plotData,
+            mapping=aes(application,site,
+                        label=formatC(`rate mean`,
+                                      format="e",digits=2)),
+            size=2.7)
+
+allcountries + facet_wrap(~all)
+```
+
+
+```{r, fig.height=8.5, fig.width=9, echo=F}
+# List of all countries to cycle through
+countries <- unique(data2$country)
+countries <- sort(countries)
+
+p.list <- map(1:length(countries), ~
+                ggplot() +
+                geom_tile(plotData[,-3],
+                          mapping = aes(application, site, 
+                                        fill = `normalized rate mean`), 
+                          color = "black", alpha = 0.3) +
+                geom_tile(plotData %>% filter(country == countries[.x]), 
+                          mapping = aes(application, site, 
+                                        fill = `normalized rate mean`), 
+                          color = "black") +
+                scale_fill_gradient2(low = "#3B9AB2",
+                                     mid = "#EBCC2A",
+                                     high = "#F21A00",
+                                     midpoint = 0.5,
+                                     breaks = seq(0,1,0.1), 
+                                     na.value="grey85",
+                                     limits = c(0,1)) +
+                theme_bw() + 
+                ggtitle(paste0("Streaming rate averages",
+                               "\n  start: ",minDate,"\n  end:  ",maxDate,
+                               "\n    duration > 100 s\n    final_state = consumed",
+                               "\n    top 10 applications")) +
+                theme(axis.text.x = element_text(angle=-35, 
+                                                 size=9, 
+                                                 vjust=0.5, 
+                                                 hjust=0.01)) +
+                guides(fill=guide_colorbar(
+                  title=TeX("\\frac{rate(site_{i},app_{j})_{avg}}{rate(app_{j})_{avg}^{max}}"),
+                  frame.colour="black",
+                  ticks.colour="black",
+                  title.theme=element_text(size=12),
+                  barheight = unit(.3, "npc"),
+                  barwidth = unit(.02, "npc"))) +
+                geom_text(plotData %>% filter(country == countries[.x]),
+                          mapping=aes(application,site,
+                                      label=formatC(`rate mean`,
+                                                    format="e",digits=2)),
+                          size=2.7) +
+                facet_wrap(~country)
+              )
+
+names(p.list) <- countries
+```
+
+## Country: br
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$br
+```
+
+## Country: cern
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$cern
+```
+
+## Country: ch
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$ch
+```
+
+## Country: cz
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$cz
+```
+
+## Country: es
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$es
+```
+
+## Country: fnal
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$fnal
+```
+
+## Country: fr
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$fr
+```
+
+## Country: my
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$my
+```
+
+## Country: nl
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$nl
+```
+
+## Country: ru
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$ru
+```
+
+## Country: uk
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$uk
+```
+
+## Country: us
+```{r, fig.height=8.5, fig.width=9, echo=F}
+p.list$us
+```
+
+
+
+
+
