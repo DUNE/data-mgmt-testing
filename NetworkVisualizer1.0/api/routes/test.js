@@ -44,8 +44,9 @@ router.get("/", function (req, res, next) {
 
   runPython(function () {
     console.log("callback done, sending data to page: \n\n");
-
-    fs.readFile("out.json", "utf8", (err, data) => {
+    fs.readFile(`${process.cwd()}/cached_searches/out_M0_${startDate.replaceAll("/","_")}_to_${endDate.replaceAll("/","_")}.json`, "utf8", (err, data) => {
+    //fs.readFile(`out_M0_${startDate.replaceAll("/","_")}_to_${endDate.replaceAll("/","_")}.json`, "utf8", (err, data) => {
+    //fs.readFile("out.json", "utf8", (err, data) => {
       if (err) {
         console.log(data)
         console.log("\n** file not found! es_client.py probably didn't succesfully make out.json!**\n")

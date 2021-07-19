@@ -8,6 +8,8 @@ import os
 import sys
 import time
 
+from pathlib import Path
+
 #ElasticSearch API is needed for interaction with Fermilab's ElasticSearch system
 from elasticsearch import Elasticsearch
 
@@ -93,7 +95,7 @@ def errorHandler(type):
 
 
 #Checks length of date arguments to ensure they're long enough
-#TODO: Replace with a better method. This doesn't cover nearly enough. 
+#TODO: Replace with a better method. This doesn't cover nearly enough.
 if len(start) < 10:
     print('start date must be in format yyyy/mm/dd')
     errorHandler("date format")
@@ -103,9 +105,7 @@ if len(end) < 10:
     errorHandler("date format")
 
 
-#Changes dates from strings to individual Y M and D, and changes to datetime format
-y0,m0,d0 = start.split('/')
-y1,m1,d1 = end.split('/')
+
 
 target_date = datetime.strptime(end, "%Y/%m/%d")
 start_date = datetime.strptime(start, "%Y/%m/%d")
@@ -117,6 +117,13 @@ if target_date < curr_date:
     swap = target_date
     target_date = curr_date
     curr_date = swap
+
+print(target_date)
+print(curr_date)
+
+#Changes dates from strings to individual Y M and D, and changes to datetime format
+y0,m0,d0 = curr_date.strftime("%Y/%m/%d").split('/')
+y1,m1,d1 = target_date.strftime("%Y/%m/%d").split('/')
 
 #Error message is genuinely self-documenting
 if target_date > today:
@@ -277,13 +284,22 @@ else:
     errorHandler("Nonexistent mode passed.")
 
 
+if not Path(f"{Path.cwd()}/cached_searches").is_dir():
+    Path(f"{Path.cwd()}/cached_searches").mkdir(exist_ok=True)
 
-#Hardcoded output file name
+
+#Output file name
 if mode in [0, 1, 2]:
-    output_file = "out.json"
+    #output_file = "out.json"
+    #output_file = f"out_M{mode}_{y0}_{m0}_{d0}_to_{y1}_{m1}_{d1}.json"
+    output_file = f"{Path.cwd()}/cached_searches/out_M{mode}_{y0}_{m0}_{d0}_to_{y1}_{m1}_{d1}.json"
 elif mode in [3, 4]:
-    output_file = "fails.json"
+    output_file = f"{Path.cwd()}/cached_searches/fails_M{mode}_{y0}_{m0}_{d0}_to_{y1}_{m1}_{d1}.json"
 
+if Path(output_file).exists():
+    print("Cached version of search exists. Exiting program")
+    time.sleep(0.1)
+    exit(0)
 
 #URL of the DUNE Elasticsearch cluster
 es_cluster = "https://fifemon-es.fnal.gov"
