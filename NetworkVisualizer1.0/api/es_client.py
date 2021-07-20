@@ -298,7 +298,7 @@ elif mode in [3, 4]:
 
 if Path(output_file).exists():
     print("Cached version of search exists. Exiting program")
-    time.sleep(0.1)
+    time.sleep(0.5)
     exit(0)
 
 #URL of the DUNE Elasticsearch cluster
@@ -791,7 +791,7 @@ def get_summary(mode, client, curr_date, end_date, es_template):
                     "name" : f"{keys[i]}_to_{keys[j]}",
                     "source" : keys[i],
                     "destination" : keys[j],
-                    "file_size" : matrix[i][j][0]*1048576,
+                    "file_size" : int(matrix[i][j][0]*1048576),
                     "start_time" : f"{y}-{m}-{d} 00:00:01",
                     "file_transfer_time" : matrix[i][j][1],
                     "transfer_speed(MB/s)" : round(float(matrix[i][j][0])/float(matrix[i][j][1]),2)
