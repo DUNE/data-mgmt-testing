@@ -1,0 +1,783 @@
+---
+title: "DUNE Team R/RStudio Tutorial"
+author: "Sean Gilligan"
+output: pdf_document
+header-includes:
+  - \usepackage{graphicx}
+  - \hypersetup{colorlinks=true,linkcolor=red,citecolor=blue,filecolor=magenta,urlcolor=blue}
+---
+
+# Code Chunks and Knitting in RStudio
+
+An R Markdown (\texttt{.Rmd}) file in \texttt{RStudio} takes advantage of what are called "code chunks" to designate areas in which to write and evaluate \texttt{R} code. A code chunk takes up a number of lines of code as determined by the user, and is started and terminated with dedicated lines of backticks and \{ bracket \} enclosed arguments related to the code chunk's evaluation during the R Markdown file's compilation, in a process called "knitting". Within \texttt{RStudio}, depending on your appearance theme (\texttt{Tools $\rightarrow$ Global Options$\dots$ $\rightarrow$ Appearance}), code chunks will look like
+\begin{center}\includegraphics[width=0.75\textwidth]{Tutorial_Files/images/codechunk.png}\end{center}
+The symbols in the top right of the code chunk are created automatically. The far right green arrow \includegraphics[scale=0.5]{Tutorial_Files/images/runchunk.png} executes the entire chunk of code, with any outputs being displayed just below the code chunk, in the order they were produced. When the R Markdown file is knitted, the lines with backticks will not appear in the produced document, and outputs will appear just below the line of code that produced them, giving the impression of multiple code chunks. Within \texttt{RStudio} individual lines within a code chunk can be evaluated by placing the cursor on the line and hitting \texttt{Ctrl+Enter}. Sections of the code selected by the cursor can be executed in the same way. The selected code can be multiple lines of code or a small section within a single line of code. The only requirement being that all the code is within the same chunk.
+
+The middle down facing gray arrow \includegraphics[scale=0.5]{Tutorial_Files/images/runpriorchunks.png} executes, in order, all code chunks above the current chunk, not including the current chunk. The gear button allows for the selection of chunk options relating to how the chunk evaluates during the "knitting" process, which can also be done by manual entry of arguments to the right of the \texttt{r} in \texttt{\{r\}}. In the screenshot of the code chunk above the argument \texttt{eval} is set to its default value, which it will take regardless of whether or not we include it. Setting it to \texttt{FALSE} would prevent the code chunk from evaluating during the knitting process. The arguments \texttt{message} and \texttt{warning} will be set to \texttt{FALSE} in certain code chunks below to prevent spurious messages and warnings from clogging up the final knitted document.
+
+The knitting process is the compilation process that evaluates all the formatting and \texttt{R} code in the R Markdown file to produce a PDF (like this one), HTML, or WORD document that is hopefully nice enough to show your peers, teachers, students, employers, employees, editor, advisor, et cetera. While clicking \texttt{File} $\rightarrow$ \texttt{Knit Document} or using the indicated keyboard shortcut is one way to carry this out, the button featuring the little ball of yarn with the knitting needle poking out in the toolbar gets the most action. Clicking the down arrow next to it shows some additional, and usually unnecessary, options as shown below. 
+\begin{center}\includegraphics[width=0.25\textwidth]{Tutorial_Files/images/knitoptions.png}\end{center}
+The file type to knit to should have been decided when you created the R Markdown file, and that information should appear as an output instruction in the YAML header at the top of the R Markdown document. For a PDF it will be "\texttt{output: pdf\_document}".
+
+# Variables and Functions in R
+
+Variables are containers for objects and are mainly created at the same time an object is assigned to them. Data types and structures are communicated automatically based on the properties of the assigned object, so no special declarations are necessary as might be needed in other languages, such as in \texttt{C++}. 
+
+Assignment of an object to a variable can be accomplished using either \texttt{=} or \texttt{<-}, with the arrow pointing from the object to the variable. The arrow indicates the direction of the flow of information. As such, \texttt{->} is also valid, despite being unconventional during normal variable declarations. Additionally, multiple variables with the same desired value can be declared and assigned values in the same line. 
+
+Assigning a new object to an object-holding variable erases all content regarding the previous object and any relevant information about it. With that said objects designed to contain multiple objects, such as vectors and matrices, result in variables that can take arguments to point to or generate new internal locations for the assignment of new objects. Only objects stored in an already existing internal location will then be erased in above described way. Printing the contents of a variable can be accomplished by merely typing the variable's name and evaluating it as \texttt{R} code. 
+
+```{r}
+number <- 5
+number
+name = "ProtoDUNE"
+name
+name <- "DUNE"
+name
+```
+
+```{r}
+n2 <- n1 <- 4 -> n3
+n1
+n2
+n3
+```
+Functions are prominent utilities in \texttt{R}. Many come in base \texttt{R} and do not require any additional packages to be loaded. Until stated otherwise the functions discussed ahead will be of this sort. Calling a function works similarly to printing the contents of a variable above, except that a function requires the inclusion of a container for potential arguments, or inputs. This container takes the form of closed parentheses following the name of the function, so that with no arguments will have the form \texttt{function()}. When more than one argument is used they are separated by commas, in which case it's often best practice to assign arguments explicitly to the function variables as defined in the function's documentation, giving it the form \texttt{function(var1 = arg1, var2 = arg2, ... , varn = argn)}. 
+
+Note, in functions it is necessary to use \texttt{=} when assigning objects to a function's variables, the default values of which can also be found in the documentation. This documentation can usually easily be found online. However, executing the \texttt{R} code `?function`, where "\texttt{function}" is the function name without parentheses, will provide the documentation as well. As you get comfortable with functions you will know how and when you can and cannot get away without explicitly assigning objects to function variables and which variables can be allowed to take their default values, resulting in forms such as \texttt{function(arg1,arg2,var5=arg5)}.
+
+# Vectors and Matrices in R
+
+Vectors can be explicitly defined element by element using the function \texttt{c()}, which assigns the enclosed comma-separated objects to each element of the vector in order. The length of the vector is determined by the number of objects, and the objects in a vector must each be of the same data type. Data types will be discussed later in its own section. For now we only really need to consider \texttt{numeric} and \texttt{character}, representing basic math and text objects. Below the integer sequence $\{1,2,3,4\}$ is explicitly defined.
+```{r}
+c(1,2,3,4)
+```
+The objects can also be other vectors. Different objects can have the same data type.
+```{r}
+c(c(1,2,3),4)
+```
+Sequences like these can take advantage of built in shortcuts and functions. Here are two possible ways to generate the same sequence.
+```{r}
+1:4
+seq(from = 1, to = 4)
+```
+The function \texttt{seq()} allows additional arguments to specify step size (\texttt{by=_}) or output vector length (\texttt{length.out=_}).
+```{r}
+seq(1,4, by = 0.5)
+seq(1,4, length.out = 7)
+```
+Decreasing sequences can also be created with these methods.
+```{r}
+4:1
+seq(4,1)
+seq(4,1, by = -0.5) # Requires negative steps
+seq(4,1, length.out = 7)
+```
+Vectors with repeating objects or patterns can be generated using \texttt{rep()}. When vectors are the objects being repeated options are available to repeat the entire vector (default) or repeat each element, as shown in the examples below.
+```{r}
+rep(x = 5, times = 5)
+rep(c(1,5), 3) # Assumes 3 assigned to times, unless stated otherwise
+rep(c(1,5), each = 3) 
+```
+
+### Some notable operations, functions, and tricks
+
+Here are some quick functions that one might find useful when handling vectors. Computational functions are of course only appropriate when dealing with vectors of numbers.
+```{r}
+v1 <- 1:6
+v1
+length(v1) # number of elements
+rev(v1) # reverse
+sum(v1) # sum
+prod(v1) # product
+mean(v1) # mean
+cumsum(v1) # cumulative sum
+cumprod(v1) # cumulative product
+```
+Random sampling from a vector can be performed using \texttt{sample()}. By default will randomly sample without replacement until all elements of the vector have been sampled. 
+```{r}
+sample(x = v1) # Default size = length(v1)
+sample(v1, size = 4, replace = T)
+sample(v1, 3)
+```
+By default the function assumes equal probability between elements. For the sequence $\{1,2,3,4,5,6\}$ this would then give a probability to each of $1/6$. If we instead assigned a vector of probabilities such that the probability of sampling $1$ was $1/2$ and the probability of getting any one of the other numbers was $1/10$, theory tells us that the average value sampled with replacement would be
+$$\sum_{x=1}^6 (\text{The probability of drawing }x)\times(x)=(0.5)(1) + (0.1)(2) + (0.1)(3) + (0.1)(4) + (0.1)(5) + (0.1)(6)=2.5$$
+```{r}
+0.5*1 + 0.1*2 + 0.1*3 + 0.1*4 + 0.1*5 + 0.1*6
+```
+This average value can be estimated by taking the average $\overline x=\frac{1}{n}\sum_{i=1}^nx_i$ of some $n$ samples $x_i$, $i=1,2,\dots,n$. I do this below by sampling $n=10000$ times with replacement and then taking the mean.
+```{r}
+xs <- sample(x = v1, size = 10000, prob = c(0.5,rep(0.1,5)), replace = T)
+# The mean of the sample is
+mean(xs)
+```
+This sample is rather large. It may it be in our interests to clear this variable to avoid running out of memory. This can be done with the function \texttt{rm()}.
+```{r}
+rm(xs)
+```
+The function \texttt{exists()} can then verify for us that the variable, the name of which is passed as an argument in quotes, and its data were indeed removed.
+```{r}
+exists("xs")
+```
+The function \texttt{ls()} can be used to show all the declared variables in the current environment.
+```{r}
+ls()
+```
+Comparing values is done similarly to other languages. The logical \texttt{NOT} is implemented via a "!" and, with the exception of "!=", must be placed and formatted in a way to "see" the entire comparison. The orderings for ">=" and "<=" are not a choice up to the user.
+```{r}
+c(5 == 6, 
+  5 != 6, 
+  5 > 6,
+  5 < 6,
+  5 >= 6,
+  5 <= 6,
+  !(5 > 6),
+  !(5 < 6))
+
+```
+Comparing whole vectors is done element by element when applicable.
+```{r}
+1:6 == c(1,5,3,4,2,6)
+```
+A single value compared will check for each element in the vector. For vectors of unequal size, the comparison will be done element by element and the smaller vector will repeat as necessary. A warning will be given if the shorter vector's length does not evenly divide the larger vector's length.
+```{r}
+1:6 <= 3
+1:6 > c(1,3,3)
+1:6 == c(5,6,1,2)
+```
+Other functions exist for cumulative comparisons, producing quantitative information about potential mismatches.
+```{r}
+all.equal(1:6, seq(1,6))
+all.equal(1:6,c(1:5,7))
+all.equal(c("l1","l2","l3"),c("l1","l2","r3"))
+```
+Another way to do this involves recognizing that \texttt{TRUE} and \texttt{FALSE} revert to $1$ and $0$ when subjected to mathematical operations.
+```{r}
+prod(c(TRUE,FALSE))
+sum(c(TRUE,FALSE))
+prod(c(TRUE,TRUE))
+sum(c(TRUE,TRUE))
+# If all TRUE then
+prod(1:6 == seq(1,6))
+# If any FALSE then
+prod(1:6 == c(1,2,3,4,5,5))
+```
+
+### Matrices
+One way to create a matrix is by binding vectors together as columns or rows with \texttt{cbind()} and \texttt{rbind} respectively.
+```{r}
+cbind(1:3,4:6,7:9) # column bind
+rbind(1:3,4:6,7:9) # row bind
+# will repeat elements if lengths unequal
+cbind(1:2,3:6,7)
+# Will give warning if lengths not divisible. 
+# Lets longest vector define the relevant dimension
+cbind(1:3,4:5,6:8)
+```
+An explicit \texttt{matrix()} function also exists. It requires a supplied vector and at least one dimensional input.
+```{r}
+matrix(1:8, nrow=2) # Fills columns first by default
+matrix(1:8, nrow=2, byrow=T)
+matrix(1:8, ncol=4, byrow=T)
+matrix(1:8) # No dimensional inputs assumes a single column...
+matrix(1:8, byrow=T) # ... Even if filling by row
+```
+If vector too short will just repeat with expected warnings
+```{r}
+matrix(1:2,nrow=4,ncol=5)
+matrix(0,4,4)
+matrix(1:3,nrow=4,ncol=5)
+```
+A matrix will be converted back to a vector if passed as an argument through certain vector friendly functions.
+```{r}
+mat1 <- matrix(1:4,2)
+mat1
+c(mat1)
+rev(mat1)
+rep(mat1)
+```
+Diagonal matrices can be generated with the function \texttt{diag()}.
+```{r}
+diag(4) # When just a number n creates n*n identity matrix
+diag(2,4) # If two numbers, the first will be the elements
+diag(2,4) == 2*diag(4) 
+diag(2, nrow = 5, ncol = 4) # Does not have to be square
+diag(1:4)
+diag(c(-3,1,8))
+```
+Getting values from matrices by index
+```{r}
+mat1 <- matrix(1:9,nrow=3)
+mat1
+mat1[1,] # indexing starts at 1
+mat1[,2]
+mat1[2,2]
+mat1[1:2,c(3,1)]
+```
+```{r}
+#######################################
+#### Quick aside: paste and paste0 ####
+#######################################
+
+# default sep=" "
+paste("default","separation")
+paste("elements","separated", "by", "commas", sep = ",")
+paste("no","separation", sep = "")
+# paste0() is paste() with sep=""
+paste0("default ", "no ", "separation") 
+# vectors and matrices paste element by element
+paste0(c("a1","a2","a3"),c("b1","b2","b3")) 
+# elements repeat as necessary
+paste0("a",1:3)
+# always outputs as a vector
+paste0(matrix(1:4,nrow=2),matrix(c("a","b","c","d"),nrow=2))
+# collapse converts to length one character
+paste0("a",1:3 ,collapse = ", ")
+```
+Naming rows and columns
+```{r}
+# rownames() and colnames()
+rownames(mat1) <- paste0("r",1:3)
+colnames(mat1) <- paste0("c",1:3)
+mat1
+# Calling elements by row and column names
+mat1["r1",]
+mat1[,"c2"]
+mat1["r2","c1"]
+```
+Transverse matrix
+```{r}
+matrix(1:9,nrow=3)
+t(matrix(1:9,nrow=3))
+1:3
+t(1:3)
+t(t(1:3))
+```
+The methods for multiplying matrices and vectors aren't immediately clear. Here 
+```{r}
+m1 <- matrix(1,4,4)
+m1
+v1 <- 1:4
+v1
+m1 * v1
+```
+Need to use %*% to do proper matrix multiplication
+```{r}
+m1 %*% v1
+```
+Inner products between vectors are natural extensions
+```{r}
+sum(v1^2) # What we expect
+v1 %*% v1
+```
+\texttt{R} makes inferences on the intended orientation of a vector based on where it is placed.
+```{r}
+t(v1) %*% v1
+t(v1) %*% t(t(v1))
+v1 %*% t(v1)
+t(t(v1)) %*% t(v1)
+
+m1 %*% v1
+m1 %*% t(t(v1))
+v1 %*% m1
+t(v1) %*% m1
+v1 %*% m1 %*% v1
+t(v1) %*% m1 %*% t(t(v1))
+```
+From above it should be clear that unless declared otherwise left-hand-side vectors (v1 %*% __) are assumed to be oriented as
+```{r}
+t(v1)
+```
+And right-hand-sided vectors (__ %*% v1) are assumed to be oriented as
+```{r}
+t(t(v1))
+```
+Latex is possible within R Markdown.
+\begin{verbatim}
+$$\begin{pmatrix}1&2&3&4\end{pmatrix}
+\begin{pmatrix}2&0&0&0\\0&2&0&0\\0&0&2&0\\0&0&0&2\end{pmatrix}
+\begin{pmatrix}1\\2\\3\\4\end{pmatrix}=\begin{pmatrix}1&2&3&4\end{pmatrix}
+\begin{pmatrix}2\\4\\6\\8\end{pmatrix}=60$$
+\end{verbatim}
+$$\begin{pmatrix}1&2&3&4\end{pmatrix}\begin{pmatrix}2&0&0&0\\0&2&0&0\\0&0&2&0\\0&0&0&2\end{pmatrix}\begin{pmatrix}1\\2\\3\\4\end{pmatrix}=\begin{pmatrix}1&2&3&4\end{pmatrix}\begin{pmatrix}2\\4\\6\\8\end{pmatrix}=60$$
+The above operation is executed below.
+```{r}
+1:4 %*% (2*diag(4)) %*% 1:4
+```
+Matrix inverses
+```{r}
+matrix(c(1,2,-3,4), nrow=2)
+solve(matrix(c(1,2,-3,4),nrow=2))
+matrix(c(1,2,-3,4),nrow=2) %*% solve(matrix(c(1,2,-3,4),nrow=2))
+```
+Matrix determinant
+```{r}
+det(matrix(c(1,2,-3,4), nrow=2))
+det(solve(matrix(c(1,2,-3,4), nrow=2)))
+```
+
+### Eigenvalues and eigenvectors
+
+Built in functions exist for finding eigenvalues and eigenvectors of a matrix. Take the Pauli matrix
+$$\sigma_1=\sigma_x=\begin{pmatrix}0&1\\1&0\end{pmatrix}$$
+```{r}
+mat1 <- matrix(c(0,1,1,0), nrow=2)
+mat1
+```
+The function \texttt{eigen()} produces a list of the eigenvalue and eigenvectors.
+```{r}
+eigen1 <- eigen(mat1)
+eigen1$values
+```
+The eigenvectors are presented as a matrix, where $n$th column is the eigenvector corresponding the $n$th eigenvalue.
+```{r}
+eigen1$vectors
+```
+Verification can be done easily enough.
+```{r}
+mat1 %*% eigen1$vectors[,1] == eigen1$values[1]*eigen1$vectors[,1]
+mat1 %*% eigen1$vectors[,2] == eigen1$values[2]*eigen1$vectors[,2]
+```
+
+# Data Types in R
+
+### Logical
+```{r}
+class(c(TRUE,FALSE,T,F,NA))
+```
+### Numeric
+```{r}
+class(c(2,4.8,-120.10,pi))
+```
+
+### Integer
+```{r}
+class(c(3L,34L,0L))
+```
+
+### Complex
+```{r}
+class(3+2i)
+```
+
+### Character
+```{r}
+class(c("Hello","TRUE","4.8","0L","3+2i","This is a sentence."))
+```
+
+### Raw
+```{r}
+charToRaw("Hello")
+class(charToRaw("Hello"))
+```
+
+### Mixing data types
+
+Interesting hierarchies and conversions present themselves when mixing data types as shown below.
+```{r}
+class(c(1.4,charToRaw("H"),6L,T,3+2i,"char"))
+c(1.4,charToRaw("H"),6L,T,3+2i,"char")
+class(c(1.4,charToRaw("H"),6L,T,3+2i))
+c(1.4,charToRaw("H"),6L,T,3+2i)
+class(c(1.4,charToRaw("H"),6L,T))
+c(1.4,charToRaw("H"),6L,T)
+class(c(1.4,charToRaw("H"),6L))
+class(c(1.4,charToRaw("H")))
+class(c(charToRaw("H"),T))
+c(charToRaw("H"),T)
+```
+
+# R-Objects
+
+We have already seen vectors and matrices. Other common objects are discussed below.
+
+### Arrays
+An array is a generalized vector and matrix type object that has an arbitrary number of dimensions. The example shown below is a $2\times 2\times 2\times 2$ array filled from the contents of the enclosed sequence. Discussion of rows and columns become difficult, so discussion of how the sequence fills the array requires a more generalized description. A particular location within this array uses a 4-dimensional index $\{i,j,k,l\}$ and is accessed by \texttt{array1[$i,j,k,l$]}. In filling the array the elements start at the index $\{1,1,1,1\}$, filling each dimension fully from left to right, resulting in the fill order $\{2,1,1,1\}$, $\{1,2,1,1\}$, $\{2,2,1,1\}$, $\{1,1,2,1\}$, $\{2,1,2,1\}$, $\{1,2,2,1\}$, $\{2,2,2,1\}$, $\{1,1,1,2\}$, $\{2,1,1,2\}$, $\{1,2,1,2\}$, $\{2,2,1,2\}$, $\{1,1,2,2\}$, $\{2,1,2,2\}$, $\{1,2,2,2\}$, $\{2,2,2,2\}$.
+```{r}
+array1 <- array(1:16, dim=c(2,2,2,2))
+array1
+```
+
+### Factors
+Created from vectors, factors assign levels to items in vectors, even when not normally appropriate. By default they are determined alphabetically for characters. Factor levels are important during visualizations, by systematically determining the order in which data should be plotted, have aesthetics applied, and placed in a legend. Creating a factor from a 
+```{r}
+factor1 <- factor(c("red","red","blue","red","green","blue"))
+factor1
+# Can change order when declaring or later
+factor(c("red","red","blue","red","green","blue"), 
+       levels = c("red","green","blue"))
+levels(factor1) <- c("red","green","blue")
+factor1
+```
+
+### Data Frames
+Data frames at first might seem similar to matrices with named columns. However, while data frames support a lot of matrix-like computations they also support relational and spreadsheet-like operations, and can support heterogeneous data mixtures. This hybrid nature stems from the fact that data frames were developed at Bell Labs for the \texttt{S} programming language from the need to treat data as both a matrix and a table. Released to the world in 1990, data frames were inherited by \texttt{S}'s open-source counterpart \texttt{R} for its release in 2000, and by 2009 the \texttt{pandas} software library managed to become open-source, bringing data frames officially to Python. The philosophy governing the Python language's nascent and continuing development has resulted in an accessibility and expansive versatility that lends Python to becoming a dominant tool in performing whatever tasks for which supportive Python libraries happen to exist. Being no exception, the growing ubiquity of Python in data science over the last decade is predicated by its collective capabilities crossing certain critical thresholds with the release of libraries like \texttt{NumPy}, \texttt{SciPy}, \texttt{TensorFlow}, and \texttt{pandas}, to name just a few. The pervasive role and effectiveness of the \texttt{pandas} \texttt{DateFrame} object in facilitating many of Python's data analysis techniques has allowed data frames to achieve a well-deserved popularity that reminds me of \href{https://www.youtube.com/watch?v=3JWTaaS7LdU}{Whitney Houston's} cover of \href{https://www.youtube.com/watch?v=lKsQR72HY0s}{Dolly Parton's} "I Will Always Love You". Talented young data scientists working in Python and getting baptized in the black boxes of machine learning and neural networks would not be remiss in assuming that data frames were invented by Python developers. 
+
+Since we are doing particle physics I should also mention that \texttt{ROOT} has an \href{https://root.cern/doc/master/classROOT_1_1RDataFrame.html}{RDataFrame} Class that has seen improvements as recently as ROOT's latest \href{https://root.cern/releases/release-62402/}{release}. I do not have any experience with it yet, but there appears to be some \href{https://indico.cern.ch/event/849610/attachments/1915671/3190475/RDataframe__EPSeminar.pdf}{enthusiasm} about it. With that said here is an example of a manually constructed data frame comparing the largest mountain on each continent.
+```{r}
+mtns <- data.frame(Name = c("Everest","Kilimanjaro","Vinson Massif",
+                            "Kosciusko","Elbrus","Denali","Aconcagua"), 
+                   `Height (m)` = c(8850,5895,4897,2228,5642,6194,6960),
+                   Continent = c("Asia","Africa","Antarctica","Australia",
+                                 "Europe","North America","South America"),
+                   check.names = F # Allows column names with atypical characters
+                   )
+mtns
+# Can call columns by name to produce vectors
+mtns$`Height (m)`
+# Can index like a matrix
+mtns[,2]
+mtns[1,]
+```
+Notice that when a column is retrieved it is isolated as a vector, but rows remain data frames. As the above data frame contains characters it would be inappropriate to perform mathematical operations on it. Below I have have recreated the earlier Pauli matrix as a data frame and performed some operations on it. I still have to tell it to be interperated as a matrix when performing matrix multiplication, but it takes readily to eigen (spectral) decomposition as is.
+```{r}
+df1 <- data.frame(matrix(c(0,1,1,0),2))
+df1
+solve(df1) %*% as.matrix(df1)
+t(df1)
+eigen(df1)
+```
+
+### Lists
+Lists are versatile objects that can hold many different objects and elements, including other lists. Here is a list holding and array, a factor, and a data frame.
+```{r}
+list1 <- list(array1, factor1, mtns)
+list1[[2]]
+```
+Items in a list can be named and accessed in ways similar to the named columns of a data frame.
+```{r}
+list1 <- list(array1 = array1, factor1 = factor1, mtns = mtns)
+list1$factor1
+```
+As lists can contain other lists, named objects can be nested within layers of many other named objects. Here the Continent column of \texttt{mtns} is three named objects deep.
+```{r}
+# Names can be nested
+list2 <- list(array1 = array1, factor1 = factor1, 
+              mtns = mtns, list1 = list1)
+list2$list1$mtns$Continent
+```
+
+# Reading in and looking at data
+
+Checking and setting the work directory can be done explicitly as shown below. By default the working directory is whatever directory the file is saved in.
+```{r}
+getwd() # Outputs the current working directory.
+#setwd("/home/gilligas/DUNE/Network/") # Change this as necessary
+```
+Files in the current directory can read in explicitly with \texttt{dir()}. Paths to other directories can be passed as an argument to inspect their contents as well.
+```{r}
+dir()
+dir("Tutorial_Files")
+```
+Checking for the existence of a directory can be done with \texttt{dir.exists("path/to/folder")}.
+```{r}
+dir.exists("Tutorial_Files/user_generated_files")
+############################################
+########### QUICK ASIDE : gsub() ###########
+############################################
+
+# gsub() can be used to replace certain patterns in a character vector.
+# The function below replaces the spaces in "Remove my spaces" with underscores.
+gsub(pattern = " ", replacement = "_", x = "Remove my spaces.")
+# Continuing with dir.exists()
+foldername <- gsub(" ", "_", paste("folder",Sys.time()))
+dir.exists(paste0("Tutorial_Files/user_generated_files/",foldername))
+# file.exists() works similarly for files.
+file.exists("Tutorial.Rmd")
+file_unlikely_to_exist = paste0("file_",paste(sample(0:9,replace=T,20),collapse = ""))
+c(file_unlikely_to_exist, file.exists(file_unlikely_to_exist))
+```
+Creating a directory can then be performed with \texttt{dir.create("path/to/folder")}. You will be informed if a directory already exists and nothing will happen.
+```{r}
+dir.create(paste0("Tutorial_Files/user_generated_files/",foldername))
+dir.exists(paste0("Tutorial_Files/user_generated_files/",foldername))
+dir("Tutorial_Files/user_generated_files/")
+dir.create("Tutorial_Files")
+```
+There are many functions for reading in files. \texttt{read.csv()} alone is sufficient for the format we have here. The data should read in a data frame.
+```{r}
+path_to_data <- "Tutorial_Files/data/"
+filename <- "SUBSET_user_2021-06-01_2021-06-28.csv"
+data <- read.csv(paste0(path_to_data,filename))
+```
+Actually looking at this data in the knitted output PDF takes some finessing. The number of columns and rows can tell us how big the object is we're dealing with.
+```{r}
+# nrow() and ncol() tell us the number of rows and columns respectively
+c(nrow(data), ncol(data))
+```
+Some useful functions for looking only at a little bit of a large data frame is \texttt{head()} or \texttt{tail()}, which show the first six and last six rows of data. An additional argument can be passed to either to increase or decrease the number as desired. However, given the number of columns, and the fact that we can't just ignore looking a bunch of columns means we need to split up data frame vertically and post the contents one at a time. Here are the first 5 columns of the first 10 rows.
+```{r}
+head(data, 10)[,1:5]
+```
+In \texttt{RStudio} this looks just fine. There is a built in interface for up and down and is very readable. What shows up in the knitted PDF is less so. Here is where we introduce the first package, \texttt{kableExtra}. Loading packages is accomplished with the \texttt{library()} function and the name of the package, which here is just \texttt{library(kableExtra)}. If this or a future package is not present on your computer then you have to install it via \texttt{install.packages("kableExtra")}, and replacing "kableExtra" with whatever the name of the package is you need.
+```{r}
+#install.packages("kableExtra")
+library(kableExtra)
+```
+This package grants the user powerful tools for building and manipulating potentially complex tables. I am by no means a master at it, but I can make it work. Here I have split up the first 10 rows into column groups that I know will scale well after some trial and error. Now, the formatting arguments that go into \texttt{kable()} can best be understand via demonstration. For the first group with 9 columns I will add each major item one at a time so it is clear what each is doing. Note that this function makes use of the pipe operator `%>%`, which functions similar to piper operators in other languages. The operators allow users to daisy chaining statements together in a manner easy to read and plan. In this case, the output of \texttt{kable} is piped to and becomes in the input for \texttt{kable\_styling()}.
+```{r}
+kable(head(data, 10)[,1:9])
+kable(head(data, 10)[,1:9])  %>%
+  kable_styling(latex_options=c("hold_position", "scale_down"))
+kable(head(data, 10)[,1:9], booktabs = T)  %>%
+  kable_styling(latex_options=c("hold_position", "scale_down"))
+kable(head(data, 10)[,1:9], booktabs = T, linesep = "")  %>%
+  kable_styling(latex_options=c("hold_position", "scale_down"))
+kable(head(data, 10)[,10:14], booktabs = T, linesep = "") %>%
+  kable_styling(latex_options=c("hold_position", "scale_down"))
+kable(head(data, 10)[,15:16], booktabs = T, linesep = "") %>%
+  kable_styling(latex_options=c("hold_position", "scale_down"))
+kable(head(data, 10)[,17:19], booktabs = T, linesep = "") %>%
+  kable_styling(position = "center", latex_options=c("hold_position"))
+```
+You may have noticed that these tables don't turn out well in \texttt{RStudio}. This is because they're formatted under the hood with code that will not fully compile until the document is knit. 
+
+The column names in our data frame can be extracted with the \texttt{names()} function. Since a data frame is in many ways also a matrix, \texttt{colnames()} would also work.
+```{r}
+names(data)
+```
+With as many data points as we are dealing with is unlikely an analyst can scan through a particle column and identify all of its unique elements. Luckily a function with an easily remembered name can be used do this for us. Below I am selecting a column named "site" and using \texttt{"unique()"} to identify its unique elements, wich I am then passing to the variable \texttt{sites}. What is new here is that I have wrapped the whole operation in parentheses. It is not obvious, but what this does is automatically print the content being exchanged without having the explicitly call the variable on a new line.
+```{r}
+(sites <- unique(data$site))
+length(sites)
+```
+Let's also look at some other variables.
+```{r}
+unique(data$data_tier)
+```
+Going forward we will need to load the package \texttt{tidyverse}. This package contains several packages this will be useful ahead. I would normally set \texttt{message=F} at the beginning of the code chunk, but for educational purposes I will allow it.
+```{r}
+#install.packages("tidyverse") # This packages takes a while to download and install
+library(tidyverse)
+```
+Now maybe we are only interested in sites that are dealing with "raw" data. There are a couple ways one might do that, but here we can use a function called \texttt{filter()}. What this function does is take in our data frame and retain only rows in which a value in one or more named columns satisfy certain conditions. The output of this function will be another data frame. Since I still expect this to be rather large I have no desire to hold on to it after the code chunk, so I will remove it. Below I perform a ratio on the number of rows that contain "raw" data to the total number of arrows, I identify the unique sites, and I count them.
+```{r}
+df2 <- filter(data,data_tier=="raw")
+
+list(
+    
+  nrow(df2)/nrow(data),
+  
+  unique(df2$site),
+  
+  length(unique(df2$site))
+
+)
+
+rm(df2)
+```
+Instead of defining \texttt{df2} and subsequently removing it I can nest the expression used to define \texttt{df2} in place of \texttt{df2} within the functions I am using above. As this can quickly become messy, \texttt{tidyverse} provides grammatical tools for piping the outputs of functions along as inputs to subsequent function. Sometimes this latter approach is inefficient or seemingly pointless, but it begins to shine as steps in data manipulation become more extensive and complicated.
+```{r}
+list(
+  
+  data %>%
+    filter(data_tier=="raw") %>%
+    nrow()/(data %>% nrow()),
+  
+  data %>%
+    filter(data_tier=="raw") %>%
+    pull(site) %>% # Used to extract column by name as a vector
+    unique(),
+  
+  data %>%
+    filter(data_tier=="raw") %>%
+    pull(site) %>%
+    n_distinct()
+  
+)
+```
+
+Here is a more extensive filter in which I then select only specific columns of interest.
+```{r}
+data %>%
+  filter(duration > 100,
+         site == "us_fnal.gov",
+         rate > 1,
+         application == "neutronana") %>%
+  select(c(1:3,6,9,12)) # Can use column names or numbers
+```
+Additional operations allow for the calculation of summary variables
+```{r}
+data %>%
+  filter(country == "us") %>%
+  add_count(application,site) %>% # Adds column "n" that tallies enclosed unique variable combination appearances
+  group_by(application,site,n) %>% # Defines the unique row quanta over which later operations apply
+  summarize("duration mean" = mean(duration),
+            "duration median" = median(duration),
+            .groups = "keep") %>% # Creates named column with function output
+  mutate("(mean-median)/mean" = (`duration mean`-`duration median`)/`duration mean`) %>% # Creates new column
+  arrange(desc(abs(`(mean-median)/mean`)), sort = T) # Sorts rows based on values of selected variable(s)
+```
+useful function for cycling through a large amount of data is the function \texttt{map()}, which belongs a class of similar functions that are characterized by their outputs. For example, \texttt{map_chr()} creates an output that is a vector characters, and \texttt{map_dbl()} produces an output of numeric, or doubles. The original function \texttt{map()} has a list as an output. Here is code that creates a list with elements named after the unique disks, where each element contains a vector of the sites associated with that disk.
+```{r}
+disks <- unique(data$disk)
+disks_by_site <- map(disks, ~ unique(filter(data, disk==.)$site))
+names(disks_by_site) <- disks
+disks_by_site
+```
+
+# Color
+The package \texttt{paletteer} contains the palettes of many other color packages.
+```{r, warning = F, eval = F}
+#install.packages("paletteer")
+library(paletteer)
+numUsers <- length(unique(data$user))
+paletteer_d("jcolors::rainbow", numUsers, type="continuous")
+paletteer_d("pals::polychrome", type="discrete")
+paletteer_d("pals::alphabet", numUsers, type="discrete")
+
+#paletteer_d("Polychrome::glasbey", type="discrete")
+#paletteer_d("pals::glasbey", type="discrete")
+
+filter(palettes_d_names, package == "wesanderson")
+filter(palettes_d_names, length == 32, type == "qualitative", 
+       package != "palettetown")
+
+paletteer_d("wesanderson::Zissou1", 5, type="discrete")
+```
+
+https://mokole.com/palette.html
+```{r}
+colors19 <- c("#808080","#2e8b57","#8b0000","#808000","#7f007f","#ff0000","#ff8c00","#7cfc00",
+              "#00fa9a","#4169e1","#00ffff","#00bfff","#0000ff","#f08080","#ff00ff","#ffff54",
+              "#dda0dd","#ff1493","#f5deb3")
+colors25 <- c("#dcdcdc","#8b4513","#006400","#808000","#483d8b","#008080","#9acd32","#00008b",
+              "#8b008b","#ff4500","#ffa500","#ffff00","#00ff00","#00fa9a","#dc143c","#00ffff",
+              "#00bfff","#0000ff","#ff00ff","#1e90ff","#db7093","#f0e68c","#ff1493","#ffa07a","#ee82ee")
+```
+
+# ggplot
+
+### Quick example
+```{r}
+point1 <- data.frame(x = rep(1:20,10), 
+                     y = log10(rep(1:20,10))+rnorm(200,0,0.5)*(1/rep(1:20,10)))
+line1 <- data.frame(x = seq(0.1,20,0.1),
+                    y = log10(seq(0.1,20,0.1)))
+
+ggplot(data = point1, mapping = aes(x = x, y = y)) +
+  geom_point()
+```
+
+```{r}
+ggplot() + 
+  geom_point(data = point1, mapping = aes(x=x, y=y))
+```
+
+```{r}
+ggplot() + 
+  geom_point(data = point1, mapping = aes(x=x, y=y)) +
+  geom_line(data = line1, mapping = aes(x=x, y=y))
+```
+```{r}
+plot(point1$x, point1$y)
+lines(line1$x,line1$y)
+```
+
+```{r}
+point1$high <- point1$y > log10(point1$x)
+
+ggplot() + 
+  geom_line(data = line1, mapping = aes(x=x, y=y)) +
+  geom_point(data = point1, mapping = aes(x=x, y=y, color=high))
+
+ggplot() + 
+  geom_line(data = line1, mapping = aes(x=x, y=y)) +
+  geom_point(data = point1, mapping = aes(x=x, y=y, color=high)) +
+  scale_x_continuous(limits=c(0,20.2), expand=c(0,0), breaks = seq(0,20,2)) +
+  scale_y_continuous(expand=expansion(mult = c(0, .05))) +
+  theme_bw()
+```
+
+Transforming variables and axes
+```{r}
+ggplot() + 
+  geom_line(data = line1, mapping = aes(x=x, y=10^y)) +
+  geom_point(data = point1, mapping = aes(x=x, y=10^y, color=high)) +
+  scale_x_continuous(expand=expansion(mult = c(0, .01))) +
+  scale_y_continuous(expand=expansion(mult = c(0, .05))) +
+  theme_bw()
+
+ggplot() + 
+  geom_line(data = line1, mapping = aes(x=x, y=10^y)) +
+  geom_point(data = point1, mapping = aes(x=x, y=10^y, color=high)) +
+  scale_x_continuous(expand=expansion(mult = c(0, .01))) +
+  scale_y_log10(expand=expansion(mult = c(0, .05))) +
+  theme_bw()
+```
+
+### Looking at our data
+```{r, warning = F, eval = F, echo = F}
+#ggplot(data = filter(data, duration > 10, rate < 100, grepl(unique(data$site), site, fixed = TRUE)), 
+#       mapping = aes(rate, fill = user)) +
+#  geom_histogram(bins = 30) + scale_x_log10(limits=c(0.01,100))
+
+p1 <- ggplot(data = filter(data, duration > 10, rate < 100), 
+       mapping = aes(rate, fill = user)) + 
+  geom_histogram(bins = 30) + 
+  #theme(legend.position="bottom") +
+  #guides(fill = guide_legend(title.position = "top")) +
+  scale_x_log10(limits=c(0.01,100)) +
+  scale_fill_manual(values=rev(colors19))
+p1
+  #scale_fill_manual(values=as.character(paletteer_d("jcolors::pal8", numUsers, type="continuous")))
+p1 + facet_wrap(~user, scales = "free_y")
+```
+
+### Dealing with time
+```{r, warning=F, eval = F, echo = F}
+library(fasttime)
+tmax <- max(as.POSIXct(data$date))
+tmin <- min(as.POSIXct(data$date))
+nbins <- as.numeric(tmax-tmin+1)
+
+ggplot(data, aes(x = fastPOSIXct(date), fill = site)) + 
+  geom_histogram(bins = nbins) + scale_x_datetime() +
+  theme_bw() + scale_y_log10(expand=expansion(mult = c(0, .05))) +
+  theme(legend.position="bottom", legend.key.size = unit(0.2, "cm"),
+        legend.text = element_text(size=5.5)) +
+  guides(fill = guide_legend(title.position = "top")) 
+  #scale_fill_paletteer_d("pals::polychrome")
+
+ggplot(data, aes(x = fastPOSIXct(date), fill = site)) + 
+  geom_histogram(bins = nbins) + scale_x_datetime() +
+  theme_bw() + scale_y_continuous(expand=expansion(mult = c(0, .05))) +
+  scale_fill_paletteer_d("pals::polychrome") + 
+  theme(legend.position="bottom", legend.key.size = unit(0.2, "cm"),
+        legend.text = element_text(size=5.5)) +
+  guides(fill = guide_legend(title.position = "top")) 
+```
+
+### Assigning ggplot to variable
+```{r, eval = F, echo = F}
+psmf <- ggplot(filter(data, site != "us_fnal.gov"), aes(x = fastPOSIXct(date), fill = site)) + 
+  geom_histogram(bins = nbins) + scale_x_datetime() +
+  theme_bw() + scale_y_continuous(expand=expansion(mult = c(0, .05))) +
+  scale_fill_paletteer_d("pals::polychrome") +
+  theme(legend.position="bottom", legend.key.size = unit(0.2, "cm"),
+        legend.text = element_text(size=5.5)) +
+  guides(fill = guide_legend(title.position = "top")) +
+  ggtitle("site minus us_fnal.gov distribution over time") +
+  xlab("date")
+psmf
+```
+
+```{r, eval = F, echo = F}
+count(data,country,sort=T)
+data$country <- factor(data$country, 
+                       levels = rev(count(data,country,
+                                          sort=T)$country))
+levels(data$country)
+```
+
+### Saving plots as pngs
+```{r, eval = F, echo = F}
+ggsave("sites_v_time_minus_fnal.png", plot=psmf)
+```
+
+
+```
+![](sites_v_time_minus_fnal.png)
+```
+
+
