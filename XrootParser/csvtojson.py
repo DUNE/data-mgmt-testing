@@ -34,8 +34,8 @@ def csv_to_json(csvFilePath, jsonFilePath):
 
 
 def main(argv):
-   csvfilepath = ''
-   jsonfilepath = ''
+   csvfilepath =''
+   jsonfilepath =''
    try:
       opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
    except getopt.GetoptError:
@@ -54,3 +54,5 @@ def main(argv):
 
 if __name__ == "__main__":
    main(sys.argv[1:])
+
+

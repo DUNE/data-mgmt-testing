@@ -185,7 +185,7 @@ def findProjectInfo(projects,tag="date"):
   result = []
   for p in projects:
     m = getProjectMeta(p)
-    #print ("project",p,m)
+    print ("project",p,m)
     if "prestage" in m["project_name"]:
       print ("skip prestage",p )
       continue
@@ -193,7 +193,7 @@ def findProjectInfo(projects,tag="date"):
     id = m["project_id"]
     record =  Cleaner(getProjectInfo(id),m)
     print (" made a record",len(record))
-    outname = "raw_%s_%d.jsonl"%(tag,id)
+    outname = "data/raw_%s_%d.jsonl"%(tag,id)
     with jsonlines.open(outname, mode='w') as writer:
       for i in record:
         writer.write(i)
@@ -283,7 +283,7 @@ def sequence(firstdate,lastdate,ids):
   # build a small map for each project
     record = {}
     print (pid)
-    fname = "raw_%s_%s_%d.jsonl"%(firstdate,lastdate,pid)
+    fname = "data/raw_%s_%s_%d.jsonl"%(firstdate,lastdate,pid)
     print ("fname",fname)
     with jsonlines.open(fname, mode='r') as reader:
       for obj in reader:
@@ -357,11 +357,11 @@ def test(first = "2021-02-01", last = "2021-02-15", n=10000):
 
   #info = result
   new = sequence(first,last,pids)
-  g = open("summary_%s_%s.json"%(first,last),'w')
+  g = open("data/summary_%s_%s.json"%(first,last),'w')
   s = json.dumps(new,indent=2)
   g.write(s)
   g.close()
-  with jsonlines.open("summary_%s_%s.jsonl"%(first,last), mode='w') as writer:
+  with jsonlines.open("data/summary_%s_%s.jsonl"%(first,last), mode='w') as writer:
     for i in new:
       writer.write(i)
   

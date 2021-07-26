@@ -164,7 +164,7 @@ const markers = [
     markerOffset: 1,
     otherName: "US_FNAL",
     name: "GPGRID",
-    coordinates: [-39,16],
+    coordinates: [-88.27, 41.84],
   },
   {
     markerOffset: 1,
@@ -312,9 +312,9 @@ function App() {
 
   const parseSiteList = () => {
     console.log(
-      "fetching DUNE site date from backend http://127.0.0.1:3001/getsites"
+      "fetching DUNE site date from backend http://fermicloud514.fnal.gov:3001/getsites"
     );
-    fetch("http://127.0.0.1:3001/getsites")
+    fetch("http://fermicloud514.fnal.gov:3001/getsites")
       .then((res) => res.json())
       .then((res) => {
         //res.root.atp_site[0].$.latitude
@@ -413,11 +413,11 @@ function App() {
     });
 
     console.log(
-      "fetching transfer data from: http://127.0.0.1:3001/test?" +
+      "fetching transfer data from: http://fermicloud514.fnal.gov:3001/test?" +
         dateParameters.toString()
     );
 
-    fetch("http://127.0.0.1:3001/test?" + dateParameters.toString())
+    fetch("http://fermicloud514.fnal.gov:3001/test?" + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())
@@ -452,7 +452,12 @@ function App() {
             );
 
             allTransferedAmount += entry.file_size;
-
+	    if (!sourceLocation) {
+	     console.log(entry.source);	
+	    }
+	    if (!destinationLocation){
+	     console.log(entry.destination);
+	    }
             // console.log(entry.file_size)
 
             if (!sourceLocation && !destinationLocation) {
@@ -596,11 +601,11 @@ function App() {
     });
 
     console.log(
-      "fetching failure data from: http://127.0.0.1:3001/allFails?" +
+      "fetching failure data from: http://fermicloud514.fnal.gov:3001/allFails?" +
         dateParameters.toString()
     );
 
-    fetch("http://127.0.0.1:3001/allFails?" + dateParameters.toString())
+    fetch("http://fermicloud514.fnal.gov:3001/allFails?" + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())

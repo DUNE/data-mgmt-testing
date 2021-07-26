@@ -3,3 +3,7 @@ XrootParser/sam-web-client
 XrootParser/miniconda
 XrootParser/miniconda.sh
 XrootParser/__pycache__
+NetworkVisualizer1.0/package-lock.json
+NetworkVisualizer1.0/api/package-lock.json
+NetworkVisualizer1.0/api/duneSiteList.json
+NetworkVisualizer1.0/api/out.json

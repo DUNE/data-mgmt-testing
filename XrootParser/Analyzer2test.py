@@ -84,12 +84,14 @@ def analyze(start_date,end_date,delta ):
     out_name = "user_%s_%s"%(start_date.strftime("%Y-%m-%d"),end_date.strftime("%Y-%m-%d"))
   else:
     out_name = "dunepro_%s_%s"%(start_date.strftime("%Y-%m-%d"),end_date.strftime("%Y-%m-%d"))
+  out_name= "data/" + out_name
+
 #  if not xroot:
 #       out_name = out_name + "_notxroot"
   data = []
   while start_range < end_date:
     end_range = start_range + delta
-    inputfilename = "summary_%s_%s.jsonl"%(start_range.strftime("%Y-%m-%d"),end_range.strftime("%Y-%m-%d"))
+    inputfilename = "data/summary_%s_%s.jsonl"%(start_range.strftime("%Y-%m-%d"),end_range.strftime("%Y-%m-%d"))
     print(inputfilename)
     if not os.path.exists(inputfilename):
       start_range += delta
@@ -167,17 +169,17 @@ def analyze(start_date,end_date,delta ):
   start_range = start_date
   days = 1.0
   count = 0
-#  while start_range < end_date:
-#    end_range = start_range + delta
-#
-#    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
-#
-#    if not os.path.exists(inputfilename):
-#      start_range += delta
-#      continue
-#
-#    days += 1.0
-#    start_range += delta
+  while start_range < end_date:
+    end_range = start_range + delta
+
+    inputfilename = "summary_%s_%s.json"%(start_range,end_range)
+
+    if not os.path.exists(inputfilename):
+      start_range += delta
+      continue
+
+    days += 1.0
+    start_range += delta
     
   for item in data:
       sumrec={}
@@ -358,6 +360,6 @@ if __name__ == '__main__':
  
   start_date = datetime.strptime(sys.argv[1], "%Y-%m-%d")
   start_range = start_date
-  end_date = datetime.strptime(sys.argv[2], "%Y-%m-%d")
   delta = timedelta(days=1)
+  end_date =datetime.strptime(sys.argv[2], "%Y-%m-%d") if len(sys.argv)>=3 else start_date+delta
   analyze(start_date,end_date,delta)
