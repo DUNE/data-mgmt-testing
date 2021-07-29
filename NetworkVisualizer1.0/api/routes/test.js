@@ -8,13 +8,14 @@ const fs = require("fs");
 //Runs es_client.py in its default mode, mode 0. Mode 0 returns all successful
 //transfers within a given date range not involved in our regular network
 //health checkup
-function runPython(callback, startDate, endDate) {
+function runPython(callback, startDate, endDate, searchMode) {
   const spawn = require("child_process").spawn;
 
   const process = spawn("python3", [
   "./es_client.py",
   "-S", startDate,
   "-E", endDate,
+  "-M", searchMode
   ]);
 
   process.on('error', function(err) {
@@ -56,7 +57,7 @@ router.get("/", function (req, res, next) {
       console.log(data+"\n")
       res.end(data);
     });
-  }, req.query.startDate, req.query.endDate);
+  }, req.query.startDate, req.query.endDate, req.query.searchMode);
 });
 
 module.exports = router;

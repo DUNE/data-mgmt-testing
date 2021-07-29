@@ -7,13 +7,13 @@ const fs = require("fs");
 
 
 //Runs es_client.py in "All failures" mode
-function runPython(callback, startDate, endDate) {
+function runPython(callback, startDate, endDate, searchMode) {
   const spawn = require("child_process").spawn;
   const process = spawn("python3", [
   "./es_client.py",
   "-S", startDate,
   "-E", endDate,
-  "-M", "4"
+  "-M", searchMode,
   ]);
 
   process.on('error', function(err) {
@@ -56,7 +56,7 @@ router.get("/", function (req, res, next) {
       console.log(data+"\n")
       res.end(data);
     });
-  }, req.query.startDate, req.query.endDate);
+  }, req.query.startDate, req.query.endDate, req.query.searchMode);
 });
 
 module.exports = router;

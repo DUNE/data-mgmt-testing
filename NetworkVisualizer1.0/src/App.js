@@ -416,13 +416,21 @@ function App() {
       dateRange.to = dateRange.from;
     }
 
+
     //Updates our two persistent date objects
     setSavedStartDate(dateFormatConverter(dateRange.from));
     setSavedEndDate(dateFormatConverter(dateRange.to));
 
+    //Determines mode to pass based on if checkup mode is enabled
+    mode = "0";
+    if (!showCheckupMode){
+      mode = "1";
+    }
+
     var dateParameters = new URLSearchParams({
       startDate: dateFormatConverter(dateRange.from),
       endDate: dateFormatConverter(dateRange.to),
+      searchMode: mode,
     });
 
     console.log(
@@ -615,10 +623,17 @@ function App() {
     setSavedStartDate(dateFormatConverter(dateRange.from));
     setSavedEndDate(dateFormatConverter(dateRange.to));
 
+    //Determines mode based on if checkup mode is enabled
+    mode = "4";
+    if (!showCheckupMode){
+      mode = "3";
+    }
+
     //Sets up our date parameters
     var dateParameters = new URLSearchParams({
       startDate: dateFormatConverter(dateRange.from),
       endDate: dateFormatConverter(dateRange.to),
+      searchMode: mode,
     });
 
     console.log(
@@ -778,7 +793,7 @@ function App() {
 
 
 
-  const proccessTransferAndCollapse = () => {
+  const processTransferAndCollapse = () => {
     parseSiteList();
     toggle();
   };
@@ -794,6 +809,16 @@ function App() {
     }
     else {
       return "Show Legend"
+    }
+  }
+
+  const changeCheckupText = () => {
+
+    if (!showCheckupMode) {
+      return "View network test"
+    }
+    else {
+      return "View normal results"
     }
   }
 
@@ -821,12 +846,14 @@ function App() {
   const [searchResultStatus, setSearchResultStatus] = useState(); //TODO actually get this working so empty text returned unless search complete, then return results found or not
   const [selectedSiteIndex, setSelectedSiteIndex] = useState();
   const [dropdownOpen, setDropDownOpen] = useState(false);
+  const [showCheckupMode, setshowCheckupMode] = useState(false);
   const [showFailureMode, setshowFailureMode] = useState(false);
   const [legendOpen, setLegendOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
   const toggleLegendCard = () => setLegendOpen(!legendOpen);
   const toggleDropDown = () => setDropDownOpen(!dropdownOpen);
+  const toggleCheckupMode = () => setshowCheckupMode(!showCheckupMode);
   const toggleFailMode = () => setshowFailureMode(!showFailureMode);
 
   const renderMap = () => {
@@ -1244,9 +1271,12 @@ function App() {
                         </CardTitle>
                       </div>
                       <div class="col-md-3" id="mapModeSwitchCol">
-                      <Button id="getFailuresButton" color="primary" onClick={() => {toggleFailMode(); getFailures();}}>
-                        {changeFailureText()}
-                      </Button>
+                        <Button id="getCheckupButton" color="primary" onClick={() => {toggleCheckupMode();}}>
+                          {changeCheckupText()}
+                        </Button>
+                        <Button id="getFailuresButton" color="primary" onClick={() => {toggleFailMode();}}>
+                          {changeFailureText()}
+                        </Button>
                       </div>
                     </div>
 
@@ -1429,7 +1459,7 @@ function App() {
                                             color="primary"
                                             disabled={!dateRange.from}
                                             onClick={
-                                              proccessTransferAndCollapse
+                                              processTransferAndCollapse
                                             }
                                           >
                                             Get Transfers
