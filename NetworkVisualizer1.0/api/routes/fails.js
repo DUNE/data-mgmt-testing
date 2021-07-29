@@ -45,7 +45,7 @@ router.get("/", function (req, res, next) {
   runPython(function () {
     console.log("callback done, sending data to page: \n\n");
 
-    fs.readFile(`${process.cwd()}/cached_searches/fails_M4_${startDate.replaceAll("/","_")}_to_${endDate.replaceAll("/","_")}.json`, "utf8", (err, data) => {
+    fs.readFile(`${process.cwd()}/cached_searches/fails_M${req.query.searchMode}_${startDate.replaceAll("/","_")}_to_${endDate.replaceAll("/","_")}.json`, "utf8", (err, data) => {
     //fs.readFile("fails.json", "utf8", (err, data) => {
       if (err) {
         console.log(data)

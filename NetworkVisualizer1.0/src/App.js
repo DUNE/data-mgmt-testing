@@ -422,7 +422,7 @@ function App() {
     setSavedEndDate(dateFormatConverter(dateRange.to));
 
     //Determines mode to pass based on if checkup mode is enabled
-    mode = "0";
+    let mode = "0";
     if (!showCheckupMode){
       mode = "1";
     }
@@ -624,7 +624,7 @@ function App() {
     setSavedEndDate(dateFormatConverter(dateRange.to));
 
     //Determines mode based on if checkup mode is enabled
-    mode = "4";
+    let mode = "4";
     if (!showCheckupMode){
       mode = "3";
     }

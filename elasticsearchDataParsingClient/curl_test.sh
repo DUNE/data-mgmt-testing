@@ -1,0 +1,1 @@
+curl -H 'Content-Type: application/json' -XGET 'https://fifemon-es.fnal.gov/sam-events-v1-2021.07/_search?pretty' -d '{"query":{"must":[{"match":{"project_id":556823}},{"match":{"experiment":"dune"}}]},"size":10000}'
