@@ -19,7 +19,7 @@
             }
         ],
         "last_update": [
-            "2021-06-23T08:09:42Z"
+            "2021-07-20T23:09:43Z"
         ],
         "vo": [
             "dune"
@@ -451,6 +451,56 @@
                     {
                         "$": {
                             "name": "CERN",
+                            "type": "Tier3s"
+                        }
+                    }
+                ]
+            },
+            {
+                "$": {
+                    "latitude": "46.57",
+                    "longitude": "7.28",
+                    "name": "UNIBE-LHEP"
+                },
+                "service": [
+                    {
+                        "$": {
+                            "endpoint": "ce01.lhep.unibe.ch",
+                            "flavour": "ARC-CE",
+                            "hostname": "ce01.lhep.unibe.ch"
+                        },
+                        "ce_resource": [
+                            {
+                                "$": {
+                                    "etf_default": "false",
+                                    "queue": "CLUSTER-HM"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "group": [
+                    {
+                        "$": {
+                            "name": "CH_UNIBE-LHEP",
+                            "type": "All sites"
+                        }
+                    },
+                    {
+                        "$": {
+                            "name": "CH_UNIBE-LHEP",
+                            "type": "DUNE_Site"
+                        }
+                    },
+                    {
+                        "$": {
+                            "name": "Tier-3",
+                            "type": "DUNE_Tier"
+                        }
+                    },
+                    {
+                        "$": {
+                            "name": "CH_UNIBE-LHEP",
                             "type": "Tier3s"
                         }
                     }
