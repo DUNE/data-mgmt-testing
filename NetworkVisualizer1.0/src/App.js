@@ -628,7 +628,7 @@ function App() {
 
     //Passes our date parameters to the routed script that calls the es_client script
     //in failures mode, then waits for completion
-    fetch(`http://{window.location.hostname}:3001/allFails?` + dateParameters.toString())
+    fetch(`http://${window.location.hostname}:3001/allFails?` + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())
