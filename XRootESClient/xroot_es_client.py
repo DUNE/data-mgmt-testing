@@ -219,7 +219,35 @@ def main(args):
                             "match": {
                                  "project_id" : project
                             }
-                        }
+                        },
+                        "should" : [
+                            {
+                                "match": {
+                                    "file_state" : "consumed"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "file_state" : "skipped"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "file_state" : "transferred"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "event" : "update_file_state"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "event" : "consumed_file"
+                                }
+                            }
+                        ],
+                        "minimum_should_match" : 2
                     }
                 }
             }
@@ -234,7 +262,35 @@ def main(args):
                                     "lte" : f"{y1}-{m1}-{d1}"
                                 }
                             }
-                        }
+                        },
+                        "should" : [
+                            {
+                                "match": {
+                                    "file_state" : "consumed_file"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "file_state" : "skipped"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "file_state" : "transferred"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "event" : "update_file_state"
+                                }
+                            },
+                            {
+                                "match": {
+                                    "event" : "consumed_file"
+                                }
+                            }
+                        ],
+                        "minimum_should_match" : 2
                     }
                 }
             }
