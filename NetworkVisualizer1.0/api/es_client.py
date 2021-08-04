@@ -93,7 +93,7 @@ def errorHandler(type):
 
 
 #Checks length of date arguments to ensure they're long enough
-#TODO: Replace with a better method. This doesn't cover nearly enough. 
+#TODO: Replace with a better method. This doesn't cover nearly enough.
 if len(start) < 10:
     print('start date must be in format yyyy/mm/dd')
     errorHandler("date format")
@@ -651,9 +651,11 @@ def get_individual(mode, client, curr_date, end_date, es_template):
                             data_exists = True
                         start = time.perf_counter()
                         for res in info:
-                            if not (res == info[0] and xfer_count == len(info)):
-                                f.write(",\n")
                             f.write(json.dumps(res, indent=2))
+                            if not (res == info[-1] and xfer_count == len(info)):
+                                f.write(",\n")
+                            else:
+                                f.write("\n")
                         f.write("\n")
                         end = time.perf_counter()
                         io_time += end - start
