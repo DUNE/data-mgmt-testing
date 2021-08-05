@@ -631,15 +631,15 @@ def get_individual(mode, client, curr_date, end_date, es_template):
                     for data in scroll(client, index, es_template, "5m"):
                         info = get_speeds(data)
                         xfer_count += len(info)
-                        if len(info) > 0:
-                            data_exists = True
                         start = time.perf_counter()
                         #With individual results, we write each processed transfer
                         #individually to a file. We write them after each scroll
                         #to reduce memory usage
                         for res in info:
-                            if not (res == info[0] and xfer_count == len(info)):
+                            if data_exists:
                                 f.write(",\n")
+                            else:
+                                data_exists = True
                             f.write(json.dumps(res, indent=2))
                         f.write("\n")
                         end = time.perf_counter()
@@ -663,12 +663,12 @@ def get_individual(mode, client, curr_date, end_date, es_template):
                             print("Error: get_errs failed")
                             continue
                         xfer_count += len(info)
-                        if len(info) > 0:
-                            data_exists = True
                         start = time.perf_counter()
                         for res in info:
-                            if not (res == info[0] and xfer_count == len(info)):
+                            if data_exists:
                                 f.write(",\n")
+                            else:
+                                data_exists = True
                             f.write(json.dumps(res, indent=2))
                         f.write("\n")
                         end = time.perf_counter()

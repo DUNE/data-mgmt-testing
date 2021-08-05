@@ -422,9 +422,9 @@ function App() {
     setSavedEndDate(dateFormatConverter(dateRange.to));
 
     //Determines mode to pass based on if checkup mode is enabled
-    let mode = "0";
+    let mode = "1";
     if (!showCheckupMode){
-      mode = "1";
+      mode = "0";
     }
 
     var dateParameters = new URLSearchParams({
@@ -624,9 +624,9 @@ function App() {
     setSavedEndDate(dateFormatConverter(dateRange.to));
 
     //Determines mode based on if checkup mode is enabled
-    let mode = "4";
+    let mode = "3";
     if (!showCheckupMode){
-      mode = "3";
+      mode = "4";
     }
 
     //Sets up our date parameters
