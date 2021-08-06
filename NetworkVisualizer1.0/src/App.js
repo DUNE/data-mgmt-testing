@@ -255,6 +255,7 @@ function App() {
   });
   const [savedStartDate, setSavedStartDate] = useState();
   const [savedEndDate, setSavedEndDate] = useState();
+  const [processingStatus, setProcessingStatus] = useState("Waiting for user entry");
 
   //Resets the "DateRange" object created earlier to a default of undefined
   const resetCalendarDateClick = () => {
@@ -410,6 +411,7 @@ function App() {
 
   const parseTransfers = (passedSites) => {
     resultsFound = false;
+    setProcessingStatus("Processing query...");
     //Ensures that if we're only passing one day to the backend, we don't
     //pass it any undefined values
     if (dateRange.to === undefined) {
@@ -573,6 +575,7 @@ function App() {
           });
 
           resultsFound = true;
+          setProcessingStatus("Results found");
           // console.log("Results found:")
           // console.log(collectionOfSiteObjects);
 
@@ -581,6 +584,7 @@ function App() {
           setIndividualSiteData(collectionOfSiteObjects);
         } else {
           resultsFound = false;
+          setProcessingStatus("No results found");
           console.log("No results returned for DUNE transfers");
           console.log(resultsFound);
         }
@@ -614,6 +618,7 @@ function App() {
   //Parses through a set of failed transfer data
   const parseFailures = (passedSites) => {
     resultsFound = false;
+    setProcessingStatus("Processing query...");
 
     //Makes sure we don't pass something undefined to our search
     if (dateRange.to === undefined) {
@@ -717,6 +722,8 @@ function App() {
             }
           });
 
+          setProcessingStatus("Results found");
+
           console.log("mapped failures: ");
           console.log(mappedFailures);
 
@@ -762,6 +769,7 @@ function App() {
           // setIndividualSiteData(collectionOfSiteObjects);
         }
         else {
+          setProcessingStatus("No results found");
           // failuresFound = false;
           // console.log("No results returned for DUNE transfers");
           // console.log(resultsFound);
@@ -815,10 +823,10 @@ function App() {
   const changeCheckupText = () => {
 
     if (!showCheckupMode) {
-      return "View network test"
+      return "View Network Test"
     }
     else {
-      return "View normal results"
+      return "View Normal Results"
     }
   }
 
@@ -903,7 +911,7 @@ function App() {
                                     to={oneOfThem.toCoord}
                                     from={oneOfThem.fromCoord}
                                     stroke="#fdff33"
-                                    strokeWidth={1}
+                                    strokeWidth={0.4}
                                     onMouseEnter={() => {
                                       // setTooltip(`Last AVG speed: ${oneOfThem.speedInMB} MB/s`);       //need to consider what, if any, we want to put in tooltip over transfer line
                                     }}
@@ -1029,7 +1037,7 @@ function App() {
                                     to={oneOfThem.toCoord}
                                     from={oneOfThem.fromCoord}
                                     stroke="#F53"
-                                    strokeWidth={1}
+                                    strokeWidth={0.4}
                                     onMouseEnter={() => {
                                       // setTooltip(`Last AVG speed: ${oneOfThem.speedInMB} MB/s`);       //need to consider what, if any, we want to put in tooltip over transfer line
                                     }}
@@ -1265,18 +1273,10 @@ function App() {
                   <CardImg top width="100%" />
                   <CardBody>
                     <div class="row">
-                      <div class="col-md-9">
+                      <div class="col-md-8">
                         <CardTitle class="cardTitle" tag="h4">
                           Transfer Map{" "}
                         </CardTitle>
-                      </div>
-                      <div class="col-md-3" id="mapModeSwitchCol">
-                        <Button id="getCheckupButton" color="primary" onClick={() => {toggleCheckupMode();}}>
-                          {changeCheckupText()}
-                        </Button>
-                        <Button id="getFailuresButton" color="primary" onClick={() => {toggleFailMode();}}>
-                          {changeFailureText()}
-                        </Button>
                       </div>
                     </div>
 
@@ -1382,6 +1382,40 @@ function App() {
                   </div>
                 </div>
 
+                <div class="row" id="optionsCardRow">
+                  <div class="col-md-12">
+                    <Card id="optionsCard">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <CardTitle class="cardTitle" tag="h5">
+                            Search Options
+                          </CardTitle>
+                        </div>
+                      </div>
+                      <div class="row" id="checkupModeSwitchRow">
+                        <Button id="getCheckupButton" color="primary" onClick={() => {toggleCheckupMode();}}>
+                          {changeCheckupText()}
+                        </Button>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <CardBody></CardBody>
+                        </div>
+                      </div>
+                      <div class="row" id="mapModeSwitchRow">
+                        <Button id="getFailuresButton" color="primary" onClick={() => {toggleFailMode();}}>
+                          {changeFailureText()}
+                        </Button>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <CardBody></CardBody>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+                </div>
+
                 <div class="row" id="searchButtonRow">
                   <div class="col-md-12" id="newSearchCardCol">
                     <Card id="searchCard">
@@ -1390,7 +1424,7 @@ function App() {
                           <CardTitle class="cardTitle" tag="h5">
                             Search
                           </CardTitle>
-                          <p>Last Query: {checkIfResultsFound()}</p>
+                          <p>Last Query: {processingStatus}</p>
                         </div>
                       </div>
 

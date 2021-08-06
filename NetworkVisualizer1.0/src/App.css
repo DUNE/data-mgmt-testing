@@ -74,8 +74,14 @@ background-image: linear-gradient(to right, #7CAED5 0%, #ffff 100%);
   text-align: right;
 }
 
-#mapModeSwitchCol{
-  text-align: right;
+#mapModeSwitchRow{
+  text-align: left;
+  padding-left: 15px;
+}
+
+#checkupModeSwitchRow{
+  text-align: left;
+  padding-left: 15px;
 }
 
 #titleRow{
@@ -142,6 +148,12 @@ background-image: linear-gradient(to right, #7CAED5 0%, #ffff 100%);
   margin-top: 5px;
 }
 
+#optionsCardRow{
+  /* background-color: green; */
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
 .rightSideFixed{
   margin-top: -15px;
 }
@@ -155,6 +167,9 @@ background-image: linear-gradient(to right, #7CAED5 0%, #ffff 100%);
 
 }
 
+#optionsCard{
+  padding: 10px;
+}
 
 
 
