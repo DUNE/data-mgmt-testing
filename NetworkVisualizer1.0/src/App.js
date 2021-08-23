@@ -1,4 +1,4 @@
-//Developed by Lydia Brynmoor
+//Developed by Lydia Brynmoor and Zachary Lee
 import React, { useState } from "react";
 import {
   Collapse,
@@ -90,7 +90,7 @@ function dateFormatConverter(passedDate) {
 function checkIfResultsFound() {
   // console.log("results found flag says: " + resultsFound)
 
-  if (resultsFound == undefined) {
+  if (resultsFound === undefined) {
     return;
   }
 
@@ -245,8 +245,8 @@ function App() {
 
   //Sets up objects used throughout the app that need to maintain an internal
   //state between calls
-  const [transfers, settransfers] = useState([]);
-  const [failures, setfailures] = useState([]);
+  const [transfers, setTransfers] = useState([]);
+  const [failures, setFailures] = useState([]);
   const [individualSiteData, setIndividualSiteData] = useState([]);
 
   const [dateRange, setDateRange] = useState({
@@ -256,6 +256,7 @@ function App() {
   const [savedStartDate, setSavedStartDate] = useState();
   const [savedEndDate, setSavedEndDate] = useState();
   const [processingStatus, setProcessingStatus] = useState("Waiting for user entry");
+  
 
   //Resets the "DateRange" object created earlier to a default of undefined
   const resetCalendarDateClick = () => {
@@ -345,8 +346,8 @@ function App() {
           }
 
           if (
-            parseFloat(item.$.longitude) == 0 &&
-            parseFloat(item.$.latitude) == 0
+            parseFloat(item.$.longitude) === 0 &&
+            parseFloat(item.$.latitude) === 0
           ) {
             console.log("0,0 entry detected: " + otherNameString);
           }
@@ -366,7 +367,7 @@ function App() {
         markers.forEach((item, i) => {
           const matchId = mappedSites.findIndex(
             (element) =>
-              element.name == item.name || element.name == item.otherName
+              element.name === item.name || element.name === item.otherName
           );
 
           if (matchId > -1) {
@@ -531,7 +532,7 @@ function App() {
 
           allTransferedAmount /= 1048576; //adjusting to mb
 
-          settransfers(mappedTransfers);
+          setTransfers(mappedTransfers);
 
           // console.log(markers)
 
@@ -585,6 +586,7 @@ function App() {
         } else {
           resultsFound = false;
           setProcessingStatus("No results found");
+          setIndividualSiteData([]);
           console.log("No results returned for DUNE transfers");
           console.log(resultsFound);
         }
@@ -727,7 +729,7 @@ function App() {
           console.log("mapped failures: ");
           console.log(mappedFailures);
 
-          setfailures(mappedFailures);
+          setFailures(mappedFailures);
 
           console.log(markers)
 
@@ -891,6 +893,7 @@ function App() {
                               zoom={0.90}
                               center={[0, 0]}
                               onMoveEnd={setMapPosition}
+                              maxZoom={24}
                             >
                               <Geographies geography={geoUrl}>
                                 {({ geographies }) =>
@@ -900,18 +903,26 @@ function App() {
                                       geography={geo}
                                       fill="#9998A3"
                                       stroke="#EAEAEC"
+                                      strokeWidth={Math.min(3/mapPosition.zoom,0.45)}
+                                      style={{
+                                        default: { outline: "none" },
+                                        hover: { outline: "none" },
+                                        pressed: { outline: "none" },
+                                        onClick: { outline: "none" },
+                                      }}
                                     />
                                   ))
                                 }
                               </Geographies>
                               {failures.map((oneOfThem, i) => {
                                 return (
+                                  <>
                                   <Line
                                     key={i}
                                     to={oneOfThem.toCoord}
                                     from={oneOfThem.fromCoord}
-                                    stroke="#fdff33"
-                                    strokeWidth={0.4}
+                                    stroke="#000000"
+                                    strokeWidth={Math.max((1.5/mapPosition.zoom)+0.05, 0.25)}
                                     onMouseEnter={() => {
                                       // setTooltip(`Last AVG speed: ${oneOfThem.speedInMB} MB/s`);       //need to consider what, if any, we want to put in tooltip over transfer line
                                     }}
@@ -919,6 +930,20 @@ function App() {
                                       setTooltip("");
                                     }}
                                   />
+                                  <Line
+                                    key={i}
+                                    to={oneOfThem.toCoord}
+                                    from={oneOfThem.fromCoord}
+                                    stroke="#fdff33"
+                                    strokeWidth={Math.max(1.5/mapPosition.zoom, 0.2)}
+                                    onMouseEnter={() => {
+                                      // setTooltip(`Last AVG speed: ${oneOfThem.speedInMB} MB/s`);       //need to consider what, if any, we want to put in tooltip over transfer line
+                                    }}
+                                    onMouseLeave={() => {
+                                      setTooltip("");
+                                    }}
+                                  />
+                                </>
                                 );
                               })}
                               //could add another line here ^ to show ratio of send
@@ -1017,6 +1042,7 @@ function App() {
                               zoom={0.90}
                               center={[0, 0]}
                               onMoveEnd={setMapPosition}
+                              maxZoom={24}
                             >
                               <Geographies geography={geoUrl}>
                                 {({ geographies }) =>
@@ -1026,18 +1052,25 @@ function App() {
                                       geography={geo}
                                       fill="#9998A3"
                                       stroke="#EAEAEC"
+                                      strokeWidth={Math.min(3/mapPosition.zoom,0.45)}
+                                      style={{
+                                        default: { outline: "none" },
+                                        hover: { outline: "none" },
+                                        pressed: { outline: "none" },
+                                      }}
                                     />
                                   ))
                                 }
                               </Geographies>
                               {transfers.map((oneOfThem, i) => {
                                 return (
+                                  <>
                                   <Line
                                     key={i}
                                     to={oneOfThem.toCoord}
                                     from={oneOfThem.fromCoord}
-                                    stroke="#F53"
-                                    strokeWidth={0.4}
+                                    stroke="#000000"
+                                    strokeWidth={Math.max((1.5/mapPosition.zoom)+0.05, 0.25)}
                                     onMouseEnter={() => {
                                       // setTooltip(`Last AVG speed: ${oneOfThem.speedInMB} MB/s`);       //need to consider what, if any, we want to put in tooltip over transfer line
                                     }}
@@ -1045,6 +1078,20 @@ function App() {
                                       setTooltip("");
                                     }}
                                   />
+                                  <Line
+                                    key={i}
+                                    to={oneOfThem.toCoord}
+                                    from={oneOfThem.fromCoord}
+                                    stroke="#F53"
+                                    strokeWidth={Math.max(1.5/mapPosition.zoom, 0.2)}
+                                    onMouseEnter={() => {
+                                      // setTooltip(`Last AVG speed: ${oneOfThem.speedInMB} MB/s`);       //need to consider what, if any, we want to put in tooltip over transfer line
+                                    }}
+                                    onMouseLeave={() => {
+                                      setTooltip("");
+                                    }}
+                                  />
+                                </>
                                 );
                               })}
                               //could add another line here ^ to show ration of send
@@ -1071,12 +1118,12 @@ function App() {
                                     }}
                                   >
                                     <circle
-                                      r={40 * fractionOfDataSent}
+                                      r={40 * fractionOfDataSent / mapPosition.zoom**0.75}
                                       fill="rgba(87,235,51,0.4)"
                                     />{" "}
                                     //send fraction circle
                                     <circle
-                                      r={40 * fractionOfDataReceived}
+                                      r={40 * fractionOfDataReceived / mapPosition.zoom**0.75}
                                       fill="rgba(12,123,220,0.4)"
                                     />{" "}
                                     //recieve fraction circle
@@ -1537,7 +1584,7 @@ function App() {
                           <div class="col-md-12">
                             <p>
                               Site:{" "}
-                              {selectedSiteIndex != undefined &&
+                              {selectedSiteIndex !== undefined &&
                                 individualSiteData[selectedSiteIndex].name}{" "}
                             </p>
                           </div>
@@ -1547,7 +1594,7 @@ function App() {
                           <div class="col-md-12">
                             <Bar
                               data={
-                                selectedSiteIndex != undefined &&
+                                selectedSiteIndex !== undefined &&
                                 populateSiteGraph(
                                   selectedSiteIndex,
                                   individualSiteData
