@@ -157,7 +157,7 @@ def main(args):
         y1,m1,d1 = target_date.strftime("%Y/%m/%d").split('/')
 
         #Output file name
-        output_file = f"{Path.cwd()}/cached_searches/out_P{project}_{y0}_{m0}_{d0}_to_{y1}_{m1}_{d1}.json"
+        output_file = f"{Path.cwd()}/cached_searches/out_P{project}_{y0}_{m0}_{d0}_to_{y1}_{m1}_{d1}_U{args.user}_E{args.experiment}.json"
 
         if Path(output_file).exists():
             print(f"Cached version of search exists. Skipping project id {project}")
@@ -294,7 +294,12 @@ def main(args):
                     }
                 }
             }
-
+        if len(args.user) > 0:
+            es_template["query"]["bool"]["should"].append({"match": {"username": args.user}})
+            es_template["query"]["bool"]["minimum_should_match"] = es_template["query"]["bool"]["minimum_should_match"] + 1
+        if len(args.experiment) > 0:
+            es_template["query"]["bool"]["should"].append({"match": {"experiment": args.experiment}})
+            es_template["query"]["bool"]["minimum_should_match"] = es_template["query"]["bool"]["minimum_should_match"] + 1
         if not Path(f"{Path.cwd()}/cached_searches").is_dir():
             Path(f"{Path.cwd()}/cached_searches").mkdir(exist_ok=True)
 
@@ -323,6 +328,8 @@ if __name__ == "__main__":
     parser.add_argument('-S', '--start', dest="start_date", default=today.strftime("%Y/%m/%d"), help="The earlest date to search for matching transfers. Defaults to today's date. Must be in form yyyy/mm/dd")
     parser.add_argument('-E', '--end', dest="end_date", default="0", help="The latest date to search for matching transfers. Defaults to the same value as the start date, giving a 1 day search. Must be in form yyyy/mm/dd")
     parser.add_argument('-Z', '--size', dest="search_size", default=10000, help="Number of results returned from Elasticsearch at once. Must be between 1 and 10,000")
+    parser.add_argument('-U', '--user', dest="user", default="", help="Searches for a specific user")
+    parser.add_argument('-X', '--experiment', dest="experiment", default="", help="Searches for a specific experiment")
     parser.add_argument('projects', nargs='*')
 
 
