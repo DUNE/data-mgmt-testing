@@ -5,6 +5,7 @@
 #JSON needed to process incoming Elasticsearch results
 #and for output formatting for easier use by webserver.
 import json
+import jsonlines
 import os
 import sys
 import time
@@ -89,6 +90,55 @@ class XRootESClient():
         self.writer_thread.start()
         time.sleep(1)
         self.writer_thread.join()
+        self.summarizer()
+
+    def summarizer(self):
+        sum_writer = jsonlines.open(f"{Path.cwd()}/cached_searches/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
+        for pid in self.pids:
+            with jsonlines.open(self.pids[pid]["raw_filename"]) as reader:
+                curr_fid = None
+                last_start = None
+                prev_event = None
+                start_num = None
+                for count, event in enumerate(reader):
+                    if curr_fid == None:
+                        curr_fid = event["file_id"]
+                        last_start = event
+                        start_num = count
+                    elif event["file_id"] != curr_fid:
+                        summary = last_start
+                        summary["file_size"] = self.fids[curr_fid]["file_size"]
+                        if "data_tier" in self.fids[curr_fid]:
+                            summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                        if "DUNE.campaign" in self.fids[curr_fid]:
+                            summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                        summary["actions"] = count - start_num #Accounts for being on the next FID already
+                        summary["last_file_state"] = prev_event["file_state"]
+                        summary["last_timestamp"] = prev_event["timestamp"]
+                        summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
+                        if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
+                            summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
+                        sum_writer.write(summary)
+                        curr_fid = event["file_id"]
+                        last_start = event
+                        start_num = count
+                    prev_event = event
+
+                #Makes sure the last FID in a file is accounted for
+                summary = last_start
+                summary["file_size"] = self.fids[curr_fid]["file_size"]
+                if "data_tier" in self.fids[curr_fid]:
+                    summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                if "DUNE.campaign" in self.fids[curr_fid]:
+                    summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                summary["actions"] = count - start_num #Accounts for being on the next FID already
+                summary["last_file_state"] = prev_event["file_state"]
+                summary["last_timestamp"] = prev_event["timestamp"]
+                summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
+                if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
+                    summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
+                sum_writer.write(summary)
+        sum_writer.close()
 
 
     def writer(self):
@@ -97,8 +147,10 @@ class XRootESClient():
         if not Path(f"{Path.cwd()}/cached_searches").is_dir():
             Path(f"{Path.cwd()}/cached_searches").mkdir(exist_ok=True)
 
-        for pid in self.pids.keys():
-            proj_files[pid] = open(f"{Path.cwd()}/cached_searches/raw_{self.args.start_date}_{self.args.end_date}_{pid}.jsonl", "w+")
+        for pid in self.pids:
+            fname = f"{Path.cwd()}/cached_searches/raw_{self.args.start_date}_{self.args.end_date}_{pid}.jsonl"
+            self.pids[pid]["raw_filename"] = fname
+            proj_files[pid] = open(fname, "w+")
 
         while self.compiler_overseer.is_alive() or not self.finished_data.empty():
             if self.finished_data.empty():
@@ -347,6 +399,7 @@ class XRootESClient():
             self.pids[pid]["es_client"] = Elasticsearch([self.args.es_cluster], timeout=120)
             self.pids[pid]["write_queue"] = queue.Queue()
             self.pids[pid]["fid_queue"] = queue.Queue()
+            self.pids[pid]["raw_filename"] = None
 
     #Function called when a fatal error is encountered
     def errorHandler(self, type):
