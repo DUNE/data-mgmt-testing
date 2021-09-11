@@ -100,6 +100,7 @@ class XRootESClient():
                 last_start = None
                 prev_event = None
                 start_num = None
+                last_count = 0
                 for count, event in enumerate(reader):
                     if curr_fid == None:
                         curr_fid = event["file_id"]
@@ -112,7 +113,7 @@ class XRootESClient():
                             summary["data_tier"] = self.fids[curr_fid]["data_tier"]
                         if "DUNE.campaign" in self.fids[curr_fid]:
                             summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
-                        summary["actions"] = count - start_num #Accounts for being on the next FID already
+                        summary["actions"] = count - start_num
                         summary["last_file_state"] = prev_event["file_state"]
                         summary["last_timestamp"] = prev_event["timestamp"]
                         summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
@@ -122,7 +123,10 @@ class XRootESClient():
                         curr_fid = event["file_id"]
                         last_start = event
                         start_num = count
+                        if summary["actions"] == 0:
+                            summary["actions"] = 1
                     prev_event = event
+                    last_count = count
 
                 #Makes sure the last FID in a file is accounted for
                 summary = last_start
@@ -131,12 +135,14 @@ class XRootESClient():
                     summary["data_tier"] = self.fids[curr_fid]["data_tier"]
                 if "DUNE.campaign" in self.fids[curr_fid]:
                     summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
-                summary["actions"] = count - start_num #Accounts for being on the next FID already
+                summary["actions"] = last_count - start_num + 1
                 summary["last_file_state"] = prev_event["file_state"]
                 summary["last_timestamp"] = prev_event["timestamp"]
                 summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
                 if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
                     summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
+                if summary["actions"] == 0:
+                    summary["actions"] = 1
                 sum_writer.write(summary)
         sum_writer.close()
 
@@ -175,7 +181,7 @@ class XRootESClient():
                     source["site"] = specials[s]
                     return source["site"]
             if not "." in node:
-                source["site"] = "unknown"
+                source["site"] = "remove_key"
                 return source["site"]
             country = "."+node.split(".")[-1]
             #print ("country guess",country)
@@ -252,7 +258,8 @@ class XRootESClient():
                     "files_in_snapshot" : self.pids[pid]["metadata"]["files_in_snapshot"],
                     "application" : self.pids[pid]["metadata"]["processes"][0]["application"]["name"]
                 }
-
+                if new_entry["site"] == "remove_key":
+                    new_entry.pop("site")
                 self.finished_data.put(new_entry)
 
             except Exception as e:
