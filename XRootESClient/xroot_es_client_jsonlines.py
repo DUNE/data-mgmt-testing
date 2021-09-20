@@ -40,12 +40,17 @@ class XRootESClient():
         self.debug = 1
         self.args = None
         self.max_retries = 30
+        self.max_es_threads = 8
+        self.max_sam_threads = 8
+        self.max_compiler_threads = 8
 
         self.fids = {}
         self.pids = {}
+        self.pid_list = None
         self.finished_data = queue.Queue()
 
         self.fid_lock = threading.Lock()
+        self.inc_lock = threading.Lock()
 
         self.compiler_overseer = None
         self.sam_overseer = None
@@ -90,11 +95,13 @@ class XRootESClient():
         self.writer_thread.start()
         time.sleep(1)
         self.writer_thread.join()
+        if self.debug >= 3:
+            print("Writing to raw files complete. Now summarizing.")
         self.summarizer()
 
     def summarizer(self):
         sum_writer = jsonlines.open(f"{Path.cwd()}/cached_searches/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
-        for pid in self.pids:
+        for pid in self.pid_list:
             with jsonlines.open(self.pids[pid]["raw_filename"]) as reader:
                 curr_fid = None
                 last_start = None
@@ -153,21 +160,25 @@ class XRootESClient():
         if not Path(f"{Path.cwd()}/cached_searches").is_dir():
             Path(f"{Path.cwd()}/cached_searches").mkdir(exist_ok=True)
 
-        for pid in self.pids:
+        for pid in self.pid_list:
             fname = f"{Path.cwd()}/cached_searches/raw_{self.args.start_date}_{self.args.end_date}_{pid}.jsonl"
             self.pids[pid]["raw_filename"] = fname
             proj_files[pid] = open(fname, "w+")
 
         while self.compiler_overseer.is_alive() or not self.finished_data.empty():
             if self.finished_data.empty():
-                time.sleep(1)
+                time.sleep(0.5)
                 continue
             to_write = self.finished_data.get()
+            if self.debug >= 3:
+                fid = to_write["file_id"]
+                pid = to_write["project_id"]
+                print(f"Writer recieved file {fid} for project {pid}")
             proj_files[to_write["project_id"]].write(json.dumps(to_write))
             proj_files[to_write["project_id"]].write("\n")
             self.finished_data.task_done()
 
-        for pid in self.pids:
+        for pid in self.pid_list:
             proj_files[pid].close()
 
     #site_finder code here taken from XRootParser code by Dr. Heidi Schellman
@@ -196,15 +207,27 @@ class XRootESClient():
         return source["site"]
 
     def compiler_overseer_func(self):
-        for pid in self.pids.keys():
-            self.pids[pid]["compiler_worker"] = threading.Thread(target=self.compiler_worker_func,args=(pid,),daemon=True)
-            self.pids[pid]["compiler_worker"].start()
-        for pid in self.pids.keys():
+        i = 0
+        while i < len(self.pids.keys()):
+            if self.max_compiler_threads <= 0:
+                if self.debug >= 3:
+                    print("No available compiler threads. Waiting.")
+                time.sleep(0.2)
+            else:
+                pid = self.pid_list[i]
+                self.inc_lock.acquire()
+                self.max_compiler_threads -= 1
+                self.inc_lock.release()
+                self.pids[pid]["compiler_worker"] = threading.Thread(target=self.compiler_worker_func,args=(pid,),daemon=True)
+                self.pids[pid]["compiler_worker"].start()
+                i += 1
+
+        for pid in self.pid_list:
             self.pids[pid]["compiler_worker"].join()
 
     #Compiles all data into finished form for a given project
     def compiler_worker_func(self, pid):
-        while self.pids[pid]["sam_worker"].is_alive() or not self.pids[pid]["write_queue"].empty():
+        while self.pids[pid]["sam_worker"] == None or self.pids[pid]["sam_worker"].is_alive() or not self.pids[pid]["write_queue"].empty():
             if self.pids[pid]["write_queue"].empty():
                 time.sleep(1)
                 continue
@@ -267,16 +290,33 @@ class XRootESClient():
                     md = self.pids[pid]["metadata"]
                     print(f"Warning: Could not process entry FID {fid} for entry {next_file} and project metadata {md}")
                     print(f"Exception {e} was thrown")
+        self.inc_lock.acquire()
+        self.max_compiler_threads += 1
+        self.inc_lock.release()
+        if self.debug >= 3:
+            print(f"Finished compiler thread with pid {pid}")
 
     def sam_overseer_func(self):
-        for pid in self.pids.keys():
-            self.pids[pid]["sam_worker"] = threading.Thread(target=self.sam_worker_func,args=(pid,),daemon=True)
-            self.pids[pid]["sam_worker"].start()
-        for pid in self.pids.keys():
+        i = 0
+        while i < len(self.pids.keys()):
+            if self.max_sam_threads <= 0:
+                if self.debug >= 3:
+                    print("No available SAM threads. Waiting.")
+                time.sleep(0.2)
+            else:
+                pid = self.pid_list[i]
+                self.inc_lock.acquire()
+                self.max_sam_threads -= 1
+                self.inc_lock.release()
+                self.pids[pid]["sam_worker"] = threading.Thread(target=self.sam_worker_func,args=(pid,),daemon=True)
+                self.pids[pid]["sam_worker"].start()
+                i += 1
+
+        for pid in self.pid_list:
             self.pids[pid]["sam_worker"].join()
 
     def sam_worker_func(self, pid):
-        while self.pids[pid]["es_worker"].is_alive() or not self.pids[pid]["fid_queue"].empty():
+        while self.pids[pid]["es_worker"] == None or self.pids[pid]["es_worker"].is_alive() or not self.pids[pid]["fid_queue"].empty():
             if self.pids[pid]["fid_queue"].empty():
                 time.sleep(1)
                 continue
@@ -289,12 +329,29 @@ class XRootESClient():
                 except:
                     print(f"Could not process item {item}")
             self.fid_lock.release()
+        self.inc_lock.acquire()
+        self.max_sam_threads += 1
+        self.inc_lock.release()
 
     def es_overseer_func(self):
-        for pid in self.pids.keys():
-            self.pids[pid]["es_worker"] = threading.Thread(target=self.es_worker_func,args=(pid,),daemon=True)
-            self.pids[pid]["es_worker"].start()
-        for pid in self.pids.keys():
+        i = 0
+        while i < len(self.pids.keys()):
+            if self.max_es_threads <= 0:
+                if self.debug >= 3:
+                    print("No available ElasticSearch threads. Waiting")
+                time.sleep(0.2)
+            else:
+                pid = self.pid_list[i]
+                if self.debug >= 3:
+                    print(f"Making ElasticSearch thread for pid {pid}")
+                self.inc_lock.acquire()
+                self.max_es_threads -= 1
+                self.inc_lock.release()
+                self.pids[pid]["es_worker"] = threading.Thread(target=self.es_worker_func,args=(pid,),daemon=True)
+                self.pids[pid]["es_worker"].start()
+                i += 1
+
+        for pid in self.pid_list:
             self.pids[pid]["es_worker"].join()
 
     def es_worker_func(self, pid):
@@ -393,6 +450,9 @@ class XRootESClient():
                                 fids_to_dump.append(res["_source"]['file_id'])
                         self.pids[pid]["fid_queue"].put(fids_to_dump)
             curr_date += relativedelta(months=+1)
+        self.inc_lock.acquire()
+        self.max_es_threads += 1
+        self.inc_lock.release()
 
     def get_proj_list(self):
         projects = self.samweb.listProjects(started_after=self.args.start_date, started_before=self.args.end_date)
@@ -407,6 +467,13 @@ class XRootESClient():
             self.pids[pid]["write_queue"] = queue.Queue()
             self.pids[pid]["fid_queue"] = queue.Queue()
             self.pids[pid]["raw_filename"] = None
+            self.pids[pid]["es_worker"] = None
+            self.pids[pid]["sam_worker"] = None
+            self.pids[pid]["compiler_worker"] = None
+        self.pid_list = list(self.pids.keys())
+        self.pid_list.sort()
+        if self.debug >= 3:
+            print(f"Full pid list is: {self.pid_list}")
 
     #Function called when a fatal error is encountered
     def errorHandler(self, type):
