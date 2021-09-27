@@ -450,7 +450,7 @@ function App() {
       .then((res) => {
         let allTransferedAmount = 0;
 
-        console.log("result: ");
+        console.log("transfer data result: ");
         console.log(res.data);
 
         //Checks that the "name" property exists in our JSON (effectively
@@ -657,7 +657,7 @@ function App() {
       .then((res) => {
         let totalNumberFailed = 0;
 
-        console.log("result: ");
+        console.log("failure data result: ");
         console.log(res.data);
 
         //Checks to make sure we have a properly formatted, non-error

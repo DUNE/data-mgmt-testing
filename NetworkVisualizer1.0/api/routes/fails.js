@@ -45,7 +45,12 @@ router.get("/", function (req, res, next) {
   runPython(function () {
     console.log("callback done, sending data to page: \n\n");
 
-    fs.readFile(`${process.cwd()}/cached_searches/fails_M${req.query.searchMode}_${req.query.startDate.replaceAll("/","_")}_to_${req.query.endDate.replaceAll("/","_")}.json`, "utf8", (err, data) => {
+    let failPath=`${process.cwd()}\\cached_searches\\fails_M${req.query.searchMode}_${req.query.startDate.replace("/","_").replace("/","_")}_to_${req.query.endDate.replace("/","_").replace("/","_")}.json`
+    
+    console.log("loading failure file: " + failPath)
+ 
+
+    fs.readFile(failPath, "utf8", (err, data) => {
     //fs.readFile("fails.json", "utf8", (err, data) => {
       if (err) {
         console.log(data)
@@ -53,7 +58,7 @@ router.get("/", function (req, res, next) {
         // console.error(err);
         // return;
       }
-      console.log(data+"\n")
+      console.log("file data: " + data+"\n")
       res.end(data);
     });
   }, req.query.startDate, req.query.endDate, req.query.searchMode);
