@@ -437,13 +437,13 @@ function App() {
     });
 
     console.log(
-      `fetching transfer data from: http://${window.location.hostname}:3001/test?` +
+      `fetching transfer data from: http://${window.location.hostname}:3001/getTransfers?` +
         dateParameters.toString()
     );
 
     //Passes date parameters to and calls the routed script that calls the backend
     //python script, then waits for completion
-    fetch(`http://${window.location.hostname}:3001/test?` + dateParameters.toString())
+    fetch(`http://${window.location.hostname}:3001/getTransfers?` + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())
@@ -644,13 +644,13 @@ function App() {
     });
 
     console.log(
-      `fetching failure data from: http://${window.location.hostname}:3001/allFails?` +
+      `fetching failure data from: http://${window.location.hostname}:3001/getFails?` +
         dateParameters.toString()
     );
 
     //Passes our date parameters to the routed script that calls the es_client script
     //in failures mode, then waits for completion
-    fetch(`http://${window.location.hostname}:3001/allFails?` + dateParameters.toString())
+    fetch(`http://${window.location.hostname}:3001/getFails?` + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())

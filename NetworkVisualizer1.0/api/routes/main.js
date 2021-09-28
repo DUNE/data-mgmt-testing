@@ -45,9 +45,17 @@ router.get("/", function (req, res, next) {
 
   runPython(function () {
     console.log("callback done, sending data to page: \n\n");
-    let transferPath= `${process.cwd()}\\cached_searches\\out_M${req.query.searchMode}_${req.query.startDate.replace("/","_").replace("/","_")}_to_${req.query.endDate.replace("/","_").replace("/","_")}.json`
     
+    try{
+    let transferPath= `${process.cwd()}\\cached_searches\\out_M${req.query.searchMode}_${req.query.startDate.replace("/","_").replace("/","_")}_to_${req.query.endDate.replace("/","_").replace("/","_")}.json`
     console.log("loading transfer file: " + transferPath)
+    }
+    catch (exception){
+      console.log("\nError! request received with no date range\n")
+      res.send("Error! request received with no date range")
+    }
+
+    
 
     fs.readFile(transferPath, "utf8", (err, data) => {
     //fs.readFile(`out_M0_${startDate.replaceAll("/","_")}_to_${endDate.replaceAll("/","_")}.json`, "utf8", (err, data) => {
