@@ -29,6 +29,27 @@ import argparse as ap
 
 import samweb_client
 
+
+#Structure of class:
+# Main new_run (main thread) handles the initial project summary function,
+# overseer functions/threads, writer thread, and summarizer function
+# There are 4 immediate subthreads in new_run: Three "overseer" threads and one
+# thread for writing results to separate raw jsonl files.
+# Each overseer thread can manage up to some set number of "worker" threads simultaneously
+# (as set by the respective max_threads variables). Each worker thread corresponds to
+# an individual project ID. Each category of thread (Elasticsearch (ES), SAM, Compiler,
+# and Writer) feeds into some other part of the process.
+#The ES threads compile a list of files and their metadata for each project.
+# The SAM threads take each file ID and retrieve additional
+# metadata for them. The Compiler threads take ES data and project metadata and
+# compile it into JSON objects for the Writer thread. The Writer thread then
+# writes the compiled data into project ID separated files until all previous
+# threads (ES, SAM, and Compiler) have terminated. The new_run thread waits for
+# the Writer thread to terminate, then runs the Summarizer function. The
+# summarizer function is designed to step through each raw jsonl file in
+# PID-order (ascending), calculate the processing rate for each file id,
+# then sending the summarized information to a new jsonl file. All raw file results
+# are processed to the same summary file, ordered by project ID.
 class XRootESClient():
     def __init__(self):
         #Debug levels:
@@ -39,24 +60,34 @@ class XRootESClient():
         #   4: Show timing data
         self.debug = 1
         self.args = None
+
+        #Number of attempts to acquire FID metadata before giving up
         self.max_retries = 30
+
+        #Controls the number of PIDS processed simultaneously at each level
         self.max_es_threads = 8
         self.max_sam_threads = 8
         self.max_compiler_threads = 8
 
+        #Class-scope data structures for File ID data, Project ID data,
+        #and processed data
         self.fids = {}
         self.pids = {}
         self.pid_list = None
         self.finished_data = queue.Queue()
 
+        #Thread locks for File ID data access and incrementing/decrementing
+        #certain values
         self.fid_lock = threading.Lock()
         self.inc_lock = threading.Lock()
 
+        #Class-scope variables for the different overseer threads
         self.compiler_overseer = None
         self.sam_overseer = None
         self.es_overseer = None
         self.writer_thread = None
 
+    #Resets values to initial state
     def reset_vals(self):
         self.args = None
         self.fids = {}
@@ -69,19 +100,26 @@ class XRootESClient():
         self.writer_thread = None
 
 
+    #Sets the debug level
     def set_debug_level(self, level):
         self.debug = level
 
+    #Main thread for the class.
     def new_run(self, args):
         self.args = args
+        #Checks to see if the default end date is set
         if self.args.end_date == "0":
             self.args.end_date = self.args.start_date
         if self.debug > 2:
             print(f"Args recieved: {args}")
+        #Initializes the SAM Web client
         self.samweb = samweb_client.SAMWebClient(experiment=args.experiment)
+        #Gets list of DUNE-related projects started in the specified date range
         self.get_proj_list()
         if self.debug > 2:
             print(f"Projects gotten: {self.pids}")
+        #Creates and starts all overseer threads as daemons to prevent continued
+        #operation if the main program ends.
         self.es_overseer = threading.Thread(target=self.es_overseer_func, daemon=True)
         self.sam_overseer = threading.Thread(target=self.sam_overseer_func, daemon=True)
         self.compiler_overseer = threading.Thread(target=self.compiler_overseer_func, daemon=True)
@@ -94,11 +132,15 @@ class XRootESClient():
         time.sleep(1)
         self.writer_thread.start()
         time.sleep(1)
+        #Writer thread doesn't exit until all other non-main threads end,
+        #so we only need to wait for it to join.
         self.writer_thread.join()
         if self.debug >= 3:
             print("Writing to raw files complete. Now summarizing.")
+        #Runs the summaraization file generating function
         self.summarizer()
 
+    #Creates a summary file with data about each FID found sorted by PID then FID
     def summarizer(self):
         sum_writer = jsonlines.open(f"{Path.cwd()}/cached_searches/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
         for pid in self.pid_list:
@@ -153,31 +195,40 @@ class XRootESClient():
                 sum_writer.write(summary)
         sum_writer.close()
 
-
+    #Takes each item sent to the finished data queue, and writes it to a
+    #raw data json file based on the project ID for the file.
     def writer(self):
         proj_files = {}
 
+        #Checks that the cached_searches directory exists, and creates it if not.
         if not Path(f"{Path.cwd()}/cached_searches").is_dir():
             Path(f"{Path.cwd()}/cached_searches").mkdir(exist_ok=True)
 
+        #Makes all of the raw file objects
         for pid in self.pid_list:
             fname = f"{Path.cwd()}/cached_searches/raw_{self.args.start_date}_{self.args.end_date}_{pid}.jsonl"
             self.pids[pid]["raw_filename"] = fname
             proj_files[pid] = open(fname, "w+")
 
+        #Checks that either the compiler is still running, or there's still data in
+        #the finished data queue to prevent early shutdowns
         while self.compiler_overseer.is_alive() or not self.finished_data.empty():
             if self.finished_data.empty():
                 time.sleep(0.5)
                 continue
+            #Gets the next json object to write
             to_write = self.finished_data.get()
             if self.debug >= 3:
                 fid = to_write["file_id"]
                 pid = to_write["project_id"]
                 print(f"Writer recieved file {fid} for project {pid}")
+            #Writes the json object to the appropriate file alongside a newline
             proj_files[to_write["project_id"]].write(json.dumps(to_write))
             proj_files[to_write["project_id"]].write("\n")
+            #Notifies the queue that the object has been processed
             self.finished_data.task_done()
 
+        #Closes all file objects
         for pid in self.pid_list:
             proj_files[pid].close()
 
@@ -206,8 +257,11 @@ class XRootESClient():
             source["site"] = "unknown"
         return source["site"]
 
+    #Overseer function that manages data compilation worker threads
+    #Uses a makeshift semaphore to manage the number of simultaneous threads
     def compiler_overseer_func(self):
         i = 0
+        #Steps through all PIDs
         while i < len(self.pids.keys()):
             if self.max_compiler_threads <= 0:
                 if self.debug >= 3:
@@ -215,6 +269,7 @@ class XRootESClient():
                 time.sleep(0.2)
             else:
                 pid = self.pid_list[i]
+                #Decrements the semaphore upon spawning a new thread
                 self.inc_lock.acquire()
                 self.max_compiler_threads -= 1
                 self.inc_lock.release()
@@ -227,12 +282,20 @@ class XRootESClient():
 
     #Compiles all data into finished form for a given project
     def compiler_worker_func(self, pid):
+        #Ensures that the thread continues so long as there's data to be processed
+        #or the threads that provide it with data are still alive (or have yet to be
+        #initialized due to thread count limitations)
         while self.pids[pid]["sam_worker"] == None or self.pids[pid]["sam_worker"].is_alive() or not self.pids[pid]["write_queue"].empty():
             if self.pids[pid]["write_queue"].empty():
                 time.sleep(1)
                 continue
+            #Pulls the next file to prepare for writing and notifies the queue
+            #that the file has been taken
             next_file = self.pids[pid]["write_queue"].get()
             self.pids[pid]["write_queue"].task_done()
+
+            #Tries to acquire file information for the specific file ID, and
+            #retires a configurable number of times
             self.fid_lock.acquire()
             retry_count = 0
             fid = next_file["file_id"]
@@ -241,18 +304,23 @@ class XRootESClient():
                 self.fid_lock.release()
                 time.sleep(1)
                 self.fid_lock.acquire()
+            #Checks to see if we've hit the retry limit
             if retry_count >= self.max_retries:
                 if self.debug > 0:
                     print(f"Error: Timed out waiting for FID {fid} metadata. Skipping.")
+
+            #Assigngs file metadata based on stored file information
             else:
                 fid_md = self.fids[fid]
             self.fid_lock.release()
             try:
+                #Checks for special file urls before processing
                 if "eos" in next_file["file_url"]:
                     file_location = "eospublic.cern.ch"
                 else:
                     file_location = next_file["file_url"].replace("https://","").replace("root://","").split("/")[0].split(":")[0]
 
+                #Compiles data
                 new_entry = {
                     "process_state" : next_file["process_state"],
                     "@timestamp" : next_file["@timestamp"],
@@ -281,8 +349,12 @@ class XRootESClient():
                     "files_in_snapshot" : self.pids[pid]["metadata"]["files_in_snapshot"],
                     "application" : self.pids[pid]["metadata"]["processes"][0]["application"]["name"]
                 }
+                #Checks if the "site" entry needs to be removed. Can happen when
+                #site data is missing
                 if new_entry["site"] == "remove_key":
                     new_entry.pop("site")
+
+                #Puts the finished data into a queue for the writer thread
                 self.finished_data.put(new_entry)
 
             except Exception as e:
@@ -290,12 +362,15 @@ class XRootESClient():
                     md = self.pids[pid]["metadata"]
                     print(f"Warning: Could not process entry FID {fid} for entry {next_file} and project metadata {md}")
                     print(f"Exception {e} was thrown")
+
+        #Increments the compiler thread sempahore to allow new threads to spawn
         self.inc_lock.acquire()
         self.max_compiler_threads += 1
         self.inc_lock.release()
         if self.debug >= 3:
             print(f"Finished compiler thread with pid {pid}")
 
+    #Overseer function for SAM-releated threads
     def sam_overseer_func(self):
         i = 0
         while i < len(self.pids.keys()):
