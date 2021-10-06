@@ -61,6 +61,8 @@ class XRootESClient():
         self.debug = 1
         self.args = None
 
+        self.dirname = ""
+
         #Number of attempts to acquire FID metadata before giving up
         self.max_retries = 30
 
@@ -80,6 +82,8 @@ class XRootESClient():
         #certain values
         self.fid_lock = threading.Lock()
         self.inc_lock = threading.Lock()
+
+
 
         #Class-scope variables for the different overseer threads
         self.compiler_overseer = None
@@ -112,6 +116,7 @@ class XRootESClient():
             self.args.end_date = self.args.start_date
         if self.debug > 2:
             print(f"Args recieved: {args}")
+        self.dirname = self.args.dirname
         #Initializes the SAM Web client
         self.samweb = samweb_client.SAMWebClient(experiment=args.experiment)
         #Gets list of DUNE-related projects started in the specified date range
@@ -142,7 +147,7 @@ class XRootESClient():
 
     #Creates a summary file with data about each FID found sorted by PID then FID
     def summarizer(self):
-        sum_writer = jsonlines.open(f"{Path.cwd()}/cached_searches/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
+        sum_writer = jsonlines.open(f"{self.dirname}/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
         for pid in self.pid_list:
             with jsonlines.open(self.pids[pid]["raw_filename"]) as reader:
                 curr_fid = None
@@ -201,12 +206,12 @@ class XRootESClient():
         proj_files = {}
 
         #Checks that the cached_searches directory exists, and creates it if not.
-        if not Path(f"{Path.cwd()}/cached_searches").is_dir():
-            Path(f"{Path.cwd()}/cached_searches").mkdir(exist_ok=True)
+        if not Path(self.dirname).is_dir():
+            Path(self.dirname).mkdir(exist_ok=True)
 
         #Makes all of the raw file objects
         for pid in self.pid_list:
-            fname = f"{Path.cwd()}/cached_searches/raw_{self.args.start_date}_{self.args.end_date}_{pid}.jsonl"
+            fname = f"{self.dirname}/raw_{self.args.start_date}_{self.args.end_date}_{pid}.jsonl"
             self.pids[pid]["raw_filename"] = fname
             proj_files[pid] = open(fname, "w+")
 
@@ -263,6 +268,7 @@ class XRootESClient():
         i = 0
         #Steps through all PIDs
         while i < len(self.pids.keys()):
+            #Checks to see if we have more threads available
             if self.max_compiler_threads <= 0:
                 if self.debug >= 3:
                     print("No available compiler threads. Waiting.")
@@ -276,7 +282,7 @@ class XRootESClient():
                 self.pids[pid]["compiler_worker"] = threading.Thread(target=self.compiler_worker_func,args=(pid,),daemon=True)
                 self.pids[pid]["compiler_worker"].start()
                 i += 1
-
+        #Waits for all threads to terminate
         for pid in self.pid_list:
             self.pids[pid]["compiler_worker"].join()
 
@@ -373,13 +379,16 @@ class XRootESClient():
     #Overseer function for SAM-releated threads
     def sam_overseer_func(self):
         i = 0
+        #Steps through all PIDs
         while i < len(self.pids.keys()):
+            #Checks to see if we have more threads available
             if self.max_sam_threads <= 0:
                 if self.debug >= 3:
                     print("No available SAM threads. Waiting.")
                 time.sleep(0.2)
             else:
                 pid = self.pid_list[i]
+                #Decrements the semaphore when spawning a new thread
                 self.inc_lock.acquire()
                 self.max_sam_threads -= 1
                 self.inc_lock.release()
@@ -387,30 +396,40 @@ class XRootESClient():
                 self.pids[pid]["sam_worker"].start()
                 i += 1
 
+        #Waits for all threads to terminate
         for pid in self.pid_list:
             self.pids[pid]["sam_worker"].join()
 
     def sam_worker_func(self, pid):
+        #Runs as long as there's data, or the thread that produces data is either alive or hasn't been started
         while self.pids[pid]["es_worker"] == None or self.pids[pid]["es_worker"].is_alive() or not self.pids[pid]["fid_queue"].empty():
+            #Waits if the FID queue is empty
             if self.pids[pid]["fid_queue"].empty():
                 time.sleep(1)
                 continue
+            #Gets the next set of file IDs
             to_search = self.pids[pid]["fid_queue"].get()
+            #Gets the metadata for the set of FIDs
             data = self.samweb.getMultipleMetadata(to_search)
             self.fid_lock.acquire()
+            #Breaks out each individual FID's metadata and writes it to a class-level
+            #dictionary hashed with file ID
             for item in data:
                 try:
                     self.fids[item['file_id']] = item
                 except:
                     print(f"Could not process item {item}")
             self.fid_lock.release()
+        #Increments the sam_threads semaphore
         self.inc_lock.acquire()
         self.max_sam_threads += 1
         self.inc_lock.release()
 
     def es_overseer_func(self):
         i = 0
+        #Steps through all PIDs
         while i < len(self.pids.keys()):
+            #Checks to see if we have more threads available
             if self.max_es_threads <= 0:
                 if self.debug >= 3:
                     print("No available ElasticSearch threads. Waiting")
@@ -419,35 +438,42 @@ class XRootESClient():
                 pid = self.pid_list[i]
                 if self.debug >= 3:
                     print(f"Making ElasticSearch thread for pid {pid}")
+                #Decrements the sempahore when spawning a new thread
                 self.inc_lock.acquire()
                 self.max_es_threads -= 1
                 self.inc_lock.release()
                 self.pids[pid]["es_worker"] = threading.Thread(target=self.es_worker_func,args=(pid,),daemon=True)
                 self.pids[pid]["es_worker"].start()
                 i += 1
-
+        #Waits for all threads to terminate
         for pid in self.pid_list:
             self.pids[pid]["es_worker"].join()
 
+    #Function to pull all logged SAM Events for a given PID in the established date range
     def es_worker_func(self, pid):
+        #Sets up variables for the function
         curr_date = date_parser.parse(self.args.start_date)
         target_date = date_parser.parse(self.args.end_date)
         y0,m0,d0 = curr_date.strftime("%Y-%m-%d").split('-')
+        #Creates an ElasticSearch search template
         es_template = {
             "query" : {
                 "bool" : {
                     "filter" : {
+                        #Only gets results after a certain date
                         "range" : {
                             "@timestamp" : {
                                 "gte" : f"{y0}-{m0}-{d0}"
                             }
                         }
                     },
+                    #Matches the PID
                     "must": {
                         "match": {
                              "project_id" : pid
                         }
                     },
+                    #Matches one of three file states and one of two events
                     "should" : [
                         {
                             "match": {
@@ -479,6 +505,9 @@ class XRootESClient():
                 }
             }
         }
+        #Adds a sort to the template, sorting first by file ID and then by event
+        #time within that sort. Ultimately gives us groups of the same file ID
+        #that are sorted by time
         es_template["sort"] = [{"file_id": "asc"},{"event_time": "asc"}]
 
         #Based on Simplernerd's tutorial here: https://simplernerd.com/elasticsearch-scroll-python/
@@ -571,6 +600,7 @@ if __name__ == "__main__":
     parser.add_argument('-U', '--user', dest="user", default="", help="Searches for a specific user")
     parser.add_argument('-X', '--experiment', dest="experiment", default="dune", help="Searches for a specific experiment")
     parser.add_argument('-C', '--cluster', dest='es_cluster', default="https://fifemon-es.fnal.gov", help="Specifies the Elasticsearch cluter to target")
+    parser.add_argument('-D', '--directory', dest='dirname', default=f"{Path.cwd()}/cached_searches", help="Sets the cached searches directory")
     parser.add_argument('projects', nargs='*')
 
     args = parser.parse_args()
