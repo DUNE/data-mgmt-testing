@@ -2,7 +2,14 @@
 
 <img src="duneMain.png">
 
-## Step 0, ensure GIT, NPM and Python3 are installed on the host machine:
+##About
+___
+The Dune Network Monitor exists to visualize the flow of data between facilities across the world participating in the Deep Underground Neutrino Project. By interfacing with the elasticsearch API our application creates a graphical representation of file transfers, bandwidth, and network reliability.
+
+##Installation
+___
+
+### Step 0, ensure GIT, NPM and Python3 are installed on the host machine:
 
 On linux run something like (package manager dependant): "sudo apt install NPM", "sudo dnf install NPM", "yum install NPM", etc...
 <br>
@@ -10,11 +17,11 @@ Similiar syntax for python "sudo apt install Python3", "sudo dnf install Python3
 <br>
 Something like "sudo apt install git", etc...
 
-## Step 1, run GIT clone this repo onto the machine that will host the network visualizer tool:
+### Step 1, run GIT clone this repo onto the machine that will host the network visualizer tool:
 
 In a terminal type "git clone https://github.com/DUNE/data-mgmt-testing.git"
 
-## Next install the "forever" package for NPM
+### Next install the "forever" package for NPM
 
 (from root or with SUDO)
 
@@ -23,9 +30,9 @@ Ex: **sudo npm install forever -g**
 <br>
 <br>
 
-## Now CD into the data-mgmt-testing directory that was cloned earlier
+### Now CD into the data-mgmt-testing directory that was cloned earlier
 
-## Running for the first time, use the script setupEverything.sh, located in /data-mgmt-testing/NetworkVisualizer1.0/
+### Running for the first time, use the script setupEverything.sh, located in /data-mgmt-testing/NetworkVisualizer1.0/
 
 To do first time setup run "sh setupEverything.sh" in the aforementioned directory
 
@@ -34,7 +41,7 @@ To do first time setup run "sh setupEverything.sh" in the aforementioned directo
 <br>
 <br>
 
-## After that run the included start and stop scripts as follows:
+### After that run the included start and stop scripts as follows:
 
 To start: run "sh startEverything.sh"
 
