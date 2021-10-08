@@ -2,11 +2,11 @@
 
 <img src="duneMain.png">
 
-##About
+## About
 ___
 The Dune Network Monitor exists to visualize the flow of data between facilities across the world participating in the Deep Underground Neutrino Project. By interfacing with the elasticsearch API our application creates a graphical representation of file transfers, bandwidth, and network reliability.
 
-##Installation
+## Installation
 ___
 
 ### Step 0, ensure GIT, NPM and Python3 are installed on the host machine:
