@@ -1,4 +1,6 @@
-# Dune data visualizer Alpha
+# Dune Network Monitor
+
+!(/duneMain.png)
 
 ## Step 0, ensure GIT, NPM and Python3 are installed on the host machine:
 
