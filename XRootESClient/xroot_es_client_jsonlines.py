@@ -147,62 +147,120 @@ class XRootESClient():
 
     #Creates a summary file with data about each FID found sorted by PID then FID
     def summarizer(self):
+        #We're making a single summary file for all projects IDs
         sum_writer = jsonlines.open(f"{self.dirname}/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
+        #Steps through all found project IDs
         for pid in self.pid_list:
+            #Checks to make sure that the raw file we're accessing isn't empty
+            #(indicating no relevant SAM events for that project)
             if Path(self.pids[pid]["raw_filename"]).stat().st_size == 0:
                 continue
+            #Each PID has an associated raw file, with a saved name for convenience
             with jsonlines.open(self.pids[pid]["raw_filename"]) as reader:
+                #Sets some default values for checks or inter-iteration variables
                 curr_fid = None
                 last_start = None
                 prev_event = None
                 start_num = None
                 last_count = 0
+                #Every line is a full event, so we process each line individually
                 for count, event in enumerate(reader):
                     try:
+                        #Checks to see if we have the default FID (indicates that
+                        #this is the first iteration of the loop)
                         if curr_fid == None:
                             curr_fid = event["file_id"]
                             last_start = event
                             start_num = count
+                        #Checks if we've moved on to a new file id. This indicates
+                        #that we need to output a summary of the last FID as we've
+                        #processed its last event (since the files are grouped by
+                        #FID and then sorted by timestamp within those groups)
                         elif event["file_id"] != curr_fid:
+                            #last_start is a copy of the first event with the current
+                            #FID, which we need for our summary.
                             summary = last_start
+                            #Pulls the file size for the current FID from previously
+                            #fetched SAM metadata and adds it to our summary
                             summary["file_size"] = self.fids[curr_fid]["file_size"]
+                            #Checks if there's a data tier associated with this FID,
+                            #and adds it to the summary
                             if "data_tier" in self.fids[curr_fid]:
                                 summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                            #Checks if there's a campaign associated with this FID,
+                            #and adds it to the summary
                             if "DUNE.campaign" in self.fids[curr_fid]:
                                 summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                            #Compares the current line/event count and subtracts the line count
+                            #of the first event associated with this FID to get a total
+                            #action/event count for this file
                             summary["actions"] = count - start_num
+                            #Adds the file state from the last known event
                             summary["last_file_state"] = prev_event["file_state"]
+                            #Adds the timestamp from the last known event
                             summary["last_timestamp"] = prev_event["timestamp"]
+                            #Calculates the difference between the first and last events for this FID
                             summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
+                            #Checks that we actually have a file size and duration, then adds the total
+                            #processing rate to the summary
                             if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
                                 summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
+                            #0 actions makes no sense as we should have at least 1 event if we've
+                            #encounted a FID.
+                            if summary["actions"] == 0:
+                                summary["actions"] = 1
+                            #Writes the summary for this FID
                             sum_writer.write(summary)
+                            #Updates the variables that track our current FID,
+                            #first known event for this FID, and the event number
+                            #of that first event.
                             curr_fid = event["file_id"]
                             last_start = event
                             start_num = count
-                            if summary["actions"] == 0:
-                                summary["actions"] = 1
+                        #Updates the value of the last checked event and event
+                        #number to the current event and event number
                         prev_event = event
                         last_count = count
                     except:
                         print(f"Error with FID {curr_fid}")
 
                 #Makes sure the last FID in a file is accounted for
+
+                #last_start is a copy of the first event with the current
+                #FID, which we need for our summary.
                 summary = last_start
+                #Pulls the file size for the current FID from previously
+                #fetched SAM metadata and adds it to our summary
                 summary["file_size"] = self.fids[curr_fid]["file_size"]
+                #Checks if there's a data tier associated with this FID,
+                #and adds it to the summary
                 if "data_tier" in self.fids[curr_fid]:
                     summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                #Checks if there's a campaign associated with this FID,
+                #and adds it to the summary
                 if "DUNE.campaign" in self.fids[curr_fid]:
                     summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                #Compares the current line/event count and subtracts the line count
+                #of the first event associated with this FID to get a total
+                #action/event count for this file
                 summary["actions"] = last_count - start_num + 1
+                #Adds the file state from the last known event
                 summary["last_file_state"] = prev_event["file_state"]
+                #Adds the timestamp from the last known event
                 summary["last_timestamp"] = prev_event["timestamp"]
+                #Calculates the difference between the first and last events for this FID
                 summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
+                #Checks that we actually have a file size and duration, then adds the total
+                #processing rate to the summary
                 if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
                     summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
+                #0 actions makes no sense as we should have at least 1 event if we've
+                #encounted a FID.
                 if summary["actions"] == 0:
                     summary["actions"] = 1
+                #Writes the last FID summary for this PID
                 sum_writer.write(summary)
+        #Closes the summary file
         sum_writer.close()
 
     #Takes each item sent to the finished data queue, and writes it to a
