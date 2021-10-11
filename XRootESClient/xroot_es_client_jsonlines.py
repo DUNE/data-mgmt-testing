@@ -149,6 +149,8 @@ class XRootESClient():
     def summarizer(self):
         sum_writer = jsonlines.open(f"{self.dirname}/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
         for pid in self.pid_list:
+            if Path(self.pids[pid]["raw_filename"]).stat().st_size == 0:
+                continue
             with jsonlines.open(self.pids[pid]["raw_filename"]) as reader:
                 curr_fid = None
                 last_start = None
@@ -156,31 +158,34 @@ class XRootESClient():
                 start_num = None
                 last_count = 0
                 for count, event in enumerate(reader):
-                    if curr_fid == None:
-                        curr_fid = event["file_id"]
-                        last_start = event
-                        start_num = count
-                    elif event["file_id"] != curr_fid:
-                        summary = last_start
-                        summary["file_size"] = self.fids[curr_fid]["file_size"]
-                        if "data_tier" in self.fids[curr_fid]:
-                            summary["data_tier"] = self.fids[curr_fid]["data_tier"]
-                        if "DUNE.campaign" in self.fids[curr_fid]:
-                            summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
-                        summary["actions"] = count - start_num
-                        summary["last_file_state"] = prev_event["file_state"]
-                        summary["last_timestamp"] = prev_event["timestamp"]
-                        summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
-                        if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
-                            summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
-                        sum_writer.write(summary)
-                        curr_fid = event["file_id"]
-                        last_start = event
-                        start_num = count
-                        if summary["actions"] == 0:
-                            summary["actions"] = 1
-                    prev_event = event
-                    last_count = count
+                    try:
+                        if curr_fid == None:
+                            curr_fid = event["file_id"]
+                            last_start = event
+                            start_num = count
+                        elif event["file_id"] != curr_fid:
+                            summary = last_start
+                            summary["file_size"] = self.fids[curr_fid]["file_size"]
+                            if "data_tier" in self.fids[curr_fid]:
+                                summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                            if "DUNE.campaign" in self.fids[curr_fid]:
+                                summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                            summary["actions"] = count - start_num
+                            summary["last_file_state"] = prev_event["file_state"]
+                            summary["last_timestamp"] = prev_event["timestamp"]
+                            summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
+                            if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
+                                summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
+                            sum_writer.write(summary)
+                            curr_fid = event["file_id"]
+                            last_start = event
+                            start_num = count
+                            if summary["actions"] == 0:
+                                summary["actions"] = 1
+                        prev_event = event
+                        last_count = count
+                    except:
+                        print(f"Error with FID {curr_fid}")
 
                 #Makes sure the last FID in a file is accounted for
                 summary = last_start
