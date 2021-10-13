@@ -56,11 +56,30 @@ class XRootESClient():
         #   0: No debug message
         #   1: Show errors
         #   2: Show warnings
-        #   3: Show process information
-        #   4: Show timing data
-        self.debug = 1
+        #   3: Show thread completion messages
+        #   4: Show additional process information
+        self.debug = 3
+
+        #If true, will display timing information for different aspects
+        #of the program
+        self.display_timing = False
+
+        #Stores timing data
+        self.times = {
+            "run_time" : 0,
+            "io_time" : 0,
+            "elasticsearch_time" : 0,
+            "sam_files_time" : 0,
+            "sam_proj_time" : 0,
+            "summarize_time" : 0,
+            "compile_time" : 0,
+            "metadata_fetches" : 0
+        }
+
+        #Variable for individual run arguments
         self.args = None
 
+        #Stores the output directory name
         self.dirname = ""
 
         #Number of attempts to acquire FID metadata before giving up
@@ -71,16 +90,21 @@ class XRootESClient():
         self.max_sam_threads = 8
         self.max_compiler_threads = 8
 
-        #Class-scope data structures for File ID data, Project ID data,
-        #and processed data
+        #Class-scope data structures for File ID metadata, Project ID data,
+        #and processed data to be written
         self.fids = {}
         self.pids = {}
         self.pid_list = None
         self.finished_data = queue.Queue()
 
+        self.finished_es_threads = 0
+        self.finished_sam_threads = 0
+        self.finished_compiler_threads = 0
+
         #Thread locks for File ID data access and incrementing/decrementing
         #certain values
         self.fid_lock = threading.Lock()
+        self.time_lock = threading.Lock()
         self.inc_lock = threading.Lock()
 
 
@@ -91,30 +115,67 @@ class XRootESClient():
         self.es_overseer = None
         self.writer_thread = None
 
+    #Sets the number of simultaneous PIDs to process
+    #Default is 8 to avoid excessive numbers of threads
+    def set_pid_count(self, count):
+        self.max_es_threads = count
+        self.max_sam_threads = count
+        self.max_compiler_threads = count
+
     #Resets values to initial state
     def reset_vals(self):
         self.args = None
         self.fids = {}
         self.pids = {}
         self.finished_data = queue.Queue()
-        self.fid_lock = threading.Lock()
         self.compiler_overseer = None
         self.sam_overseer = None
         self.es_overseer = None
         self.writer_thread = None
+        for key in self.times:
+            self.times[key] = 0
 
+    #Displays timing data collected by other functions
+    def show_timing_info(self):
+        print("======================")
+        print("Single run timing info")
+        print("======================")
+        print(f"Overall run time: {round(self.times["run_time"], 3)} seconds")
+        print(f"Project summaries fetch time: {round(self.times["sam_proj_time"])} seconds")
+        print(f"Average Elasticsearch thread time: {round(self.times["elasticsearch_time"]/len(self.pids.keys()), 3)} seconds")
+        print(f"Average active SAM FID metadata fetch time: {round(1000*self.times["sam_files_time"]/len(self.fids.keys()), 4)} seconds per 1000 files")
+        print(f"Total summarizer function time: {round(self.times["summarize_time"], 3)} seconds")
 
     #Sets the debug level
     def set_debug_level(self, level):
         self.debug = level
 
+    #Sets whether the program will display timing data
+    def set_show_timing_info(self, display_timing):
+        self.display_timing = display_timing
+
     #Main thread for the class.
     def new_run(self, args):
+        #Gets the overall run start time
+        start_time = datetime.datetime.now().timestamp()
+
+        #Resets finished thread counts
+        self.finished_es_threads = 0
+        self.finished_sam_threads = 0
+        self.finished_compiler_threads = 0
+
+
         self.args = args
+
+        #Sets debug level and whether to show timing info
+        self.set_debug_level(int(args.debug_level))
+        if args.show_timing:
+            self.set_show_timing_info(True)
+
         #Checks to see if the default end date is set
         if self.args.end_date == "0":
             self.args.end_date = self.args.start_date
-        if self.debug > 2:
+        if self.debug > 3:
             print(f"Args recieved: {args}")
         self.dirname = self.args.dirname
         #Initializes the SAM Web client
@@ -130,23 +191,31 @@ class XRootESClient():
         self.compiler_overseer = threading.Thread(target=self.compiler_overseer_func, daemon=True)
         self.writer_thread = threading.Thread(target=self.writer, daemon=True)
         self.es_overseer.start()
-        time.sleep(1)
+        time.sleep(0.5)
         self.sam_overseer.start()
-        time.sleep(1)
+        time.sleep(0.5)
         self.compiler_overseer.start()
-        time.sleep(1)
+        time.sleep(0.5)
         self.writer_thread.start()
-        time.sleep(1)
+        time.sleep(0.5)
         #Writer thread doesn't exit until all other non-main threads end,
         #so we only need to wait for it to join.
         self.writer_thread.join()
-        if self.debug >= 3:
+        if self.debug > 2:
             print("Writing to raw files complete. Now summarizing.")
         #Runs the summaraization file generating function
         self.summarizer()
 
+        #Gets the overall run end time and duration
+        end_time = datetime.datetime.now().timestamp()
+        self.times["run_time"] = end_time - start_time
+        if self.display_timing:
+            self.show_timing_info()
+
     #Creates a summary file with data about each FID found sorted by PID then FID
     def summarizer(self):
+        #Gets summarizer start time
+        start_time = datetime.datetime.now().timestamp()
         #We're making a single summary file for all projects IDs
         sum_writer = jsonlines.open(f"{self.dirname}/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
         #Steps through all found project IDs
@@ -263,6 +332,10 @@ class XRootESClient():
         #Closes the summary file
         sum_writer.close()
 
+        #Gets summarizer end time and duration
+        end_time = datetime.datetime.now().timestamp()
+        self.times["summarize_time"] = end_time - start_time
+
     #Takes each item sent to the finished data queue, and writes it to a
     #raw data json file based on the project ID for the file.
     def writer(self):
@@ -286,7 +359,7 @@ class XRootESClient():
                 continue
             #Gets the next json object to write
             to_write = self.finished_data.get()
-            if self.debug >= 3:
+            if self.debug > 3:
                 fid = to_write["file_id"]
                 pid = to_write["project_id"]
                 print(f"Writer recieved file {fid} for project {pid}")
@@ -333,10 +406,12 @@ class XRootESClient():
         while i < len(self.pids.keys()):
             #Checks to see if we have more threads available
             if self.max_compiler_threads <= 0:
-                if self.debug >= 3:
+                if self.debug > 3:
                     print("No available compiler threads. Waiting.")
                 time.sleep(0.2)
             else:
+                if self.debug > 3:
+                    print(f"Making compiler thread for pid {pid}")
                 pid = self.pid_list[i]
                 #Decrements the semaphore upon spawning a new thread
                 self.inc_lock.acquire()
@@ -375,8 +450,8 @@ class XRootESClient():
                 self.fid_lock.acquire()
             #Checks to see if we've hit the retry limit
             if retry_count >= self.max_retries:
-                if self.debug > 0:
-                    print(f"Error: Timed out waiting for FID {fid} metadata. Skipping.")
+                if self.debug > 1:
+                    print(f"Warning: Timed out waiting for FID {fid} metadata. Skipping.")
 
             #Assigngs file metadata based on stored file information
             else:
@@ -435,9 +510,13 @@ class XRootESClient():
         #Increments the compiler thread sempahore to allow new threads to spawn
         self.inc_lock.acquire()
         self.max_compiler_threads += 1
-        self.inc_lock.release()
-        if self.debug >= 3:
+        self.finished_compiler_threads += 1
+        if self.debug > 3:
             print(f"Finished compiler thread with pid {pid}")
+        if self.debug > 2:
+            print(f"{self.finished_compiler_threads}/{len(self.pids.keys())} compiler threads finished")
+        self.inc_lock.release()
+
 
     #Overseer function for SAM-releated threads
     def sam_overseer_func(self):
@@ -446,10 +525,12 @@ class XRootESClient():
         while i < len(self.pids.keys()):
             #Checks to see if we have more threads available
             if self.max_sam_threads <= 0:
-                if self.debug >= 3:
+                if self.debug > 3:
                     print("No available SAM threads. Waiting.")
                 time.sleep(0.2)
             else:
+                if self.debug > 3:
+                    print(f"Making SAM thread for pid {pid}")
                 pid = self.pid_list[i]
                 #Decrements the semaphore when spawning a new thread
                 self.inc_lock.acquire()
@@ -470,6 +551,7 @@ class XRootESClient():
             if self.pids[pid]["fid_queue"].empty():
                 time.sleep(1)
                 continue
+            start_time = datetime.datetime.now().timestamp()
             #Gets the next set of file IDs
             to_search = self.pids[pid]["fid_queue"].get()
             #Gets the metadata for the set of FIDs
@@ -483,9 +565,18 @@ class XRootESClient():
                 except:
                     print(f"Could not process item {item}")
             self.fid_lock.release()
+            end_time = datetime.datetime.now().timestamp()
+            self.time_lock.acquire()
+            self.times["sam_files_time"] = self.times["sam_files_time"] + end_time - start_time
+            self.time_lock.release()
         #Increments the sam_threads semaphore
         self.inc_lock.acquire()
         self.max_sam_threads += 1
+        self.finished_sam_threads += 1
+        if self.debug > 3:
+            print(f"Finished SAM file metadata thread with pid {pid}")
+        if self.debug > 2:
+            print(f"{self.finished_sam_threads}/{len(self.pids.keys())} SAM file metadata threads finished")
         self.inc_lock.release()
 
     def es_overseer_func(self):
@@ -494,12 +585,12 @@ class XRootESClient():
         while i < len(self.pids.keys()):
             #Checks to see if we have more threads available
             if self.max_es_threads <= 0:
-                if self.debug >= 3:
+                if self.debug > 3:
                     print("No available ElasticSearch threads. Waiting")
                 time.sleep(0.2)
             else:
                 pid = self.pid_list[i]
-                if self.debug >= 3:
+                if self.debug > 3:
                     print(f"Making ElasticSearch thread for pid {pid}")
                 #Decrements the sempahore when spawning a new thread
                 self.inc_lock.acquire()
@@ -514,6 +605,8 @@ class XRootESClient():
 
     #Function to pull all logged SAM Events for a given PID in the established date range
     def es_worker_func(self, pid):
+        #Gets start time for this worker function
+        start_time = datetime.datetime.now().timestamp()
         #Sets up variables for the function
         curr_date = date_parser.parse(self.args.start_date)
         target_date = date_parser.parse(self.args.end_date)
@@ -619,9 +712,21 @@ class XRootESClient():
             curr_date += relativedelta(months=+1)
         self.inc_lock.acquire()
         self.max_es_threads += 1
+        self.finished_es_threads += 1
+        if self.debug > 3:
+            print(f"Finished ElasticSearch data thread with pid {pid}")
+        if self.debug > 2:
+            print(f"{self.finished_es_threads}/{len(self.pids.keys())} SAM file metadata threads finished")
         self.inc_lock.release()
 
+        #Gets the end time and duration for this thread
+        end_time = datetime.datetime.now().timestamp()
+        self.time_lock.acquire()
+        self.times["elasticsearch_time"] = self.times["elasticsearch_time"] + end_time - start_time
+        self.time_lock.release()
+
     def get_proj_list(self):
+        start_time = datetime.datetime.now().timestamp()
         projects = self.samweb.listProjects(started_after=self.args.start_date, started_before=self.args.end_date)
         for proj in projects:
             if "prestage" in proj:
@@ -639,13 +744,11 @@ class XRootESClient():
             self.pids[pid]["compiler_worker"] = None
         self.pid_list = list(self.pids.keys())
         self.pid_list.sort()
-        if self.debug >= 3:
+        if self.debug > 2:
             print(f"Full pid list is: {self.pid_list}")
+        end_time = datetime.datetime.now().timestamp()
+        self.times["sam_proj_time"] = end_time - start_time
 
-    #Function called when a fatal error is encountered
-    def errorHandler(self, type):
-        print(f"Error of type {type} occured")
-        exit()
 
 if __name__ == "__main__":
 
@@ -664,13 +767,14 @@ if __name__ == "__main__":
     parser.add_argument('-X', '--experiment', dest="experiment", default="dune", help="Searches for a specific experiment")
     parser.add_argument('-C', '--cluster', dest='es_cluster', default="https://fifemon-es.fnal.gov", help="Specifies the Elasticsearch cluter to target")
     parser.add_argument('-D', '--directory', dest='dirname', default=f"{Path.cwd()}/cached_searches", help="Sets the cached searches directory")
-    parser.add_argument('projects', nargs='*')
+    parser.add_argument('--debug_level', dest='debug_level', default=2, help="Determines which level of debug information to show. 1: Errors only, 2: Warnings and Errors, 3: Basic process info, 4: Advanced process info")
+    parser.add_argument('--show_timing', action='store_true', help="Shows timing information if set")
+
 
     args = parser.parse_args()
 
     client = XRootESClient()
 
-    client.set_debug_level(3)
     client.new_run(args)
 
     program_end = time.perf_counter()
