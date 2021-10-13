@@ -140,11 +140,11 @@ class XRootESClient():
         print("======================")
         print("Single run timing info")
         print("======================")
-        print(f"Overall run time: {round(self.times["run_time"], 3)} seconds")
-        print(f"Project summaries fetch time: {round(self.times["sam_proj_time"])} seconds")
-        print(f"Average Elasticsearch thread time: {round(self.times["elasticsearch_time"]/len(self.pids.keys()), 3)} seconds")
-        print(f"Average active SAM FID metadata fetch time: {round(1000*self.times["sam_files_time"]/len(self.fids.keys()), 4)} seconds per 1000 files")
-        print(f"Total summarizer function time: {round(self.times["summarize_time"], 3)} seconds")
+        print(f"Overall run time: {round(self.times['run_time'], 3)} seconds")
+        print(f"Project summaries fetch time: {round(self.times['sam_proj_time'])} seconds")
+        print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/len(self.pids.keys()), 3)} seconds")
+        print(f"Average active SAM FID metadata fetch time: {round(1000*self.times['sam_files_time']/len(self.fids.keys()), 4)} seconds per 1000 files")
+        print(f"Total summarizer function time: {round(self.times['summarize_time'], 3)} seconds")
 
     #Sets the debug level
     def set_debug_level(self, level):
@@ -157,7 +157,7 @@ class XRootESClient():
     #Main thread for the class.
     def new_run(self, args):
         #Gets the overall run start time
-        start_time = datetime.datetime.now().timestamp()
+        start_time = datetime.now().timestamp()
 
         #Resets finished thread counts
         self.finished_es_threads = 0
@@ -171,7 +171,7 @@ class XRootESClient():
         self.set_debug_level(int(args.debug_level))
         if args.show_timing:
             self.set_show_timing_info(True)
-
+        self.set_pid_count(int(args.simultaneous_pids))
         #Checks to see if the default end date is set
         if self.args.end_date == "0":
             self.args.end_date = self.args.start_date
@@ -182,8 +182,10 @@ class XRootESClient():
         self.samweb = samweb_client.SAMWebClient(experiment=args.experiment)
         #Gets list of DUNE-related projects started in the specified date range
         self.get_proj_list()
-        if self.debug > 2:
+        if self.debug > 3:
             print(f"Projects gotten: {self.pids}")
+        if self.debug > 2:
+            print(f"{len(self.pids.keys())} projects found")
         #Creates and starts all overseer threads as daemons to prevent continued
         #operation if the main program ends.
         self.es_overseer = threading.Thread(target=self.es_overseer_func, daemon=True)
@@ -207,7 +209,7 @@ class XRootESClient():
         self.summarizer()
 
         #Gets the overall run end time and duration
-        end_time = datetime.datetime.now().timestamp()
+        end_time = datetime.now().timestamp()
         self.times["run_time"] = end_time - start_time
         if self.display_timing:
             self.show_timing_info()
@@ -215,7 +217,7 @@ class XRootESClient():
     #Creates a summary file with data about each FID found sorted by PID then FID
     def summarizer(self):
         #Gets summarizer start time
-        start_time = datetime.datetime.now().timestamp()
+        start_time = datetime.now().timestamp()
         #We're making a single summary file for all projects IDs
         sum_writer = jsonlines.open(f"{self.dirname}/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
         #Steps through all found project IDs
@@ -333,7 +335,7 @@ class XRootESClient():
         sum_writer.close()
 
         #Gets summarizer end time and duration
-        end_time = datetime.datetime.now().timestamp()
+        end_time = datetime.now().timestamp()
         self.times["summarize_time"] = end_time - start_time
 
     #Takes each item sent to the finished data queue, and writes it to a
@@ -411,7 +413,7 @@ class XRootESClient():
                 time.sleep(0.2)
             else:
                 if self.debug > 3:
-                    print(f"Making compiler thread for pid {pid}")
+                    print(f"Making compiler thread for pid {self.pid_list[i]}")
                 pid = self.pid_list[i]
                 #Decrements the semaphore upon spawning a new thread
                 self.inc_lock.acquire()
@@ -530,7 +532,7 @@ class XRootESClient():
                 time.sleep(0.2)
             else:
                 if self.debug > 3:
-                    print(f"Making SAM thread for pid {pid}")
+                    print(f"Making SAM thread for pid {self.pid_list[i]}")
                 pid = self.pid_list[i]
                 #Decrements the semaphore when spawning a new thread
                 self.inc_lock.acquire()
@@ -551,7 +553,7 @@ class XRootESClient():
             if self.pids[pid]["fid_queue"].empty():
                 time.sleep(1)
                 continue
-            start_time = datetime.datetime.now().timestamp()
+            start_time = datetime.now().timestamp()
             #Gets the next set of file IDs
             to_search = self.pids[pid]["fid_queue"].get()
             #Gets the metadata for the set of FIDs
@@ -565,7 +567,7 @@ class XRootESClient():
                 except:
                     print(f"Could not process item {item}")
             self.fid_lock.release()
-            end_time = datetime.datetime.now().timestamp()
+            end_time = datetime.now().timestamp()
             self.time_lock.acquire()
             self.times["sam_files_time"] = self.times["sam_files_time"] + end_time - start_time
             self.time_lock.release()
@@ -606,7 +608,7 @@ class XRootESClient():
     #Function to pull all logged SAM Events for a given PID in the established date range
     def es_worker_func(self, pid):
         #Gets start time for this worker function
-        start_time = datetime.datetime.now().timestamp()
+        start_time = datetime.now().timestamp()
         #Sets up variables for the function
         curr_date = date_parser.parse(self.args.start_date)
         target_date = date_parser.parse(self.args.end_date)
@@ -716,17 +718,17 @@ class XRootESClient():
         if self.debug > 3:
             print(f"Finished ElasticSearch data thread with pid {pid}")
         if self.debug > 2:
-            print(f"{self.finished_es_threads}/{len(self.pids.keys())} SAM file metadata threads finished")
+            print(f"{self.finished_es_threads}/{len(self.pids.keys())} ElasticSearch threads finished")
         self.inc_lock.release()
 
         #Gets the end time and duration for this thread
-        end_time = datetime.datetime.now().timestamp()
+        end_time = datetime.now().timestamp()
         self.time_lock.acquire()
         self.times["elasticsearch_time"] = self.times["elasticsearch_time"] + end_time - start_time
         self.time_lock.release()
 
     def get_proj_list(self):
-        start_time = datetime.datetime.now().timestamp()
+        start_time = datetime.now().timestamp()
         projects = self.samweb.listProjects(started_after=self.args.start_date, started_before=self.args.end_date)
         for proj in projects:
             if "prestage" in proj:
@@ -746,7 +748,7 @@ class XRootESClient():
         self.pid_list.sort()
         if self.debug > 2:
             print(f"Full pid list is: {self.pid_list}")
-        end_time = datetime.datetime.now().timestamp()
+        end_time = datetime.now().timestamp()
         self.times["sam_proj_time"] = end_time - start_time
 
 
@@ -756,7 +758,7 @@ if __name__ == "__main__":
     #Timings used primarily for debug and code improvements,
     #but could still be useful in the long-term.
     #Any calls of time.perf_counter are exclusively for this
-    program_init = time.perf_counter()
+    #program_init = time.perf_counter()
 
     #Arguments for the script. The help info in the add_argument functions detail their respective uses
     parser = ap.ArgumentParser()
@@ -769,7 +771,7 @@ if __name__ == "__main__":
     parser.add_argument('-D', '--directory', dest='dirname', default=f"{Path.cwd()}/cached_searches", help="Sets the cached searches directory")
     parser.add_argument('--debug_level', dest='debug_level', default=2, help="Determines which level of debug information to show. 1: Errors only, 2: Warnings and Errors, 3: Basic process info, 4: Advanced process info")
     parser.add_argument('--show_timing', action='store_true', help="Shows timing information if set")
-
+    parser.add_argument('--simultaneous_pids', default=8, help="Defines how many project IDs the client will attempt to handle simultaneously")
 
     args = parser.parse_args()
 
@@ -777,10 +779,10 @@ if __name__ == "__main__":
 
     client.new_run(args)
 
-    program_end = time.perf_counter()
-    tot_time = program_end - program_init
+    #program_end = time.perf_counter()
+    #tot_time = program_end - program_init
 
-    print(f"Overall program time: {round(tot_time,2)} seconds")
+    #print(f"Overall program time: {round(tot_time,2)} seconds")
     #print(f"---Total scroll time: {round(scroll_time,2)} seconds, {round(scroll_time/tot_time*100,2)}%")
     #print(f"---Total file IO time: {round(io_time,2)} seconds, {round(io_time/tot_time*100,2)}%")
     #print(f"---Other time usage: {round(other_time,2)}, {round(other_time/tot_time*100,2)}%")
