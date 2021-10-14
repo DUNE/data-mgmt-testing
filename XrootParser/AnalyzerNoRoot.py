@@ -235,8 +235,8 @@ def analyze(start_date,end_date,delta ):
       sumrec["data_tier"] = item["data_tier"]
       sumrec["node"] = item["node"]
       summary.append(sumrec)
-      if item["username"] == "dunepro" and not DUNEPRO :
-        continue
+#      if item["username"] == "dunepro" and not DUNEPRO :
+#        continue
       if not item["username"] == "dunepro" and DUNEPRO :
         continue
       if duration < 10:
@@ -271,7 +271,15 @@ def analyze(start_date,end_date,delta ):
           for data in summary:
               writer.writerow(data)
   except IOError:
-      print("I/O error")
+      print("csv I/O error")
+  try:
+    with jsonlines.open("%s.jsonl"%(out_name), mode='w') as writer:
+      for i in summary:
+        writer.write(i)
+        
+  except IOError:
+      print("jsonl I/O error")
+    
   
 #  cross.Scale(1./days)
  # state.Scale(1./days)
