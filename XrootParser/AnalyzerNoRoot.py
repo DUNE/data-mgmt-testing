@@ -8,6 +8,50 @@ DUNEPRO=False  # only dunepro
 # loop over a range of input json files and histogram data flow vs various characteristics
 # inputs are start and end dates, requires that summary files for those inputs be made by Utils.py
 
+# translate nodenames - this should be a json file.
+def truncate(f):
+  return round(f*1000)/1000.
+def translate_site(name):
+  nodename_sitename = {"br_cat.cbpf.br": "BR_CBPF",
+   "ch_cern.ch": "CERN-PROD",
+   "ch_unibe-lhcp.bern.ch": "UNIBE-LHEP",
+   "cz_farm.particle.cz": "FZU",
+   "es_ciemat.es": "CIEMAT-LCG2",
+   "es_pic.es": "PIC",
+   "fr_in2p3.fr": "IN2P3-CC",
+   "nl_farm.nikhef.nl": "NIKHEF-ELPROD",
+   "uk_brunel.ac.uk": "BRUNEL",
+   "uk_ecdf.ed.ac.uk": "UKI-SCOTGRID-EDCF",
+   "uk_esc.qmul.uk": "UKI-LT2-QMUL",
+   "uk_grid.hep.ph.ic.ac.uk": "UKI-LT2-IC-HEP",
+   "uk_gridpp.rl.ac.uk": "RAL-LCG2",
+         "xrootd.echo.stfc.ac.uk": "RAL-LCG2",
+   "uk_in.tier2.hep.manchester.ac.uk": "UKI-NORTHGRID-MAN-HEP",
+   "uk_nubes.stfc.ac.uk": "RAL-LCG2",
+   "uk_ph.liv.ac.uk": "UKI-NORTHGRID-LIV-HEP",
+   "uk_physics.ox.ac.uk": "UKI-SOUTHGRID-OX-HEP",
+   "uk_pp.rl.ac.uk": "UKI-SOUTHGRID-RALPP",
+   "uk_sheffield.uk": "UKI-NORTHGRID-SHEF-HEP",
+   "us_campuscluster.illinois.edu": "MWT2",
+   "us_chtc.wisc.edu": "GLOW",
+   "us_colorado.edu": "COLORADO",
+   "us_crc.nd.edu": "NWICG_NDCMS",
+   "us_crush.syracuse.edu": "SU-ITS-CE2",
+   "us_fnal.gov": "US_FNAL",
+   "us_iu.edu": "MWT2",
+   "us_nmsu.edu": "SLATE_US_NMSU_DISCOVERY",
+   "us_rcf.bnl.gov": "BNL-SDCC-CE01",
+   "us_sdcc.bnl.gov": "BNL-SDCC-CE01",
+   "us_uct2-mwt2.uchicago.edu": "MWT2",
+   "us_unl.edu": "Nebraska",
+   "us_usatlas.bnl.gov": "BNL-SDCC-CE01",
+   "fndca1.fnal.gov": "US_FNAL",
+   "eospublic.cern.ch": "CERN-PROD" }
+  if name in nodename_sitename:
+    return nodename_sitename[name]
+  else:
+    return "UNKNOW_"+name
+
 import numpy as np
 from datetime import date,datetime,timedelta
 from dateutil import parser
@@ -128,44 +172,7 @@ def analyze(start_date,end_date,delta ):
   print ("users",users)
   print ("states",states)
   nstate = len(states)
-#  ROOT.gStyle.SetOptStat(0)
-#
-#  cross = ROOT.TH2F("cross","transfer/day",nd,0,nd,ns,0,ns)
-##  setXYLabels(cross,disks,sites)
-#  state = ROOT.TH2F("state","transfer/day",nstate,0,nstate,ns,0,ns)
-##  setXYLabels(state,states,sites)
-#  consumed = ROOT.TH2F("consumed","consumed",nd,0,nd,ns,0,ns)
-##  setXYLabels(consumed,disks,sites)
-#  consumed_by_app = ROOT.TH2F("consumed_by_app","consumed",na,0,na,ns,0,ns)
-##  setXYLabels(consumed_by_app,apps,sites)
-#  rate = ROOT.TH2F("rate","rate for consumed, MB/s",nd,0,nd,ns,0,ns)
-##  setXYLabels(rate,disks,sites)
-#  rate_by_app = ROOT.TH2F("rate_by_app","rate for consumed, by app, MB/s",na,0,na,ns,0,ns)
-##  setXYLabels(rate_by_app,apps,sites)
-#  ratelog10 = ROOT.TH2F("rates","rate for consumed, MB/s;;Log10 Rate",24,-3,3.,ns,0,ns)
-##  setYLabels(ratelog10,sites)
-#  skipped = ROOT.TH2F("skipped","skipped",nd,0,nd,ns,0,ns)
-##  setXYLabels(skipped,disks,sites)
-#  totalbytes = ROOT.TH1F("totalbytes_size","GB/day",ns,0,ns )
-##  setXLabels(totalbytes,sites)
-#  totalbytes_user = ROOT.TH1F("totalbytes_user","consumed GB/day",nu,0,nu )
-##  setXLabels(totalbytes_user,users)
-#  totalbytes_user_failed = ROOT.TH1F("totalbytes_user_failed","skipped GB/day",nu,0,nu )
-##  setXLabels(totalbytes_user_failed,users)
-#  totalbytes_date = ROOT.TH1F("totalbytes_date","GB/day",ndt,0,ndt )
-#  setXLabels(totalbytes_date,dates)
-#  setXLabels(cross,sites)
-#  setXLabels(consumed,sites)
-#  setXLabels(skipped,sites)
-#  setXLabels(rate,sites)
-#  setYLabels(cross,disks)
-#  setYLabels(consumed,disks)
-#  setYLabels(skipped,disks)
-#  setYLabels(rate,disks)
-#  setXLabels(totalbytes,sites)
-#  cross.GetXaxis().LabelsOption("v");
-#  cross.GetYaxis().LabelsOption("v");
-  
+ 
   summary = []
   start_range = start_date
   days = 1.0
@@ -202,36 +209,49 @@ def analyze(start_date,end_date,delta ):
       if "application" in item:
         application = item["application"]
       
-      isite = float(sites[site])-.5
+#    isite = float(sites[site])-.5
       disk = item["file_location"]
-      idisk = float(disks[disk])-.5
+#      idisk = float(disks[disk])-.5
       user = item["username"]
-      iuser = float(users[user])-.5
+#      iuser = float(users[user])-.5
       date = item["@timestamp"][0:10]
-      idate = float(dates[date])-.5
-      istate = float(states[finalstate]) -.5
-      iapp = float(apps[application]) -.5
-      #print (type(isite),type(idisk))
-      #print ("item",site,isite,disk,idisk)
-      
-#      state.Fill(istate,isite,1.0)
-      duration = item["duration"]
-      sumrec["disk"] = disk
+#      idate = float(dates[date])-.5
+#      istate = float(states[finalstate]) -.5
+#      iapp = float(apps[application]) -.5
+
+      duration = truncate(item["duration"])
+#   zac_dict['name'] = row['file_name']
+#source=row['disk']
+#newsource=nodename_sitename[source]
+#zac_dict['source']=newsource
+#destination=row['site']
+#newdestination=nodename_sitename[destination]
+#zac_dict['destination']=newdestination
+#zac_dict['file_size'] = row['file_size']
+#zac_dict['start_time'] = row['timestamp']
+#zac_dict['file_transfer_time']=row['duration']
+#zac_dict['transfer_speed(MB/s)']=row['rate']
+#Brate=int(float(row['rate'])*1000000)
+#zac_dict['transfer_speed(B/s)']=Brate
+
+      sumrec["source"] = translate_site(disk)
       sumrec["user"] = user
       sumrec["date"] = date
       process_id = 0
       if "process_id" in item:
         sumrec["process_id"] = item["process_id"]
-      sumrec["timestamp"] = item["@timestamp"]
-      sumrec["duration"] = duration
+      sumrec["start_time"] = item["@timestamp"]
+      sumrec["file_transfer_time"] = duration
       sumrec["file_size"] = item["file_size"]
       sumrec["username"] = user
       sumrec["application"] = application
       sumrec["final_state"] = finalstate
-      sumrec["site"] = site
-      sumrec["rate"] = item["rate"]
+      sumrec["destination"] = translate_site(site)
+      sumrec['transfer_speed(MB/s)'] = truncate(item["rate"])
+      sumrec['transfer_speed(B/s)'] = truncate(item["rate"]*1000000)
       sumrec["project_name"] = item["project_name"]
-      sumrec["file_name"] = os.path.basename(item["file_url"])
+      #sumrec["file_name"] = os.path.basename(item["file_url"])
+      sumrec["name"] = os.path.basename(item["file_url"])
       sumrec["data_tier"] = item["data_tier"]
       sumrec["node"] = item["node"]
       summary.append(sumrec)
@@ -279,6 +299,14 @@ def analyze(start_date,end_date,delta ):
         
   except IOError:
       print("jsonl I/O error")
+  
+  try:
+      g = open("%s.json"%(out_name),'w')
+
+      json.dump(summary,g)
+        
+  except IOError:
+      print("json I/O error")
     
   
 #  cross.Scale(1./days)
