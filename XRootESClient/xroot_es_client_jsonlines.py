@@ -219,7 +219,7 @@ class XRootESClient():
         #Gets summarizer start time
         start_time = datetime.now().timestamp()
         #We're making a single summary file for all projects IDs
-        sum_writer = jsonlines.open(f"{self.dirname}/summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
+        sum_writer = jsonlines.open(f"{self.dirname}/{self.args.experiment}_summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
         #Steps through all found project IDs
         for pid in self.pid_list:
             #Checks to make sure that the raw file we're accessing isn't empty
@@ -349,7 +349,7 @@ class XRootESClient():
 
         #Makes all of the raw file objects
         for pid in self.pid_list:
-            fname = f"{self.dirname}/raw_{self.args.start_date}_{self.args.end_date}_{pid}.jsonl"
+            fname = f"{self.dirname}/{self.args.experiment}_raw_{self.args.start_date}_{self.args.end_date}_{pid}.jsonl"
             self.pids[pid]["raw_filename"] = fname
             proj_files[pid] = open(fname, "w+")
 
@@ -769,7 +769,7 @@ if __name__ == "__main__":
     parser.add_argument('-X', '--experiment', dest="experiment", default="dune", help="Searches for a specific experiment")
     parser.add_argument('-C', '--cluster', dest='es_cluster', default="https://fifemon-es.fnal.gov", help="Specifies the Elasticsearch cluter to target")
     parser.add_argument('-D', '--directory', dest='dirname', default=f"{Path.cwd()}/cached_searches", help="Sets the cached searches directory")
-    parser.add_argument('--debug_level', dest='debug_level', default=2, help="Determines which level of debug information to show. 1: Errors only, 2: Warnings and Errors, 3: Basic process info, 4: Advanced process info")
+    parser.add_argument('--debug_level', dest='debug_level', default=3, help="Determines which level of debug information to show. 1: Errors only, 2: Warnings and Errors, 3: Basic process info, 4: Advanced process info")
     parser.add_argument('--show_timing', action='store_true', help="Shows timing information if set")
     parser.add_argument('--simultaneous_pids', default=8, help="Defines how many project IDs the client will attempt to handle simultaneously")
 
