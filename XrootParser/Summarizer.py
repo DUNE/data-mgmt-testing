@@ -8,6 +8,9 @@ from dateutil import parser
 
 DEBUG=True
 
+f = open("SiteNames.json",'r')
+nodename_sitename =json.load(f)
+f.close()
 #xroot = True  # only xrootd urls
 # loop over a range of input jsonl summary files and output summaries
 
@@ -18,10 +21,10 @@ def truncate(f):
   return round(f*1000)/1000.
  
 # translate site names into CRIC names
-def translate_site(name):
-  f = open("SiteNames.json",'r')
-  nodename_sitename =json.load(f)
-  f.close()
+
+
+def translate_site(name,nodename_sitename):
+  
   if name in nodename_sitename:
     return nodename_sitename[name]
   else:
@@ -51,7 +54,7 @@ def summarizeRecord(item):
       user = item["username"]
       date = item["@timestamp"][0:10]
       duration = truncate(item["duration"])
-      sumrec["source"] = translate_site(disk)
+      sumrec["source"] = translate_site(disk,nodename_sitename)
       sumrec["user"] = user
       sumrec["date"] = date
       process_id = 0
@@ -63,7 +66,7 @@ def summarizeRecord(item):
       sumrec["username"] = user
       sumrec["application"] = application
       sumrec["final_state"] = finalstate
-      sumrec["destination"] = translate_site(site)
+      sumrec["destination"] = translate_site(site,nodename_sitename)
       sumrec['transfer_speed(MB/s)'] = truncate(item["rate"])
       sumrec['transfer_speed(B/s)'] = truncate(item["rate"]*1000000)
       sumrec["project_name"] = item["project_name"]
@@ -152,7 +155,9 @@ def summarize(start_date,end_date,delta ):
 
 if __name__ == '__main__':
 
-   
+  f = open("SiteNames.json",'r')
+  nodename_sitename =json.load(f)
+  f.close()
  
   start_date = datetime.strptime(sys.argv[1], "%Y-%m-%d")
   start_range = start_date
