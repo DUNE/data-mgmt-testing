@@ -115,6 +115,58 @@ class XRootESClient():
         self.es_overseer = None
         self.writer_thread = None
 
+    #Puts the relevant country extension at the front of a location
+    def countrify(self, loc):
+        country = loc.split(".")[-1]
+        if country == "edu" or country == "gov":
+            country = "us"
+        return country+"_"+loc
+
+    #Takes a node's name and finds the associated site
+    def translate_site(self, name, nodename_sitename):
+        if name in nodename_sitename:
+            return nodename_sitename[name]
+        else:
+            return "UNKNOW_"+name
+
+    def summarize_record(self, item, nodename_sitename):
+        sumrec={}
+        if "site" not in item or "file_location" not in item:
+            #print("missing: ",item["node"])
+            return None
+        site = self.countrify(item["site"])
+        if "rate" not in item:
+            return None
+        finalstate = item["last_file_state"]
+        application = "unknown"
+        if "application" in item:
+            application = item["application"]
+        disk = item["file_location"]
+        user = item["username"]
+        date = item["@timestamp"][0:10]
+        duration = round(item["duration"], 4)
+        sumrec["source"] = self.translate_site(disk,nodename_sitename)
+        sumrec["user"] = user
+        sumrec["date"] = date
+        process_id = 0
+        if "process_id" in item:
+            sumrec["process_id"] = item["process_id"]
+        sumrec["start_time"] = item["@timestamp"]
+        sumrec["file_transfer_time"] = duration
+        sumrec["file_size"] = item["file_size"]
+        sumrec["username"] = user
+        sumrec["application"] = application
+        sumrec["final_state"] = finalstate
+        sumrec["destination"] = self.translate_site(site,nodename_sitename)
+        sumrec['transfer_speed(MB/s)'] = round(item["rate"], 4)
+        sumrec['transfer_speed(B/s)'] = round(item["rate"]*1024*1024, 4)
+        sumrec["project_name"] = item["project_name"]
+        #sumrec["file_name"] = os.path.basename(item["file_url"])
+        sumrec["name"] = os.path.basename(item["file_url"])
+        sumrec["data_tier"] = item["data_tier"]
+        sumrec["node"] = item["node"]
+        return sumrec
+
     #Sets the number of simultaneous PIDs to process
     #Default is 8 to avoid excessive numbers of threads
     def set_pid_count(self, count):
@@ -220,11 +272,20 @@ class XRootESClient():
         start_time = datetime.now().timestamp()
         #We're making a single summary file for all projects IDs
         sum_writer = jsonlines.open(f"{self.dirname}/{self.args.experiment}_summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
+        if self.args.compile_for_display:
+            display_writer = open(f"{self.dirname}/out_{self.args.experiment}_{self.args.start_date}_{self.args.end_date}.json", "w+")
+            display_writer.write('{ "data" : [\n')
+            site_file = open(self.args.sitename_file,'r')
+            nodename_sitename =json.load(site_file)
+            site_file.close()
+            is_start = True
         #Steps through all found project IDs
         for pid in self.pid_list:
             #Checks to make sure that the raw file we're accessing isn't empty
             #(indicating no relevant SAM events for that project)
             if Path(self.pids[pid]["raw_filename"]).stat().st_size == 0:
+                if self.args.clear_raws:
+                    os.remove(self.pids[pid]["raw_filename"])
                 continue
             #Each PID has an associated raw file, with a saved name for convenience
             with jsonlines.open(self.pids[pid]["raw_filename"]) as reader:
@@ -292,6 +353,15 @@ class XRootESClient():
                         #number to the current event and event number
                         prev_event = event
                         last_count = count
+                        if self.args.compile_for_display:
+                            if self.args.compile_verbose:
+                                to_write = self.summarize_record(summary, nodename_sitename)
+                                if not to_write == None:
+                                    if not is_start:
+                                        display_writer.write(",\n")
+                                    else:
+                                        is_start = False
+                                    display_writer.write(json.dumps(to_write, indent=2))
                     except:
                         print(f"Error with FID {curr_fid}")
 
@@ -331,7 +401,19 @@ class XRootESClient():
                     summary["actions"] = 1
                 #Writes the last FID summary for this PID
                 sum_writer.write(summary)
+                if self.args.compile_for_display:
+                    if self.args.compile_verbose:
+                        to_write = self.summarize_record(summary, nodename_sitename)
+                        if not to_write == None:
+                            display_writer.write(",\n")
+                            display_writer.write(json.dumps(to_write, indent=2))
+
+            if self.args.clear_raws:
+                os.remove(self.pids[pid]["raw_filename"])
         #Closes the summary file
+        if self.args.compile_for_display:
+            display_writer.write("\n]}")
+            display_writer.close()
         sum_writer.close()
 
         #Gets summarizer end time and duration
@@ -769,9 +851,13 @@ if __name__ == "__main__":
     parser.add_argument('-X', '--experiment', dest="experiment", default="dune", help="Searches for a specific experiment")
     parser.add_argument('-C', '--cluster', dest='es_cluster', default="https://fifemon-es.fnal.gov", help="Specifies the Elasticsearch cluter to target")
     parser.add_argument('-D', '--directory', dest='dirname', default=f"{Path.cwd()}/cached_searches", help="Sets the cached searches directory")
-    parser.add_argument('--debug_level', dest='debug_level', default=3, help="Determines which level of debug information to show. 1: Errors only, 2: Warnings and Errors, 3: Basic process info, 4: Advanced process info")
-    parser.add_argument('--show_timing', action='store_true', help="Shows timing information if set")
-    parser.add_argument('--simultaneous_pids', default=8, help="Defines how many project IDs the client will attempt to handle simultaneously")
+    parser.add_argument('--debug-level', dest='debug_level', default=3, help="Determines which level of debug information to show. 1: Errors only, 2: Warnings and Errors, 3: Basic process info, 4: Advanced process info")
+    parser.add_argument('--show-timing', action='store_true', help="Shows timing information if set")
+    parser.add_argument('--simultaneous-pids', default=8, help="Defines how many project IDs the client will attempt to handle simultaneously")
+    parser.add_argument('--compile-for-display', action='store_true', help="If set, also outputs a file for use with the Network Visualizer frontend")
+    parser.add_argument('--sitename-file', default=f"{Path.cwd()}/SiteNames.json", help="File to pull node-site associations from. Only needed if compiling for display")
+    parser.add_argument('--clear-raws', action='store_true', help="If set, deletes all raw files from this run after summarizing them")
+    parser.add_argument('--compile-verbose', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
 
     args = parser.parse_args()
 
