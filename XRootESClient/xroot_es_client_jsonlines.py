@@ -279,6 +279,8 @@ class XRootESClient():
             nodename_sitename =json.load(site_file)
             site_file.close()
             is_start = True
+            if not self.args.compile_verbose:
+                aggregates = {}
         #Steps through all found project IDs
         for pid in self.pid_list:
             #Checks to make sure that the raw file we're accessing isn't empty
@@ -349,69 +351,129 @@ class XRootESClient():
                             curr_fid = event["file_id"]
                             last_start = event
                             start_num = count
+
+                            if self.args.compile_for_display:
+                                to_write = self.summarize_record(summary, nodename_sitename)
+                                if self.args.compile_verbose:
+                                    if not to_write == None:
+                                        if not is_start:
+                                            display_writer.write(",\n")
+                                        else:
+                                            is_start = False
+                                        display_writer.write(json.dumps(to_write, indent=2))
+                                else:
+                                    if not to_write == None:
+                                        if not pid in aggregates.keys():
+                                            aggregates[pid] = {}
+                                        if not to_write["source"] in aggregates[pid].keys():
+                                            aggregates[pid][to_write["source"]] = {}
+                                        if not to_write["destination"] in aggregates[pid][to_write["source"]].keys():
+                                            aggregates[pid][to_write["source"]][to_write["destination"]] = to_write
+                                            aggregates[pid][to_write["source"]][to_write["destination"]]["name"] = f"project_{pid}_{to_write['source']}_to_{to_write['destination']}"
+                                            aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"] = []
+                                        else:
+                                            aggregates[pid][to_write["source"]][to_write["destination"]]["file_size"] += to_write["file_size"]
+                                            aggregates[pid][to_write["source"]][to_write["destination"]]["file_transfer_time"] += to_write["file_transfer_time"]
+                                            if not to_write["data_tier"] in aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"]:
+                                                aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"].append(to_write["data_tier"])
+
+
+
                         #Updates the value of the last checked event and event
                         #number to the current event and event number
                         prev_event = event
                         last_count = count
-                        if self.args.compile_for_display:
-                            if self.args.compile_verbose:
-                                to_write = self.summarize_record(summary, nodename_sitename)
-                                if not to_write == None:
-                                    if not is_start:
-                                        display_writer.write(",\n")
-                                    else:
-                                        is_start = False
-                                    display_writer.write(json.dumps(to_write, indent=2))
+
+
+
+
                     except:
-                        print(f"Error with FID {curr_fid}")
+                        print(f"Error with FID {curr_fid}: {sys.exc_info()}")
+
+
+
 
                 #Makes sure the last FID in a file is accounted for
+                try:
+                    #last_start is a copy of the first event with the current
+                    #FID, which we need for our summary.
+                    summary = last_start
+                    #Pulls the file size for the current FID from previously
+                    #fetched SAM metadata and adds it to our summary
+                    summary["file_size"] = self.fids[curr_fid]["file_size"]
+                    #Checks if there's a data tier associated with this FID,
+                    #and adds it to the summary
+                    if "data_tier" in self.fids[curr_fid]:
+                        summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                    #Checks if there's a campaign associated with this FID,
+                    #and adds it to the summary
+                    if "DUNE.campaign" in self.fids[curr_fid]:
+                        summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                    #Compares the current line/event count and subtracts the line count
+                    #of the first event associated with this FID to get a total
+                    #action/event count for this file
+                    summary["actions"] = last_count - start_num + 1
+                    #Adds the file state from the last known event
+                    summary["last_file_state"] = prev_event["file_state"]
+                    #Adds the timestamp from the last known event
+                    summary["last_timestamp"] = prev_event["timestamp"]
+                    #Calculates the difference between the first and last events for this FID
+                    summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
+                    #Checks that we actually have a file size and duration, then adds the total
+                    #processing rate to the summary
+                    if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
+                        summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
+                    #0 actions makes no sense as we should have at least 1 event if we've
+                    #encounted a FID.
+                    if summary["actions"] == 0:
+                        summary["actions"] = 1
+                    #Writes the last FID summary for this PID
+                    sum_writer.write(summary)
 
-                #last_start is a copy of the first event with the current
-                #FID, which we need for our summary.
-                summary = last_start
-                #Pulls the file size for the current FID from previously
-                #fetched SAM metadata and adds it to our summary
-                summary["file_size"] = self.fids[curr_fid]["file_size"]
-                #Checks if there's a data tier associated with this FID,
-                #and adds it to the summary
-                if "data_tier" in self.fids[curr_fid]:
-                    summary["data_tier"] = self.fids[curr_fid]["data_tier"]
-                #Checks if there's a campaign associated with this FID,
-                #and adds it to the summary
-                if "DUNE.campaign" in self.fids[curr_fid]:
-                    summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
-                #Compares the current line/event count and subtracts the line count
-                #of the first event associated with this FID to get a total
-                #action/event count for this file
-                summary["actions"] = last_count - start_num + 1
-                #Adds the file state from the last known event
-                summary["last_file_state"] = prev_event["file_state"]
-                #Adds the timestamp from the last known event
-                summary["last_timestamp"] = prev_event["timestamp"]
-                #Calculates the difference between the first and last events for this FID
-                summary["duration"] = prev_event["timestamp"] - last_start["timestamp"]
-                #Checks that we actually have a file size and duration, then adds the total
-                #processing rate to the summary
-                if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
-                    summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
-                #0 actions makes no sense as we should have at least 1 event if we've
-                #encounted a FID.
-                if summary["actions"] == 0:
-                    summary["actions"] = 1
-                #Writes the last FID summary for this PID
-                sum_writer.write(summary)
-                if self.args.compile_for_display:
-                    if self.args.compile_verbose:
+                    if self.args.compile_for_display:
                         to_write = self.summarize_record(summary, nodename_sitename)
-                        if not to_write == None:
-                            display_writer.write(",\n")
-                            display_writer.write(json.dumps(to_write, indent=2))
+                        if self.args.compile_verbose:
+                            if not to_write == None:
+                                if not is_start:
+                                    display_writer.write(",\n")
+                                else:
+                                    is_start = False
+                                display_writer.write(json.dumps(to_write, indent=2))
+                        else:
+                            if not to_write == None:
+                                if not pid in aggregates.keys():
+                                    aggregates[pid] = {}
+                                if not to_write["source"] in aggregates[pid].keys():
+                                    aggregates[pid][to_write["source"]] = {}
+                                if not to_write["destination"] in aggregates[pid][to_write["source"]].keys():
+                                    aggregates[pid][to_write["source"]][to_write["destination"]] = to_write
+                                    aggregates[pid][to_write["source"]][to_write["destination"]]["name"] = f"project_{pid}_{to_write['source']}_to_{to_write['destination']}"
+                                    aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"] = []
+                                else:
+                                    aggregates[pid][to_write["source"]][to_write["destination"]]["file_size"] += to_write["file_size"]
+                                    aggregates[pid][to_write["source"]][to_write["destination"]]["file_transfer_time"] += to_write["file_transfer_time"]
+                                    if not to_write["data_tier"] in aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"]:
+                                        aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"].append(to_write["data_tier"])
+                except:
+                    print(f"Error with FID {curr_fid}: {sys.exc_info()}")
 
             if self.args.clear_raws:
                 os.remove(self.pids[pid]["raw_filename"])
+
         #Closes the summary file
         if self.args.compile_for_display:
+            if not self.args.compile_verbose:
+                for pid in aggregates.keys():
+                    for source in aggregates[pid].keys():
+                        for dest in aggregates[pid][source].keys():
+                            to_write = aggregates[pid][source][dest]
+                            to_write["transfer_speed(B/s)"] = round(to_write["file_size"] / to_write["file_transfer_time"], 4)
+                            to_write["transfer_speed(MB/s)"] = round(to_write["transfer_speed(B/s)"] / 1024 / 1024, 4)
+                            if not is_start:
+                                display_writer.write(",\n")
+                            else:
+                                is_start = False
+                            display_writer.write(json.dumps(to_write, indent=2))
             display_writer.write("\n]}")
             display_writer.close()
         sum_writer.close()
