@@ -273,14 +273,14 @@ class XRootESClient():
         start_time = datetime.now().timestamp()
         #We're making a single summary file for all projects IDs
         sum_writer = jsonlines.open(f"{self.dirname}/{self.args.experiment}_summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
-        if self.args.compile_for_display:
+        if self.args.output_for_display:
             display_writer = open(f"{self.dirname}/out_{self.args.experiment}_{self.args.start_date}_{self.args.end_date}.json", "w+")
             display_writer.write('{ "data" : [\n')
             site_file = open(self.args.sitename_file,'r')
             nodename_sitename =json.load(site_file)
             site_file.close()
             is_start = True
-            if not self.args.compile_verbose:
+            if not self.args.display_verbose:
                 aggregates = {}
         #Steps through all found project IDs
         for pid in self.pid_list:
@@ -353,9 +353,9 @@ class XRootESClient():
                             last_start = event
                             start_num = count
 
-                            if self.args.compile_for_display:
+                            if self.args.output_for_display:
                                 to_write = self.summarize_record(summary, nodename_sitename)
-                                if self.args.compile_verbose:
+                                if self.args.display_verbose:
                                     if not to_write == None:
                                         if not is_start:
                                             display_writer.write(",\n")
@@ -431,9 +431,9 @@ class XRootESClient():
                     #Writes the last FID summary for this PID
                     sum_writer.write(summary)
 
-                    if self.args.compile_for_display:
+                    if self.args.output_for_display:
                         to_write = self.summarize_record(summary, nodename_sitename)
-                        if self.args.compile_verbose:
+                        if self.args.display_verbose:
                             if not to_write == None:
                                 if not is_start:
                                     display_writer.write(",\n")
@@ -462,8 +462,8 @@ class XRootESClient():
                 os.remove(self.pids[pid]["raw_filename"])
 
         #Closes the summary file
-        if self.args.compile_for_display:
-            if not self.args.compile_verbose:
+        if self.args.output_for_display:
+            if not self.args.display_verbose:
                 for pid in aggregates.keys():
                     for source in aggregates[pid].keys():
                         for dest in aggregates[pid][source].keys():
@@ -918,10 +918,10 @@ if __name__ == "__main__":
     parser.add_argument('--debug-level', dest='debug_level', default=3, help="Determines which level of debug information to show. 1: Errors only, 2: Warnings and Errors, 3: Basic process info, 4: Advanced process info")
     parser.add_argument('--show-timing', action='store_true', help="Shows timing information if set")
     parser.add_argument('--simultaneous-pids', default=8, help="Defines how many project IDs the client will attempt to handle simultaneously")
-    parser.add_argument('--compile-for-display', action='store_true', help="If set, also outputs a file for use with the Network Visualizer frontend")
+    parser.add_argument('--output-for-display', action='store_true', help="If set, also outputs a file for use with the Network Visualizer frontend")
     parser.add_argument('--sitename-file', default=f"{Path.cwd()}/SiteNames.json", help="File to pull node-site associations from. Only needed if compiling for display")
     parser.add_argument('--clear-raws', action='store_true', help="If set, deletes all raw files from this run after summarizing them")
-    parser.add_argument('--compile-verbose', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
+    parser.add_argument('--display-verbose', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
 
     args = parser.parse_args()
 
