@@ -156,6 +156,7 @@ class XRootESClient():
         sumrec["file_size"] = item["file_size"]
         sumrec["username"] = user
         sumrec["application"] = application
+        sumrec["version"] = item["version"]
         sumrec["final_state"] = finalstate
         sumrec["destination"] = self.translate_site(site,nodename_sitename)
         sumrec['transfer_speed(MB/s)'] = round(item["rate"], 4)
@@ -637,7 +638,8 @@ class XRootESClient():
                     "process_counts" : self.pids[pid]["metadata"]["process_counts"],
                     "file_counts" : self.pids[pid]["metadata"]["file_counts"],
                     "files_in_snapshot" : self.pids[pid]["metadata"]["files_in_snapshot"],
-                    "application" : self.pids[pid]["metadata"]["processes"][0]["application"]["name"]
+                    "application" : self.pids[pid]["metadata"]["processes"][0]["application"]["name"],
+                    "version" : self.pids[pid]["metadata"]["processes"][0]["application"]["version"]
                 }
                 #Checks if the "site" entry needs to be removed. Can happen when
                 #site data is missing
