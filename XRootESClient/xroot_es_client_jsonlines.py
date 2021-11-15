@@ -277,7 +277,7 @@ class XRootESClient():
         #Gets list of DUNE-related projects started in the specified date range
         self.get_proj_list()
         if self.debug > 3:
-            print(f"Projects gotten: {self.pids}")
+            print(f"Projects gotten: {' '.join(pid for pid in self.pids)}")
         if self.debug > 2:
             print(f"{len(self.pids.keys())} projects found")
         #Creates and starts all overseer threads as daemons to prevent continued
@@ -802,7 +802,9 @@ class XRootESClient():
         start_time = datetime.now().timestamp()
         #Sets up variables for the function
         curr_date = date_parser.parse(self.args["start_date"])
-        target_date = date_parser.parse(self.args["end_date"])
+        #Increases the searched date range by a month to account for end-of-month
+        #spillover
+        target_date = date_parser.parse(self.args["end_date"]) + relativedelta(months=+1)
         y0,m0,d0 = curr_date.strftime("%Y-%m-%d").split('-')
         #Creates an ElasticSearch search template
         es_template = {
@@ -854,6 +856,12 @@ class XRootESClient():
                 }
             }
         }
+
+        #If we're searching for a specific user, add a requirement to search for that user
+        if self.args["user"] != "":
+            es_template["query"]["bool"]["should"].append({"match":{"username" : f"{self.args['user']}"}})
+            es_template["query"]["bool"]["minimum_should_match"] += 1
+
         #Adds a sort to the template, sorting first by file ID and then by event
         #time within that sort. Ultimately gives us groups of the same file ID
         #that are sorted by time
@@ -938,7 +946,7 @@ class XRootESClient():
         self.pid_list = list(self.pids.keys())
         self.pid_list.sort()
         if self.debug > 2:
-            print(f"Full pid list is: {self.pid_list}")
+            print(f"Full pid list is: {' '.join(str(p) for p in self.pid_list)}")
         end_time = datetime.now().timestamp()
         self.times["sam_proj_time"] = end_time - start_time
 
