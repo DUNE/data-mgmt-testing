@@ -293,8 +293,8 @@ class XRootESClient():
         print("======================")
         print(f"Overall run time: {round(self.times['run_time'], 3)} seconds")
         print(f"Project summaries fetch time: {round(self.times['sam_proj_time'], 3)} seconds")
-        print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/len(self.total_pids), 3)} seconds")
-        print(f"Average active SAM FID metadata fetch time: {round(1000*self.times['sam_files_time']/len(self.total_fids), 4)} seconds per 1000 files")
+        print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/self.total_pids, 3)} seconds")
+        print(f"Average active SAM FID metadata fetch time: {round(1000*self.times['sam_files_time']/self.total_fids, 4)} seconds per 1000 files")
         print(f"Total summarizer function time: {round(self.times['summarize_time'], 3)} seconds")
 
     #Sets the debug level
