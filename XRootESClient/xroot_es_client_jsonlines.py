@@ -89,7 +89,9 @@ class XRootESClient():
         self.max_es_threads = 8
         self.max_sam_threads = 8
         self.max_compiler_threads = 8
-        self.day_step_semaphore = 12
+
+        self.total_pids = 0
+        self.total_fids = 0
 
         #Class-scope data structures for File ID metadata, Project ID data,
         #and processed data to be written
@@ -130,13 +132,15 @@ class XRootESClient():
             "output_for_display" : False,
             "display_aggregate" : False,
             "sitename_file" : f"{Path.cwd()}/SiteNames.json",
-            "clear_raws" : False
+            "clear_raws" : False,
+            #end_date assignment is handled elsewhere
+            "end_date"  : "0"
             }
 
 
         keys = self.args.keys()
 
-        required_args = ["start_date", "end_date"]
+        required_args = ["start_date"]
 
         missing = []
 
@@ -216,16 +220,71 @@ class XRootESClient():
 
     #Resets values to initial state
     def reset_vals(self):
+        #Debug levels:
+        #   0: No debug message
+        #   1: Show errors
+        #   2: Show warnings
+        #   3: Show thread completion messages
+        #   4: Show additional process information
+        self.debug = 3
+
+        #If true, will display timing information for different aspects
+        #of the program
+        self.display_timing = False
+
+        #Stores timing data
+        self.times = {
+            "run_time" : 0,
+            "io_time" : 0,
+            "elasticsearch_time" : 0,
+            "sam_files_time" : 0,
+            "sam_proj_time" : 0,
+            "summarize_time" : 0,
+            "compile_time" : 0,
+            "metadata_fetches" : 0
+        }
+
+        #Variable for individual run arguments
         self.args = {}
+
+        #Stores the output directory name
+        self.dirname = ""
+
+        #Number of attempts to acquire FID metadata before giving up
+        self.max_retries = 30
+
+        #Controls the number of PIDS processed simultaneously at each level
+        self.max_es_threads = 8
+        self.max_sam_threads = 8
+        self.max_compiler_threads = 8
+
+        self.total_pids = 0
+        self.total_fids = 0
+
+        #Class-scope data structures for File ID metadata, Project ID data,
+        #and processed data to be written
         self.fids = {}
         self.pids = {}
+        self.pid_list = None
         self.finished_data = queue.Queue()
+
+        self.finished_es_threads = 0
+        self.finished_sam_threads = 0
+        self.finished_compiler_threads = 0
+
+        #Thread locks for File ID data access and incrementing/decrementing
+        #certain values
+        self.fid_lock = threading.Lock()
+        self.time_lock = threading.Lock()
+        self.inc_lock = threading.Lock()
+
+
+
+        #Class-scope variables for the different overseer threads
         self.compiler_overseer = None
         self.sam_overseer = None
         self.es_overseer = None
         self.writer_thread = None
-        for key in self.times:
-            self.times[key] = 0
 
     #Displays timing data collected by other functions
     def show_timing_info(self):
@@ -233,9 +292,9 @@ class XRootESClient():
         print("Single run timing info")
         print("======================")
         print(f"Overall run time: {round(self.times['run_time'], 3)} seconds")
-        print(f"Project summaries fetch time: {round(self.times['sam_proj_time'])} seconds")
-        print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/len(self.pids.keys()), 3)} seconds")
-        print(f"Average active SAM FID metadata fetch time: {round(1000*self.times['sam_files_time']/len(self.fids.keys()), 4)} seconds per 1000 files")
+        print(f"Project summaries fetch time: {round(self.times['sam_proj_time'], 3)} seconds")
+        print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/len(self.total_pids), 3)} seconds")
+        print(f"Average active SAM FID metadata fetch time: {round(1000*self.times['sam_files_time']/len(self.total_fids), 4)} seconds per 1000 files")
         print(f"Total summarizer function time: {round(self.times['summarize_time'], 3)} seconds")
 
     #Sets the debug level
@@ -268,39 +327,65 @@ class XRootESClient():
         self.set_pid_count(int(self.args["simultaneous_pids"]))
         #Checks to see if the default end date is set
         if self.args["end_date"] == "0":
-            self.args["end_date"] = self.args["start_date"]
+            self.args["end_date"] = date_parser.parse(self.args["start_date"]) + relativedelta(days=+1)
         if self.debug > 3:
             print(f"Args recieved: {self.args}")
         self.dirname = self.args["dirname"]
-        #Initializes the SAM Web client
-        self.samweb = samweb_client.SAMWebClient(experiment=self.args["experiment"])
-        #Gets list of DUNE-related projects started in the specified date range
-        self.get_proj_list()
-        if self.debug > 3:
-            print(f"Projects gotten: {' '.join(pid for pid in self.pids)}")
-        if self.debug > 2:
-            print(f"{len(self.pids.keys())} projects found")
-        #Creates and starts all overseer threads as daemons to prevent continued
-        #operation if the main program ends.
-        self.es_overseer = threading.Thread(target=self.es_overseer_func, daemon=True)
-        self.sam_overseer = threading.Thread(target=self.sam_overseer_func, daemon=True)
-        self.compiler_overseer = threading.Thread(target=self.compiler_overseer_func, daemon=True)
-        self.writer_thread = threading.Thread(target=self.writer, daemon=True)
-        self.es_overseer.start()
-        time.sleep(0.5)
-        self.sam_overseer.start()
-        time.sleep(0.5)
-        self.compiler_overseer.start()
-        time.sleep(0.5)
-        self.writer_thread.start()
-        time.sleep(0.5)
-        #Writer thread doesn't exit until all other non-main threads end,
-        #so we only need to wait for it to join.
-        self.writer_thread.join()
-        if self.debug > 2:
-            print("Writing to raw files complete. Now summarizing.")
-        #Runs the summaraization file generating function
-        self.summarizer()
+
+        #Code to go day by day for output files as expected by other programs associated
+        #with this project.
+        curr_date = date_parser.parse(self.args["start_date"])
+        target_date = date_parser.parse(self.args["end_date"])
+
+        while (target_date - curr_date).days > 0:
+            self.args["end_date"] = (curr_date + relativedelta(days=+1)).strftime("%Y-%m-%d")
+
+            if self.debug > 2:
+                print("\n==========================================================================")
+                print(f"Started processing date range {self.args['start_date']} to {self.args['end_date']}")
+                print("==========================================================================")
+
+            #Initializes the SAM Web client
+            self.samweb = samweb_client.SAMWebClient(experiment=self.args["experiment"])
+            #Gets list of DUNE-related projects started in the specified date range
+            self.get_proj_list()
+            if self.debug > 3:
+                print(f"Projects gotten: {' '.join(pid for pid in self.pids)}")
+            if self.debug > 2:
+                print(f"{len(self.pids.keys())} projects found")
+            #Creates and starts all overseer threads as daemons to prevent continued
+            #operation if the main program ends.
+            self.es_overseer = threading.Thread(target=self.es_overseer_func, daemon=True)
+            self.sam_overseer = threading.Thread(target=self.sam_overseer_func, daemon=True)
+            self.compiler_overseer = threading.Thread(target=self.compiler_overseer_func, daemon=True)
+            self.writer_thread = threading.Thread(target=self.writer, daemon=True)
+            self.es_overseer.start()
+            time.sleep(0.5)
+            self.sam_overseer.start()
+            time.sleep(0.5)
+            self.compiler_overseer.start()
+            time.sleep(0.5)
+            self.writer_thread.start()
+            time.sleep(0.5)
+            #Writer thread doesn't exit until all other non-main threads end,
+            #so we only need to wait for it to join.
+            self.writer_thread.join()
+            if self.debug > 2:
+                print("Writing to raw files complete. Now summarizing.")
+            #Runs the summaraization file generating function
+            self.summarizer()
+
+            #Clears the pid list
+            self.fids = {}
+            self.pids = {}
+
+            #Resets finished thread counts
+            self.finished_es_threads = 0
+            self.finished_sam_threads = 0
+            self.finished_compiler_threads = 0
+
+            self.args["start_date"] = self.args["end_date"]
+            curr_date += relativedelta(days=+1)
 
         #Gets the overall run end time and duration
         end_time = datetime.now().timestamp()
@@ -731,6 +816,7 @@ class XRootESClient():
                 self.inc_lock.release()
                 self.pids[pid]["sam_worker"] = threading.Thread(target=self.sam_worker_func,args=(pid,),daemon=True)
                 self.pids[pid]["sam_worker"].start()
+                self.total_pids += 1
                 i += 1
 
         #Waits for all threads to terminate
@@ -750,6 +836,7 @@ class XRootESClient():
             #Gets the metadata for the set of FIDs
             data = self.samweb.getMultipleMetadata(to_search)
             self.fid_lock.acquire()
+            self.total_fids += len(to_search)
             #Breaks out each individual FID's metadata and writes it to a class-level
             #dictionary hashed with file ID
             for item in data:
@@ -948,7 +1035,7 @@ class XRootESClient():
         if self.debug > 2:
             print(f"Full pid list is: {' '.join(str(p) for p in self.pid_list)}")
         end_time = datetime.now().timestamp()
-        self.times["sam_proj_time"] = end_time - start_time
+        self.times["sam_proj_time"] += end_time - start_time
 
 
 if __name__ == "__main__":
@@ -974,7 +1061,7 @@ if __name__ == "__main__":
     parser.add_argument('--output-for-display', action='store_true', help="If set, also outputs a file for use with the Network Visualizer frontend")
     parser.add_argument('--sitename-file', default=f"{Path.cwd()}/SiteNames.json", help="File to pull node-site associations from. Only needed if compiling for display")
     parser.add_argument('--clear-raws', action='store_true', help="If set, deletes all raw files from this run after summarizing them")
-    parser.add_argument('--display-verbose', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
+    parser.add_argument('--display-aggregates', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
 
     args = vars(parser.parse_args())
 
