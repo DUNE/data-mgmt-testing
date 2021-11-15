@@ -77,7 +77,7 @@ class XRootESClient():
         }
 
         #Variable for individual run arguments
-        self.args = None
+        self.args = {}
 
         #Stores the output directory name
         self.dirname = ""
@@ -89,6 +89,7 @@ class XRootESClient():
         self.max_es_threads = 8
         self.max_sam_threads = 8
         self.max_compiler_threads = 8
+        self.day_step_semaphore = 12
 
         #Class-scope data structures for File ID metadata, Project ID data,
         #and processed data to be written
@@ -114,6 +115,44 @@ class XRootESClient():
         self.sam_overseer = None
         self.es_overseer = None
         self.writer_thread = None
+
+    def check_args(self):
+        #Defaults only applies to optional arguments
+        default_optionals = {
+            "debug_level" : 3,
+            "show_timing" : False,
+            "simultaneous_pids" : 8,
+            "dirname" : f"{Path.cwd()}/cached_searches",
+            "experiment" : "dune",
+            "es_cluster" : "https://fifemon-es.fnal.gov",
+            "search_size" : 1000,
+            "user" : "",
+            "output_for_display" : False,
+            "display_aggregate" : False,
+            "sitename_file" : f"{Path.cwd()}/SiteNames.json",
+            "clear_raws" : False
+            }
+
+
+        keys = self.args.keys()
+
+        required_args = ["start_date", "end_date"]
+
+        missing = []
+
+        for arg in required_args:
+            if not arg in keys:
+                missing.append(arg)
+
+        if not len(missing) == 0:
+            print(f"Error: Missing the following required arguments:\n{' '.join(arg for arg in missing)}")
+
+        missing = []
+
+        for arg in default_optionals:
+            if not arg in keys:
+                self.args[arg] = default_optionals[arg]
+
 
     #Puts the relevant country extension at the front of a location
     def countrify(self, loc):
@@ -177,7 +216,7 @@ class XRootESClient():
 
     #Resets values to initial state
     def reset_vals(self):
-        self.args = None
+        self.args = {}
         self.fids = {}
         self.pids = {}
         self.finished_data = queue.Queue()
@@ -218,21 +257,23 @@ class XRootESClient():
         self.finished_compiler_threads = 0
 
 
-        self.args = args
+        self.args = dict(args)
+
+        self.check_args()
 
         #Sets debug level and whether to show timing info
-        self.set_debug_level(int(args.debug_level))
-        if args.show_timing:
+        self.set_debug_level(int(self.args["debug_level"]))
+        if self.args["show_timing"]:
             self.set_show_timing_info(True)
-        self.set_pid_count(int(args.simultaneous_pids))
+        self.set_pid_count(int(self.args["simultaneous_pids"]))
         #Checks to see if the default end date is set
-        if self.args.end_date == "0":
-            self.args.end_date = self.args.start_date
+        if self.args["end_date"] == "0":
+            self.args["end_date"] = self.args["start_date"]
         if self.debug > 3:
-            print(f"Args recieved: {args}")
-        self.dirname = self.args.dirname
+            print(f"Args recieved: {self.args}")
+        self.dirname = self.args["dirname"]
         #Initializes the SAM Web client
-        self.samweb = samweb_client.SAMWebClient(experiment=args.experiment)
+        self.samweb = samweb_client.SAMWebClient(experiment=self.args["experiment"])
         #Gets list of DUNE-related projects started in the specified date range
         self.get_proj_list()
         if self.debug > 3:
@@ -272,22 +313,22 @@ class XRootESClient():
         #Gets summarizer start time
         start_time = datetime.now().timestamp()
         #We're making a single summary file for all projects IDs
-        sum_writer = jsonlines.open(f"{self.dirname}/{self.args.experiment}_summary_{self.args.start_date}_{self.args.end_date}.jsonl", mode="w")
-        if self.args.output_for_display:
-            display_writer = open(f"{self.dirname}/out_{self.args.experiment}_{self.args.start_date}_{self.args.end_date}.json", "w+")
+        sum_writer = jsonlines.open(f"{self.dirname}/{self.args['experiment']}_summary_{self.args['start_date']}_{self.args['end_date']}.jsonl", mode="w")
+        if self.args["output_for_display"]:
+            display_writer = open(f"{self.dirname}/out_{self.args['experiment']}_{self.args['start_date']}_{self.args['end_date']}.json", "w+")
             display_writer.write('{ "data" : [\n')
-            site_file = open(self.args.sitename_file,'r')
+            site_file = open(self.args["sitename_file"],'r')
             nodename_sitename =json.load(site_file)
             site_file.close()
             is_start = True
-            if not self.args.display_verbose:
+            if self.args["display_aggregate"]:
                 aggregates = {}
         #Steps through all found project IDs
         for pid in self.pid_list:
             #Checks to make sure that the raw file we're accessing isn't empty
             #(indicating no relevant SAM events for that project)
             if Path(self.pids[pid]["raw_filename"]).stat().st_size == 0:
-                if self.args.clear_raws:
+                if self.args["clear_raws"]:
                     os.remove(self.pids[pid]["raw_filename"])
                 continue
             #Each PID has an associated raw file, with a saved name for convenience
@@ -353,9 +394,9 @@ class XRootESClient():
                             last_start = event
                             start_num = count
 
-                            if self.args.output_for_display:
+                            if self.args["output_for_display"]:
                                 to_write = self.summarize_record(summary, nodename_sitename)
-                                if self.args.display_verbose:
+                                if not self.args["display_aggregate"]:
                                     if not to_write == None:
                                         if not is_start:
                                             display_writer.write(",\n")
@@ -369,14 +410,16 @@ class XRootESClient():
                                         if not to_write["source"] in aggregates[pid].keys():
                                             aggregates[pid][to_write["source"]] = {}
                                         if not to_write["destination"] in aggregates[pid][to_write["source"]].keys():
-                                            aggregates[pid][to_write["source"]][to_write["destination"]] = to_write
+                                            aggregates[pid][to_write["source"]][to_write["destination"]] = dict(to_write)
                                             aggregates[pid][to_write["source"]][to_write["destination"]]["name"] = f"project_{pid}_{to_write['source']}_to_{to_write['destination']}"
                                             aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"] = []
+                                            aggregates[pid][to_write["source"]][to_write["destination"]]["file_count"] = 0
                                         else:
                                             aggregates[pid][to_write["source"]][to_write["destination"]]["file_size"] += to_write["file_size"]
                                             aggregates[pid][to_write["source"]][to_write["destination"]]["file_transfer_time"] += to_write["file_transfer_time"]
-                                            if not to_write["data_tier"] in aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"]:
-                                                aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"].append(to_write["data_tier"])
+                                        if not to_write["data_tier"] in aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"]:
+                                            aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"].append(to_write["data_tier"])
+                                        aggregates[pid][to_write["source"]][to_write["destination"]]["file_count"] += 1
 
 
 
@@ -431,9 +474,9 @@ class XRootESClient():
                     #Writes the last FID summary for this PID
                     sum_writer.write(summary)
 
-                    if self.args.output_for_display:
+                    if self.args["output_for_display"]:
                         to_write = self.summarize_record(summary, nodename_sitename)
-                        if self.args.display_verbose:
+                        if not self.args["display_aggregate"]:
                             if not to_write == None:
                                 if not is_start:
                                     display_writer.write(",\n")
@@ -447,34 +490,36 @@ class XRootESClient():
                                 if not to_write["source"] in aggregates[pid].keys():
                                     aggregates[pid][to_write["source"]] = {}
                                 if not to_write["destination"] in aggregates[pid][to_write["source"]].keys():
-                                    aggregates[pid][to_write["source"]][to_write["destination"]] = to_write
+                                    aggregates[pid][to_write["source"]][to_write["destination"]] = dict(to_write)
                                     aggregates[pid][to_write["source"]][to_write["destination"]]["name"] = f"project_{pid}_{to_write['source']}_to_{to_write['destination']}"
                                     aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"] = []
+                                    aggregates[pid][to_write["source"]][to_write["destination"]]["file_count"] = 0
                                 else:
                                     aggregates[pid][to_write["source"]][to_write["destination"]]["file_size"] += to_write["file_size"]
                                     aggregates[pid][to_write["source"]][to_write["destination"]]["file_transfer_time"] += to_write["file_transfer_time"]
-                                    if not to_write["data_tier"] in aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"]:
-                                        aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"].append(to_write["data_tier"])
+                                if not to_write["data_tier"] in aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"]:
+                                    aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"].append(to_write["data_tier"])
+                                aggregates[pid][to_write["source"]][to_write["destination"]]["file_count"] += 1
                 except:
                     print(f"Error with FID {curr_fid}: {sys.exc_info()}")
 
-            if self.args.clear_raws:
+            if self.args["clear_raws"]:
                 os.remove(self.pids[pid]["raw_filename"])
 
         #Closes the summary file
-        if self.args.output_for_display:
-            if not self.args.display_verbose:
+        if self.args["output_for_display"]:
+            if self.args["display_aggregate"]:
                 for pid in aggregates.keys():
                     for source in aggregates[pid].keys():
                         for dest in aggregates[pid][source].keys():
-                            to_write = aggregates[pid][source][dest]
-                            to_write["transfer_speed(B/s)"] = round(to_write["file_size"] / to_write["file_transfer_time"], 4)
-                            to_write["transfer_speed(MB/s)"] = round(to_write["transfer_speed(B/s)"] / 1024 / 1024, 4)
+                            info_out = aggregates[pid][source][dest]
+                            info_out["transfer_speed(B/s)"] = round(info_out["file_size"] / info_out["file_transfer_time"], 4)
+                            info_out["transfer_speed(MB/s)"] = round(info_out["transfer_speed(B/s)"] / 1024 / 1024, 4)
                             if not is_start:
                                 display_writer.write(",\n")
                             else:
                                 is_start = False
-                            display_writer.write(json.dumps(to_write, indent=2))
+                            display_writer.write(json.dumps(info_out, indent=2))
             display_writer.write("\n]}")
             display_writer.close()
         sum_writer.close()
@@ -494,7 +539,7 @@ class XRootESClient():
 
         #Makes all of the raw file objects
         for pid in self.pid_list:
-            fname = f"{self.dirname}/{self.args.experiment}_raw_{self.args.start_date}_{self.args.end_date}_{pid}.jsonl"
+            fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
             self.pids[pid]["raw_filename"] = fname
             proj_files[pid] = open(fname, "w+")
 
@@ -756,8 +801,8 @@ class XRootESClient():
         #Gets start time for this worker function
         start_time = datetime.now().timestamp()
         #Sets up variables for the function
-        curr_date = date_parser.parse(self.args.start_date)
-        target_date = date_parser.parse(self.args.end_date)
+        curr_date = date_parser.parse(self.args["start_date"])
+        target_date = date_parser.parse(self.args["end_date"])
         y0,m0,d0 = curr_date.strftime("%Y-%m-%d").split('-')
         #Creates an ElasticSearch search template
         es_template = {
@@ -845,7 +890,7 @@ class XRootESClient():
                 #Calling "scroll" gets the next set of results. The number
                 #of results depends on the "size" parameter passed to the
                 #initial search
-                for data in scroll(self.pids[pid]["es_client"], index, es_template, "5m", self.args.search_size):
+                for data in scroll(self.pids[pid]["es_client"], index, es_template, "5m", self.args["search_size"]):
                     if len(data) > 0:
                         data_exists = True
                         #With individual results, we write each processed transfer
@@ -875,7 +920,7 @@ class XRootESClient():
 
     def get_proj_list(self):
         start_time = datetime.now().timestamp()
-        projects = self.samweb.listProjects(started_after=self.args.start_date, started_before=self.args.end_date)
+        projects = self.samweb.listProjects(started_after=self.args["start_date"], started_before=self.args["end_date"])
         for proj in projects:
             if "prestage" in proj:
                 continue
@@ -883,7 +928,7 @@ class XRootESClient():
             pid = md["project_id"]
             self.pids[pid] = {}
             self.pids[pid]["metadata"] = md
-            self.pids[pid]["es_client"] = Elasticsearch([self.args.es_cluster], timeout=120)
+            self.pids[pid]["es_client"] = Elasticsearch([self.args["es_cluster"]], timeout=120)
             self.pids[pid]["write_queue"] = queue.Queue()
             self.pids[pid]["fid_queue"] = queue.Queue()
             self.pids[pid]["raw_filename"] = None
@@ -923,7 +968,7 @@ if __name__ == "__main__":
     parser.add_argument('--clear-raws', action='store_true', help="If set, deletes all raw files from this run after summarizing them")
     parser.add_argument('--display-verbose', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
 
-    args = parser.parse_args()
+    args = vars(parser.parse_args())
 
     client = XRootESClient()
 
