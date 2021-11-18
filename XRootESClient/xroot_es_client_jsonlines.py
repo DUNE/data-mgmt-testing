@@ -4,6 +4,7 @@
 
 #JSON needed to process incoming Elasticsearch results
 #and for output formatting for easier use by webserver.
+DEBUGSITE=0
 import json
 import jsonlines
 import os
@@ -652,27 +653,42 @@ class XRootESClient():
 
     #site_finder code here taken from XRootParser code by Dr. Heidi Schellman
     def site_finder(self, source):
-        knownsites = [".gov",".fr",".es",".br",".edu",".in",".cz",".uk",".fr",".ch",".nl",".ru"]
-        specials = {"dice":"dice.bristol.uk","CRUSH":"crush.syracuse.edu","gridpp.rl.ac.uk":"gridpp.rl.ac.uk","comp20-":"lancaster.uk","discovery":"nmsu.edu","nid":"nersc.lbnl.gov","wn-2":"unibe-lhcp.bern.ch","qmul":"esc.qmul.uk","uct2":"uct2-mwt2.uchicago.edu","nubes.stfc.ac.uk":"nubes.stfc.ac.uk","unl.edu":"unl.edu","wn0":"sheffield.uk","wn1":"sheffield.uk","wn2":"sheffield.uk","local-":"pr"}
+        knownsites = [".gov",".fr",".es",".br",".edu",".in",".cz",".uk",".fr",".ch",".nl",".ru",".pr"]
+        specials = {"dice":"dice.bristol.uk","CRUSH":"crush.syracuse.edu","gridpp.rl.ac.uk":"gridpp.rl.ac.uk","comp20-":"lancaster.uk","discovery":"nmsu.edu","nid":"nersc.lbnl.gov","wn-2":"unibe-lhcp.bern.ch","qmul":"esc.qmul.uk","uct2":"uct2-mwt2.uchicago.edu","nubes.stfc.ac.uk":"nubes.stfc.ac.uk","unl.edu":"unl.edu","wn0":"sheffield.uk","wn1":"sheffield.uk","wn2":"sheffield.uk","local-":"uprm:pr","arbutus":"arbutus.ca","axion":"axion.ca","local":"uprm.pr"}
         if "node" in source:
             node = source["node"]
-            for s in specials:
-                if s in node:
-                    source["site"] = specials[s]
-                    return source["site"]
-            if not "." in node:
-                source["site"] = "remove_key"
-                return source["site"]
+           
+           
             country = "."+node.split(".")[-1]
             #print ("country guess",country)
             if country in knownsites:
+                # strip off the node name to get site name
                 source["site"]= node[node.find(".")+1:]
+                # fix because of structure of these node names
+                if("gridpp.rl.ac.uk" in node):
+                  source["site"]= "gridpp.rl.ac.uk"
+                if DEBUGSITE:
+                  print("site check",node,source["site"])
                 return source["site"]
-            else:
-                #print ("unidentified site",node,specials)
-                source["site"] = "mystery-site"
+            for s in specials:
+                if s in node:
+                    source["site"] = specials[s]
+                    if DEBUGSITE:
+                      print("site check",node,source["site"])
+                    return source["site"]
+            if not "." in node:
+                source["site"] = "remove_key"
+                if DEBUGSITE:
+                  print("site check",node,source["site"])
+                return source["site"]
+            source["site"] = "mystery-site"
+            if DEBUGSITE:
+               print("site check",node,source["site"])
+
         else:
             source["site"] = "unknown"
+            if DEBUGSITE:
+              print("site check",node,source["site"])
         return source["site"]
 
     #Overseer function that manages data compilation worker threads
@@ -771,6 +787,7 @@ class XRootESClient():
                     "application" : self.pids[pid]["metadata"]["processes"][0]["application"]["name"],
                     "version" : self.pids[pid]["metadata"]["processes"][0]["application"]["version"]
                 }
+                 
                 #Checks if the "site" entry needs to be removed. Can happen when
                 #site data is missing
                 if new_entry["site"] == "remove_key":
