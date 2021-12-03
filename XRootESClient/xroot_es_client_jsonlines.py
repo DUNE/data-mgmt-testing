@@ -1078,7 +1078,7 @@ if __name__ == "__main__":
     parser.add_argument('--output-for-display', action='store_true', help="If set, also outputs a file for use with the Network Visualizer frontend")
     parser.add_argument('--sitename-file', default=f"{Path.cwd()}/SiteNames.json", help="File to pull node-site associations from. Only needed if compiling for display")
     parser.add_argument('--clear-raws', action='store_true', help="If set, deletes all raw files from this run after summarizing them")
-    parser.add_argument('--display-aggregates', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
+    parser.add_argument('--display-aggregate', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
 
     args = vars(parser.parse_args())
 
