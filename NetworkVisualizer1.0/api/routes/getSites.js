@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const xml2js = require('xml2js');
-
+const cors = require('cors')
 
 
 
@@ -63,10 +63,13 @@ function xmlToJson (input, pasedCallback) {
 
 
 
+// let corsOptions = {
+//   origin:"http://localhost:3001",
+//   optionsSuccessStatus: 200
+// }
 
 
-
-router.get("/", function (req, res, next) {
+router.get("/", cors(), function (req, res, next) {
 
   getSites(function () {
     console.log("callback done for dune site download \n\n");

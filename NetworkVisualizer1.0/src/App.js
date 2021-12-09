@@ -43,6 +43,8 @@ import "./App.css";
 var resultsFound = false;
 var siteUnclicked = true;
 var failuresFound = false;
+var periodTransfers = 0
+var periodFailures = 0
 
 const srGraphOptions = {
   scales: {
@@ -115,6 +117,30 @@ const markers = [
   {
     markerOffset: 1,
     otherName: "",
+    name: "QMUL",
+    coordinates: [0.0404, 51.5241],
+  },
+  {
+    markerOffset: 1,
+    otherName: "",
+    name: "SURFSARA",
+    coordinates: [4.904, 52.368],
+  },
+  {
+    markerOffset: 1,
+    otherName: "",
+    name: "GPGrid",
+    coordinates: [-88.57, 41.24],
+  },
+  {
+    markerOffset: 1,
+    otherName: "",
+    name: "GPGRID",
+    coordinates: [-88.27, 41.84],
+  },
+  {
+    markerOffset: 1,
+    otherName: "",
     name: "CERN_PDUNE_CASTOR",
     coordinates: [6, 46],
   },
@@ -165,7 +191,7 @@ const markers = [
     markerOffset: 1,
     otherName: "US_FNAL",
     name: "GPGRID",
-    coordinates: [-39,16],
+    coordinates: [-88.57, 41.24],
   },
   {
     markerOffset: 1,
@@ -321,13 +347,43 @@ function App() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //Sets up the site list based on CRIC data and hardcoded overrides
   //then
   const parseSiteList = () => {
     console.log(
-      `fetching DUNE site date from backend http://${window.location.hostname}:3001/getsites`
+      `fetching DUNE site date from backend http://localhost:3001/getsites`
     );
-    fetch(`http://${window.location.hostname}:3001/getsites`)
+    fetch(`http://localhost:3001/getsites`, {crossDomain:true})
       .then((res) => res.json())
       .then((res) => {
         //res.root.atp_site[0].$.latitude
@@ -346,8 +402,8 @@ function App() {
           }
 
           if (
-            parseFloat(item.$.longitude) === 0 &&
-            parseFloat(item.$.latitude) === 0
+            parseFloat(item.$.longitude) === 0 || 0.0 &&
+            parseFloat(item.$.latitude) === 0 || 0.0
           ) {
             console.log("0,0 entry detected: " + otherNameString);
           }
@@ -371,10 +427,10 @@ function App() {
           );
 
           if (matchId > -1) {
-            // console.log("replacing: ")
-            // console.log(mappedSites[matchId])
-            // console.log("with ")
-            // console.log(item)
+            console.log("replacing: ")
+            console.log(mappedSites[matchId])
+            console.log("with ")
+            console.log(item)
             mappedSites[matchId] = item;
           } else {
             mappedSites.push(item);
@@ -389,15 +445,16 @@ function App() {
         // console.log(res.root.atp_site[0].group[1].$.name)
 
         parseTransfers(mappedSites);
+        parseFailures(mappedSites);
 
-        if (showFailureMode){
-          console.log("getting transfers")
-          parseTransfers(mappedSites);
-        }
-        else {
-          console.log("getting failures")
-          parseFailures(mappedSites);
-        }
+        // if (showFailureMode){
+        //   console.log("getting transfers")
+        //   parseTransfers(mappedSites);
+        // }
+        // else {
+        //   console.log("getting failures")
+        //   parseFailures(mappedSites);
+        // }
       });
   };
 
@@ -411,6 +468,7 @@ function App() {
 
 
   const parseTransfers = (passedSites) => {
+
     resultsFound = false;
     setProcessingStatus("Processing query...");
     //Ensures that if we're only passing one day to the backend, we don't
@@ -437,13 +495,13 @@ function App() {
     });
 
     console.log(
-      `fetching transfer data from: http://${window.location.hostname}:3001/getTransfers?` +
+      `fetching transfer data from: http://localhost:3001/getTransfers?` +
         dateParameters.toString()
     );
 
     //Passes date parameters to and calls the routed script that calls the backend
     //python script, then waits for completion
-    fetch(`http://${window.location.hostname}:3001/getTransfers?` + dateParameters.toString())
+    fetch(`http://localhost:3001/getTransfers?` + dateParameters.toString(), {crossDomain:true})
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())
@@ -469,11 +527,11 @@ function App() {
 
           const mappedTransfers = res.data.map((entry) => {
             const sourceLocation = passedSites.find(
-              (location) => entry.source === location.name | entry.source === location.otherName
+              (location) => entry.source === location.name || entry.source === location.otherName
             );
 
             const destinationLocation = passedSites.find(
-              (location) => entry.destination === location.name | entry.destination === location.otherName
+              (location) => entry.destination === location.name || entry.destination === location.otherName
             );
 
             const speedInMB = parseFloat(entry["transfer_speed(MB/s)"]).toFixed(
@@ -483,6 +541,7 @@ function App() {
             //Tracks the total amount of data transferred for this time period
             //independent of sites
             allTransferedAmount += entry.file_size;
+            periodTransfers ++
 
             // console.log(entry.file_size)
 
@@ -496,6 +555,7 @@ function App() {
                 toCoord: mysteryCoordinates,
                 speedInMB: speedInMB,
                 sentToDestSizeMB: entry.file_size / 1048576,
+                filesTransfered: 0
               };
             } else if (!sourceLocation) {
               return {
@@ -505,6 +565,7 @@ function App() {
                 toCoord: destinationLocation.coordinates,
                 speedInMB: speedInMB,
                 sentToDestSizeMB: entry.file_size / 1048576,
+                filesTransfered: 0
               };
             } else if (!destinationLocation) {
               return {
@@ -514,6 +575,7 @@ function App() {
                 toCoord: mysteryCoordinates,
                 speedInMB: speedInMB,
                 sentToDestSizeMB: entry.file_size / 1048576,
+                filesTransfered: 0
               };
             } else {
               return {
@@ -523,6 +585,7 @@ function App() {
                 toCoord: destinationLocation.coordinates,
                 speedInMB: speedInMB,
                 sentToDestSizeMB: entry.file_size / 1048576,
+                filesTransfered: 0
               };
             }
           });
@@ -566,7 +629,9 @@ function App() {
 
             entry.fractionOfDataSent = entry.totalSent / allTransferedAmount;
             entry.fractionOfDataReceived =
-              entry.totalReceived / allTransferedAmount;
+            entry.totalReceived / allTransferedAmount;
+
+            entry.filesTransfered ++
 
             entry.totalSent = parseFloat(entry.totalSent).toFixed(2);
             entry.totalReceived = parseFloat(entry.totalReceived).toFixed(2);
@@ -582,7 +647,8 @@ function App() {
 
           //Sets the state object holding our search results to the new
           //results we just processed
-          setIndividualSiteData(collectionOfSiteObjects);
+          // setIndividualSiteData(collectionOfSiteObjects);
+          parseFailures(collectionOfSiteObjects);
         } else {
           resultsFound = false;
           setProcessingStatus("No results found");
@@ -650,7 +716,7 @@ function App() {
 
     //Passes our date parameters to the routed script that calls the es_client script
     //in failures mode, then waits for completion
-    fetch(`http://${window.location.hostname}:3001/getFails?` + dateParameters.toString())
+    fetch(`http://${window.location.hostname}:3001/getFails?` + dateParameters.toString(), {crossDomain:true})
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())
@@ -675,17 +741,20 @@ function App() {
 
           const mappedFailures = res.data.map((entry) => {
             const sourceLocation = passedSites.find(
-              (location) => entry.source === location.name | entry.source === location.otherName
+              (location) => entry.source === location.name || entry.source === location.otherName
             );
 
             const destinationLocation = passedSites.find(
-              (location) => entry.destination === location.name | entry.destination === location.otherName
+              (location) => entry.destination === location.name || entry.destination === location.otherName
             );
 
             const failureCount = entry.count
 
             totalNumberFailed += failureCount;
+            periodFailures ++
 
+            // console.log("******** fails: ", totalNumberFailed ,"     **********")
+            // console.log(entry)
             // console.log(entry.file_size)
             //Reformats the data depending on which locations in the transfer
             //were valid/known
@@ -733,49 +802,51 @@ function App() {
 
           console.log(markers)
 
+          const collectionOfSiteObjects = passedSites.map((x) => {
+            return {
+              ...x,
+              totalFailuresSent: 0,
+              totalFailuresReceived: 0,
+            };
+          });
 
           // console.log("collection site objects:");
           // console.log(collectionOfSiteObjects);
 
-          // collectionOfSiteObjects.forEach((entry) => {
-          //   res.data
-          //     .filter((jsonThing) => {
-          //       return jsonThing.source === entry.name;
-          //     })
-          //     // .forEach((item, i) => {
-          //     //   entry.totalSent += item.file_size / 1048576; //dividing the total bytes into megabytes 1024 b to kb, 1024 kb to mb
-          //     // });
-          //
-          //   res.data
-          //     .filter((jsonThing) => {
-          //       return jsonThing.destination === entry.name;
-          //     })
-          //     // .forEach((item, i) => {
-          //     //   entry.totalReceived += item.file_size / 1048576; //dividing the total bytes into megabytes 1024 b to kb, 1024 kb to mb
-          //     // });
-          //
-          //   entry.fractionOfSendErrors = entry.totalSent / allTransferedAmount;
-          //   entry.fractionOfRecErrors = entry.totalReceived / allTransferedAmount;
-          //
-          //   entry.totalSent = parseFloat(entry.totalSent).toFixed(2);
-          //   entry.totalReceived = parseFloat(entry.totalReceived).toFixed(2);
-          //   entry.fractionOfDataSent = parseFloat(
-          //     entry.fractionOfDataSent
-          //   ).toFixed(4);
-          // });
+          collectionOfSiteObjects.forEach((entry) => {
+            res.data
+              .filter((jsonThing) => {
+                return jsonThing.source === entry.name;
+              })
+              .forEach((item, i) => {
+                entry.totalFailuresSent += item.count
+              });
+          
+            res.data
+              .filter((jsonThing) => {
+                return jsonThing.destination === entry.name;
+              })
+              .forEach((item, i) => {
+                entry.totalFailuresReceived += item.count
+              });
+          
+            entry.fractionOfSendErrors = entry.totalFailuresSent / totalNumberFailed;
+            entry.fractionOfRecErrors = entry.totalFailuresReceived / totalNumberFailed;
+            // entry.failRatio = /entry.failCount
+          });
 
-          // resultsFound = true;
-          // // console.log("Results found:")
-          // // console.log(collectionOfSiteObjects);
-          //
-          // setIndividualSiteData(collectionOfSiteObjects);
+          resultsFound = true;
+          // console.log("Results found:")
+          // console.log(collectionOfSiteObjects);
+          
+          setIndividualSiteData(collectionOfSiteObjects);
         }
-        else {
-          setProcessingStatus("No results found");
+        // else {
+        //   setProcessingStatus("No results found");
           // failuresFound = false;
           // console.log("No results returned for DUNE transfers");
           // console.log(resultsFound);
-        }
+        
 
 
       });
@@ -786,10 +857,23 @@ function App() {
 
 
 
+  function calculateTotalFailRatio(){
+    const failRatio = periodFailures/(periodTransfers+periodFailures)
+    console.log("\n\ntransfers: ", periodTransfers, "      failures: ", periodFailures)
+    console.log("failure ration this period: ", failRatio)
+    return failRatio
+  }
 
 
+  function calculateAllSiteFailRatios(passedFailSites){
 
+    for (let x in passedFailSites) {
+      passedFailSites[x].failRatio = passedFailSites[x].failCount / periodFailures
+      console.log("period faiulres for ",passedFailSites[x].from , " =  ", passedFailSites[x].failRatio)
 
+      return
+    }
+  }
 
 
 
@@ -871,6 +955,7 @@ function App() {
     if (!showFailureMode) {
       return renderTransferMap();
     } else {
+      calculateAllSiteFailRatios();
       return renderFailMap();
     }
   };
@@ -880,7 +965,7 @@ function App() {
 
 
   const renderFailMap = () => {
-    return                     <div id={"map"}>
+    return               <div id={"map"}>
                           <ComposableMap data-tip=""   projectionConfig={{
     scale: 155,
     rotation: [-11, 0, 0],
@@ -918,7 +1003,7 @@ function App() {
                                 return (
                                   <>
                                   <Line
-                                    key={i}
+                                    key={`a-${i}`}
                                     to={oneOfThem.toCoord}
                                     from={oneOfThem.fromCoord}
                                     stroke="#000000"
@@ -931,7 +1016,7 @@ function App() {
                                     }}
                                   />
                                   <Line
-                                    key={i}
+                                    key={`b-${i}`}
                                     to={oneOfThem.toCoord}
                                     from={oneOfThem.fromCoord}
                                     stroke="#fdff33"
@@ -959,9 +1044,11 @@ function App() {
                                     fractionOfRecErrors
                                   },
                                   i
-                                ) => (
+                                ) => {
+                                  console.log('fraction of send errors', fractionOfSendErrors)
+                                  return (
                                   <Marker
-                                    key={i}
+                                    key={`m-${i}`}
                                     coordinates={coordinates}
                                     onClick={() => {
                                       //alert("click action here");
@@ -979,7 +1066,7 @@ function App() {
                                     />{" "}
                                     //recieve fraction circle
                                   </Marker>
-                                )
+                                )}
                               )}
                               {individualSiteData.map(
                                 (
@@ -1000,6 +1087,7 @@ function App() {
                                     }}
                                     onMouseEnter={() => {
                                       setTooltip(
+                                        "failure tool tip"
                                         // `${name}<br> TX: ${totalSent} MB <br>  RX: ${totalReceived} MB`
                                       );
                                     }}
@@ -1008,7 +1096,7 @@ function App() {
                                     }}
                                   >
                                     <circle
-                                      r={2.2 / mapPosition.zoom}
+                                      r={2.2 * calculateTotalFailRatio() / mapPosition.zoom}
                                       fill="rgba(75,0,146,1)"
                                     />
                                   </Marker>
@@ -1066,7 +1154,7 @@ function App() {
                                 return (
                                   <>
                                   <Line
-                                    key={i}
+                                    key={`a-${i}`}
                                     to={oneOfThem.toCoord}
                                     from={oneOfThem.fromCoord}
                                     stroke="#000000"
@@ -1079,7 +1167,7 @@ function App() {
                                     }}
                                   />
                                   <Line
-                                    key={i}
+                                    key={`b-${i}`}
                                     to={oneOfThem.toCoord}
                                     from={oneOfThem.fromCoord}
                                     stroke="#F53"
@@ -1110,7 +1198,7 @@ function App() {
                                   i
                                 ) => (
                                   <Marker
-                                    key={i}
+                                    key={`a-${i}`}
                                     coordinates={coordinates}
                                     onClick={() => {
                                       //alert("click action here");
@@ -1118,12 +1206,12 @@ function App() {
                                     }}
                                   >
                                     <circle
-                                      r={40 * fractionOfDataSent / mapPosition.zoom**0.75}
+                                      r={40 * fractionOfDataSent}
                                       fill="rgba(87,235,51,0.4)"
                                     />{" "}
                                     //send fraction circle
                                     <circle
-                                      r={40 * fractionOfDataReceived / mapPosition.zoom**0.75}
+                                      r={40 * fractionOfDataReceived}
                                       fill="rgba(12,123,220,0.4)"
                                     />{" "}
                                     //recieve fraction circle
@@ -1144,7 +1232,7 @@ function App() {
                                   i
                                 ) => (
                                   <Marker
-                                    key={i}
+                                    key={`b-${i}`}
                                     coordinates={coordinates}
                                     onClick={() => {
                                       setSelectedSiteIndex(i);
@@ -1163,6 +1251,7 @@ function App() {
                                       fill="rgba(75,0,146,1)"
                                     />
                                   </Marker>
+
                                 )
                               )}
                             </ZoomableGroup>

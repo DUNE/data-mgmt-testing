@@ -1,0 +1,422 @@
+{ "data" : [
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_EOS",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_EOS",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_EOS",
+  "destination": "NIKHEF",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "NIKHEF",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "NIKHEF",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "NIKHEF",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "NIKHEF",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "NIKHEF",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_EOS",
+  "destination": "NIKHEF",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "NIKHEF",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "03750_000_lro.mid",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "NIKHEF",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.leeza",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "MANCHESTER",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.13",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "np04_raw_run011793_0002_dl1.root",
+  "source": "CERN_PDUNE_EOS",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "np04_raw_run011793_0002_dl2.root",
+  "source": "CERN_PDUNE_EOS",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+}
+]}

@@ -1,0 +1,6820 @@
+{ "data" : [
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210616",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210616",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210616",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210616",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210616",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "DUNE_US_BNL_SDCC",
+  "reason": "tx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "FNAL_DCACHE_TEST",
+  "destination": "QMUL",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "LIVERPOOL",
+  "destination": "QMUL",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210616",
+  "source": "NIKHEF",
+  "destination": "RAL_ECHO",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "IMPERIAL",
+  "destination": "QMUL",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "1gbtestfile.20210601",
+  "source": "LIVERPOOL",
+  "destination": "QMUL",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+},
+{
+  "name": "02812_000_lro.mid",
+  "source": "FNAL_DCACHE",
+  "destination": "DUNE_FR_CCIN2P3_XROOTD",
+  "reason": "rx_error",
+  "count": 1
+}
+]}

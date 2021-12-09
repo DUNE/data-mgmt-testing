@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.6.2",
     "bootstrap4": "^0.0.1-security",
     "chart.js": "^3.2.0",
+    "cors": "^2.8.5",
     "d3": "^6.5.0",
     "d3-geo": "^2.0.1",
     "fs": "^0.0.1-security",
