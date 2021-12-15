@@ -70,6 +70,15 @@ def setXYLabels(h,x,y):
   setXLabels(h,x)
   setYLabels(h,y)
 
+def loadjsonlines(inputfilename):
+  print (inputfilename)
+  data = []
+  with jsonlines.open(inputfilename, mode='r') as reader:
+      for obj in reader:
+        data.append(obj)
+  reader.close()
+  return data
+  
 def analyze(start_date,end_date,delta , expt):
 
 # first get lists of variables
@@ -84,14 +93,14 @@ def analyze(start_date,end_date,delta , expt):
   
   while start_range < end_date:
     end_range = start_range + delta
-    inputfilename = "data/%s_summary_%s_%s.json"%(expt,start_range,end_range)
+    inputfilename = "data/%s_summary_%s_%s.jsonl"%(expt,start_range,end_range)
     if not os.path.exists(inputfilename):
       start_range += delta
       continue
-    inputfile = open(inputfilename,'r')
-    print ("input:",inputfilename)
+    #inputfile = open(inputfilename,'r')
+    #print ("input:",inputfilename)
     start_range += delta
-    data = json.load(inputfile)
+    data = loadjsonlines(inputfilename)
     apps = getListOfTypes(data,"application",apps)
     sites = getListOfTypes(data,"site",sites)
     states = getListOfTypes(data,"last_file_state",states)
@@ -101,7 +110,7 @@ def analyze(start_date,end_date,delta , expt):
     
     if DUNEPRO:
       users = {"dunepro":1}
-    inputfile.close()
+   
   print (dates)
   firstday = start_date
   lastday = end_date
@@ -111,9 +120,9 @@ def analyze(start_date,end_date,delta , expt):
     out_name = "%s_dunepro_%s_%s"%(expt,firstday,lastday)
   if not xroot:
        out_name = out_name + "_notxroot"
-  print (sites)
+  
   #sites = sorted(sites,reverse=True)
-  print (sites)
+ 
   ns = len(sites)
   nd = len(disks)
   nu = len(users)
@@ -177,16 +186,17 @@ def analyze(start_date,end_date,delta , expt):
   while start_range < end_date:
     end_range = start_range + delta
     
-    inputfilename = "data/%s_summary_%s_%s.json"%(expt,start_range,end_range)
+    inputfilename = "data/%s_summary_%s_%s.jsonl"%(expt,start_range,end_range)
     print ("read ",inputfilename)
     if not os.path.exists(inputfilename):
       start_range += delta
       continue
-    inputfile = open(inputfilename,'r')
-    print ("read ",inputfilename)
+    #inputfile = open(inputfilename,'r')
+    #print ("read ",inputfilename)
     days += 1.0
     start_range += delta
-    data = json.load(inputfile)
+    #data = json.load(inputfile)
+    data = loadjsonlines(inputfilename)
     for item in data:
       sumrec={}
       
