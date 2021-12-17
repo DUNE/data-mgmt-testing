@@ -331,7 +331,6 @@ class XRootESClient():
             self.args["end_date"] = date_parser.parse(self.args["start_date"]) + relativedelta(days=+1)
         if self.debug > 3:
             print(f"Args recieved: {self.args}")
-        self.dirname = self.args["dirname"]
 
         #Code to go day by day for output files as expected by other programs associated
         #with this project.
@@ -340,6 +339,18 @@ class XRootESClient():
 
         while (target_date - curr_date).days > 0:
             self.args["end_date"] = (curr_date + relativedelta(days=+1)).strftime("%Y-%m-%d")
+
+
+            #Makes sure that every step of the path from the provided directory onwards exists
+            #and then sets self.dirname
+            if not Path(self.args['dirname']).is_dir():
+                Path(self.args['dirname']).mkdir(exist_ok=True)
+            if not Path(f"{self.args['dirname']}/{curr_date.year}").is_dir():
+                Path(f"{self.args['dirname']}/{curr_date.year}").mkdir(exist_ok=True)
+            if not Path(f"{self.args['dirname']}/{curr_date.year}/{curr_date.month}").is_dir():
+                Path(f"{self.args['dirname']}/{curr_date.year}/{curr_date.month}").mkdir(exist_ok=True)
+
+            self.dirname = f"{self.args['dirname']}/{curr_date.year}/{curr_date.month}"
 
             if self.debug > 2:
                 print("\n==========================================================================")
@@ -657,8 +668,8 @@ class XRootESClient():
         specials = {"dice":"dice.bristol.uk","CRUSH":"crush.syracuse.edu","gridpp.rl.ac.uk":"gridpp.rl.ac.uk","comp20-":"lancaster.uk","discovery":"nmsu.edu","nid":"nersc.lbnl.gov","wn-2":"unibe-lhcp.bern.ch","qmul":"esc.qmul.uk","uct2":"uct2-mwt2.uchicago.edu","nubes.stfc.ac.uk":"nubes.stfc.ac.uk","unl.edu":"unl.edu","wn0":"sheffield.uk","wn1":"sheffield.uk","wn2":"sheffield.uk","local-":"uprm:pr","arbutus":"arbutus.ca","axion":"axion.ca","local":"uprm.pr"}
         if "node" in source:
             node = source["node"]
-           
-           
+
+
             country = "."+node.split(".")[-1]
             #print ("country guess",country)
             if country in knownsites:
@@ -787,7 +798,7 @@ class XRootESClient():
                     "application" : self.pids[pid]["metadata"]["processes"][0]["application"]["name"],
                     "version" : self.pids[pid]["metadata"]["processes"][0]["application"]["version"]
                 }
-                 
+
                 #Checks if the "site" entry needs to be removed. Can happen when
                 #site data is missing
                 if new_entry["site"] == "remove_key":
@@ -1071,7 +1082,7 @@ if __name__ == "__main__":
     parser.add_argument('-U', '--user', dest="user", default="", help="Searches for a specific user")
     parser.add_argument('-X', '--experiment', dest="experiment", default="dune", help="Searches for a specific experiment")
     parser.add_argument('-C', '--cluster', dest='es_cluster', default="https://fifemon-es.fnal.gov", help="Specifies the Elasticsearch cluter to target")
-    parser.add_argument('-D', '--directory', dest='dirname', default=f"{Path.cwd()}/cached_searches", help="Sets the cached searches directory")
+    parser.add_argument('-D', '--directory', dest='dirname', default=f"{Path.cwd()}/cache", help="Sets the cached searches directory")
     parser.add_argument('--debug-level', dest='debug_level', default=3, help="Determines which level of debug information to show. 1: Errors only, 2: Warnings and Errors, 3: Basic process info, 4: Advanced process info")
     parser.add_argument('--show-timing', action='store_true', help="Shows timing information if set")
     parser.add_argument('--simultaneous-pids', default=8, help="Defines how many project IDs the client will attempt to handle simultaneously")
