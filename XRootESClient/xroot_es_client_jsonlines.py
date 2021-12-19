@@ -134,6 +134,8 @@ class XRootESClient():
             "display_aggregate" : False,
             "sitename_file" : f"{Path.cwd()}/SiteNames.json",
             "clear_raws" : False,
+            "make_csvs" : False,
+            "overwrite_files" : False,
             #end_date assignment is handled elsewhere
             "end_date"  : "0"
             }
@@ -412,7 +414,7 @@ class XRootESClient():
         #We're making a single summary file for all projects IDs
         sum_writer = jsonlines.open(f"{self.dirname}/{self.args['experiment']}_summary_{self.args['start_date']}_{self.args['end_date']}.jsonl", mode="w")
         if self.args["output_for_display"]:
-            display_writer = open(f"{self.dirname}/out_{self.args['experiment']}_{self.args['start_date']}_{self.args['end_date']}.json", "w+")
+            display_writer = open(f"{self.dirname}/out_{self.args['experiment']}_{self.args['start_date']}_to_{self.args['end_date']}.json", "w")
             display_writer.write('{ "data" : [\n')
             site_file = open(self.args["sitename_file"],'r')
             nodename_sitename =json.load(site_file)
@@ -1090,6 +1092,8 @@ if __name__ == "__main__":
     parser.add_argument('--sitename-file', default=f"{Path.cwd()}/SiteNames.json", help="File to pull node-site associations from. Only needed if compiling for display")
     parser.add_argument('--clear-raws', action='store_true', help="If set, deletes all raw files from this run after summarizing them")
     parser.add_argument('--display-aggregate', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
+    parser.add_argument('--make-csvs', action='store_true', help="If set, also writes summary information to CSV files")
+    parser.add_argument('--overwrite-files', action='store_true', help="If set, ignores checking for cached raw files and re-pulls all data")
 
     args = vars(parser.parse_args())
 
