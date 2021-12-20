@@ -470,10 +470,14 @@ class XRootESClient():
                             #and adds it to the summary
                             if "data_tier" in self.fids[curr_fid]:
                                 summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                            else:
+                                summary["data_tier"] = ""
                             #Checks if there's a campaign associated with this FID,
                             #and adds it to the summary
                             if "DUNE.campaign" in self.fids[curr_fid]:
                                 summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                            else:
+                                summary["campaign"] = ""
                             #Compares the current line/event count and subtracts the line count
                             #of the first event associated with this FID to get a total
                             #action/event count for this file
