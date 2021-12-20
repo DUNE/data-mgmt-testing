@@ -567,10 +567,14 @@ class XRootESClient():
                     #and adds it to the summary
                     if "data_tier" in self.fids[curr_fid]:
                         summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                    else:
+                        summary["data_tier"] = ""
                     #Checks if there's a campaign associated with this FID,
                     #and adds it to the summary
                     if "DUNE.campaign" in self.fids[curr_fid]:
                         summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                    else:
+                        summary["campaign"] = ""
                     #Compares the current line/event count and subtracts the line count
                     #of the first event associated with this FID to get a total
                     #action/event count for this file
@@ -716,7 +720,7 @@ class XRootESClient():
                       print("site check",node,source["site"])
                     return source["site"]
             if not "." in node:
-                source["site"] = "remove_key"
+                source["site"] = ""
                 if DEBUGSITE:
                   print("site check",node,source["site"])
                 return source["site"]
@@ -833,11 +837,6 @@ class XRootESClient():
                     "application" : self.pids[pid]["metadata"]["processes"][0]["application"]["name"],
                     "version" : self.pids[pid]["metadata"]["processes"][0]["application"]["version"]
                 }
-
-                #Checks if the "site" entry needs to be removed. Can happen when
-                #site data is missing
-                if new_entry["site"] == "remove_key":
-                    new_entry.pop("site")
 
                 #Puts the finished data into a queue for the writer thread
                 self.finished_data.put(new_entry)
