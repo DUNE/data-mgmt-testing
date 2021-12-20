@@ -136,7 +136,7 @@ class XRootESClient():
             "sitename_file" : f"{Path.cwd()}/SiteNames.json",
             "clear_raws" : False,
             "make_csvs" : False,
-            "overwrite_files" : False,
+            "overwrite_files" : True,
             #end_date assignment is handled elsewhere
             "end_date"  : "0"
             }
@@ -432,13 +432,14 @@ class XRootESClient():
         for pid in self.pid_list:
             #Checks to make sure that the raw file we're accessing isn't empty
             #(indicating no relevant SAM events for that project)
-            if Path(self.pids[pid]["raw_filename"]).stat().st_size == 0:
+            raw_fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
+            if os.path.exists(raw_fname) and  Path(raw_fname).stat().st_size == 0:
                 if self.args["clear_raws"]:
                     os.remove(self.pids[pid]["raw_filename"])
                 continue
 
             #Each PID has an associated raw file, with a saved name for convenience
-            with jsonlines.open(self.pids[pid]["raw_filename"]) as reader:
+            with jsonlines.open(raw_fname) as reader:
                 #Sets some default values for checks or inter-iteration variables
                 curr_fid = None
                 last_start = None
@@ -635,7 +636,7 @@ class XRootESClient():
             display_writer.close()
 
         if self.args["make_csvs"]:
-            csv_writer.close()
+            csv_file.close()
 
         sum_writer.close()
 
@@ -679,8 +680,9 @@ class XRootESClient():
             self.finished_data.task_done()
 
         #Closes all file objects
-        for f in proj_files:
-            f.close()
+        for pid in self.pid_list:
+            if pid in proj_files:
+                proj_files[pid].close()
 
     #site_finder code here taken from XRootParser code by Dr. Heidi Schellman
     def site_finder(self, source):
@@ -1132,7 +1134,7 @@ if __name__ == "__main__":
     parser.add_argument('--clear-raws', action='store_true', help="If set, deletes all raw files from this run after summarizing them")
     parser.add_argument('--display-aggregate', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
     parser.add_argument('--make-csvs', action='store_true', help="If set, also writes summary information to CSV files")
-    parser.add_argument('--overwrite-files', action='store_true', help="If set, ignores checking for cached raw files and re-pulls all data")
+    #parser.add_argument('--overwrite-files', action='store_true', help="If set, ignores checking for cached raw files and re-pulls all data")
 
     args = vars(parser.parse_args())
 
