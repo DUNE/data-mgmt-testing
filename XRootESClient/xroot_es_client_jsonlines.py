@@ -655,7 +655,7 @@ class XRootESClient():
         #Makes all of the raw file objects
         for pid in self.pid_list:
             fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
-            if self.args["overwrite_files"] or os.path.exists(fname):
+            if self.args["overwrite_files"] or not os.path.exists(fname):
                 self.pids[pid]["raw_filename"] = fname
                 proj_files[pid] = open(fname, "w+")
 
@@ -679,8 +679,8 @@ class XRootESClient():
             self.finished_data.task_done()
 
         #Closes all file objects
-        for pid in self.pid_list:
-            proj_files[pid].close()
+        for f in proj_files:
+            f.close()
 
     #site_finder code here taken from XRootParser code by Dr. Heidi Schellman
     def site_finder(self, source):
@@ -739,7 +739,7 @@ class XRootESClient():
                 pid = self.pid_list[i]
                 #Decrements the semaphore upon spawning a new thread
                 raw_fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
-                if self.args["overwrite_files"] or os.path.exists(raw_fname):
+                if self.args["overwrite_files"] or not os.path.exists(raw_fname):
                     self.inc_lock.acquire()
                     self.max_compiler_threads -= 1
                     self.inc_lock.release()
@@ -866,7 +866,7 @@ class XRootESClient():
                     print(f"Making SAM thread for pid {self.pid_list[i]}")
                 pid = self.pid_list[i]
                 raw_fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
-                if self.args["overwrite_files"] or os.path.exists(raw_fname):
+                if self.args["overwrite_files"] or not os.path.exists(raw_fname):
                     #Decrements the semaphore when spawning a new thread
                     self.inc_lock.acquire()
                     self.max_sam_threads -= 1
@@ -935,7 +935,7 @@ class XRootESClient():
                 if self.debug > 3:
                     print(f"Making ElasticSearch thread for pid {pid}")
                 raw_fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
-                if self.args["overwrite_files"] or os.path.exists(raw_fname):
+                if self.args["overwrite_files"] or not os.path.exists(raw_fname):
                     #Decrements the sempahore when spawning a new thread
                     self.inc_lock.acquire()
                     self.max_es_threads -= 1
