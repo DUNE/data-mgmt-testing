@@ -491,7 +491,9 @@ class XRootESClient():
                             #Checks that we actually have a file size and duration, then adds the total
                             #processing rate to the summary
                             if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
-                                summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
+                                summary["rate"]=summary["file_size"]/summary["duration"] / 1024 / 1024
+                            else:
+                                summary["rate"] = 0
                             #0 actions makes no sense as we should have at least 1 event if we've
                             #encounted a FID.
                             if summary["actions"] == 0:
