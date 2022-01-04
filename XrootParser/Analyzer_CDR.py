@@ -2,7 +2,10 @@
 # works with python2
 import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import math
-durationcut = 100
+FAST=True
+durationcut = 25
+if not FAST:
+    durationcut = 200
 DUNEPRO=False  # only dunepro
 xroot = True  # only xrootd urls
 # loop over a range of input json files and histogram data flow vs various characteristics
@@ -43,7 +46,7 @@ def shortdisk(disk):
     if "manchester" in disk:
         return "manchester"
     if "fndca" in disk:
-        return "fnal"
+        return "fndca"
     if "echo" in disk:
         return "echo"
     return disk
@@ -209,6 +212,11 @@ def analyze(start_date,end_date,delta , expt, pid):
     for item in data:
       sumrec={}
       
+      # remove some special runs
+      if "SCEsyst"  in item["file_url"]:
+        continue
+      #if "fnal.gov" in item["node"]:
+      #  print (item)
       if not xroot and "root:" in item["file_url"]:
          
         continue
@@ -231,9 +239,16 @@ def analyze(start_date,end_date,delta , expt, pid):
       #rate = item["file_size"]/item["duration"]/1000000.
       #print ("got here")
       finalstate = item["last_file_state"]
+      if "gpvm" in item["node"]:
+        continue
       application = "unknown"
+      user = item["username"]
       if "application" in item:
         application = item["application"]
+        if not FAST and (application !="reco" or user != "dunepro"):
+            continue
+        if FAST and user !="calcuttj":
+            continue
       version = "unknown"
       if "version" in item:
         version = item["version"]
@@ -284,6 +299,8 @@ def analyze(start_date,end_date,delta , expt, pid):
       # get intrinsic rate
       if duration < durationcut:
         continue
+      #if item["campaign"] != "PDSPProd4a":
+      #   continue
       siterate[site+disk].Fill(math.log10(myrate))
       if not "us" in sumrec["country"] and not "fnal" in sumrec["node"] and finalstate == "consumed":
         if  "fnal" in disk or "gsiftp" in disk:
@@ -298,6 +315,7 @@ def analyze(start_date,end_date,delta , expt, pid):
         sumrec["country"]="cern"
       if "campaign" in item:
         sumrec["campaign"] = item["campaign"]
+        
       else:
         sumrec["campaign"] = None
       #print (sumrec)
@@ -377,7 +395,7 @@ def analyze(start_date,end_date,delta , expt, pid):
   #cross.Print("ALL")
   drates = open("rates.txt",'w')
   ROOT.gStyle.SetLegendFillColor(0);
-  pdfname = "sites/ALL"
+  pdfname = "sites/ALL"+out_name
 
   pdfstart = pdfname + ".pdf("
   pdfend = pdfname + ".pdf)"
@@ -389,17 +407,17 @@ def analyze(start_date,end_date,delta , expt, pid):
             max = siterate[site+disk].GetMaximum()
         #print ("max =", max)
     base = "fndca1.fnal.gov"
-    siterate[site+base].SetMaximum(max*1.2)
+    siterate[site+base].SetMaximum(max*1.5)
     siterate[site+base].SetTitle(site)
     siterate[site+base].Draw("HIST")
     basecolor = disks[disk]
     siterate[site+disk].SetLineStyle(basecolor)
     srates = "%s "%(site)
     icolor = 0
-    leg = ROOT.TLegend(0.22,0.7,0.4,0.89)
+    leg = ROOT.TLegend(0.22,0.75,0.4,0.89)
     leg.SetBorderSize(0)
     leg.SetFillColor(0)
-    ROOT.gStyle.SetLegendTextSize(0.05)
+    ROOT.gStyle.SetLegendTextSize(0.03)
     for disk in disks:
         icolor +=1
         siterate[site+disk].SetLineWidth(2)
@@ -413,7 +431,7 @@ def analyze(start_date,end_date,delta , expt, pid):
         u = math.pow(10, mean + rms )
         n =siterate[site+disk].GetEntries()
         if n > 0:
-            entry = leg.AddEntry(siterate[site+disk],"%s %4.1f MB/s"%(shortdisk(disk),m),"f")
+            entry = leg.AddEntry(siterate[site+disk],"%s %4.1f-%4.1f MB/s"%(shortdisk(disk),l,u),"f")
         else:
             entry = leg.AddEntry("","","")
         leg.Draw("SAME")
@@ -544,7 +562,7 @@ def analyze(start_date,end_date,delta , expt, pid):
     max = apptiming[app].GetMaximum()
     if remtiming[app].GetMaximum() > max:
       max = remtiming[app].GetMaximum()
-    remtiming[app].SetMaximum(max*1.2)
+    remtiming[app].SetMaximum(max*1.5)
     remtiming[app].Draw("hist")
     apptiming[app].SetLineColor(2)
     apptiming[app].Draw("same hist")
