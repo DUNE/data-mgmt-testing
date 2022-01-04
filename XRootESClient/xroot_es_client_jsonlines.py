@@ -7,6 +7,7 @@
 DEBUGSITE=0
 import json
 import jsonlines
+import csv
 import os
 import sys
 import time
@@ -134,6 +135,8 @@ class XRootESClient():
             "display_aggregate" : False,
             "sitename_file" : f"{Path.cwd()}/SiteNames.json",
             "clear_raws" : False,
+            "make_csvs" : False,
+            "overwrite_files" : True,
             #end_date assignment is handled elsewhere
             "end_date"  : "0"
             }
@@ -412,7 +415,7 @@ class XRootESClient():
         #We're making a single summary file for all projects IDs
         sum_writer = jsonlines.open(f"{self.dirname}/{self.args['experiment']}_summary_{self.args['start_date']}_{self.args['end_date']}.jsonl", mode="w")
         if self.args["output_for_display"]:
-            display_writer = open(f"{self.dirname}/out_{self.args['experiment']}_{self.args['start_date']}_{self.args['end_date']}.json", "w+")
+            display_writer = open(f"{self.dirname}/out_{self.args['experiment']}_{self.args['start_date']}_to_{self.args['end_date']}.json", "w")
             display_writer.write('{ "data" : [\n')
             site_file = open(self.args["sitename_file"],'r')
             nodename_sitename =json.load(site_file)
@@ -420,16 +423,23 @@ class XRootESClient():
             is_start = True
             if self.args["display_aggregate"]:
                 aggregates = {}
+
+        if self.args["make_csvs"]:
+            csv_filename = f"{self.dirname}/{self.args['experiment']}_summary_{self.args['start_date']}_{self.args['end_date']}.csv"
+            csv_file = open(csv_filename, 'w')
+            csv_writer = None
         #Steps through all found project IDs
         for pid in self.pid_list:
             #Checks to make sure that the raw file we're accessing isn't empty
             #(indicating no relevant SAM events for that project)
-            if Path(self.pids[pid]["raw_filename"]).stat().st_size == 0:
+            raw_fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
+            if os.path.exists(raw_fname) and  Path(raw_fname).stat().st_size == 0:
                 if self.args["clear_raws"]:
                     os.remove(self.pids[pid]["raw_filename"])
                 continue
+
             #Each PID has an associated raw file, with a saved name for convenience
-            with jsonlines.open(self.pids[pid]["raw_filename"]) as reader:
+            with jsonlines.open(raw_fname) as reader:
                 #Sets some default values for checks or inter-iteration variables
                 curr_fid = None
                 last_start = None
@@ -460,10 +470,14 @@ class XRootESClient():
                             #and adds it to the summary
                             if "data_tier" in self.fids[curr_fid]:
                                 summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                            else:
+                                summary["data_tier"] = ""
                             #Checks if there's a campaign associated with this FID,
                             #and adds it to the summary
                             if "DUNE.campaign" in self.fids[curr_fid]:
                                 summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                            else:
+                                summary["campaign"] = ""
                             #Compares the current line/event count and subtracts the line count
                             #of the first event associated with this FID to get a total
                             #action/event count for this file
@@ -477,7 +491,9 @@ class XRootESClient():
                             #Checks that we actually have a file size and duration, then adds the total
                             #processing rate to the summary
                             if "file_size" in summary and "duration" in summary and summary["file_size"] != None and summary["duration"] != 0:
-                                summary["rate"]=summary["file_size"]/summary["duration"]*0.000001
+                                summary["rate"]=summary["file_size"]/summary["duration"] / 1024 / 1024
+                            else:
+                                summary["rate"] = 0
                             #0 actions makes no sense as we should have at least 1 event if we've
                             #encounted a FID.
                             if summary["actions"] == 0:
@@ -518,7 +534,12 @@ class XRootESClient():
                                             aggregates[pid][to_write["source"]][to_write["destination"]]["data_tier"].append(to_write["data_tier"])
                                         aggregates[pid][to_write["source"]][to_write["destination"]]["file_count"] += 1
 
-
+                            if self.args["make_csvs"]:
+                                if csv_writer is None:
+                                    fieldnames = summary.keys()
+                                    csv_writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                                    csv_writer.writeheader()
+                                csv_writer.writerow(summary)
 
                         #Updates the value of the last checked event and event
                         #number to the current event and event number
@@ -546,10 +567,14 @@ class XRootESClient():
                     #and adds it to the summary
                     if "data_tier" in self.fids[curr_fid]:
                         summary["data_tier"] = self.fids[curr_fid]["data_tier"]
+                    else:
+                        summary["data_tier"] = ""
                     #Checks if there's a campaign associated with this FID,
                     #and adds it to the summary
                     if "DUNE.campaign" in self.fids[curr_fid]:
                         summary["campaign"] = self.fids[curr_fid]["DUNE.campaign"]
+                    else:
+                        summary["campaign"] = ""
                     #Compares the current line/event count and subtracts the line count
                     #of the first event associated with this FID to get a total
                     #action/event count for this file
@@ -619,6 +644,10 @@ class XRootESClient():
                             display_writer.write(json.dumps(info_out, indent=2))
             display_writer.write("\n]}")
             display_writer.close()
+
+        if self.args["make_csvs"]:
+            csv_file.close()
+
         sum_writer.close()
 
         #Gets summarizer end time and duration
@@ -637,8 +666,10 @@ class XRootESClient():
         #Makes all of the raw file objects
         for pid in self.pid_list:
             fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
-            self.pids[pid]["raw_filename"] = fname
-            proj_files[pid] = open(fname, "w+")
+            if self.args["overwrite_files"] or not os.path.exists(fname):
+                self.pids[pid]["raw_filename"] = fname
+                proj_files[pid] = open(fname, "w+")
+
 
         #Checks that either the compiler is still running, or there's still data in
         #the finished data queue to prevent early shutdowns
@@ -660,7 +691,8 @@ class XRootESClient():
 
         #Closes all file objects
         for pid in self.pid_list:
-            proj_files[pid].close()
+            if pid in proj_files:
+                proj_files[pid].close()
 
     #site_finder code here taken from XRootParser code by Dr. Heidi Schellman
     def site_finder(self, source):
@@ -688,7 +720,7 @@ class XRootESClient():
                       print("site check",node,source["site"])
                     return source["site"]
             if not "." in node:
-                source["site"] = "remove_key"
+                source["site"] = ""
                 if DEBUGSITE:
                   print("site check",node,source["site"])
                 return source["site"]
@@ -718,15 +750,22 @@ class XRootESClient():
                     print(f"Making compiler thread for pid {self.pid_list[i]}")
                 pid = self.pid_list[i]
                 #Decrements the semaphore upon spawning a new thread
-                self.inc_lock.acquire()
-                self.max_compiler_threads -= 1
-                self.inc_lock.release()
-                self.pids[pid]["compiler_worker"] = threading.Thread(target=self.compiler_worker_func,args=(pid,),daemon=True)
-                self.pids[pid]["compiler_worker"].start()
+                raw_fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
+                if self.args["overwrite_files"] or not os.path.exists(raw_fname):
+                    self.inc_lock.acquire()
+                    self.max_compiler_threads -= 1
+                    self.inc_lock.release()
+                    self.pids[pid]["compiler_worker"] = threading.Thread(target=self.compiler_worker_func,args=(pid,),daemon=True)
+                    self.pids[pid]["compiler_worker"].start()
+                else:
+                    self.inc_lock.acquire()
+                    self.finished_compiler_threads += 1
+                    self.inc_lock.release()
                 i += 1
         #Waits for all threads to terminate
         for pid in self.pid_list:
-            self.pids[pid]["compiler_worker"].join()
+            if not self.pids[pid]["compiler_worker"] is None:
+                self.pids[pid]["compiler_worker"].join()
 
     #Compiles all data into finished form for a given project
     def compiler_worker_func(self, pid):
@@ -799,11 +838,6 @@ class XRootESClient():
                     "version" : self.pids[pid]["metadata"]["processes"][0]["application"]["version"]
                 }
 
-                #Checks if the "site" entry needs to be removed. Can happen when
-                #site data is missing
-                if new_entry["site"] == "remove_key":
-                    new_entry.pop("site")
-
                 #Puts the finished data into a queue for the writer thread
                 self.finished_data.put(new_entry)
 
@@ -838,18 +872,25 @@ class XRootESClient():
                 if self.debug > 3:
                     print(f"Making SAM thread for pid {self.pid_list[i]}")
                 pid = self.pid_list[i]
-                #Decrements the semaphore when spawning a new thread
-                self.inc_lock.acquire()
-                self.max_sam_threads -= 1
-                self.inc_lock.release()
-                self.pids[pid]["sam_worker"] = threading.Thread(target=self.sam_worker_func,args=(pid,),daemon=True)
-                self.pids[pid]["sam_worker"].start()
-                self.total_pids += 1
+                raw_fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
+                if self.args["overwrite_files"] or not os.path.exists(raw_fname):
+                    #Decrements the semaphore when spawning a new thread
+                    self.inc_lock.acquire()
+                    self.max_sam_threads -= 1
+                    self.inc_lock.release()
+                    self.pids[pid]["sam_worker"] = threading.Thread(target=self.sam_worker_func,args=(pid,),daemon=True)
+                    self.pids[pid]["sam_worker"].start()
+                    self.total_pids += 1
+                else:
+                    self.inc_lock.acquire()
+                    self.finished_sam_threads += 1
+                    self.inc_lock.release()
                 i += 1
 
         #Waits for all threads to terminate
         for pid in self.pid_list:
-            self.pids[pid]["sam_worker"].join()
+            if not self.pids[pid]["sam_worker"] is None:
+                self.pids[pid]["sam_worker"].join()
 
     def sam_worker_func(self, pid):
         #Runs as long as there's data, or the thread that produces data is either alive or hasn't been started
@@ -900,16 +941,23 @@ class XRootESClient():
                 pid = self.pid_list[i]
                 if self.debug > 3:
                     print(f"Making ElasticSearch thread for pid {pid}")
-                #Decrements the sempahore when spawning a new thread
-                self.inc_lock.acquire()
-                self.max_es_threads -= 1
-                self.inc_lock.release()
-                self.pids[pid]["es_worker"] = threading.Thread(target=self.es_worker_func,args=(pid,),daemon=True)
-                self.pids[pid]["es_worker"].start()
+                raw_fname = f"{self.dirname}/{self.args['experiment']}_raw_{self.args['start_date']}_{self.args['end_date']}_{pid}.jsonl"
+                if self.args["overwrite_files"] or not os.path.exists(raw_fname):
+                    #Decrements the sempahore when spawning a new thread
+                    self.inc_lock.acquire()
+                    self.max_es_threads -= 1
+                    self.inc_lock.release()
+                    self.pids[pid]["es_worker"] = threading.Thread(target=self.es_worker_func,args=(pid,),daemon=True)
+                    self.pids[pid]["es_worker"].start()
+                else:
+                    self.inc_lock.acquire()
+                    self.finished_es_threads += 1
+                    self.inc_lock.release()
                 i += 1
         #Waits for all threads to terminate
         for pid in self.pid_list:
-            self.pids[pid]["es_worker"].join()
+            if not self.pids[pid]["es_worker"] is None:
+                self.pids[pid]["es_worker"].join()
 
     #Function to pull all logged SAM Events for a given PID in the established date range
     def es_worker_func(self, pid):
@@ -1090,6 +1138,8 @@ if __name__ == "__main__":
     parser.add_argument('--sitename-file', default=f"{Path.cwd()}/SiteNames.json", help="File to pull node-site associations from. Only needed if compiling for display")
     parser.add_argument('--clear-raws', action='store_true', help="If set, deletes all raw files from this run after summarizing them")
     parser.add_argument('--display-aggregate', action='store_true', help="If set, writes all events for display compilation instead of auto-summarizing")
+    parser.add_argument('--make-csvs', action='store_true', help="If set, also writes summary information to CSV files")
+    #parser.add_argument('--overwrite-files', action='store_true', help="If set, ignores checking for cached raw files and re-pulls all data")
 
     args = vars(parser.parse_args())
 
