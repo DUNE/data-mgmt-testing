@@ -3,7 +3,7 @@
 import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import math
 FAST=True
-durationcut = 25
+durationcut = 50
 if not FAST:
     durationcut = 200
 DUNEPRO=False  # only dunepro
@@ -45,11 +45,16 @@ def getListOfTypes(data,key,inlist):
 def shortdisk(disk):
     if "manchester" in disk:
         return "manchester"
+    if "lancs" in disk:
+      return "lancaster"
     if "fndca" in disk:
         return "fndca"
     if "echo" in disk:
         return "echo"
+    if "cern" in disk:
+      return "cern"
     return disk
+    
 def getListOfDates(data,inlist):
   key = "@timestamp"
   l = list(inlist.keys())
@@ -125,10 +130,10 @@ def analyze(start_date,end_date,delta , expt, pid):
   print (dates)
   firstday = start_date
   lastday = end_date
-  if (not DUNEPRO):
-    out_name = "%s_all_%s_%s_%d"%(expt,firstday,lastday,pid)
+  if (not FAST):
+    out_name = "%s_slow_%s_%s_%d"%(expt,firstday,lastday,pid)
   else:
-    out_name = "%s_dunepro_%s_%s_%d"%(expt,firstday,lastday,pid)
+    out_name = "%s_fast_%s_%s_%d"%(expt,firstday,lastday,pid)
   if not xroot:
        out_name = out_name + "_notxroot"
   out_name = out_name.replace("-","_")
@@ -168,6 +173,7 @@ def analyze(start_date,end_date,delta , expt, pid):
   rate_by_app = ROOT.TH2F("rate_by_app","rate for consumed, by app, MB/s",na,0,na,ns,0,ns)
   setXYLabels(rate_by_app,apps,sites)
   ratelog10 = ROOT.TH2F("rates","rate for consumed, MB/s;;Log10 Rate",24,-3,3.,ns,0,ns)
+  h_duration = ROOT.TH1F("duration", "duration in seconds",100, 0,500.)
   setYLabels(ratelog10,sites)
   skipped = ROOT.TH2F("skipped","skipped",nd,0,nd,ns,0,ns)
   setXYLabels(skipped,disks,sites)
@@ -201,6 +207,7 @@ def analyze(start_date,end_date,delta , expt, pid):
     inputfilename = "data/%s_summary_%s_%s.jsonl"%(expt,start_range,end_range)
     print ("read ",inputfilename)
     if not os.path.exists(inputfilename):
+      print ("skipping missing",inputfilename)
       start_range += delta
       continue
     #inputfile = open(inputfilename,'r')
@@ -227,13 +234,17 @@ def analyze(start_date,end_date,delta , expt, pid):
             continue
       
       if "site" not in item or "file_location" not in item:
-        #print("missing: ",item["site"])
+        print("missing a site",item["job_id"])
         continue
       
-      
+       
+        
       site = countrify(item["site"])
+      if site == "_":
+        print ("strange site",item["node"])
       if "duration" not in item:
         continue
+      h_duration.Fill(item["duration"])
       if "rate" not in item:
         continue
       #rate = item["file_size"]/item["duration"]/1000000.
@@ -247,7 +258,7 @@ def analyze(start_date,end_date,delta , expt, pid):
         application = item["application"]
         if not FAST and (application !="reco" or user != "dunepro"):
             continue
-        if FAST and user !="calcuttj":
+        if FAST and user =="dunepro":
             continue
       version = "unknown"
       if "version" in item:
@@ -378,7 +389,7 @@ def analyze(start_date,end_date,delta , expt, pid):
   
   
  
-  ROOT.gStyle.SetPalette(ROOT.kBlueYellow);
+  ROOT.gStyle.SetPalette(ROOT.kLightTemperature);
   ROOT.gStyle.SetPaintTextFormat("4.1f")
  # cross.Scale(1./days)
  # state.Scale(1./days)
@@ -400,6 +411,10 @@ def analyze(start_date,end_date,delta , expt, pid):
   pdfstart = pdfname + ".pdf("
   pdfend = pdfname + ".pdf)"
   c.Print(pdfstart,".pdf")
+  h_duration.Draw()
+  c.Print("duration",".pdf")
+  mycolor = [ROOT.kBlack,ROOT.kBlue,9,38,ROOT.kCyan]
+  myline = [1,2]
   for site in sites:
     max = 0
     for disk in disks:
@@ -410,18 +425,23 @@ def analyze(start_date,end_date,delta , expt, pid):
     siterate[site+base].SetMaximum(max*1.5)
     siterate[site+base].SetTitle(site)
     siterate[site+base].Draw("HIST")
-    basecolor = disks[disk]
-    siterate[site+disk].SetLineStyle(basecolor)
-    srates = "%s "%(site)
+     
+    siterate[site+disk].SetLineStyle(disks[disk]%2)
+    srates = "%32s\t"%(site)
     icolor = 0
     leg = ROOT.TLegend(0.22,0.75,0.4,0.89)
     leg.SetBorderSize(0)
     leg.SetFillColor(0)
+    
+    ibase = disks[base] -1
+    siterate[site+base].SetLineStyle(myline[(ibase)%2])
+    siterate[site+base].SetLineColor(mycolor[int(ibase/2)])
     ROOT.gStyle.SetLegendTextSize(0.03)
     for disk in disks:
-        icolor +=1
+        icolor = disks[disk] -1
         siterate[site+disk].SetLineWidth(2)
-        siterate[site+disk].SetLineStyle(icolor)
+        siterate[site+disk].SetLineStyle(myline[(icolor%2)])
+        siterate[site+disk].SetLineColor(mycolor[int(icolor/2)])
         siterate[site+disk].Draw("SAME HIST")
         
         mean = siterate[site+disk].GetMean()
@@ -434,9 +454,12 @@ def analyze(start_date,end_date,delta , expt, pid):
             entry = leg.AddEntry(siterate[site+disk],"%s %4.1f-%4.1f MB/s"%(shortdisk(disk),l,u),"f")
         else:
             entry = leg.AddEntry("","","")
+            l = 0
+            u = 0
+            m = 0
         leg.Draw("SAME")
         #print (mean,rms,m,l,u)
-        srates += " %s, %d \t= %4.1f - %4.1f + %4.1f\t"%(shortdisk(disk),n,m,l,u)
+        srates += " %s: %5d \t= %4.1f-%4.1f+%4.1f\t"%(shortdisk(disk),n,m,l,u)
     print (srates)
     srates += "\n"
     drates.write(srates)
@@ -447,11 +470,11 @@ def analyze(start_date,end_date,delta , expt, pid):
 
   cross.Draw("TEXT SAME")
   c.Print("pix/"+out_name+"_traffic.png")
-  c.Print("pix/"+out_name+"_traffic.C")
+  c.Print("C/"+out_name+"_traffic.C")
   state.Draw("COLZ")
   state.Draw("TEXT SAME")
   c.Print("pix/"+out_name+"_states.png")
-  c.Print("pix/"+out_name+"_states.C")
+  c.Print("C/"+out_name+"_states.C")
   
   
   c.SetLogz(0)
@@ -459,7 +482,7 @@ def analyze(start_date,end_date,delta , expt, pid):
   totalbytes.SetMinimum(1.)
   totalbytes.Draw("")
   c.Print("pix/"+out_name+"_totalbytes_site.png")
-  c.Print("pix/"+out_name+"_totalbytes_site.C")
+  c.Print("C/"+out_name+"_totalbytes_site.C")
   leg = ROOT.TLegend(0.75,0.75,0.85,0.87)
   leg.SetBorderSize(0)
   
@@ -477,12 +500,12 @@ def analyze(start_date,end_date,delta , expt, pid):
   leg.Draw("same")
   
   c.Print("pix/"+out_name+"_totalbytes_user.png")
-  c.Print("pix/"+out_name+"_totalbytes_user.C")
+  c.Print("C/"+out_name+"_totalbytes_user.C")
   
   
   totalbytes_date.Draw()
   c.Print("pix/"+out_name+"_totalbytes_date.png")
-  c.Print("pix/"+out_name+"_totalbytes_date.C")
+  c.Print("C/"+out_name+"_totalbytes_date.C")
   c.SetLogy(0)
   total = consumed.Clone("total")
   total.Add(skipped)
@@ -490,11 +513,11 @@ def analyze(start_date,end_date,delta , expt, pid):
   efficiency.SetTitle("success rate "+out_name)
   efficiency.Divide(total)
   efficiency.Draw("COLZ NUM")
-  ROOT.gStyle.SetPalette(ROOT.kLightTerrain);
-  ROOT.gStyle.SetPaintTextFormat("4.1f")
-  efficiency.Draw("TEXT45 SAME")
+  ROOT.gStyle.SetPalette(ROOT.kLightTemperature);
+  ROOT.gStyle.SetPaintTextFormat("4.2f")
+  efficiency.Draw("TEXT SAME")
   c.Print("pix/"+out_name+"_efficiency.png")
-  c.Print("pix/"+out_name+"_efficiency.C")
+  c.Print("C/"+out_name+"_efficiency.C")
   #c.SetLogz(1)
   #rate.SetMaximum(100.)
   rate.Divide(consumed)
@@ -502,21 +525,23 @@ def analyze(start_date,end_date,delta , expt, pid):
   rate.Draw("COLZ")
   #ROOT.gStyle.SetPaintTextFormat("5.2f")
   rate.Draw("TEXT SAME")
+  
   c.Print("pix/"+out_name+"_rate.png")
-  c.Print("pix/"+out_name+"_rate.C")
+  c.Print("C/"+out_name+"_rate.C")
   #rate_by_app.SetMaximum(100.)
   rate_by_app.Divide(consumed_by_app)
   rate_by_app.SetTitle(rate_by_app.GetTitle()+" " + out_name)
   rate_by_app.Draw("COLZ")
   #ROOT.gStyle.SetPaintTextFormat("5.2f")
   rate_by_app.Draw("TEXT45 SAME")
+  c.SetLogz(1)
   c.Print("pix/"+out_name+"_rate_by_app.png")
-  c.Print("pix/"+out_name+"_rate_by_app.C")
+  c.Print("C/"+out_name+"_rate_by_app.C")
   
   c.SetLogz(0)
   ratelog10.Draw("BOX")
   c.Print("pix/"+out_name+"_ratelog10.png")
-  c.Print("pix/"+out_name+"_ratelog10.C")
+  c.Print("C/"+out_name+"_ratelog10.C")
   print ("total count is ",count)
   speeds = ROOT.TFile.Open(out_name+"_speeds.root","RECREATE")
   stat = np.zeros(4)
@@ -568,7 +593,7 @@ def analyze(start_date,end_date,delta , expt, pid):
     apptiming[app].Draw("same hist")
     leg.Draw()
     c.Print("pix/"+out_name+"_"+app+".png")
-    c.Print("pix/"+out_name+"_"+app+".C")
+    c.Print("C/"+out_name+"_"+app+".C")
     
   
   r.close()
