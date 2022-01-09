@@ -232,9 +232,10 @@ def analyze(start_date,end_date,delta , expt, pid):
       if pid > 0:
         if item["project_id"] != pid:
             continue
-      
+      if "node" not in item:
+        continue
       if "site" not in item or "file_location" not in item:
-        print("missing a site",item["job_id"])
+        print("missing a site",item["job_id"],item["node"])
         continue
       
        
@@ -244,6 +245,8 @@ def analyze(start_date,end_date,delta , expt, pid):
         print ("strange site",item["node"])
       if "duration" not in item:
         continue
+      else:
+        duration = item["duration"]
       h_duration.Fill(item["duration"])
       if "rate" not in item:
         continue
@@ -256,9 +259,15 @@ def analyze(start_date,end_date,delta , expt, pid):
       user = item["username"]
       if "application" in item:
         application = item["application"]
-        if not FAST and (application !="reco" or user != "dunepro"):
+        if not FAST:
+          if (application !="reco" or user != "dunepro" or duration < 500):
             continue
-        if FAST and user =="dunepro":
+          if ("NP02" in item["file_url"] or item["data_tier"]!= "raw"):
+            continue
+          if item["rate"] > 2 and finalstate=="consumed":
+            print (item)
+        else:
+          if user =="dunepro" or application == "reco":
             continue
       version = "unknown"
       if "version" in item:
@@ -290,6 +299,8 @@ def analyze(start_date,end_date,delta , expt, pid):
       process_id = 0
       if "process_id" in item:
         sumrec["process_id"] = item["process_id"]
+      else:
+        sumrec["process_id"] = 0
       sumrec["timestamp"] = item["@timestamp"]
       sumrec["duration"] = duration
       sumrec["file_size"] = item["file_size"]
@@ -312,7 +323,8 @@ def analyze(start_date,end_date,delta , expt, pid):
         continue
       #if item["campaign"] != "PDSPProd4a":
       #   continue
-      siterate[site+disk].Fill(math.log10(myrate))
+      if finalstate == "consumed":
+        siterate[site+disk].Fill(math.log10(myrate))
       if not "us" in sumrec["country"] and not "fnal" in sumrec["node"] and finalstate == "consumed":
         if  "fnal" in disk or "gsiftp" in disk:
           remtiming[application].Fill(math.log10(myrate))
@@ -451,7 +463,11 @@ def analyze(start_date,end_date,delta , expt, pid):
         u = math.pow(10, mean + rms )
         n =siterate[site+disk].GetEntries()
         if n > 0:
-            entry = leg.AddEntry(siterate[site+disk],"%s %4.1f-%4.1f MB/s"%(shortdisk(disk),l,u),"f")
+            if FAST:
+              entry = leg.AddEntry(siterate[site+disk],"%s %4.1f-%4.1f MB/s"%(shortdisk(disk),l,u),"f")
+            else:
+              entry = leg.AddEntry(siterate[site+disk],"%s %4.2f-%4.2f MB/s"%(shortdisk(disk),l,u),"f")
+              
         else:
             entry = leg.AddEntry("","","")
             l = 0
