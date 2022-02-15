@@ -155,6 +155,229 @@ class ESMonitoringClient():
             }
         }
 
+    def get_err(self, transfer):
+        try:
+            new_json = {
+                "name" : transfer["name"],
+                "source" : transfer["src-rse"],
+                "destination" : transfer["dst-rse"]
+            }
+            if transfer["event_type"] == "transfer-failed":
+                new_json["reason"] = "rx_error"
+            else:
+                new_json["reason"] = "tx_error"
+            new_json["count"] = 1
+            return new_json
+        except e:
+            print(f"Error processing failed transfer. Exception: {e}")
+            return {"name" : "ERROR"}
+
+    def get_speed(self, transfer):
+        #Pulls request creation time
+        c_time = transfer["created_at"]
+        #Pulls the (transfer request?) submission time, the transfer start time,
+        #and the transfer end time, as well as the file size
+        sub_time = transfer["submitted_at"]
+        start_time = transfer["started_at"]
+        fin_time = transfer["transferred_at"]
+        f_size = float(transfer["bytes"])
+
+        #Places our relevant times into an array for processing
+        time_arr = [c_time, sub_time, start_time, fin_time]
+        len_arr = []
+
+        #Finds the time differences for each set of times (creation to submission,
+        #submission to starting, and transmission start to transmission end)
+        #Initial time format is YYYY:M:DTH:M:SZ where T separates the year-month-day
+        #portion from the hours-minutes-second portion and the Z denotes UTC
+        for i in range(len(time_arr)-1):
+            #Gets our times from the JSON's format into a workable form
+            #First divides
+            split_1 = time_arr[i].split()
+            split_2 = time_arr[i + 1].split()
+            #Splits the hour-minute-second portion into individual pieces
+            #Note: In the future, with very long transmissions or transmissions
+            #started around midnight we may need to account for days, but that seems
+            #like an edge case that would be rare and unlikely to meaningfully affect results
+            t_1 = split_1[1].split(':')
+            t_2 = split_2[1].split(':')
+
+            #Pulls the difference between each individual number set
+            #The hours, minutes, and seconds being greater in the start
+            #time than in the end time are accounted for later on
+            h_diff = float(t_2[0]) - float(t_1[0])
+            m_diff = float(t_2[1]) - float(t_1[1])
+            s_diff = float(t_2[2]) - float(t_1[2])
+
+            #Accounts for the hour being higher in the start time, which would
+            #mean that the day had turned over at some point.
+            if h_diff < 0:
+                h_diff += 24
+
+            #The difference in minutes and seconds being negative is accounted
+            #for here. The hour difference (thanks to the code above) should
+            #always be 0 or greater. If the minutes and seconds are different,
+            #then the hours should always be greater than zero, so the overall
+            #time will still be positive.
+            tot_time = (h_diff * 60 + m_diff) * 60 + s_diff
+
+            #Appends each time to the time length array
+            len_arr.append(tot_time)
+
+        #Calculates the transfer speed from the transfer start to end time and
+        #the file size
+        transfer_speed = f_size/len_arr[2]
+        #Filters out transfers with abnormally short transfer times
+        if len_arr[2] < 10.0 or len_arr[2] > 12 * 60 * 60:
+            to_remove.append(transfer)
+            continue
+        #Fills our speed information dictionary for this JSON object
+        info = {
+            "creation_to_submission": len_arr[0],
+            "submission_to_started": len_arr[1],
+            "file_transfer_time": len_arr[2],
+            "transfer_speed(MB/s)": f_size/len_arr[2]/1024/1024
+        }
+        return info
+
+    def get_info(self, transfer):
+        speed_info = self.get_speed(transfer)
+        new_json = {
+            "name": transfer["name"],
+            "source": transfer["src-rse"],
+            "destination": transfer["dst-rse"],
+            "file_size": int(transfer["file-size"]),
+            "start_time": transfer["started_at"],
+            "file_transfer_time": str(speed_info["file_transfer_time"]),
+            "transfer_speed(MB/s)": str(round(speed_info["transfer_speed(MB/s)"],2)),
+        }
+        return new_json
+
+    def transfer_success(self, data):
+        return json.dumps(self.get_info(data))
+
+    def aggregate_success(self):
+        xfer_matrix = []
+        keys = []
+    	while True:
+    		input = yield
+    		if input["operation"] == "STORE":
+                data = self.get_info(input["data"])
+                if not data["source"] in keys:
+                    xfer_matrix.append([])
+                    keys.append(data["source"])
+                    for key in keys:
+                        xfer_matrix[-1].append([0,0])
+                if data["destination"] not in keys:
+                    xfer_matrix.append([])
+                    for key in keys:
+                        xfer_matrix[-1].append([0, 0])
+                    keys.append(entry["destination"])
+                    for i in range(len(matrix)):
+                        xfer_matrix[i].append([0, 0])
+    			#process input["data"] in whatever way's needed
+                size = int(data["file_size"])
+                transfer_time = float(data["file_transfer_time"])
+
+                idx1 = keys.index(data["source"])
+                idx2 = keys.index(data["destination"])
+
+                xfer_matrix[idx1][idx2][0] += size/1045876
+                xfer_matrix[idx1][idx2][1] += transfer_time
+
+            elif input["operation"] == "GET":
+    			break
+
+        for i in range(len(keys)):
+            for j in range(len(keys)):
+                if xfer_matrix[i][j][0] == 0:
+                    continue
+                #We're using the earliest search date as our "transfer date" since
+                #we don't actually have a date to associate with the summarized
+                #transfers
+                y = start_date.strftime("%Y")
+                m = start_date.strftime("%m")
+                d = start_date.strftime("%d")
+                #We then format our data and append it to a list to be written
+                #in bulk
+                new_entry = {
+                    "name" : f"{keys[i]}_to_{keys[j]}",
+                    "source" : keys[i],
+                    "destination" : keys[j],
+                    "file_size" : xfer_matrix[i][j][0]*1048576,
+                    "start_time" : f"{y}-{m}-{d} 00:00:01",
+                    "file_transfer_time" : xfer_matrix[i][j][1],
+                    "transfer_speed(MB/s)" : round(float(xfer_matrix[i][j][0])/float(xfer_matrix[i][j][1]),2)
+                }
+                yield new_entry
+
+		yield "FINISHED"
+
+    def checkup_success(self, data):
+        return json.dumps(self.get_info(data))
+
+    def transfer_failed(self, data):
+        return json.dumps(self.get_err(data))
+
+    def aggregate_failed(self):
+        xfer_matrix = [[],[]]
+        keys = []
+
+    	while True:
+    		input = yield
+    		if input["operation"] == "STORE":
+    			if input["source"] not in keys:
+                    xfer_matrix[0].append([])
+                    xfer_matrix[1].append([])
+                    for key in keys:
+                        xfer_matrix[0][-1].append(0)
+                        xfer_matrix[1][-1].append(0)
+                    keys.append(input["source"])
+                    for i in range(len(xfer_matrix[0])):
+                        xfer_matrix[0][i].append(0)
+                        xfer_matrix[1][i].append(0)
+                if input["destination"] not in keys:
+                    xfer_matrix[0].append([])
+                    xfer_matrix[1].append([])
+                    for key in keys:
+                        xfer_matrix[0][-1].append(0)
+                        xfer_matrix[1][-1].append(0)
+                    keys.append(input["destination"])
+                    for i in range(len(matrix[0])):
+                        xfer_matrix[0][i].append(0)
+                        xfer_matrix[1][i].append(0)
+
+                if input["reason"] == "tx_error":
+                    idx0 = 0
+                else:
+                    idx0 = 1
+                idx1 = keys.index(input["source"])
+                idx2 = keys.index(input["destination"])
+
+                xfer_matrix[idx0][idx1][idx2] += 1
+
+    		elif input["operation"] == "GET":
+    			break
+
+        for i in range(len(keys)):
+            for j in range(len(keys)):
+                if xfer_matrix[0][i][j] == 0:
+                    continue
+                #Format is slightly different, but we're still formatting
+                #data from our matrices and preparing to write it to file
+                new_entry = {
+                    "name" : f"{keys[i]}_to_{keys[j]}",
+                    "source" : keys[i],
+                    "destination" : keys[j],
+                    "reason" : "tx_error",
+                    "count" : xfer_matrix[0][i][j]
+                    }
+                yield new_entry
+
+    	yield "FINISHED"
+
+    def checkup_failed(self, data):
+        return json.dumps(self.get_err(data))
 
     def check_args(self):
         #Defaults only applies to optional arguments
@@ -259,7 +482,9 @@ class ESMonitoringClient():
 
         data_processor_thread = threading.Thread(target=self.data_processor, args=(day, filetypes, data_queue, thread_list,) daemon=True)
 
-        #data_processor_thread only terminates after all es_worker threads terminate
+        for t in thread_list:
+            t.join()
+
         data_processor_thread.join()
 
         self.day_lock.acquire()
