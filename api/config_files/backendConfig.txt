@@ -1,0 +1,2 @@
+rucio_query_script_path: "./backend_components/rucio/es_client.py"
+rucio_download_path: "./backend_components/rucio/cached_searches"

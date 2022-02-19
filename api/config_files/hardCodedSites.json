@@ -1,0 +1,99 @@
+
+[
+  {
+    "name": "Example site name (will match any of the names associated with a site)",
+    "coordinates": {
+      "comments": "here you can store relevant notes, like the last time you checked to see if CRIC has been updated",
+      "longitude": "## Test ##",
+      "latitude": "## Test ##"
+    }
+  },
+  {
+    "name":"br_cbpf",
+    "coordinates": {
+      "comments": "Centro Brasileiro de Pesquisas Físicas",
+      "longitude": -43.174,
+      "latitude": -22.94
+    }
+  },
+  {
+    "name":"br_unicamp",
+    "coordinates": {
+      "comments": "UNICAMP Universidade Estadual de Campinas",
+      "longitude": -47.0694,
+      "latitude": -22.81810
+    }
+  },
+  {
+    "name":"ca_victoria",
+    "coordinates": {
+      "comments": "University of Victoria, Canada",
+      "longitude": -123.31140,
+      "latitude": 48.46332
+    }
+  },
+  {
+    "name":"in_tifr",
+    "coordinates": {
+      "comments": "Tata Institute of Fundamental Research",
+      "longitude": 72.80512868553612,
+      "latitude": 18.90654198873039
+    }
+  },
+  {
+    "name":"surfsara",
+    "coordinates": {
+      "comments": "Surfsarah in the netherlands at Universiteit Van Amsterdam",
+      "longitude": 72.80512868553612,
+      "latitude": 18.90654198873039
+    }
+  },
+  {
+    "name":"jinr",
+    "coordinates": {
+      "comments": "assuming it's this: JINR Laboratory of High Energy Physics, https://international-relations.web.cern.ch/stakeholder-relations/states/jinr",
+      "longitude": 37.211198437779046,
+      "latitude": 56.758284714095055
+    }
+  },
+  {
+    "name":"fnal",
+    "coordinates": {
+      "comments": "This is Fermilab in Batavia, IL. Also pretty sure GPgrid is the same thing?",
+      "longitude": -88.25504291674402,
+      "latitude": 41.84159944919603
+    }
+  },
+  {
+    "name":"nmsu-discovery",
+    "coordinates": {
+      "comments": "New Mexico State University",
+      "longitude": -106.74920347454587,
+      "latitude": 32.27947009589123
+    }
+  },
+  {
+    "name":"su-its-ce2",
+    "coordinates": {
+      "comments": "Pretty sure this is Syracuse University, Syracuse, New York",
+      "longitude": -76.1349771124802,
+      "latitude": 43.03955442138531
+    }
+  },
+  {
+    "name":"wsu",
+    "coordinates": {
+      "comments": "Wayne State University, Detriot, MI",
+      "longitude": -83.0670536462607,
+      "latitude": 42.35823385673308
+    }
+  },
+  {
+    "name":"bnl",
+    "coordinates": {
+      "comments": "Brookhaven National Labroatory, Upton New York",
+      "longitude": -72.87515460866717,
+      "latitude": 40.86443045052161
+    }
+  }
+]

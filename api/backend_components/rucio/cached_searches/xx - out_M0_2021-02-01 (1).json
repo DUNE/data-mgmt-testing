@@ -1,0 +1,29 @@
+[
+{
+  "name": "CERN_PDUNE_CASTOR_to_RAL_ECHO",
+  "source": "CERN_PDUNE_CASTOR",
+  "destination": "RAL_ECHO",
+  "file_size": 90113918080254,
+  "start_time": "2021-02-01 00:00:01",
+  "file_transfer_time": 28447926.0,
+  "transfer_speed(MB/s)": 3.02
+},
+{
+  "name": "CERN_PDUNE_EOS_to_RAL_ECHO",
+  "source": "CERN_PDUNE_EOS",
+  "destination": "RAL_ECHO",
+  "file_size": 22800904227619,
+  "start_time": "2021-02-01 00:00:01",
+  "file_transfer_time": 1102812.0,
+  "transfer_speed(MB/s)": 19.72
+},
+{
+  "name": "FNAL_DCACHE_to_RAL_ECHO",
+  "source": "FNAL_DCACHE",
+  "destination": "RAL_ECHO",
+  "file_size": 60891315498616,
+  "start_time": "2021-02-01 00:00:01",
+  "file_transfer_time": 7261874.0,
+  "transfer_speed(MB/s)": 8.0
+}
+]
