@@ -252,7 +252,7 @@ class RucioESClient():
 	def transfer_success(self, data):
 		return json.dumps(self.get_info(data))
 
-	def aggregate_success(self):
+	def aggregate_success(self, day):
 		xfer_matrix = []
 		keys = []
 		while True:
@@ -291,9 +291,9 @@ class RucioESClient():
 				#We're using the earliest search date as our "transfer date" since
 				#we don't actually have a date to associate with the summarized
 				#transfers
-				y = start_date.strftime("%Y")
-				m = start_date.strftime("%m")
-				d = start_date.strftime("%d")
+				y = day.strftime("%Y")
+				m = day.strftime("%m")
+				d = day.strftime("%d")
 				#We then format our data and append it to a list to be written
 				#in bulk
 				new_entry = {
@@ -315,7 +315,7 @@ class RucioESClient():
 	def transfer_failed(self, data):
 		return json.dumps(self.get_err(data))
 
-	def aggregate_failed(self):
+	def aggregate_failed(self, day):
 		xfer_matrix = [[],[]]
 		keys = []
 
@@ -526,14 +526,16 @@ class RucioESClient():
 
 		generators = {}
 		files = {}
+		counts = {}
 
 		for key in filetypes:
 			#Initializes all generators
 			if self.file_info[key]["process_type"] == "generator":
-				generators[key] = self.file_info[key]["process_func"]()
+				generators[key] = self.file_info[key]["process_func"](day)
 				next(generators[key])
 			dir_path = f"{self.args['dirname']}/{day.year}/{day.month:02}"
 			fname = self.file_info[key]["file_format"].format(y1, m1, d1, y2, m2, d2)
+			counts[key] = 0
 			files[key] = open(f"{dir_path}/{fname}", "w+")
 			files[key].write('[\n')
 
@@ -566,6 +568,7 @@ class RucioESClient():
 					if next_data[res].find(self.file_info[key]["restrictions"][res]) != -1:
 						res_count += 1
 				if res_count <= self.file_info[key]["max_restriction_count"] and con_count >= self.file_info[key]["min_condition_count"]:
+					counts[key] += 1
 					if self.file_info[key]["process_type"] == "generator":
 						msg = {
 							"data" : next_data,
@@ -587,24 +590,19 @@ class RucioESClient():
 
 		for key in filetypes:
 			if self.file_info[key]["process_type"] == "generator":
-				con_count = 0
-				res_count = 0
-				for con in self.file_info[key]["conditions"].keys():
-					if next_data[con].find(self.file_info[key]["conditions"][con]) != -1:
-						con_count += 1
-				for res in self.file_info[key]["restrictions"].keys():
-					if next_data[res].find(self.file_info[key]["restrictions"][res]) != -1:
-						res_count += 1
-				if res_count <= self.file_info[key]["max_restriction_count"] and con_count >= self.file_info[key]["min_condition_count"]:
-					data = generators[key].send("GET")
-					while data != "FINISHED":
-						files[key].write(f"{data},\n")
+				data = generators[key].send({"operation" : "GET"})
+				while data != "FINISHED":
+					files[key].write(f"{data},\n")
+					data = generators[key].send({"operation" : "GET"})
 
 		for key in filetypes:
-			#Handles trailing commas on last line
-			files[key].seek(files[key].tell()-2)
-			files[key].write("\n]")
-			files[key].close()
+			if counts[key] == 0:
+				files[key].write("[\n]")
+			else:
+				#Handles trailing commas on last line
+				files[key].seek(files[key].tell()-2)
+				files[key].write("\n]")
+				files[key].close()
 
 		if self.debug_level > 3:
 			print(f"Data processor for day {day} ended")
@@ -667,7 +665,7 @@ class RucioESClient():
 			required_files = []
 
 
-			y_next, m_next, d_next = self.args["end_date"].split("-")
+			y_next, m_next, d_next = (curr_date + relativedelta(days=+1)).strftime("%Y-%m-%d").split("-")
 
 			#Checks which files need to be written
 			for key in self.file_info.keys():
