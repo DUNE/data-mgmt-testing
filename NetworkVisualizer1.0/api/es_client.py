@@ -594,7 +594,7 @@ class RucioESClient():
 			if self.file_info[key]["process_type"] == "generator":
 				data = generators[key].send({"operation" : "GET"})
 				while data != "FINISHED":
-					files[key].write(f"{data},\n")
+					files[key].write(f"{json.dumps(data)},\n")
 					data = generators[key].send({"operation" : "GET"})
 
 		for key in filetypes:
