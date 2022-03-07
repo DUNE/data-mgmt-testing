@@ -261,10 +261,12 @@ class RucioESClient():
 				data = self.get_info(input["data"])
 				if not data["source"] in keys:
 					xfer_matrix.append([])
-					keys.append(data["source"])
 					for key in keys:
 						xfer_matrix[-1].append([0,0])
-				if data["destination"] not in keys:
+					keys.append(data["source"])
+					for i in range(len(xfer_matrix)):
+						xfer_matrix[i].append([0, 0])
+				if not data["destination"] in keys:
 					xfer_matrix.append([])
 					for key in keys:
 						xfer_matrix[-1].append([0, 0])
@@ -381,9 +383,10 @@ class RucioESClient():
 		default_optionals = {
 			"debug_level" : 3,
 			"show_timing" : False,
-			"dirname" : f"{Path.cwd()}/cached_searches",
+			"dirname" : f"{Path.cwd()}/cache",
 			"es_cluster" : "https://fifemon-es.fnal.gov",
-			"search_size" : 5000,
+			"search_size" : 7500,
+			"simultaneous_days" : 4,
 			#end_date assignment is handled elsewhere
 			"end_date"  : "0",
 			"force_overwrite" : False
@@ -409,8 +412,8 @@ class RucioESClient():
 			if not arg in keys:
 				self.args[arg] = default_optionals[arg]
 
+		self.day_semaphore = self.args["simultaneous_days"]
 		self.client = Elasticsearch([self.args["es_cluster"]])
-
 
 	def day_overseer(self, day, filetypes):
 		'''divide each day into six hour chunks
@@ -467,7 +470,7 @@ class RucioESClient():
 				}
 			}
 
-			new_thread = threading.Thread(target=self.es_worker, args=(index, data_queue, es_template), daemon=True)
+			new_thread = threading.Thread(target=self.es_worker, args=(index, data_queue, es_template, day), daemon=True)
 			thread_list.append(new_thread)
 
 			if self.debug_level > 3:
@@ -494,14 +497,13 @@ class RucioESClient():
 		self.day_semaphore += 1
 		self.day_lock.release()
 
-	def es_worker(self, index, data_queue, query):
+	def es_worker(self, index, data_queue, query, day):
 		'''Difference from original: Instead of writing directly, sends data to data processing queue'''
 		for data in scroll(self.client, index, query, "2m", self.args["search_size"]):
 			if self.debug_level > 3:
-				print(f"Got scroll of size {len(data)}")
+				print(f"Got scroll of size {len(data)} for {day}")
 			for entry in data:
 				data_queue.put(entry["_source"])
-
 
 	def data_processor(self, day, filetypes, data_queue, thread_list):
 		'''set up summary matrices
@@ -625,7 +627,12 @@ class RucioESClient():
 		#Code to go day by day for output files as expected by other programs associated
 		#with this project.
 		curr_date = date_parser.parse(self.args["start_date"])
-		target_date = date_parser.parse(self.args["end_date"])
+		target_date = date_parser.parse(self.args["end_date"]) + relativedelta(days=+1)
+
+		if curr_date > target_date:
+			temp_date = target_date
+			target_date = curr_date
+			curr_date = temp_date
 
 		overseer_threads = []
 
@@ -633,6 +640,9 @@ class RucioESClient():
 			y = curr_date.strftime("%Y")
 			m = curr_date.strftime("%m")
 			d = curr_date.strftime("%d")
+
+			if curr_date > datetime.now() + relativedelta(days=+1):
+				break
 
 			index = f"rucio-transfers-v0-{y}.{m}"
 
@@ -704,8 +714,13 @@ if __name__ == "__main__":
 	parser = ap.ArgumentParser()
 	parser.add_argument('-S', '--start', dest="start_date", default=today.strftime("%Y-%m-%d"), help="The earlest date to search for matching transfers. Defaults to today's date. Must be in form yyyy-mm-dd")
 	parser.add_argument('-E', '--end', dest="end_date", default="0", help="The latest date to search for matching transfers. Defaults to the same value as the start date, giving a 1 day search. Must be in form yyyy-mm-dd")
+	parser.add_argument('-C', '--cluster', dest='es_cluster', default="https://fifemon-es.fnal.gov", help="Specifies the Elasticsearch cluster to target")
+	parser.add_argument('-D', '--directory', dest='dirname', default=f"{Path.cwd()}/cache", help="Sets the cached searches directory")
+	parser.add_argument('-Z', '--search-size', dest="search_size", default=7500, help="Number of results returned from Elasticsearch at once.")
 	parser.add_argument('--debug-level', dest='debug_level', default=3, help="Determines which level of debug information to show. 1: Errors only, 2: Warnings and Errors, 3: Basic process info, 4: Advanced process info")
 	parser.add_argument('--force-overwrite', dest='force_overwrite', action='store_true', help="Sets whether existing files will be overwritten. Only advised for regularly running backend systems and maintenance, not live users.")
+	parser.add_argument('--simultaneous-days', default=4, help="Defines how many days the client will attempt to handle simultaneously. Advise keeping low to avoid timeout errors. Defaults to 4.")
+	parser.add_argument('--show-timing', action='store_true', help="Shows timing information if set")
 
 	args = vars(parser.parse_args())
 
