@@ -170,6 +170,8 @@ class RucioESClient():
 			return {"name" : "ERROR"}
 
 	def get_speed(self, transfer):
+		if transfer["duration"] == 0:
+			return {}
 		#Pulls request creation time
 		c_time = transfer["created_at"]
 		#Pulls the (transfer request?) submission time, the transfer start time,
@@ -224,9 +226,9 @@ class RucioESClient():
 		#Calculates the transfer speed from the transfer start to end time and
 		#the file size
 		transfer_speed = f_size/len_arr[2]
-		#Filters out transfers with abnormally short transfer times
+		#Filters out transfers with abnormally short or long transfer times
 		if len_arr[2] < 10.0 or len_arr[2] > 12 * 60 * 60:
-			to_remove.append(transfer)
+			return {}
 		#Fills our speed information dictionary for this JSON object
 		info = {
 			"creation_to_submission": len_arr[0],
@@ -237,7 +239,14 @@ class RucioESClient():
 		return info
 
 	def get_info(self, transfer):
-		speed_info = self.get_speed(transfer)
+		try:
+			speed_info = self.get_speed(transfer)
+		except:
+			if self.debug_level > 2:
+				print(f"Transfer caused error in get_info: {transfer}")
+			return {}
+		if speed_info == {}:
+			return {}
 		new_json = {
 			"name": transfer["name"],
 			"source": transfer["src-rse"],
@@ -259,6 +268,8 @@ class RucioESClient():
 			input = yield
 			if input["operation"] == "STORE":
 				data = self.get_info(input["data"])
+				if data == {}:
+					continue
 				if not data["source"] in keys:
 					xfer_matrix.append([])
 					for key in keys:
@@ -372,6 +383,12 @@ class RucioESClient():
 					"count" : xfer_matrix[0][i][j]
 					}
 				yield new_entry
+				
+				if xfer_matrix[1][i][j] == 0:
+					continue
+				new_entry["reason"] = "rx_error"
+				new_entry["count"] = xfer_matrix[1][i][j]
+				yield new_entry
 
 		yield "FINISHED"
 
@@ -412,7 +429,7 @@ class RucioESClient():
 			if not arg in keys:
 				self.args[arg] = default_optionals[arg]
 
-		self.day_semaphore = self.args["simultaneous_days"]
+		self.day_semaphore = int(self.args["simultaneous_days"])
 		self.client = Elasticsearch([self.args["es_cluster"]])
 
 	def day_overseer(self, day, filetypes):
@@ -499,11 +516,17 @@ class RucioESClient():
 
 	def es_worker(self, index, data_queue, query, day):
 		'''Difference from original: Instead of writing directly, sends data to data processing queue'''
-		for data in scroll(self.client, index, query, "2m", self.args["search_size"]):
-			if self.debug_level > 3:
-				print(f"Got scroll of size {len(data)} for {day}")
-			for entry in data:
-				data_queue.put(entry["_source"])
+		try:
+			for data in scroll(self.client, index, query, "15m", self.args["search_size"]):
+				if self.debug_level > 3:
+					print(f"Got scroll of size {len(data)} for {day}")
+				for entry in data:
+					data_queue.put(entry["_source"])
+		except Exception as e:
+			if self.debug_level > 1:
+				print(f"Unhandled exeption in es_worker on day {day}")
+			if self.debug_level > 2:
+				print(f"Exception: {repr(e)}")
 
 	def data_processor(self, day, filetypes, data_queue, thread_list):
 		'''set up summary matrices
@@ -579,6 +602,8 @@ class RucioESClient():
 						generators[key].send(msg)
 					elif self.file_info[key]["process_type"] == "function":
 						res = self.file_info[key]["process_func"](next_data)
+						if res == {}:
+							continue
 						files[key].write(f"{res},\n")
 
 
@@ -599,7 +624,7 @@ class RucioESClient():
 
 		for key in filetypes:
 			if counts[key] == 0:
-				files[key].write("[\n]")
+				files[key].write("]")
 			else:
 				#Handles trailing commas on last line
 				files[key].seek(files[key].tell()-2)
