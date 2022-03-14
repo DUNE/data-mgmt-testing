@@ -41,6 +41,8 @@ class RucioESClient():
 		self.day_semaphore = 4
 		self.day_lock = threading.Lock()
 
+		self.time_lock = threading.Lock()
+
 		#If true, will display timing information for different aspects
 		#of the program
 		self.display_timing = False
@@ -49,7 +51,15 @@ class RucioESClient():
 		self.times = {
 			"run_time" : 0,
 			"io_time" : 0,
-			"elasticsearch_time" : 0
+			"generator_input_time" : 0,
+			"generator_output_time" : 0,
+			"function_output_time" : 0,
+			"elasticsearch_time" : 0,
+			"longest_day" : None,
+			"longest_day_time" : 0,
+			"get_info_time" : 0,
+			"get_err_time" : 0,
+			"es_thread_count" : 0
 		}
 
 		#Variable for individual run arguments
@@ -153,6 +163,7 @@ class RucioESClient():
 		}
 
 	def get_err(self, transfer):
+		start_time = datetime.now().timestamp()
 		try:
 			new_json = {
 				"name" : transfer["name"],
@@ -164,9 +175,17 @@ class RucioESClient():
 			else:
 				new_json["reason"] = "tx_error"
 			new_json["count"] = 1
+			end_time = datetime.now().timestamp()
+			self.time_lock.acquire()
+			self.times["get_info_time"] += float(end_time - start_time)
+			self.time_lock.release()
 			return new_json
 		except e:
 			print(f"Error processing failed transfer. Exception: {e}")
+			end_time = datetime.now().timestamp()
+			self.time_lock.acquire()
+			self.times["get_err_time"] += float(end_time - start_time)
+			self.time_lock.release()
 			return {"name" : "ERROR"}
 
 	def get_speed(self, transfer):
@@ -239,13 +258,22 @@ class RucioESClient():
 		return info
 
 	def get_info(self, transfer):
+		start_time = datetime.now().timestamp()
 		try:
 			speed_info = self.get_speed(transfer)
 		except:
+			end_time = datetime.now().timestamp()
+			self.time_lock.acquire()
+			self.times["get_info_time"] += float(end_time - start_time)
+			self.time_lock.release()
 			if self.debug_level > 2:
 				print(f"Transfer caused error in get_info: {transfer}")
 			return {}
 		if speed_info == {}:
+			end_time = datetime.now().timestamp()
+			self.time_lock.acquire()
+			self.times["get_info_time"] += float(end_time - start_time)
+			self.time_lock.release()
 			return {}
 		new_json = {
 			"name": transfer["name"],
@@ -256,6 +284,10 @@ class RucioESClient():
 			"file_transfer_time": str(speed_info["file_transfer_time"]),
 			"transfer_speed(MB/s)": str(round(speed_info["transfer_speed(MB/s)"],2)),
 		}
+		end_time = datetime.now().timestamp()
+		self.time_lock.acquire()
+		self.times["get_info_time"] += float(end_time - start_time)
+		self.time_lock.release()
 		return new_json
 
 	def transfer_success(self, data):
@@ -383,7 +415,7 @@ class RucioESClient():
 					"count" : xfer_matrix[0][i][j]
 					}
 				yield new_entry
-				
+
 				if xfer_matrix[1][i][j] == 0:
 					continue
 				new_entry["reason"] = "rx_error"
@@ -431,8 +463,10 @@ class RucioESClient():
 
 		self.day_semaphore = int(self.args["simultaneous_days"])
 		self.client = Elasticsearch([self.args["es_cluster"]])
+		self.show_timing = self.args["show_timing"]
 
 	def day_overseer(self, day, filetypes):
+		start_time = datetime.now().timestamp()
 		'''divide each day into six hour chunks
 		(gives us 4 threads per day for faster data pull for all time increments.
 		Also convenient number since processing a week of data at once would lead to 28 total threads,
@@ -514,8 +548,18 @@ class RucioESClient():
 		self.day_semaphore += 1
 		self.day_lock.release()
 
+		end_time = datetime.now().timestamp()
+		day_time = float(end_time - start_time)
+		self.time_lock.acquire()
+		if self.times["longest_day_time"] == None or self.times["longest_day_time"] < day_time:
+			self.times["longest_day_time"] = day_time
+			self.times["longest_day"] = day.strftime("%Y-%m-%d")
+		self.time_lock.release()
+
 	def es_worker(self, index, data_queue, query, day):
+		start_time = datetime.now().timestamp()
 		'''Difference from original: Instead of writing directly, sends data to data processing queue'''
+
 		try:
 			for data in scroll(self.client, index, query, "15m", self.args["search_size"]):
 				if self.debug_level > 3:
@@ -527,6 +571,12 @@ class RucioESClient():
 				print(f"Unhandled exeption in es_worker on day {day}")
 			if self.debug_level > 2:
 				print(f"Exception: {repr(e)}")
+
+		end_time = datetime.now().timestamp()
+		self.time_lock.acquire()
+		self.times["elasticsearch_time"] += float(end_time - start_time)
+		self.times["es_thread_count"] += 1
+		self.time_lock.release()
 
 	def data_processor(self, day, filetypes, data_queue, thread_list):
 		'''set up summary matrices
@@ -595,16 +645,28 @@ class RucioESClient():
 				if res_count <= self.file_info[key]["max_restriction_count"] and con_count >= self.file_info[key]["min_condition_count"]:
 					counts[key] += 1
 					if self.file_info[key]["process_type"] == "generator":
+						start_time = datetime.now().timestamp()
 						msg = {
 							"data" : next_data,
 							"operation" : "STORE"
 						}
 						generators[key].send(msg)
+						end_time = datetime.now().timestamp()
+						self.time_lock.acquire()
+						self.times["generator_input_time"] += float(end_time - start_time)
+						self.time_lock.release()
 					elif self.file_info[key]["process_type"] == "function":
+						start_time = datetime.now().timestamp()
 						res = self.file_info[key]["process_func"](next_data)
 						if res == {}:
 							continue
+						write_start = datetime.now().timestamp()
 						files[key].write(f"{res},\n")
+						end_time = datetime.now().timestamp()
+						self.time_lock.acquire()
+						self.times["function_output_time"] += float(end_time - start_time)
+						self.times["io_time"] += float(end_time - write_start)
+						self.time_lock.release()
 
 
 			'''process data
@@ -617,11 +679,22 @@ class RucioESClient():
 
 		for key in filetypes:
 			if self.file_info[key]["process_type"] == "generator":
+				start_time = datetime.now().timestamp()
 				data = generators[key].send({"operation" : "GET"})
 				while data != "FINISHED":
+					write_start = datetime.now().timestamp()
 					files[key].write(f"{json.dumps(data)},\n")
+					end_time = datetime.now().timestamp()
+					self.time_lock.acquire()
+					self.times["io_time"] += float(end_time - write_start)
+					self.time_lock.release()
 					data = generators[key].send({"operation" : "GET"})
+				end_time = datetime.now().timestamp()
+				self.time_lock.acquire()
+				self.times["generator_output_time"] += float(end_time - start_time)
+				self.time_lock.release()
 
+		start_time = datetime.now().timestamp()
 		for key in filetypes:
 			if counts[key] == 0:
 				files[key].write("]")
@@ -630,9 +703,43 @@ class RucioESClient():
 				files[key].seek(files[key].tell()-2)
 				files[key].write("\n]")
 				files[key].close()
+		end_time = datetime.now().timestamp()
+		self.time_lock.acquire()
+		self.times["io_time"] += float(end_time - start_time)
+		self.time_lock.release()
 
 		if self.debug_level > 3:
 			print(f"Data processor for day {day} ended")
+
+	def show_timing_info(self):
+        print("======================")
+        print("Single run timing info")
+        print("======================")
+        print(f"Overall run time: {round(self.times['run_time'], 3)} seconds")
+        print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/self.times["es_thread_count"], 3)} seconds")
+		print(f"File IO Time: {round(self.times["io_time"], 3)} seconds")
+		print(f"Generator input processing time: {round(self.times["generator_input_time"], 3)} seconds")
+		print(f"Generator output processing time: {round(self.times["generator_output_time"], 3)} seconds")
+		print(f"Processing function time: {round(self.times["function_output_time"])} seconds")
+		print(f"Total \"get_info\" time: {round(self.times["get_info_time"], 3)} seconds")
+		print(f"Total \"get_err\" time: {round(self.times["get_err_time"], 3)} seconds")
+		print(f"Longest single day processing time: {round(self.times["longest_day_time"], 3)} seconds for day {self.times["longest_day"]}")
+
+
+		'''self.times = {
+			"run_time" : 0,
+			"io_time" : 0,
+			"generator_input_time" : 0,
+			"generator_output_time" : 0,
+			"function_output_time" : 0,
+			"elasticsearch_time" : 0,
+			"longest_day" : None,
+			"longest_day_time" : 0,
+			"get_info_time" : 0,
+			"get_err_time" : 0,
+			"es_thread_count" : 0
+		}'''
+
 
 	def main(self, args):
 		#Start time for timing info
@@ -731,6 +838,13 @@ class RucioESClient():
 		for t in overseer_threads:
 			t.join()
 
+		end_time = datetime.now().timestamp()
+		self.time_lock.acquire()
+		self.times["run_time"] += float(end_time - start_time)
+		self.time_lock.release()
+
+		if self.show_timing:
+			self.show_timing_info()
 
 if __name__ == "__main__":
 
