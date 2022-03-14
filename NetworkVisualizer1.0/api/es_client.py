@@ -251,7 +251,7 @@ class RucioESClient():
 		#Fills our speed information dictionary for this JSON object
 		info = {
 			"file_transfer_time": float(transfer["duration"]),
-			"transfer_speed(MB/s)": f_size/float(transfer["duration"])/1024/1024
+			"transfer_speed(MB/s)": float(transfer["bytes"])/float(transfer["duration"])/1024/1024
 		}
 		return info
 
@@ -476,7 +476,7 @@ class RucioESClient():
 		index = f"rucio-transfers-v0-{y}.{m}"
 
 		#Attempts to limit memory usage by setting a maximum queue size. Number based on limited testing and should probably be changed at some point
-		data_queue = queue.Queue(maxsize=int(float(self.args["search_size"]) * 6.0 / float(self.args["simultaneous_days"])))
+		data_queue = queue.Queue(maxsize=int(float(self.args["search_size"]) * 10.0 / float(self.args["simultaneous_days"])))
 
 		hour = 0
 		#Make sure hour_step is always a factor of 24 or may break things
