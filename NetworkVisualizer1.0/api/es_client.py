@@ -189,10 +189,10 @@ class RucioESClient():
 			return {"name" : "ERROR"}
 
 	def get_speed(self, transfer):
-		if transfer["duration"] == 0:
+		if float(transfer["duration"]) < 10 or float(transfer["duration"]) > 12 * 60 * 60:
 			return {}
 		#Pulls request creation time
-		c_time = transfer["created_at"]
+		'''c_time = transfer["created_at"]
 		#Pulls the (transfer request?) submission time, the transfer start time,
 		#and the transfer end time, as well as the file size
 		sub_time = transfer["submitted_at"]
@@ -202,13 +202,13 @@ class RucioESClient():
 
 		#Places our relevant times into an array for processing
 		time_arr = [c_time, sub_time, start_time, fin_time]
-		len_arr = []
+		len_arr = []'''
 
 		#Finds the time differences for each set of times (creation to submission,
 		#submission to starting, and transmission start to transmission end)
 		#Initial time format is YYYY:M:DTH:M:SZ where T separates the year-month-day
 		#portion from the hours-minutes-second portion and the Z denotes UTC
-		for i in range(len(time_arr)-1):
+		'''for i in range(len(time_arr)-1):
 			#Gets our times from the JSON's format into a workable form
 			#First divides
 			split_1 = time_arr[i].split()
@@ -247,13 +247,11 @@ class RucioESClient():
 		transfer_speed = f_size/len_arr[2]
 		#Filters out transfers with abnormally short or long transfer times
 		if len_arr[2] < 10.0 or len_arr[2] > 12 * 60 * 60:
-			return {}
+			return {}'''
 		#Fills our speed information dictionary for this JSON object
 		info = {
-			"creation_to_submission": len_arr[0],
-			"submission_to_started": len_arr[1],
-			"file_transfer_time": len_arr[2],
-			"transfer_speed(MB/s)": f_size/len_arr[2]/1024/1024
+			"file_transfer_time": float(transfer["duration"]),
+			"transfer_speed(MB/s)": f_size/float(transfer["duration"])/1024/1024
 		}
 		return info
 
