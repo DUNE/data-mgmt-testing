@@ -177,7 +177,7 @@ class RucioESClient():
 			new_json["count"] = 1
 			end_time = datetime.now().timestamp()
 			self.time_lock.acquire()
-			self.times["get_info_time"] += float(end_time - start_time)
+			self.times["get_err_time"] += float(end_time - start_time)
 			self.time_lock.release()
 			return new_json
 		except e:
@@ -477,11 +477,12 @@ class RucioESClient():
 		d = day.strftime("%d")
 		index = f"rucio-transfers-v0-{y}.{m}"
 
-		data_queue = queue.Queue()
+		#Attempts to limit memory usage by setting a maximum queue size. Number based on limited testing and should probably be changed at some point
+		data_queue = queue.Queue(maxsize=int(float(self.args["search_size"]) * 6.0 / float(self.args["simultaneous_days"])))
 
 		hour = 0
 		#Make sure hour_step is always a factor of 24 or may break things
-		hour_step = 8
+		hour_step = 12
 		thread_list = []
 		'''for each chunk
 			add es_worker thread to list with args passed
