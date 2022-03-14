@@ -712,19 +712,22 @@ class RucioESClient():
 			print(f"Data processor for day {day} ended")
 
 	def show_timing_info(self):
-        print("======================")
-        print("Single run timing info")
-        print("======================")
-        print(f"Overall run time: {round(self.times['run_time'], 3)} seconds")
-        print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/self.times["es_thread_count"], 3)} seconds")
-		print(f"File IO Time: {round(self.times["io_time"], 3)} seconds")
-		print(f"Generator input processing time: {round(self.times["generator_input_time"], 3)} seconds")
-		print(f"Generator output processing time: {round(self.times["generator_output_time"], 3)} seconds")
-		print(f"Processing function time: {round(self.times["function_output_time"])} seconds")
-		print(f"Total \"get_info\" time: {round(self.times["get_info_time"], 3)} seconds")
-		print(f"Total \"get_err\" time: {round(self.times["get_err_time"], 3)} seconds")
-		print(f"Longest single day processing time: {round(self.times["longest_day_time"], 3)} seconds for day {self.times["longest_day"]}")
-
+		print("")
+		print("===========")
+		print("Timing Info")
+		print("===========")
+		print(f"Overall run time: {round(self.times['run_time'], 3)} seconds")
+		print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/self.times['es_thread_count'], 3)} seconds")
+		print(f"Total number of Elasticsearch threads: {self.times['es_thread_count']}")
+		print(f"Simultaneous days: {self.args['simultaneous_days']}")
+		print(f"File IO Time: {round(self.times['io_time'], 3)} seconds")
+		print(f"Generator input processing time: {round(self.times['generator_input_time'], 3)} seconds")
+		print(f"Generator output processing time: {round(self.times['generator_output_time'], 3)} seconds")
+		print(f"Processing function time: {round(self.times['function_output_time'])} seconds")
+		print(f"Total \"get_info\" time: {round(self.times['get_info_time'], 3)} seconds")
+		print(f"Total \"get_err\" time: {round(self.times['get_err_time'], 3)} seconds")
+		print(f"Longest single day processing time: {round(self.times['longest_day_time'], 3)} seconds for day {self.times['longest_day']}")
+		print("")
 
 		'''self.times = {
 			"run_time" : 0,
