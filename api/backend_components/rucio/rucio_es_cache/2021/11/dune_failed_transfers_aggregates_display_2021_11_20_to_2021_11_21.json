@@ -1,0 +1,5 @@
+[
+{"name": "FNAL_DCACHE_to_LANCASTER", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 3},
+{"name": "FNAL_DCACHE_to_DUNE_US_BNL_SDCC", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 11305},
+{"name": "FNAL_DCACHE_TEST_to_DUNE_US_BNL_SDCC", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1}
+]

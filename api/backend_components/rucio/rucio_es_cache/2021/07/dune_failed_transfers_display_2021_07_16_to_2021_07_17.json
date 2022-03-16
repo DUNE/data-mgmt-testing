@@ -1,0 +1,6 @@
+[
+{"name": "iceberg_r007003_sr01_20200813T030649_1_dl1.root", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
+{"name": "iceberg_r007003_sr01_20200813T030649_1_dl1.root", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
+{"name": "iceberg_r007003_sr01_20200813T030649_1_dl1.root", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
+{"name": "iceberg_r007003_sr01_20200813T030649_1_dl1.root", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1}
+]

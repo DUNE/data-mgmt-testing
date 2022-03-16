@@ -1,0 +1,10 @@
+[
+{"name": "FNAL_DCACHE_TEST_to_QMUL", "source": "FNAL_DCACHE_TEST", "destination": "QMUL", "file_size": 1026643525.6187158, "start_time": "2021-08-09 00:00:01", "file_transfer_time": 2322.0, "transfer_speed(MB/s)": 0.42},
+{"name": "FNAL_DCACHE_TEST_to_RAL-PP", "source": "FNAL_DCACHE_TEST", "destination": "RAL-PP", "file_size": 1026643525.6187158, "start_time": "2021-08-09 00:00:01", "file_transfer_time": 2363.0, "transfer_speed(MB/s)": 0.41},
+{"name": "FNAL_DCACHE_TEST_to_NIKHEF", "source": "FNAL_DCACHE_TEST", "destination": "NIKHEF", "file_size": 1026643525.6187158, "start_time": "2021-08-09 00:00:01", "file_transfer_time": 2258.0, "transfer_speed(MB/s)": 0.43},
+{"name": "FNAL_DCACHE_TEST_to_LIVERPOOL", "source": "FNAL_DCACHE_TEST", "destination": "LIVERPOOL", "file_size": 1026643525.6187158, "start_time": "2021-08-09 00:00:01", "file_transfer_time": 42.0, "transfer_speed(MB/s)": 23.31},
+{"name": "FNAL_DCACHE_TEST_to_LANCASTER", "source": "FNAL_DCACHE_TEST", "destination": "LANCASTER", "file_size": 1026643525.6187158, "start_time": "2021-08-09 00:00:01", "file_transfer_time": 41.0, "transfer_speed(MB/s)": 23.88},
+{"name": "NIKHEF_to_PRAGUE", "source": "NIKHEF", "destination": "PRAGUE", "file_size": 1026643525.6187158, "start_time": "2021-08-09 00:00:01", "file_transfer_time": 16.0, "transfer_speed(MB/s)": 61.19},
+{"name": "MANCHESTER_to_RAL_ECHO", "source": "MANCHESTER", "destination": "RAL_ECHO", "file_size": 1026643525.6187158, "start_time": "2021-08-09 00:00:01", "file_transfer_time": 80.0, "transfer_speed(MB/s)": 12.24},
+{"name": "MANCHESTER_to_DUNE_FR_CCIN2P3_XROOTD", "source": "MANCHESTER", "destination": "DUNE_FR_CCIN2P3_XROOTD", "file_size": 1026643525.6187158, "start_time": "2021-08-09 00:00:01", "file_transfer_time": 13.0, "transfer_speed(MB/s)": 75.31}
+]

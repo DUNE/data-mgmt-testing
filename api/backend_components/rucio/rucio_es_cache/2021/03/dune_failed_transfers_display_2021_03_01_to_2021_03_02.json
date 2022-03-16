@@ -1,0 +1,9 @@
+[
+{"name": "np04_raw_run005791_0041_dl2.root", "source": "CERN_PDUNE_EOS", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1},
+{"name": "np04_raw_run005791_0046_dl6.root", "source": "CERN_PDUNE_EOS", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1},
+{"name": "np04_raw_run005791_0046_dl6.root", "source": "CERN_PDUNE_CASTOR", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1},
+{"name": "np04_raw_run005791_0041_dl2.root", "source": "CERN_PDUNE_CASTOR", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1},
+{"name": "03248_000_lro.mid", "source": "CERN_PDUNE_EOS", "destination": "QMUL", "reason": "tx_error", "count": 1},
+{"name": "np04_raw_run005791_0046_dl6.root", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1},
+{"name": "np04_raw_run005791_0041_dl2.root", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1}
+]

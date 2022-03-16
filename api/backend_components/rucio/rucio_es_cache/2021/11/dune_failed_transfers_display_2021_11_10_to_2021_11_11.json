@@ -1,0 +1,6 @@
+[
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_datadriven_20055721_68_20210521T115625Z.root", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p7GeV_35ms_sce_datadriven_21086209_74_20210611T192600Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1},
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_datadriven_44120637_289_20210520T093510Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1},
+{"name": "np04_raw_run005185_0002_dl12_reco1_18170656_0_20210320T014348Z.root", "source": "FNAL_DCACHE", "destination": "RAL-PP", "reason": "tx_error", "count": 1}
+]

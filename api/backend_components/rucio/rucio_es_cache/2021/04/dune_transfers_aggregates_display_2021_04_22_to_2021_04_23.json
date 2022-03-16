@@ -1,0 +1,4 @@
+[
+{"name": "MANCHESTER_to_LANCASTER", "source": "MANCHESTER", "destination": "LANCASTER", "file_size": 9964006319.672068, "start_time": "2021-04-22 00:00:01", "file_transfer_time": 750.0, "transfer_speed(MB/s)": 12.67},
+{"name": "FNAL_DCACHE_to_LANCASTER", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 125166206014.08565, "start_time": "2021-04-22 00:00:01", "file_transfer_time": 9547.0, "transfer_speed(MB/s)": 12.5}
+]

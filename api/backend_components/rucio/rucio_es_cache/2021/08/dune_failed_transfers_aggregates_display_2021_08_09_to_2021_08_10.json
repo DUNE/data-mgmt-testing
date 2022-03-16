@@ -1,0 +1,4 @@
+[
+{"name": "FNAL_DCACHE_to_DUNE_FR_CCIN2P3_XROOTD", "source": "FNAL_DCACHE", "destination": "DUNE_FR_CCIN2P3_XROOTD", "reason": "tx_error", "count": 2},
+{"name": "FNAL_DCACHE_TEST_to_DUNE_US_BNL_SDCC", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 3}
+]

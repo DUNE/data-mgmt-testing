@@ -17,7 +17,12 @@ function getSites() {
     return axios.get("http://localhost:3001/sites");
 }
 function getTransfers() {
-    return axios.get("http://localhost:3001/records")
+    return axios.get('http://localhost:3001/records', {
+        params: {
+            startDate: '1-01-2021',
+            endDate: "12-28-2021"
+        }
+      })
 }
 
 function getSearchResults() {

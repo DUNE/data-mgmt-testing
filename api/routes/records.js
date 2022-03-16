@@ -9,20 +9,11 @@ router.get('/', async function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
-  let result = await processController();
+  //console.log(" REQ PARAMS: ", req.query)
+  let searchParameters = req.query;
+  console.log(" /// parametesr: ", searchParameters);
 
-  if (!result.siteOutputWithStats) {
-    console.log(" !ERROR!, couldn't retrieve site list.")
-    res.status(500).send()
-  }
-
-  // sitesObject.then( res.status(200).send(sitesObject) )
-
-  // res.status(666).send({"A": 2})
-  console.log("\n Transfers Object succesfully retrieved with   ", result)
-
-
-
+  let result = await processController(searchParameters);
   res.status(200).send(result)
 
 

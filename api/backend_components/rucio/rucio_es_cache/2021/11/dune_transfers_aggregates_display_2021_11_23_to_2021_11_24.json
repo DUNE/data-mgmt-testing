@@ -1,0 +1,8 @@
+[
+{"name": "FNAL_DCACHE_to_LANCASTER", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 329197761760.1043, "start_time": "2021-11-23 00:00:01", "file_transfer_time": 307288.0, "transfer_speed(MB/s)": 1.02},
+{"name": "FNAL_DCACHE_to_RAL_ECHO", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "file_size": 274584293351.29578, "start_time": "2021-11-23 00:00:01", "file_transfer_time": 867576.0, "transfer_speed(MB/s)": 0.3},
+{"name": "FNAL_DCACHE_to_RAL-PP", "source": "FNAL_DCACHE", "destination": "RAL-PP", "file_size": 133268223803.03186, "start_time": "2021-11-23 00:00:01", "file_transfer_time": 321800.0, "transfer_speed(MB/s)": 0.39},
+{"name": "FNAL_DCACHE_to_QMUL", "source": "FNAL_DCACHE", "destination": "QMUL", "file_size": 14215651649.045416, "start_time": "2021-11-23 00:00:01", "file_transfer_time": 48993.0, "transfer_speed(MB/s)": 0.28},
+{"name": "FNAL_DCACHE_to_MANCHESTER", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "file_size": 4306481668.5958185, "start_time": "2021-11-23 00:00:01", "file_transfer_time": 6056.0, "transfer_speed(MB/s)": 0.68},
+{"name": "CERN_PDUNE_EOS_to_MANCHESTER", "source": "CERN_PDUNE_EOS", "destination": "MANCHESTER", "file_size": 56247284059.47285, "start_time": "2021-11-23 00:00:01", "file_transfer_time": 904.0, "transfer_speed(MB/s)": 59.34}
+]

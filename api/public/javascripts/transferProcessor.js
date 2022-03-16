@@ -1,10 +1,10 @@
 const {buildSites} = require("./siteDownloader");
 const fs = require('fs');
+const esClientPath = "";
+const resultsPath = "";
 
 
-
-
-function loadRucioConfig() {
+function loadConfig() {
   let fs = require('fs');
 
   fs.readFile("../../config_files/backendConfig.txt", 'utf8', function(error, data){
@@ -32,6 +32,8 @@ function runPython(callbackFunction, searchParameters) {
   const spawn = require("child_process").spawn;
 
     let configData = loadRucioConfig();
+
+    console.log("\n\n ****** ************* \n\n\ ", configData)
 
     let programName = ""      
     let programPath = configData[0]
@@ -169,20 +171,6 @@ async function processSomeData(responseObject) {
 
 }
 
-
-
-
-
-
-      // let singleTransfer = transfers[day][record]
-      // console.log(singleTransfer)
-
-      // //now assign transfer to each sites set of sent and recevied
-      // siteArrayIndexFromLookupTX = sites.nameLookMap.get(singleTransfer.matchedSource)
-      // siteArrayIndexFromLookupRX = sites.nameLookMap.get(singleTransfer.matchedDestination)
-
-      // sites.sites[siteArrayIndexFromLookupTX].sent.push(singleTransfer)
-      // sites.sites[siteArrayIndexFromLookupRX].received.push(singleTransfer)
 
 
 
@@ -529,7 +517,7 @@ function createGeoJsonTransferFile (passedTransferObject) {
       let MiddleOfMonthDateUnixTime = Math.floor(MiddleOfMonthDate/1000)
       let EndOfMonthDateUnixTime = Math.floor(EndOfMonthDate/1000)
 
-      let transferTransaction = {"type":"Feature", "geometry":{ "type": "LineString", "coordinates": [ [coordFrom[0], coordFrom[1]], [coordTo[0], coordTo[1]] ]}, "properties": {"from": sendingSite.names[0], "to": receivingSite.names[0], "toLong":coordTo[0], "toLat":coordTo[1], "fromLong":coordFrom[0], "fromLat":coordFrom[1], "size": parseInt(transfer.file_size), "duration": "Ask Zack how to get", "date": transfer.start_time, "from": transfer.source, "to": transfer.destination, "speed": transfer["transfer_speed(MB/s)"] } }
+      let transferTransaction = {"type":"Feature", "geometry":{ "type": "LineString", "coordinates": [ [coordFrom[0], coordFrom[1]], [coordTo[0], coordTo[1]] ]}, "properties": {"from": sendingSite.names[0], "to": receivingSite.names[0], "toLong":coordTo[0], "toLat":coordTo[1], "fromLong":coordFrom[0], "fromLat":coordFrom[1], "size": parseInt(transfer.file_size), "duration": passedTransferObject[y].file_transfer_time, "date": transfer.start_time, "from": transfer.source, "to": transfer.destination, "speed": transfer["transfer_speed(MB/s)"] } }
       // let transferTransactionAnim = {"type":"Feature", "geometry":{ "type": "LineString", "coordinates": [ [coordFrom[0], coordTo[0], 0, firstOfMonthDateUnixTime], [coordFrom[1], coordTo[1], 0, MiddleOfMonthDateUnixTime ], [coordFrom[1], coordTo[1], 0, EndOfMonthDateUnixTime ] ] }, "properties": { "from": sendingSite.names[0], "to": receivingSite.names[0], "toLong":coordTo[0], "toLat":coordTo[1], "fromLong":coordFrom[0], "fromLat":coordFrom[1], "size": parseInt(transfer.file_size), "duration": "Ask Zack how to get", "date": transfer.start_time, "from": transfer.source, "to": transfer.destination, "speed": transfer["transfer_speed(MB/s)"] } }
       
       // **** TODO ***** put in haversine equation to calculate middle interpolated coordinates
@@ -629,6 +617,8 @@ async function processController() {
 }
 
 
-processController();
+// processController();
+
+loadConfig();
 
 module.exports = {}

@@ -50,20 +50,15 @@ async function buildSites() {
   await loadHardCodedSites(sitesObject)
   console.log("\nOverwriting CRIC downloaded entries with hard coded entrys from /config_files/hardCodedSites.json...")
   
-//   console.log("\n\nFinal Site Output Object:\n")
-  
-  // console.log(sitesObject)
-
-
   //update the reverse table after the hard coded sites have been added too
 
   sitesObject = await buildLookupTables(sitesObject)
 
-//   console.log(sitesObject)
-
   let geoJsonObject = await createGeoJsonFile(sitesObject)
 
   sitesObject.geoJsonSites = geoJsonObject;
+
+  //code below: In case we want to write these out for retrival later
 
   // fs.writeFileSync("siteOutput.json", JSON.stringify(sitesObject.sites))
   // fs.writeFileSync("sitesGeoJson.json", JSON.stringify(geoJsonObject))

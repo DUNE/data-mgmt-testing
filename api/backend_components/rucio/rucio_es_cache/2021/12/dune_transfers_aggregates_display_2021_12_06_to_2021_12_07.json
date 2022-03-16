@@ -1,0 +1,6 @@
+[
+{"name": "FNAL_DCACHE_to_MANCHESTER", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "file_size": 6656234794268.619, "start_time": "2021-12-06 00:00:01", "file_transfer_time": 1996550.0, "transfer_speed(MB/s)": 3.18},
+{"name": "FNAL_DCACHE_to_LANCASTER", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 10100557300685.443, "start_time": "2021-12-06 00:00:01", "file_transfer_time": 3141867.0, "transfer_speed(MB/s)": 3.07},
+{"name": "FNAL_DCACHE_to_QMUL", "source": "FNAL_DCACHE", "destination": "QMUL", "file_size": 34038454367.190422, "start_time": "2021-12-06 00:00:01", "file_transfer_time": 25715.0, "transfer_speed(MB/s)": 1.26},
+{"name": "CERN_PDUNE_EOS_to_DUNE_FR_CCIN2P3_DISK", "source": "CERN_PDUNE_EOS", "destination": "DUNE_FR_CCIN2P3_DISK", "file_size": 3464925095.1932044, "start_time": "2021-12-06 00:00:01", "file_transfer_time": 61.0, "transfer_speed(MB/s)": 54.17}
+]

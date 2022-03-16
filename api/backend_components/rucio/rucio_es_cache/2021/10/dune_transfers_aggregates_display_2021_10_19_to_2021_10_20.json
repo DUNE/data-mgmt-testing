@@ -1,0 +1,7 @@
+[
+{"name": "FNAL_DCACHE_to_QMUL", "source": "FNAL_DCACHE", "destination": "QMUL", "file_size": 7609844525653.089, "start_time": "2021-10-19 00:00:01", "file_transfer_time": 903366.0, "transfer_speed(MB/s)": 8.03},
+{"name": "FNAL_DCACHE_to_RAL_ECHO", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "file_size": 7372474748275.615, "start_time": "2021-10-19 00:00:01", "file_transfer_time": 2950797.0, "transfer_speed(MB/s)": 2.38},
+{"name": "FNAL_DCACHE_to_RAL-PP", "source": "FNAL_DCACHE", "destination": "RAL-PP", "file_size": 3104790240217.7983, "start_time": "2021-10-19 00:00:01", "file_transfer_time": 443555.0, "transfer_speed(MB/s)": 6.68},
+{"name": "FNAL_DCACHE_to_MANCHESTER", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "file_size": 407961378895.6739, "start_time": "2021-10-19 00:00:01", "file_transfer_time": 56928.0, "transfer_speed(MB/s)": 6.83},
+{"name": "FNAL_DCACHE_to_LANCASTER", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 6968874590114.288, "start_time": "2021-10-19 00:00:01", "file_transfer_time": 507176.0, "transfer_speed(MB/s)": 13.1}
+]

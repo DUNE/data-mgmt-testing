@@ -1,0 +1,5 @@
+[
+{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_off_14346591_31_20201120T072934Z.root", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1},
+{"name": "1gbtestfile.13", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
+{"name": "1gbtestfile.13", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1}
+]

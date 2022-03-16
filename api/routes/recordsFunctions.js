@@ -4,16 +4,37 @@ const fs = require('fs');
 
 
 
-function loadRucioConfig() {
+async function loadConfig() {
   let fs = require('fs');
+  let configObject = {};
 
-  fs.readFile("./config_files/backendConfig.txt", 'utf8', function(error, data){
-    let results=data.split("\"")
-    console.log("Loading Config: ", results[1], "          " ,results[3])
-    return [[results[1]][results[3]]]
-  })
+  let data = await fs.promises.readFile("./config_files/backendConfig.txt", 'utf8');
 
+  let results=data.split("\n")
+  //console.log(results)
+  
+
+  results.forEach(line => {
+    let variable = line.split(":")[0];
+    variable.replace("\'",'')
+    let value = line.split("\"")[1];
+    console.log("***", variable, value, "***")
+
+    configObject[variable] = value;
+
+  });
+
+  configObject = {...configObject, statusCode: -42, message:"", success:true}
+  // console.log("dl path: ", configObject.download_path)
+  configObject.outputFilePath = configObject.download_path;
+  // console.log("\nconfig object created:", (configObject));
+
+
+  return configObject;
 }
+
+
+
 
 function dateFormatConverter(passedDate) {
   const date = passedDate.toISOString().split("T")[0].replace(/-/g, "/");
@@ -30,8 +51,6 @@ function runPython(callbackFunction, searchParameters) {
     
   
   const spawn = require("child_process").spawn;
-
-    let configData = loadRucioConfig();
 
     let programName = ""      
     let programPath = configData[0]
@@ -115,74 +134,61 @@ function runPython(callbackFunction, searchParameters) {
 
 
 
-async function processSomeData(responseObject) {
+  async function processSomeData(configuration) {
 
-  // if (!responseObject.processedData){
-  //   return
-  // }
-
-  // let numberOfDaysToProcess = (responseObject.end.getTime() - responseObject.start.getTime() ) / (1000*3600*24);    //this gives us the number of days we want to look at, thus the number of files
-
-  let fs = require('fs');
-
-  var getDaysArray = function(start, end) {                                             //thanks to enesn on stack overflow for these 8 or so lines
-    for(var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
-        arr.push(new Date(dt));
-    }
-    return arr;
-  };
-
-  var daylist = getDaysArray(new Date("2021-02-01"),new Date("2021-02-01"));          //TODO, add the actual date ranges passed into here
-
-  responseObject.start=daylist[0]
-  responseObject.end = daylist[daylist.length-1]
-
-  for (i in daylist) {
-    daylist[i] = daylist[i].toISOString().slice(0,10)   //this outputs a string in the yyyy-mm-dd format, thought about using localstring but what if the local environment is europe? day and month could be inverted
-  }
-
-  // console.log("\nloading data for these days:", daylist)
-
-  let transferObect = {days:[]}
-
-  // fs.readdir("../../backend_components/rucio/cached_searches", (err, files) => {
-  //   files.forEach(file => {
-  //     console.log(file);
-  //   });
-  // });
+    let transferObject = {days:[]}
+    let fs = require('fs');
+    let transferCount = 0;
   
-  transferObect.daysPresent = daylist
+    let startDate = configuration.searchParameters.startDate;
+    let endDate = configuration.searchParameters.endDate;
+  
+    var getDaysArray = function(start, end) {                                             //thanks to enesn on stack overflow for these 8 or so lines
+      for(var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
+          arr.push(new Date(dt));
+      }
+      return arr;
+    };
+  
+    var dayList = getDaysArray(new Date(startDate),new Date(endDate));
+    let utcDates = [...dayList]
+  
+    for (i in dayList) {
+        dayList[i] = dayList[i].toISOString().slice(0,10)   //this outputs a string in the yyyy-mm-dd format, thought about using localstring but what if the local environment is europe? day and month could be inverted
+    }
+    
+    transferObject.daysPresent = dayList
+    // transferObject.startYear = dayList[0].slice(0,4);
+    // transferObject.startMonth = dayList[0].slice(5,7);
+    // transferObject.startDay = dayList[0].slice(8,10);
 
-  for (x in daylist) {
-    // console.log("\n", daylist[x])
-    const data = await fs.promises.readFile("./backend_components/rucio/cached_searches/out_M0_" + daylist[x] + ".json", 'utf8');
-    let day = {date: daylist[x], transfers: JSON.parse(data)}
-      // console.log(day,"\n\n")
-    transferObect.days.push(day)
+    for (x in dayList) {
+        let terminatingDay = new Date(utcDates[x]);
+        terminatingDay.setDate(terminatingDay.getDate() + 1);
+        terminatingDay = terminatingDay.toISOString().slice(0,10);
+        let beginingDay = dayList[x];
+        let month = dayList[x].slice(5,7);
+        let year = dayList[x].slice(0,4);
 
-  }
+        let path = configuration.download_path.substring(1) + "/" + year + "/" + month + "/dune_transfers_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json"
+        let dailyData = await fs.promises.readFile(path);
+        let dailyTransferRecord = {date: dayList[x], transfers: JSON.parse(dailyData)}
+        transferObject.days.push(dailyTransferRecord)
 
-  // console.log(transferObect.days[0])
-  // console.log(transferObect.days[1])
+        transferCount += dailyData.length;
+        //console.log(dailyData)
+    }
+    
+    console.log("\n", transferCount, "transfers retrieved from query");
+    // console.log("\n\n\n\", transfer object:   ", transferObject ,"\n\n\n\n")
+    // console.log(transferObject.days[0])
 
-  return transferObect
-
+    return transferObject
 }
 
 
 
 
-
-
-      // let singleTransfer = transfers[day][record]
-      // console.log(singleTransfer)
-
-      // //now assign transfer to each sites set of sent and recevied
-      // siteArrayIndexFromLookupTX = sites.nameLookMap.get(singleTransfer.matchedSource)
-      // siteArrayIndexFromLookupRX = sites.nameLookMap.get(singleTransfer.matchedDestination)
-
-      // sites.sites[siteArrayIndexFromLookupTX].sent.push(singleTransfer)
-      // sites.sites[siteArrayIndexFromLookupRX].received.push(singleTransfer)
 
 
 
@@ -191,114 +197,74 @@ async function processSomeData(responseObject) {
 function sortTransfers(sitesObject, transferObject) {
   //here the raw file with the transfers by day is passed in, then we combine this data with our site list data structure so each site will have a collection of transfers per day, basically bubble sort
 
-  // console.log(transferObject)
-
-  // console.log("transfers: ", transferObject.days)
-
-  // console.log(transferObject.days[0].transfers[0])
+  console.log(" \n\n\n IN TRANSFERS")
+  //console.log(transferObject.days[0].transfers[0])
+  console.log(transferObject.days[0])
 
   sitesObject.networkTransferTotal = 0;
 
- for (i in transferObject.days) {
-   // console.log(transferObject.days[i].transfers)
+  for (i in transferObject.days) {
+      
+      transferDate = transferObject.days[i].date
 
-   transferBatchDate = transferObject.days[i].date
-  //  console.log("batch date is: ", transferBatchDate)
+      for (let j in transferObject.days) {
 
-   for (j in transferObject.days[i].transfers) {
-
-      let singleTransfer = transferObject.days[i].transfers[j]
-
-      sitesObject.networkTransferTotal += singleTransfer.file_size
-
-      let from = singleTransfer.matchedSource
-      let to = singleTransfer.matchedDestination
-
-      // console.log(from.transfersByDate)
-
+          if (transferObject.days[j].length > 0) {
+            console.log("         T   H I S TRANSFER #", transferObject[i].days[j] )
+            console.log(" length: ", transferObject[i])
+  
+            let singleTransfer = transferObject.days[i].transfers[j];
+            sitesObject.networkTransferTotal += singleTransfer.file_size
+  
+            let from = singleTransfer.matchedSource
+            let to = singleTransfer.matchedDestination
+  
+            siteArrayIndexFromLookupDest = sitesObject.nameLookupMap.get(to)
+            siteArrayIndexFromLookupSrc = sitesObject.nameLookupMap.get(from)
     
+            //console.log("site array index: ", siteArrayIndexFromLookupDest, siteArrayIndexFromLookupSrc)
+  
+            let siteObjectTo = sitesObject.sites[siteArrayIndexFromLookupSrc]
+            let siteObjectFrom = sitesObject.sites[siteArrayIndexFromLookupDest]
+  
+            
+  
+            //console.log("  from, to:   ", siteObjectTo, siteObjectFrom)
+  
+            siteObjectFrom.totalSent += singleTransfer.file_size;
+            siteObjectTo.totalRecieved += singleTransfer.file_size;
+  
+            
+  
+            siteObjectTo.allTransfers.push(singleTransfer)
+            siteObjectFrom.allTransfers.push(singleTransfer)
+  
+            //console.log(" siiiiiiiii ttee ", siteObjectTo, siteObjectFrom)
+            let existingSendsOnThisDate = []
+            
+            if (siteObjectFrom.transfersByDate.get(transferDate)) {
+              existingSendsOnThisDate = siteObjectFrom.transfersByDate.get(transferDate)
+            }
+  
+            existingSendsOnThisDate.push(singleTransfer)
+            siteObjectFrom.transfersByDate.set(transferDate, existingSendsOnThisDate)
+  
+            let existingReceivesOnThisDate = []
+            
+            if (siteObjectTo.transfersByDate.get(transferDate)) {
+              existingReceivesOnThisDate = siteObjectFrom.transfersByDate.get(transferDate)
+            }
+            
+            existingReceivesOnThisDate.push(singleTransfer)
+            siteObjectTo.transfersByDate.set(transferDate, existingReceivesOnThisDate)
       
+            siteObjectFrom.sent.push(singleTransfer)
+            siteObjectTo.received.push(singleTransfer)
+          }
 
-      // console.log("here", singeTransfer)
-      // console.log("src", singeTransfer.matchedSource)
-      // console.log("to", singeTransfer.matchedDestination)
-
-      // let singleTransfer = transferObject.days[i].transfers[j]
-      // console.log(singleTransfer)
-
-      // console.log(sitesObject.nameLookupMap)
-      // console.log(singleTransfer.matchedSource, singleTransfer.matchedDestination)
-
-      //now assign transfer to each sites set of sent and recevied
-      
-
-      // console.log("\nto", to, "  from  ", from)
-
-      siteArrayIndexFromLookupDest = sitesObject.nameLookupMap.get(to)
-      siteArrayIndexFromLookupSrc = sitesObject.nameLookupMap.get(from)
-
-      let siteObjectTo = sitesObject.sites[siteArrayIndexFromLookupSrc]
-      let siteObjectFrom = sitesObject.sites[siteArrayIndexFromLookupDest]
-
-      //update this sites stats to reflect transfers
-
-      // console.log("     singeTransfer:   ", singleTransfer.file_size)
-      siteObjectFrom.totalSent += singleTransfer.file_size;
-      siteObjectTo.totalRecieved += singleTransfer.file_size;
-
-      // console.log("   POST ADD   ", siteObjectFrom, siteObjectTo)
-
-      siteObjectTo.allTransfers.push(singleTransfer)
-      siteObjectFrom.allTransfers.push(singleTransfer)
-
-
-      if ( !siteObjectFrom.transfersByDate.get(transferBatchDate) ) {
-        siteObjectFrom.transfersByDate.set(transferBatchDate, [])
+          
       }
-
-      let existingSendsOnThisDate = siteObjectFrom.transfersByDate.get(transferBatchDate)
-      existingSendsOnThisDate.push(singleTransfer)
-      siteObjectFrom.transfersByDate.set(transferBatchDate, existingSendsOnThisDate)
-
-
-
-      if ( !siteObjectTo.transfersByDate.get(transferBatchDate) ) {
-        siteObjectTo.transfersByDate.set(transferBatchDate, [])
-      }
-
-      let existingReceivesOnThisDate = siteObjectTo.transfersByDate.get(transferBatchDate)
-      existingReceivesOnThisDate.push(singleTransfer)
-      siteObjectTo.transfersByDate.set(transferBatchDate, existingReceivesOnThisDate)
-
-
-      // console.log("\n\n\nafter, ", siteObjectFrom)
-      // console.log(siteObjectFrom.transfersByDate.get(transferBatchDate), "\n\n\n\n")
-      // console.log(siteObjectTo.transfersByDate.get(transferBatchDate), "\n\n\n\n")
-
-      // console.log(siteArrayIndexFromLookupRX, siteArrayIndexFromLookupTX)
-      // console.log(sitesObject.sites[siteArrayIndexFromLookupRX], )
-
-      // console.log("sender: ", siteObjectTo.names[0], "reciver: " ,siteObjectFrom.names[0])
-      // console.log("\n\n\n\nsender ", siteObjectTo, "\n\n\n\n")
-
-      // siteObjectTo.received.push(singleTransfer)
-      siteObjectFrom.sent.push(singleTransfer)
-      siteObjectTo.received.push(singleTransfer)
-
-      // console.log("sender: ", siteObjectTo.names[0], "reciver: " ,siteObjectFrom.names[0])
-      // console.log("\n\n\n\nsender\n", siteObjectTo, "\n\nreceived\n", siteObjectFrom, "\n\n\n\n")
-
-      // sitesObject.sites[siteArrayIndexFromLookupTX].sent.push(singleTransfer)
-      // sitesObject.sites[siteArrayIndexFromLookupRX].received.push(singleTransfer)
-
-   }
-
-  //  console.log(sitesObject.sites[sitesObject.nameLookupMap.get(siteObject.sites.names[0])])
-   
- }
-
-  // console.log(sitesObject.sites)
-
+  }
   return [sitesObject, transferObject]
 }
 
@@ -306,7 +272,14 @@ function sortTransfers(sitesObject, transferObject) {
 
 function siteNameFuzzyMatching (sitesObject, adressField) {
 
-  let adressFieldWords = adressField.toString().split("_")
+  let adressFieldWords = adressField.toString().split("_");
+  
+  if (adressFieldWords[0].length === adressField.length && adressFieldWords[0]==adressField) {
+    //console.log(" ----- spliting - char")
+    adressFieldWords = adressField.toString().split("-");
+  }
+
+  //console.log("post split: ", adressFieldWords, adressField)
 
   // console.log(source, " to ", destination)
   // console.log(sourceWords, " to ", destWords)
@@ -341,16 +314,20 @@ function siteNameFuzzyMatching (sitesObject, adressField) {
     ids.push(key)
   })
 
-  let bestGuessIndex = ids[occurances.indexOf(Math.max(...occurances) )]
-  let bestGuess = sitesObject.sites[bestGuessIndex].names[0]
+  let bestGuess;
+  //if nothing was found, put these in the unknown box
+  if (ids.length === 0) {
+    bestGuess = "unknown";
+    return bestGuess;
+  } else {
+    let bestGuessIndex = ids[occurances.indexOf(Math.max(...occurances) )]
+    let bestGuess = sitesObject.sites[bestGuessIndex].names[0]
+    
+    console.log("closest match for ", adressField , ", is" , bestGuess)
+    return bestGuess;
+  }
+
   
-  // console.log(occurances)
-  // console.log(Math.max(...occurances))
-  // console.log( bestGuessIndex )
-  console.log("closest match for ", adressField , ", is" , bestGuess)
-
-  return bestGuess
-
 }
 
 
@@ -361,63 +338,66 @@ function siteNameFuzzyMatching (sitesObject, adressField) {
 
 async function buildSiteTransferRecords(sitesObject, passedTransferObject) {
 
-  console.log("\n\n\n\n\n")
-  // console.log(sites)
-  // console.log("Dataset Includes:", passedTransferObject)
-  // console.log("\n\n\n\n")
-  // console.log(transfers.days)
-
   //setup list of unknown sites that don't match any words
-  sitesObject.uncertainSites = []
-
-  //LOGIC: go through each transfer, locate source and destination from list, do fuzzy matching if need be
-  //       add transfer to each objects "all transfers member", then add it to each sites corresponding, sent and recieved method under the correct date
+  sitesObject.uncertainSites = [];
 
   for (x in passedTransferObject.days) {
-    console.log("\n\n")
-    console.log("\n\n")
+    for (y in passedTransferObject.days[x].transfers) {
 
+      let transfer = passedTransferObject.days[x].transfers[y];
+      let source;
+      let destination;
+
+      if (transfer.source && transfer.destination) {
+        source = transfer.source.toLowerCase();
+        destination = transfer.destination.toLowerCase();
+
+        if ( !sitesObject.nameLookupMap.has(source) ) { //if inputting the whole faccility name doesn't yield a match we start trying to match individual words
+          sitesObject.uncertainSites.push(source)
+        }
+  
+        if ( !sitesObject.nameLookupMap.has(destination) ) { //if inputting the whole faccility name doesn't yield a match we start trying to match individual words
+          sitesObject.uncertainSites.push(destination)
+        }
+
+      }
+    }
+  }
+
+  sitesObject.uncertainSites = new Set(sitesObject.uncertainSites);
+  sitesObject.uncertainSites = [... sitesObject.uncertainSites];  //convert to array
+  console.log("\n  Uncertain sites: ", sitesObject.uncertainSites);
+
+  for (x in sitesObject.uncertainSites) {
+
+    let site = sitesObject.uncertainSites[x];
+    
+    let siteNameBestGuess =  siteNameFuzzyMatching(sitesObject, site);
+
+    //console.log("\n\n SITE BEST GUESS: ", siteNameBestGuess ,"\n\n")
+
+    let siteIndex = sitesObject.nameLookupMap.get(siteNameBestGuess);
+
+    //console.log("\n\n", site ,"\n");
+    //console.log("for  ", siteNameBestGuess ," new site index: ", siteIndex)
+    sitesObject.nameLookupMap.set(site, siteIndex);
+  }
+
+  // Now that sites are updated so transfers go to the (mostly) right ones, we process transfers.
+ 
+
+  for (x in passedTransferObject.days) {
     for (y in passedTransferObject.days[x].transfers) {
       let transfer = passedTransferObject.days[x].transfers[y]
-      
-      // console.log(transfer)
-      let ascertainedSource;
-      let ascertainedDestination;
 
-      let source = transfer.source.toLowerCase();
-      let destination = transfer.destination.toLowerCase();
+      if (transfer && transfer.source && transfer.destination) {
+        let source = transfer.source.toLowerCase();
+        let destination = transfer.destination.toLowerCase();
 
-      if ( !sitesObject.nameLookupMap.has(source) ) //if inputting the whole faccility name doesn't yield a match we start trying to match individual words
-      {
-        if (!sitesObject.uncertainSites.includes(source)) {
-            sitesObject.uncertainSites.push(source)
-        }
-        
-        console.log("\nidentifying sender...")
-        ascertainedSource = siteNameFuzzyMatching(sitesObject, source)   //best guess based on matching words in faccillity from field:
-      } else {
-        ascertainedSource = sitesObject.sites[sitesObject.nameLookMap.get(source)]
+        transfer.matchedSource = source;
+        transfer.matchedDestination = destination;
+        //console.log("\nsource: ", source, "\ndest: ", destination, "\n\ntransfer: ", transfer)
       }
-      
-
-      if ( !sitesObject.nameLookupMap.has(destination) ) //if inputting the whole faccility name doesn't yield a match we start trying to match individual words
-      {
-        if (!sitesObject.uncertainSites.includes(destination)) {
-          sitesObject.uncertainSites.push(destination)
-        } 
-        console.log("\nidentifying reciever...")
-        ascertainedDestination = siteNameFuzzyMatching(sitesObject, destination)   //best guess based on matching words in faccillity from field:
-      } else {
-        ascertainedDestination = sitesObject.sites[sitesObject.nameLookMap.get(destination)]
-      }
-
-
-      // console.log("\nmapped as from: ", ascertainedSource, " and to: ", ascertainedDestination, "\n\n\n\n\n\n")
-
-      //note this on the transfer object so we can use it later for processing
-
-      transfer.matchedSource = ascertainedSource ;
-      transfer.matchedDestination = ascertainedDestination ;
     }
   }
 
@@ -486,79 +466,59 @@ function calculateSiteMetaStats(passedSitesObject) {
 
 function createGeoJsonTransferFile (passedTransferObject) {
 
-  // console.log("\n\n\n\n\n\n\n\n geoJSON debug", passedTransferObject, "\n\n\n\n\n\n\n")
+  //console.log("\n\n\n\n\n\n\n\n geoJSON debug", passedTransferObject, "\n\n\n\n\n\n\n")
 
   let transfersByDay = passedTransferObject[1].days
-
-  // console.log("passed big object geoJSonSites:          ", passedTransferObject[0].sites)
+  let failCount = 0;
 
   let geoJSONtransfers = []
-  let animatedgeoJsonTransfers = []
+  // let animatedgeoJsonTransfers = []
 
   for (let x=0; x < transfersByDay.length; x++) {
 
-    // console.log("top: ", transfersByDay[x])
-    
-    // console.log("length: ", transfersByDay[x].transfers.length)
-
     for (let y=0; y < transfersByDay[x].transfers.length; y++) {
-      // console.log("each: ", transfersByDay[x].transfers[y])
-    
-
       let transfer = transfersByDay[x].transfers[y]
-      
-      let siteIndexSent = passedTransferObject[0].nameLookupMap.get(transfer.matchedSource)
-      let sendingSite = passedTransferObject[0].sites[siteIndexSent]
-      let coordFrom = [parseFloat(sendingSite.longitude), parseFloat(sendingSite.latitude)]
-      // console.log("from: ", coordFrom)
-      
-      let siteIndexRecv = passedTransferObject[0].nameLookupMap.get(transfer.matchedDestination)
-      let receivingSite = passedTransferObject[0].sites[siteIndexRecv]
-      let coordTo = [parseFloat(receivingSite.longitude), parseFloat(receivingSite.latitude)]
-      // console.log("to: ", coordTo)
+      //console.log("tranfer matched: ", transfer.matchedSource, transfer.matchedDestination)
 
+      if (transfer.matchedSource && transfer.matchedDestination && passedTransferObject[0].nameLookupMap.get(transfer.matchedSource) &&passedTransferObject[0].nameLookupMap.get(transfer.matchedDestination)) {
+        
+        //.log("tranfer matched: ", transfer.matchedSource, transfer.matchedDestination)
 
+          let siteIndexSent = passedTransferObject[0].nameLookupMap.get(transfer.matchedSource)
+          let sendingSite = passedTransferObject[0].sites[siteIndexSent]
 
+          let siteIndexRecv = passedTransferObject[0].nameLookupMap.get(transfer.matchedDestination)
+          let receivingSite = passedTransferObject[0].sites[siteIndexRecv]
 
-      let date = new Date(transfer.start_time)
-      let firstOfMonthDate = new Date(date.getFullYear(), date.getMonth(), 1)
-      let MiddleOfMonthDate = new Date(date.getFullYear(), date.getMonth(), 15)
-      let EndOfMonthDate = new Date(date.getFullYear(), date.getMonth(), 28)
-      // console.log("  month nunber for date:  ", date.getMonth()+1)
-      let firstOfMonthDateUnixTime = Math.floor(firstOfMonthDate/1000)
-      let MiddleOfMonthDateUnixTime = Math.floor(MiddleOfMonthDate/1000)
-      let EndOfMonthDateUnixTime = Math.floor(EndOfMonthDate/1000)
+          //console.log("both sies::   ", siteIndexRecv)
+          
+          let coordTo = [parseFloat(receivingSite.longitude), parseFloat(receivingSite.latitude)]
+          let coordFrom = [parseFloat(sendingSite.longitude), parseFloat(sendingSite.latitude)]
+    
+          let transferTransaction = {"type":"Feature", "geometry":{ "type": "LineString", "coordinates": [ [coordFrom[0], coordFrom[1]], [coordTo[0], coordTo[1]] ]}, "properties": {"from": sendingSite.names[0], "to": receivingSite.names[0], "toLong":coordTo[0], "toLat":coordTo[1], "fromLong":coordFrom[0], "fromLat":coordFrom[1], "size": parseInt(transfer.file_size), "duration": "Ask Zack how to get", "date": transfer.start_time, "from": transfer.source, "to": transfer.destination, "speed": transfer["transfer_speed(MB/s)"] } }
+          
+          // let transferTransactionAnim = {"type":"Feature", "geometry":{ "type": "LineString", "coordinates": [ [coordFrom[0], coordTo[0], 0, firstOfMonthDateUnixTime], [coordFrom[1], coordTo[1], 0, MiddleOfMonthDateUnixTime ], [coordFrom[1], coordTo[1], 0, EndOfMonthDateUnixTime ] ] }, "properties": { "from": sendingSite.names[0], "to": receivingSite.names[0], "toLong":coordTo[0], "toLat":coordTo[1], "fromLong":coordFrom[0], "fromLat":coordFrom[1], "size": parseInt(transfer.file_size), "duration": "Ask Zack how to get", "date": transfer.start_time, "from": transfer.source, "to": transfer.destination, "speed": transfer["transfer_speed(MB/s)"] } }
+          // **** TODO ***** put in haversine equation to calculate middle interpolated coordinates
 
-
-      //let transferTransaction = {"type":"Feature", "geometry":{ "type": "LineString", "coordinates": [ [coordFrom[0], coordFrom[1]], [coordTo[0], coordTo[1]] ]}, "properties": {"from": sendingSite.names[0], "to": receivingSite.names[0], "destination":[coordTo[0], coordTo[1]], "source":[coordFrom[0], coordFrom[1]], "size": parseInt(transfer.file_size), "duration": "Ask Zack how to get", "date": transfer.start_time, "from": transfer.source, "to": transfer.destination, "speed": transfer["transfer_speed(MB/s)"] } }
-
-      let transferTransaction = {"type":"Feature", "geometry":{ "type": "LineString", "coordinates": [ [coordFrom[0], coordFrom[1]], [coordTo[0], coordTo[1]] ]}, "properties": {"from": sendingSite.names[0], "to": receivingSite.names[0], "toLong":coordTo[0], "toLat":coordTo[1], "fromLong":coordFrom[0], "fromLat":coordFrom[1], "size": parseInt(transfer.file_size), "duration": "Ask Zack how to get", "date": transfer.start_time, "from": transfer.source, "to": transfer.destination, "speed": transfer["transfer_speed(MB/s)"] } }
-      
-      // let transferTransactionAnim = {"type":"Feature", "geometry":{ "type": "LineString", "coordinates": [ [coordFrom[0], coordTo[0], 0, firstOfMonthDateUnixTime], [coordFrom[1], coordTo[1], 0, MiddleOfMonthDateUnixTime ], [coordFrom[1], coordTo[1], 0, EndOfMonthDateUnixTime ] ] }, "properties": { "from": sendingSite.names[0], "to": receivingSite.names[0], "toLong":coordTo[0], "toLat":coordTo[1], "fromLong":coordFrom[0], "fromLat":coordFrom[1], "size": parseInt(transfer.file_size), "duration": "Ask Zack how to get", "date": transfer.start_time, "from": transfer.source, "to": transfer.destination, "speed": transfer["transfer_speed(MB/s)"] } }
-      
-      // **** TODO ***** put in haversine equation to calculate middle interpolated coordinates
-      // **** TODO ***** NOTE: currently setting everything to the first day of the month to show everything in that month, until I can come up with a better way to visualize
-      // console.log("  anim coords ",transferTransactionAnim.geometry.coordinates)
-
-      geoJSONtransfers.push(transferTransaction)
-      // animatedgeoJsonTransfers.push(transferTransactionAnim)
-      // console.log ("pertinent info: ", transfer, siteIndex )
-
-
+          geoJSONtransfers.push(transferTransaction)
+          // animatedgeoJsonTransfers.push(transferTransactionAnim)
+          // console.log ("pertinent info: ", transfer, siteIndex )
+    
+      }
     }
   }
 
   let transferObjectFinal={}
 
-  // console.log("\n\n\n\n\n\n\n\n geoJSON result", geoJSONtransfers, "\n\n\n\n\n\n\n")
-  // console.log("\n\n\n\n\n\n\n\n geoJSON *** ANIMATED TRIPS *** result", animatedgeoJsonTransfers[0].geometry.coordinates, "\n\n\n\n\n\n\n")
+  // // console.log("\n\n\n\n\n\n\n\n geoJSON result", geoJSONtransfers, "\n\n\n\n\n\n\n")
+  // // console.log("\n\n\n\n\n\n\n\n geoJSON *** ANIMATED TRIPS *** result", animatedgeoJsonTransfers[0].geometry.coordinates, "\n\n\n\n\n\n\n")
  
 
   let geoJsonMeta = {"type":"FeatureCollection", "features":geoJSONtransfers}
-  let geoJsonMetaAnim = {"type":"FeatureCollection", "features":animatedgeoJsonTransfers}
+  //let geoJsonMetaAnim = {"type":"FeatureCollection", "features":animatedgeoJsonTransfers}
 
   transferObjectFinal.geoJson = geoJsonMeta;
-  transferObjectFinal.animated = geoJsonMetaAnim
+  //transferObjectFinal.animated = geoJsonMetaAnim
 
   return transferObjectFinal
  }
@@ -578,26 +538,36 @@ function createGeoJsonTransferFile (passedTransferObject) {
 
 
 
+async function processController(searchParameters) {
 
-// let responseDetails = {statusCode: -42, message:"", success:false, outputFilePath:"../../backend_componenets/rucio/cached_searches"}       //TODO, discuss what data we should take from this
+  let configObject = await loadConfig();
+  configObject.searchParameters = searchParameters;
 
-// processSomeData(responseDetails);
+  // *********** TODO FIX ^ v *******************
 
+  // let configObject = { 
+  //   query_script_path: './backend_components/rucio/es_client.py',
+  //   download_path: './backend_components/rucio/rucio_es_cache',
+  //   es_client_path: './backend_components/es-cliet.py',
+  //   statusCode: -42,
+  //   message: '',
+  //   success: true,
+  //   outputFilePath: './backend_components/rucio/rucio_es_cache'
+  // }
 
-async function processController() {
-
-//  loadRucioConfig();
-  
-  let responseDetails = {statusCode: -42, message:"", success:true, outputFilePath:"./backend_componenets/rucio/cached_searches"}
-
-
+  // console.log("final config: ", configObject);
 
   let sites = await buildSites();
-  let transfers = await processSomeData(responseDetails)
+  let transfers = await processSomeData(configObject)
   let identifiedTransfers = await buildSiteTransferRecords(sites, transfers)
+
+
 
   sites = identifiedTransfers[0]
   transfers = identifiedTransfers[1]
+
+  // console.log("\n\n\n\n\n\n ********************")
+  // console.log(transfers);
 
   // console.log(populatedSites[0], populatedSites[1], populatedSites[1].days[0])
 
@@ -631,6 +601,8 @@ async function processController() {
   // fs.writeFileSync("transfersGeoJsonAnim.json", JSON.stringify(geoJsonObject.animated))    // *** TODO *** not quite working right, think I'm setting the wrong coordinates and also trip view not much without interpolated steps.
 
   let omniObject = {"transferGeoJSON": geoJsonTransferObject, "siteOutputWithStats": finalObject[0].sites, "sitesGeoJSON": finalObject[0].geoJsonSites}
+
+  console.log(omniObject)
 
   return omniObject
 

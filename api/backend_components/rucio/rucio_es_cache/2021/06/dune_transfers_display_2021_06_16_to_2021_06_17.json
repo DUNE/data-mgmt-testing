@@ -1,0 +1,12 @@
+[
+{"name": "1gbtestfile.20210616", "source": "DUNE_FR_CCIN2P3_XROOTD", "destination": "RAL_ECHO", "file_size": 1024000000, "start_time": "2021-06-16 02:35:05", "file_transfer_time": "61.0", "transfer_speed(MB/s)": "16.01"},
+{"name": "1gbtestfile.20210616", "source": "PRAGUE", "destination": "DUNE_FR_CCIN2P3_XROOTD", "file_size": 1024000000, "start_time": "2021-06-16 02:28:14", "file_transfer_time": "14.0", "transfer_speed(MB/s)": "69.75"},
+{"name": "1gbtestfile.20210616", "source": "FNAL_DCACHE_TEST", "destination": "NIKHEF", "file_size": 1024000000, "start_time": "2021-06-16 00:27:40", "file_transfer_time": "38.0", "transfer_speed(MB/s)": "25.7"},
+{"name": "1gbtestfile.20210616", "source": "FNAL_DCACHE_TEST", "destination": "LANCASTER", "file_size": 1024000000, "start_time": "2021-06-16 00:27:37", "file_transfer_time": "68.0", "transfer_speed(MB/s)": "14.36"},
+{"name": "1gbtestfile.20210616", "source": "FNAL_DCACHE_TEST", "destination": "RAL-PP", "file_size": 1024000000, "start_time": "2021-06-16 00:27:42", "file_transfer_time": "156.0", "transfer_speed(MB/s)": "6.26"},
+{"name": "1gbtestfile.20210616", "source": "FNAL_DCACHE_TEST", "destination": "LIVERPOOL", "file_size": 1024000000, "start_time": "2021-06-16 00:27:38", "file_transfer_time": "205.0", "transfer_speed(MB/s)": "4.76"},
+{"name": "1gbtestfile.20210616", "source": "FNAL_DCACHE_TEST", "destination": "MANCHESTER", "file_size": 1024000000, "start_time": "2021-06-16 00:27:40", "file_transfer_time": "43.0", "transfer_speed(MB/s)": "22.71"},
+{"name": "1gbtestfile.20210616", "source": "FNAL_DCACHE_TEST", "destination": "IMPERIAL", "file_size": 1024000000, "start_time": "2021-06-16 00:27:37", "file_transfer_time": "54.0", "transfer_speed(MB/s)": "18.08"},
+{"name": "1gbtestfile.20210616", "source": "FNAL_DCACHE_TEST", "destination": "PRAGUE", "file_size": 1024000000, "start_time": "2021-06-16 00:27:40", "file_transfer_time": "242.0", "transfer_speed(MB/s)": "4.04"},
+{"name": "1gbtestfile.20210616", "source": "LIVERPOOL", "destination": "QMUL", "file_size": 1024000000, "start_time": "2021-06-16 00:39:41", "file_transfer_time": "11.0", "transfer_speed(MB/s)": "88.78"}
+]

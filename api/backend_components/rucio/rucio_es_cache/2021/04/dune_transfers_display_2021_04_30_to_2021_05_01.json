@@ -1,0 +1,14 @@
+[
+{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_14352413_41_20201120T145446Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 1793105862, "start_time": "2021-04-30 18:59:03", "file_transfer_time": "248.0", "transfer_speed(MB/s)": "6.9"},
+{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_14346159_29_20201120T050000Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 2143302906, "start_time": "2021-04-30 18:59:03", "file_transfer_time": "359.0", "transfer_speed(MB/s)": "5.69"},
+{},
+{"name": "iceberg_r002002_sr01_20190709T070916_1_dl1.root", "source": "FNAL_DCACHE", "destination": "IMPERIAL", "file_size": 168674569, "start_time": "2021-04-30 20:51:54", "file_transfer_time": "14.0", "transfer_speed(MB/s)": "11.49"},
+{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_38622496_9_20201123T194554Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 1990529104, "start_time": "2021-04-30 10:17:57", "file_transfer_time": "76.0", "transfer_speed(MB/s)": "24.98"},
+{"name": "iceberg_r007826_sr01_20200906T143136_1_dl1.root", "source": "MANCHESTER", "destination": "LIVERPOOL", "file_size": 72508332, "start_time": "2021-04-30 10:23:00", "file_transfer_time": "13.0", "transfer_speed(MB/s)": "5.32"},
+{},
+{"name": "iceberg_r001002_sr01_20190325T143750_1_dl1.root", "source": "FNAL_DCACHE_TEST", "destination": "LIVERPOOL", "file_size": 969255622, "start_time": "2021-04-30 15:42:40", "file_transfer_time": "44.0", "transfer_speed(MB/s)": "21.01"},
+{"name": "iceberg_r001002_sr01_20190325T143750_1_dl1.root", "source": "FNAL_DCACHE_TEST", "destination": "IMPERIAL", "file_size": 969255622, "start_time": "2021-04-30 15:42:28", "file_transfer_time": "52.0", "transfer_speed(MB/s)": "17.78"},
+{"name": "iceberg_r001002_sr01_20190325T143750_1_dl1.root", "source": "FNAL_DCACHE_TEST", "destination": "LANCASTER", "file_size": 969255622, "start_time": "2021-04-30 15:41:13", "file_transfer_time": "40.0", "transfer_speed(MB/s)": "23.11"},
+{"name": "iceberg_r001002_sr01_20190325T143750_1_dl1.root", "source": "FNAL_DCACHE_TEST", "destination": "RAL-PP", "file_size": 969255622, "start_time": "2021-04-30 15:42:06", "file_transfer_time": "36.0", "transfer_speed(MB/s)": "25.68"},
+{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_38885145_11_20201120T193659Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 2098639094, "start_time": "2021-04-30 01:18:41", "file_transfer_time": "80.0", "transfer_speed(MB/s)": "25.02"}
+]

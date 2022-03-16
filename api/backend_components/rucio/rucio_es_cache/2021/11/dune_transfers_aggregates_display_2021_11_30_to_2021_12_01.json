@@ -1,0 +1,9 @@
+[
+{"name": "FNAL_DCACHE_to_LANCASTER", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 7054522353031.029, "start_time": "2021-11-30 00:00:01", "file_transfer_time": 4404864.0, "transfer_speed(MB/s)": 1.53},
+{"name": "FNAL_DCACHE_to_QMUL", "source": "FNAL_DCACHE", "destination": "QMUL", "file_size": 5091886086951.613, "start_time": "2021-11-30 00:00:01", "file_transfer_time": 5435315.0, "transfer_speed(MB/s)": 0.89},
+{"name": "FNAL_DCACHE_to_RAL-PP", "source": "FNAL_DCACHE", "destination": "RAL-PP", "file_size": 1317454616944.2683, "start_time": "2021-11-30 00:00:01", "file_transfer_time": 1027895.0, "transfer_speed(MB/s)": 1.22},
+{"name": "FNAL_DCACHE_to_RAL_ECHO", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "file_size": 884672211077.5867, "start_time": "2021-11-30 00:00:01", "file_transfer_time": 814151.0, "transfer_speed(MB/s)": 1.04},
+{"name": "FNAL_DCACHE_to_MANCHESTER", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "file_size": 13390631812.427906, "start_time": "2021-11-30 00:00:01", "file_transfer_time": 8204.0, "transfer_speed(MB/s)": 1.56},
+{"name": "CERN_PDUNE_EOS_to_DUNE_FR_CCIN2P3_XROOTD", "source": "CERN_PDUNE_EOS", "destination": "DUNE_FR_CCIN2P3_XROOTD", "file_size": 183641030045.23993, "start_time": "2021-11-30 00:00:01", "file_transfer_time": 5436.0, "transfer_speed(MB/s)": 32.22},
+{"name": "DUNE_FR_CCIN2P3_to_DUNE_FR_CCIN2P3_XROOTD", "source": "DUNE_FR_CCIN2P3", "destination": "DUNE_FR_CCIN2P3_XROOTD", "file_size": 13859700380.772818, "start_time": "2021-11-30 00:00:01", "file_transfer_time": 90.0, "transfer_speed(MB/s)": 146.86}
+]

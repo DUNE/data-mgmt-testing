@@ -1,0 +1,6 @@
+[
+{"name": "1gbtestfile.leeza", "source": "FNAL_DCACHE_TEST", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
+{"name": "1gbtestfile.leeza", "source": "FNAL_DCACHE_TEST", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
+{"name": "1gbtestfile.leeza", "source": "FNAL_DCACHE_TEST", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
+{"name": "1gbtestfile.13", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1}
+]

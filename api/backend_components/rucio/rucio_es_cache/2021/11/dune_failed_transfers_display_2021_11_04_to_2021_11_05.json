@@ -1,0 +1,10 @@
+[
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p3GeV_35ms_sce_off_47274309_14_20210731T110200Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1},
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p3GeV_35ms_sce_off_46854614_218_20210730T050414Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1},
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_off_46302444_49_20210701T183743Z.root", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1},
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_off_46338195_72_20210702T121830Z.root", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1},
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_46672966_48_20210725T051038Z.root", "source": "FNAL_DCACHE", "destination": "RAL-PP", "reason": "tx_error", "count": 1},
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p3GeV_35ms_sce_off_22761452_105_20210731T001639Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1},
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_46304557_15_20210701T205133Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1},
+{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p2GeV_35ms_sce_off_20995983_134_20210614T163232Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1}
+]

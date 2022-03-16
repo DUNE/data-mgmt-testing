@@ -1,0 +1,8 @@
+[
+{"name": "FNAL_DCACHE_to_RAL_ECHO", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "file_size": 1179318189215.398, "start_time": "2021-11-25 00:00:01", "file_transfer_time": 526907.0, "transfer_speed(MB/s)": 2.13},
+{"name": "FNAL_DCACHE_to_LANCASTER", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 34321679293346.516, "start_time": "2021-11-25 00:00:01", "file_transfer_time": 7858185.0, "transfer_speed(MB/s)": 4.17},
+{"name": "FNAL_DCACHE_to_QMUL", "source": "FNAL_DCACHE", "destination": "QMUL", "file_size": 1453570921820.08, "start_time": "2021-11-25 00:00:01", "file_transfer_time": 388434.0, "transfer_speed(MB/s)": 3.57},
+{"name": "FNAL_DCACHE_to_RAL-PP", "source": "FNAL_DCACHE", "destination": "RAL-PP", "file_size": 5013535484932.188, "start_time": "2021-11-25 00:00:01", "file_transfer_time": 1137383.0, "transfer_speed(MB/s)": 4.2},
+{"name": "FNAL_DCACHE_to_MANCHESTER", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "file_size": 217051554943.87228, "start_time": "2021-11-25 00:00:01", "file_transfer_time": 70917.0, "transfer_speed(MB/s)": 2.92},
+{"name": "FNAL_DCACHE_to_DUNE_US_BNL_SDCC", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "file_size": 5750826237438.04, "start_time": "2021-11-25 00:00:01", "file_transfer_time": 478778.0, "transfer_speed(MB/s)": 11.46}
+]

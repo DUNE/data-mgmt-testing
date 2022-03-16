@@ -1,0 +1,10 @@
+[
+{"name": "1gbtestfile.20210524", "source": "FNAL_DCACHE_TEST", "destination": "PRAGUE", "file_size": 1024000000, "start_time": "2021-05-24 16:39:45", "file_transfer_time": "11.0", "transfer_speed(MB/s)": "88.78"},
+{"name": "1gbtestfile.20210524", "source": "FNAL_DCACHE_TEST", "destination": "LIVERPOOL", "file_size": 1024000000, "start_time": "2021-05-24 16:39:43", "file_transfer_time": "78.0", "transfer_speed(MB/s)": "12.52"},
+{"name": "1gbtestfile.20210524", "source": "FNAL_DCACHE_TEST", "destination": "MANCHESTER", "file_size": 1024000000, "start_time": "2021-05-24 16:39:43", "file_transfer_time": "91.0", "transfer_speed(MB/s)": "10.73"},
+{"name": "1gbtestfile.20210524", "source": "FNAL_DCACHE_TEST", "destination": "IMPERIAL", "file_size": 1024000000, "start_time": "2021-05-24 16:39:41", "file_transfer_time": "91.0", "transfer_speed(MB/s)": "10.73"},
+{"name": "1gbtestfile.20210524", "source": "FNAL_DCACHE_TEST", "destination": "LANCASTER", "file_size": 1024000000, "start_time": "2021-05-24 16:39:41", "file_transfer_time": "77.0", "transfer_speed(MB/s)": "12.68"},
+{"name": "1gbtestfile.20210524", "source": "PRAGUE", "destination": "RAL-PP", "file_size": 1024000000, "start_time": "2021-05-24 17:28:12", "file_transfer_time": "30.0", "transfer_speed(MB/s)": "32.55"},
+{"name": "1gbtestfile.20210524", "source": "MANCHESTER", "destination": "RAL_ECHO", "file_size": 1024000000, "start_time": "2021-05-24 18:40:30", "file_transfer_time": "445.0", "transfer_speed(MB/s)": "2.19"},
+{"name": "1gbtestfile.20210524", "source": "MANCHESTER", "destination": "DUNE_FR_CCIN2P3_XROOTD", "file_size": 1024000000, "start_time": "2021-05-24 18:40:30", "file_transfer_time": "292.0", "transfer_speed(MB/s)": "3.34"}
+]
