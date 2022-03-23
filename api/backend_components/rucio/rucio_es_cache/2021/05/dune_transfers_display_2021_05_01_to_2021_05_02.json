@@ -1,4 +1,0 @@
-[
-{"name": "mcc11_snb_singlephase_monoenergetic_marley_clean_-ff048006-037d-46b8-9911-1075416bed23.id_30.25_g4_detsim_reco.root", "source": "FNAL_DCACHE_TEST", "destination": "MANCHESTER", "file_size": 763727399, "start_time": "2021-05-01 06:28:46", "file_transfer_time": "30.0", "transfer_speed(MB/s)": "24.28"},
-{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_14351836_65_20201120T144824Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 2068125384, "start_time": "2021-05-01 20:47:42", "file_transfer_time": "79.0", "transfer_speed(MB/s)": "24.97"}
-]

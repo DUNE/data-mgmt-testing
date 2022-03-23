@@ -1,4 +1,0 @@
-[
-{"name": "FNAL_DCACHE_to_RAL_ECHO", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "file_size": 2775323604260.9688, "start_time": "2021-02-23 00:00:01", "file_transfer_time": 439075.0, "transfer_speed(MB/s)": 6.03},
-{"name": "FNAL_DCACHE_TEST_to_DUNE_US_BNL_SDCC", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "file_size": 1026643525.6187158, "start_time": "2021-02-23 00:00:01", "file_transfer_time": 15.0, "transfer_speed(MB/s)": 65.27}
-]

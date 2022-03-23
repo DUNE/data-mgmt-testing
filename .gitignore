@@ -2,3 +2,4 @@ node_modules/
 .eslintcache
 *.eslintcache
 api/cached_searches
+api/backend_components/rucio/rucio_es_cache/**

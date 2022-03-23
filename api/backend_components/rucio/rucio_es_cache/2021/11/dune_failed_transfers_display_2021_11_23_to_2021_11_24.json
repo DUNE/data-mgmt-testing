@@ -1,4 +1,0 @@
-[
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p7GeV_35ms_sce_datadriven_21092930_372_20210702T020620Z.root", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_21637338_112_20210629T215818Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1}
-]

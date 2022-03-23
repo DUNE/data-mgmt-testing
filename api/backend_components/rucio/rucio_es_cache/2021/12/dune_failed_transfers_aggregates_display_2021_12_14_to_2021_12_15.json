@@ -1,4 +1,0 @@
-[
-{"name": "FNAL_DCACHE_to_DUNE_US_BNL_SDCC", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 220},
-{"name": "FNAL_DCACHE_to_MANCHESTER", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1}
-]

@@ -1,4 +1,0 @@
-[
-{"name": "FNAL_DCACHE_TEST_to_MANCHESTER", "source": "FNAL_DCACHE_TEST", "destination": "MANCHESTER", "file_size": 765699013.2040739, "start_time": "2021-05-01 00:00:01", "file_transfer_time": 30.0, "transfer_speed(MB/s)": 24.34},
-{"name": "FNAL_DCACHE_to_LANCASTER", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 2073464390.2844927, "start_time": "2021-05-01 00:00:01", "file_transfer_time": 79.0, "transfer_speed(MB/s)": 25.03}
-]

@@ -1,4 +1,0 @@
-[
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_off_22621184_164_20210726T133350Z.root", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_off_22621184_322_20210726T075640Z.root", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1}
-]

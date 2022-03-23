@@ -1,8 +1,0 @@
-[
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_datadriven_44121960_33_20210520T151154Z.root", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_datadriven_20045483_399_20210521T133115Z.root", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_datadriven_20045483_400_20210521T154238Z.root", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_datadriven_20045483_398_20210521T090912Z.root", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_datadriven_22553846_1073_20210723T164300Z.root", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_off_46695336_558_20210726T160122Z.root", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 1}
-]

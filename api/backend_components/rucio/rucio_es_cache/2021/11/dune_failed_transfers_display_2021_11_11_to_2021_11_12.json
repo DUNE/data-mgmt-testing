@@ -1,5 +1,0 @@
-[
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p2GeV_35ms_sce_off_45707977_43_20210609T045809Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1},
-{"name": "np04_raw_run005282_0022_dl9_reco1_14390380_0_20201121T070043Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p3GeV_35ms_sce_off_46858152_75_20210730T143740Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1}
-]

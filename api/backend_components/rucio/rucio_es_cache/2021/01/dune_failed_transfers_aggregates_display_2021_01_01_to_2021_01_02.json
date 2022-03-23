@@ -1,4 +1,0 @@
-[
-{"name": "FNAL_DCACHE_to_NIKHEF", "source": "FNAL_DCACHE", "destination": "NIKHEF", "reason": "tx_error", "count": 1},
-{"name": "FNAL_DCACHE_TEST_to_DUNE_US_BNL_SDCC", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 2}
-]

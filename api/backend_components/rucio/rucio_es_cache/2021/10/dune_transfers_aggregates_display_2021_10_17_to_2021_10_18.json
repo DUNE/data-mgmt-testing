@@ -1,4 +1,0 @@
-[
-{"name": "FNAL_DCACHE_to_MANCHESTER", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "file_size": 12688824290588.586, "start_time": "2021-10-17 00:00:01", "file_transfer_time": 4256653.0, "transfer_speed(MB/s)": 2.84},
-{"name": "FNAL_DCACHE_to_RAL_ECHO", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "file_size": 4838752422959.91, "start_time": "2021-10-17 00:00:01", "file_transfer_time": 1557407.0, "transfer_speed(MB/s)": 2.96}
-]

@@ -1,3 +1,3 @@
-query_script_path: "/backend_components/rucio/es_client.py"
-download_path: "/backend_components/rucio/rucio_es_cache"
-es_client_path: "/backend_components/es-cliet.py"
+query_script_path: "./backend_components/rucio/es-client.py"
+download_path: "./backend_components/rucio/rucio_es_cache"
+es_client_path: "./backend_components/es-client.py"

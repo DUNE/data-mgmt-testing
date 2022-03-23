@@ -1,4 +1,0 @@
-[
-{"name": "FNAL_DCACHE_to_RAL_ECHO", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "reason": "tx_error", "count": 930},
-{"name": "FNAL_DCACHE_to_MANCHESTER", "source": "FNAL_DCACHE", "destination": "MANCHESTER", "reason": "tx_error", "count": 9}
-]

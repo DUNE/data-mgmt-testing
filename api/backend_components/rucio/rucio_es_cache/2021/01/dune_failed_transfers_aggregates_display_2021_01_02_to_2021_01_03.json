@@ -1,4 +1,0 @@
-[
-{"name": "FNAL_DCACHE_TEST_to_DUNE_US_BNL_SDCC", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 2},
-{"name": "CERN_PDUNE_CASTOR_to_NIKHEF", "source": "CERN_PDUNE_CASTOR", "destination": "NIKHEF", "reason": "tx_error", "count": 2}
-]

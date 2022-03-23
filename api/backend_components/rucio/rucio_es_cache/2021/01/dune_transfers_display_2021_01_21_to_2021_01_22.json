@@ -1,5 +1,0 @@
-[
-{"name": "np04_raw_run011793_0001_dl1.root", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "file_size": 4101740667, "start_time": "2021-01-21 21:27:25", "file_transfer_time": "42.0", "transfer_speed(MB/s)": "93.14"},
-{"name": "np04_raw_run011793_0001_dl2.root", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "file_size": 4098945374, "start_time": "2021-01-21 21:27:25", "file_transfer_time": "43.0", "transfer_speed(MB/s)": "90.91"},
-{"name": "np04_raw_run011793_0003_dl2.root", "source": "FNAL_DCACHE", "destination": "DUNE_US_BNL_SDCC", "file_size": 3193147936, "start_time": "2021-01-21 21:27:25", "file_transfer_time": "36.0", "transfer_speed(MB/s)": "84.59"}
-]

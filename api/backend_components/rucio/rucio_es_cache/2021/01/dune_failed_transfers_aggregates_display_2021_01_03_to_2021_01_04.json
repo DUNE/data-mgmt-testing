@@ -1,4 +1,0 @@
-[
-{"name": "CERN_PDUNE_EOS_to_NIKHEF", "source": "CERN_PDUNE_EOS", "destination": "NIKHEF", "reason": "tx_error", "count": 1},
-{"name": "FNAL_DCACHE_to_NIKHEF", "source": "FNAL_DCACHE", "destination": "NIKHEF", "reason": "tx_error", "count": 1}
-]

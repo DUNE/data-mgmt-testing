@@ -1,4 +1,0 @@
-[
-{"name": "03750_000_lro.mid", "source": "CERN_PDUNE_EOS", "destination": "NIKHEF", "reason": "tx_error", "count": 1},
-{"name": "03750_000_lro.mid", "source": "FNAL_DCACHE", "destination": "NIKHEF", "reason": "tx_error", "count": 1}
-]

@@ -1,4 +1,0 @@
-[
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p3GeV_35ms_sce_datadriven_47256336_234_20210731T104751Z.root", "source": "FNAL_DCACHE", "destination": "QMUL", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p6GeV_35ms_sce_datadriven_46727957_869_20210727T071302Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1}
-]

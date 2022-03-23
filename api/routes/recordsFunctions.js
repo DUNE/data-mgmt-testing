@@ -1,5 +1,6 @@
 const {buildSites} = require("./siteFunctions");
 const fs = require('fs');
+const { json } = require("d3");
 
 
 
@@ -24,9 +25,14 @@ async function loadConfig() {
 
   });
 
+  //console.log("\n\n\n\n\n  CONFIG OBJ    ...", configObject ,"\n\n\n\n")
+
   configObject = {...configObject, statusCode: -42, message:"", success:true}
+  configObject.executableName = configObject.es_client_path.split("/")[configObject.es_client_path.split("/").length-1]
   // console.log("dl path: ", configObject.download_path)
-  configObject.outputFilePath = configObject.download_path;
+  configObject.outputFilePath = configObject.download_path.replace("\"", '');
+  // let relativePath = configObject.downloadPath.split("/")
+  // configObject.relativeDownloadPath = relativePath[relativePath.length-1]
   // console.log("\nconfig object created:", (configObject));
 
 
@@ -47,75 +53,92 @@ function dateFormatConverter(passedDate) {
 
 //searchParamters object should have at least the following attributes, arguments[], search modes[], 
 
-function runPython(callbackFunction, searchParameters) {
+function runPython(startDate, endDate) {
+
+  return new Promise(async (resolve, reject) => {
+
+  
+      
+    let fs = require('fs');
+
+    let configResult = await loadConfig();
+    console.log("\n\n\nconfigobject:", configResult ,"\n\n\n")
+
+    let executableName = configResult.executableName;
+    let downloadPath = configResult.outputFilePath
+    downloadPath = downloadPath.split("/")[downloadPath.split("/").length-1]
+
+    //console.log("\n\nin python run:\n", startDate, "\n", endDate, "\n", executableName, "\n" ,downloadPath)
     
-  
-  const spawn = require("child_process").spawn;
+    const spawn = require("child_process").spawn;
 
-    let programName = ""      
-    let programPath = configData[0]
-    let outputPath = configData[1]
+      // searchParameters.startDate = dateFormatConverter(searchParameters.startDate)
+      // searchParameters.endDate = dateFormatConverter(searchParameters.endDate)
 
-    searchParameters.startDate = dateFormatConvert(searchParameters.startDate)
-    searchParameters.endDate = dateFormatConvert(searchParameters.endDate)
+      //
+      const process = spawn("python3", [
+      configResult.query_script_path,
+      "-S", startDate,
+      "-E", endDate,
+      "-D", configResult.outputFilePath
+      ]);
 
-    const process = spawn("python3", [
-    programPath + programName,
-    "-S", searchParameters.startDate,
-    "-E", searchParameters.endDate,
-    "-M", searchParameters.searchModes,
-    "-D", outputPath
-    ]);
-  
-    process.on('error', function(err) {
-      console.log("Python error detected, child process encoutered an error. \n")
+      console.log("\n\n process arguments: ", process.spawnargs)
+    
+      process.on('error', function(err) {
+        console.log("Python error detected, child process encoutered an error. \n")
+        reject();
+      });
+    
+      console.log("\nNode trying to run Python...\n");
+    
+      //log the standard out from the program
+      process.stdout.on("data", (data) => {
+        console.log("_________Python STD-OUT Begin\n\n" + data.toString() + "\n\n_________Python End\n");
+      });
+    
+      process.stderr.on("data", (data) => {
+        console.log("_________Python ERR-OUT Begin\n\n" + data.toString() + "\n\n_________Python End\n");
+      });
+
+
+      process.on("close", (code) => {
+          console.log("closing with code: ", code)
+
+          // let responseDetails = {statusCode: -42, message:"", success:false, outputFilePath:outputPath, start:searchParameters.startDate, end:searchParameters.endDate}       //TODO, discuss what data we should take from this
+
+          // //TODO here we will read the exit code and compare the value to a table below and report on the status.
+          
+          // switch (code) {
+          //     case 0:
+          //       console.log('Python reports no errors upon exit\n');
+          //       break;
+          //     case 1:
+          //         console.log("Python reports unsuccessful exit");
+          //         break;
+          //     case 666:
+          //       console.log('We can have other message codes, like server never responded, or bad credentials or something, lets consider what options to have.');
+          //       break;
+          //     default:
+          //       console.log("Python reported an unknown status code: ", code);
+          //   }
+
+          // responseDetails.statusCode=code
+          // responseDetails.message=""                          //TODO save some descriptive messages for each exit code
+          // responseDetails.typesRetrieved.push("transfers")    //TODO, read what arguments are being sent to python so we can syncronize that
+
+          // if (code==0) {
+          //   responseDetails.success=true
+          //   callbackFunction(responseDetails);
+          // }
+          // else{
+          //   callbackFunction(responseDetails);
+          // }
+
+          resolve();
+      });
+      
     });
-  
-    console.log("\nNode trying to run Python...\n");
-  
-    //log the standard out from the program
-    process.stdout.on("data", (data) => {
-      console.log("_________Python Begin\n\n" + data.toString() + "\n_________Python End\n");
-    });
-  
-
-
-
-    process.on("close", (code) => {
-
-        let responseDetails = {statusCode: -42, message:"", success:false, outputFilePath:outputPath, start:searchParameters.startDate, end:searchParameters.endDate}       //TODO, discuss what data we should take from this
-
-        //TODO here we will read the exit code and compare the value to a table below and report on the status.
-        
-        switch (code) {
-            case 0:
-              console.log('Python reports no errors upon exit\n');
-              break;
-            case 1:
-                console.log("Python reports unsuccessful exit");
-                break;
-            case 666:
-              console.log('We can have other message codes, like server never responded, or bad credentials or something, lets consider what options to have.');
-              break;
-            default:
-              console.log("Python reported an unknown status code: ", code);
-          }
-
-        responseDetails.statusCode=code
-        responseDetails.message=""                          //TODO save some descriptive messages for each exit code
-        responseDetails.typesRetrieved.push("transfers")    //TODO, read what arguments are being sent to python so we can syncronize that
-
-        if (code==0) {
-          responseDetails.success=true
-          callbackFunction(responseDetails);
-        }
-        else{
-          callbackFunction(responseDetails);
-        }
-
-        
-    });
-
   }
 
 
@@ -134,57 +157,198 @@ function runPython(callbackFunction, searchParameters) {
 
 
 
+
+
+
+
+
+
+
+
+
+  // async function checkIfFilesCached(fileList) {
+  //   console.log(" inside file checking function")
+
+  //   for (let i=0; i < fileList.length; i++) {
+  //     try {
+  //       fs.open(fileList[i])
+  //       console.log("after file check")
+  //     } catch (error) {
+  //       console.log("some files missing, setting flag to download them.")
+  //       return false;
+  //     }
+  //   }
+
+  //   console.log("all files exist");
+  //   return true;
+  // }
+
+
+
+
+  function getDaysArray(start, end) {                                             //thanks to enesn on stack overflow for these 8 or so lines
+    for(var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
+        arr.push(new Date(dt));
+    }
+    return arr;
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   async function processSomeData(configuration) {
 
-    let transferObject = {days:[]}
-    let fs = require('fs');
-    let transferCount = 0;
-  
-    let startDate = configuration.searchParameters.startDate;
-    let endDate = configuration.searchParameters.endDate;
-  
-    var getDaysArray = function(start, end) {                                             //thanks to enesn on stack overflow for these 8 or so lines
-      for(var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
-          arr.push(new Date(dt));
-      }
-      return arr;
-    };
-  
-    var dayList = getDaysArray(new Date(startDate),new Date(endDate));
-    let utcDates = [...dayList]
-  
-    for (i in dayList) {
-        dayList[i] = dayList[i].toISOString().slice(0,10)   //this outputs a string in the yyyy-mm-dd format, thought about using localstring but what if the local environment is europe? day and month could be inverted
-    }
+    //console.log("***\n\n", configuration  ,"***\n\n")
+
+
+
+        
+        let fs = require('fs');
+        let transferObject = {days:[]}
+        let transferCount = 0;
+        let allFilesPresent = true;
+        let loadedData;
+        let failedLoad = 0;
+        let failedFiles = [];
     
-    transferObject.daysPresent = dayList
-    // transferObject.startYear = dayList[0].slice(0,4);
-    // transferObject.startMonth = dayList[0].slice(5,7);
-    // transferObject.startDay = dayList[0].slice(8,10);
-
-    for (x in dayList) {
-        let terminatingDay = new Date(utcDates[x]);
-        terminatingDay.setDate(terminatingDay.getDate() + 1);
-        terminatingDay = terminatingDay.toISOString().slice(0,10);
-        let beginingDay = dayList[x];
-        let month = dayList[x].slice(5,7);
-        let year = dayList[x].slice(0,4);
-
-        let path = configuration.download_path.substring(1) + "/" + year + "/" + month + "/dune_transfers_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json"
-        let dailyData = await fs.promises.readFile(path);
-        let dailyTransferRecord = {date: dayList[x], transfers: JSON.parse(dailyData)}
-        transferObject.days.push(dailyTransferRecord)
-
-        transferCount += dailyData.length;
-        //console.log(dailyData)
-    }
+        let startDate = configuration.searchParameters.startDate;
+        let endDate = configuration.searchParameters.endDate;
+      
+        let dayList = getDaysArray(new Date(startDate),new Date(endDate));
+        let utcDates = [...dayList]
+        let fileList = []
+      
+        for (i in dayList) {
+            dayList[i] = dayList[i].toISOString().slice(0,10)   //this outputs a string in the yyyy-mm-dd format, thought about using localstring but what if the local environment is europe? day and month could be inverted
+        }
     
-    console.log("\n", transferCount, "transfers retrieved from query");
-    // console.log("\n\n\n\", transfer object:   ", transferObject ,"\n\n\n\n")
-    // console.log(transferObject.days[0])
+        //console.log("\n***\n\n\n", utcDates, "\n***\n\n\n")
+    
+        for (i in dayList) {  //build list of files we need for this data
+    
+          let terminatingDay = new Date(utcDates[i]);
+          //console.log("term day: ", terminatingDay)
+          terminatingDay.setDate(terminatingDay.getDate() + 1);
+          terminatingDay = terminatingDay.toISOString().slice(0,10);
+          let beginingDay = dayList[i];
+          let month = dayList[i].slice(5,7);
+          let year = dayList[i].slice(0,4);
+          let path = "." + configuration.download_path.substring(1) + "/" + year + "/" + month + "/dune_transfers_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json"
+          fileList.push(path)
+        }
+    
+        //console.log("\n***\n\n\n", fileList, "\n***\n\n\n")
+    
+        for (let i=0; i < fileList.length; i++) {
+          try {
+            fs.open(fileList[i])
+          } catch (error) {
+            console.log("some files missing, setting flag to download them.")
+            allFilesPresent = false;
+            break;
+          }
+        }
+    
+        if (!allFilesPresent) {
+          await runPython(dayList[0], dayList[dayList.length-1]);
+          console.log("after async file download")
+          //console.log(await fs.promises.readdir("./backend_components/rucio/rucio_es_cache/2021/01")) // show files in directory
+    
+          for (x in fileList) {
+            console.log("trying to load: ", fileList[x])
+            let dailyData = await fs.promises.readFile(fileList[x]);
+            let jsonObject;
+            //sanitize for extra comma at end
+            if (dailyData && dailyData.toString().charAt(dailyData.toString().length-4) === ',') {
+              //Uh oh, found extra trailing comma that would have broken things, deleting...
+              console.log("\nWarning, found extraneous trailing comma and deleted it in file:", fileList[x], "\n")
+              let regex = /\,(?!\s*?[\{\[\"\'\w])/g;
+              dailyData = ( dailyData.toString() ).replace(regex, ''); // remove all trailing commas
+              jsonObject = JSON.parse(dailyData);
+              console.log(dailyData.substring(dailyData.length-10, dailyData.length))
 
-    return transferObject
+              let dailyTransferRecord = {date: dayList[x], transfers: jsonObject}
+              transferObject.days.push(dailyTransferRecord)
+              transferCount += Object.keys(jsonObject).length
+              //console.log("\ntransfer: ", dailyTransferRecord.transfers);
+
+            } else {
+
+              try {
+                let transferJSON = JSON.parse(dailyData);
+                
+                if (transferJSON && Object.keys(transferJSON) > 1) {
+                  //console.log("keys", Object.keys(transferJSON))
+                  let dailyTransferRecord = {date: dayList[x], transfers: transferJSON}
+                  transferObject.days.push(dailyTransferRecord)
+                  transferCount += Object.keys(transferJSON).length
+                  // console.log("\ntransfer: ", dailyTransferRecord.transfers);
+  
+                }
+  
+              } catch (error) {
+                console.log("\nFailed to load, bad JSON syntax, file: ", fileList[x], "\n")
+                failedFiles.push(fileList[x]);
+                failedLoad += 1;
+              }
+
+            }
+            
+
+          }
+
+          transferObject.daysPresent = dayList
+          
+          console.log("\n", transferCount, "transfers retrieved from query");
+          console.log("\n", failedLoad , "files failed to load (likely bad JSON):\n\n", failedFiles)
+
+          console.log("transfer object sample: ", transferObject[5])
+      
+          return transferObject
+        }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -326,7 +490,7 @@ function siteNameFuzzyMatching (sitesObject, adressField) {
     console.log("closest match for ", adressField , ", is" , bestGuess)
     return bestGuess;
   }
-
+ 
   
 }
 
@@ -543,66 +707,27 @@ async function processController(searchParameters) {
   let configObject = await loadConfig();
   configObject.searchParameters = searchParameters;
 
-  // *********** TODO FIX ^ v *******************
-
-  // let configObject = { 
-  //   query_script_path: './backend_components/rucio/es_client.py',
-  //   download_path: './backend_components/rucio/rucio_es_cache',
-  //   es_client_path: './backend_components/es-cliet.py',
-  //   statusCode: -42,
-  //   message: '',
-  //   success: true,
-  //   outputFilePath: './backend_components/rucio/rucio_es_cache'
-  // }
-
-  // console.log("final config: ", configObject);
-
   let sites = await buildSites();
+
+
+
+
   let transfers = await processSomeData(configObject)
+
+
+
+
   let identifiedTransfers = await buildSiteTransferRecords(sites, transfers)
-
-
 
   sites = identifiedTransfers[0]
   transfers = identifiedTransfers[1]
 
-  // console.log("\n\n\n\n\n\n ********************")
-  // console.log(transfers);
-
-  // console.log(populatedSites[0], populatedSites[1], populatedSites[1].days[0])
-
   let processedTransfers = await sortTransfers(sites, transfers)
-
-  // *** This is the farthest step in the pipeline, the data model from sites now has all the transfers in it and is ready to send to the front end for visualization
-  
-  // *** TODO now lets complete the API by setting up the routes
-
-  // console.log(sites)
-
-  
-  
-  
   let finalObject = [calculateSiteMetaStats(processedTransfers[0]),processedTransfers[1]]
-
-  
-
-//   console.log("\n\n\n\n\n\n\n     final object:   ", finalObject[0].geoJsonSites.features)
-
-
-
   let geoJsonTransferObject = await createGeoJsonTransferFile(finalObject)
-
-  // console.log("     geo JSON: ", geoJsonTransferObject.geoJson.features)
-
-//   fs.writeFileSync("transfersGeoJson.json", JSON.stringify(geoJsonTransferObject.geoJson))
-//   fs.writeFileSync("siteOutput.json", JSON.stringify(finalObject[0].sites))
-//   fs.writeFileSync("sitesGeoJson.json", JSON.stringify(finalObject[0].geoJsonSites))
-
-  // fs.writeFileSync("transfersGeoJsonAnim.json", JSON.stringify(geoJsonObject.animated))    // *** TODO *** not quite working right, think I'm setting the wrong coordinates and also trip view not much without interpolated steps.
-
   let omniObject = {"transferGeoJSON": geoJsonTransferObject, "siteOutputWithStats": finalObject[0].sites, "sitesGeoJSON": finalObject[0].geoJsonSites}
 
-  console.log(omniObject)
+  //console.log(omniObject)
 
   return omniObject
 

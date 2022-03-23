@@ -1,5 +1,0 @@
-[
-{"name": "FNAL_DCACHE_TEST_to_MANCHESTER", "source": "FNAL_DCACHE_TEST", "destination": "MANCHESTER", "reason": "tx_error", "count": 2},
-{"name": "FNAL_DCACHE_TEST_to_DUNE_US_BNL_SDCC", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
-{"name": "CERN_PDUNE_EOS_to_DUNE_US_BNL_SDCC", "source": "CERN_PDUNE_EOS", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 2}
-]

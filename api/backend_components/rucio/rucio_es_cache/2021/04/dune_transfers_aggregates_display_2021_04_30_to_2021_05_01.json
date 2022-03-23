@@ -1,9 +1,0 @@
-[
-{"name": "FNAL_DCACHE_to_LANCASTER", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 8046295538.572848, "start_time": "2021-04-30 00:00:01", "file_transfer_time": 763.0, "transfer_speed(MB/s)": 10.06},
-{"name": "FNAL_DCACHE_to_IMPERIAL", "source": "FNAL_DCACHE", "destination": "IMPERIAL", "file_size": 169110013.867556, "start_time": "2021-04-30 00:00:01", "file_transfer_time": 14.0, "transfer_speed(MB/s)": 11.52},
-{"name": "MANCHESTER_to_LIVERPOOL", "source": "MANCHESTER", "destination": "LIVERPOOL", "file_size": 72695517.18868394, "start_time": "2021-04-30 00:00:01", "file_transfer_time": 13.0, "transfer_speed(MB/s)": 5.33},
-{"name": "FNAL_DCACHE_TEST_to_LANCASTER", "source": "FNAL_DCACHE_TEST", "destination": "LANCASTER", "file_size": 971757821.2850013, "start_time": "2021-04-30 00:00:01", "file_transfer_time": 40.0, "transfer_speed(MB/s)": 23.17},
-{"name": "FNAL_DCACHE_TEST_to_IMPERIAL", "source": "FNAL_DCACHE_TEST", "destination": "IMPERIAL", "file_size": 971757821.2850013, "start_time": "2021-04-30 00:00:01", "file_transfer_time": 52.0, "transfer_speed(MB/s)": 17.82},
-{"name": "FNAL_DCACHE_TEST_to_LIVERPOOL", "source": "FNAL_DCACHE_TEST", "destination": "LIVERPOOL", "file_size": 971757821.2850013, "start_time": "2021-04-30 00:00:01", "file_transfer_time": 44.0, "transfer_speed(MB/s)": 21.06},
-{"name": "FNAL_DCACHE_TEST_to_RAL-PP", "source": "FNAL_DCACHE_TEST", "destination": "RAL-PP", "file_size": 971757821.2850013, "start_time": "2021-04-30 00:00:01", "file_transfer_time": 36.0, "transfer_speed(MB/s)": 25.74}
-]

@@ -1,6 +1,0 @@
-[
-{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_39678246_18_20201120T182849Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 1987112228, "start_time": "2021-04-28 23:19:55", "file_transfer_time": "2530.0", "transfer_speed(MB/s)": "0.75"},
-{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_14350797_7_20201120T093453Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 1977127369, "start_time": "2021-04-28 23:19:55", "file_transfer_time": "2615.0", "transfer_speed(MB/s)": "0.72"},
-{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_38888201_73_20201121T052528Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 1714949838, "start_time": "2021-04-29 07:40:32", "file_transfer_time": "2167.0", "transfer_speed(MB/s)": "0.75"},
-{"name": "PDSPProd4_protoDUNE_sp_reco_stage1_p0.5GeV_35ms_sce_datadriven_38629442_32_20201127T092155Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "file_size": 1951219819, "start_time": "2021-04-29 16:46:34", "file_transfer_time": "323.0", "transfer_speed(MB/s)": "5.76"}
-]

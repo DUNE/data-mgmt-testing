@@ -1,4 +1,0 @@
-[
-{"name": "np04_raw_run005809_0004_dl5_reco1_39133364_0_20201111T041548Z.root", "source": "FNAL_DCACHE", "destination": "LANCASTER", "reason": "tx_error", "count": 1},
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p0.3GeV_35ms_sce_datadriven_46700323_14_20210726T102035Z.root", "source": "FNAL_DCACHE", "destination": "RAL-PP", "reason": "tx_error", "count": 1}
-]

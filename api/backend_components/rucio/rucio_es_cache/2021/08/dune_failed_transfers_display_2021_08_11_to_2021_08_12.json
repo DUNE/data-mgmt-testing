@@ -1,7 +1,0 @@
-[
-{"name": "1gbtestfile.20210809", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
-{"name": "1gbtestfile.20210809", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
-{"name": "1gbtestfile.20210809", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
-{"name": "1gbtestfile.20210809", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1},
-{"name": "1gbtestfile.20210809", "source": "FNAL_DCACHE_TEST", "destination": "DUNE_US_BNL_SDCC", "reason": "tx_error", "count": 1}
-]

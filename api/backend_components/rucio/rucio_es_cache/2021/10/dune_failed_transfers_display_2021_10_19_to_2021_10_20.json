@@ -1,5 +1,0 @@
-[
-{"name": "PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_off_46330875_109_20210702T113827Z.root", "source": "FNAL_DCACHE", "destination": "RAL_ECHO", "reason": "tx_error", "count": 1},
-{"name": "np04_raw_run005837_0096_dl9_reco1_15139978_0_20201219T012612Z.root", "source": "FNAL_DCACHE", "destination": "QMUL", "reason": "tx_error", "count": 1},
-{"name": "np04_raw_run005209_0003_dl8_reco1_42893188_0_20210320T175646Z.root", "source": "FNAL_DCACHE", "destination": "RAL-PP", "reason": "tx_error", "count": 1}
-]
