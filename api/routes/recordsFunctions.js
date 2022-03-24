@@ -56,13 +56,10 @@ function dateFormatConverter(passedDate) {
 function runPython(startDate, endDate) {
 
   return new Promise(async (resolve, reject) => {
-
-  
-      
     let fs = require('fs');
 
     let configResult = await loadConfig();
-    console.log("\n\n\nconfigobject:", configResult ,"\n\n\n")
+    // console.log("\n\n\nconfigobject:", configResult ,"\n\n\n")
 
     let executableName = configResult.executableName;
     let downloadPath = configResult.outputFilePath
@@ -83,7 +80,7 @@ function runPython(startDate, endDate) {
       "-D", configResult.outputFilePath
       ]);
 
-      console.log("\n\n process arguments: ", process.spawnargs)
+      console.log("\n\n Python arguments: ", process.spawnargs)
     
       process.on('error', function(err) {
         console.log("Python error detected, child process encoutered an error. \n")
@@ -103,7 +100,7 @@ function runPython(startDate, endDate) {
 
 
       process.on("close", (code) => {
-          console.log("closing with code: ", code)
+          console.log("Python exited with code: ", code)
 
           // let responseDetails = {statusCode: -42, message:"", success:false, outputFilePath:outputPath, start:searchParameters.startDate, end:searchParameters.endDate}       //TODO, discuss what data we should take from this
 
@@ -209,118 +206,117 @@ function runPython(startDate, endDate) {
 
   async function processSomeData(configuration) {
 
-    //console.log("***\n\n", configuration  ,"***\n\n")
-
-
-
-        
         let fs = require('fs');
+
         let transferObject = {days:[]}
         let transferCount = 0;
-        let allFilesPresent = true;
-        let loadedData;
+
         let failedLoad = 0;
         let failedFiles = [];
+        let syntaxErrorFiles = [];
+        let syntaxErrorCount = 0;
     
         let startDate = configuration.searchParameters.startDate;
         let endDate = configuration.searchParameters.endDate;
       
         let dayList = getDaysArray(new Date(startDate),new Date(endDate));
         let utcDates = [...dayList]
-        let fileList = []
-      
+        let dayCount = dayList.length;
+
+        let fileListIndividualTransfers = [];
+        let fileListAggregateTransfers = [];
+        let fileListFailedTransfers = [];
+        let fileListNetworkCheckups = [];
+        let fileListAggregateFailures = [];
+        let fileListFailedCheckups = [];
+        let syntaxErrorList = [];
+
+        // console.log("days: ", dayList);
+        
         for (i in dayList) {
-            dayList[i] = dayList[i].toISOString().slice(0,10)   //this outputs a string in the yyyy-mm-dd format, thought about using localstring but what if the local environment is europe? day and month could be inverted
-        }
-    
-        //console.log("\n***\n\n\n", utcDates, "\n***\n\n\n")
-    
-        for (i in dayList) {  //build list of files we need for this data
-    
+          dayList[i] = dayList[i].toISOString().slice(0,10)   //this outputs a string in the yyyy-mm-dd format, thought about using localstring but what if the local environment is europe? day and month could be inverted
           let terminatingDay = new Date(utcDates[i]);
-          //console.log("term day: ", terminatingDay)
           terminatingDay.setDate(terminatingDay.getDate() + 1);
           terminatingDay = terminatingDay.toISOString().slice(0,10);
           let beginingDay = dayList[i];
           let month = dayList[i].slice(5,7);
           let year = dayList[i].slice(0,4);
-          let path = "." + configuration.download_path.substring(1) + "/" + year + "/" + month + "/dune_transfers_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json"
-          fileList.push(path)
+
+          let individualFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month      + "/dune_transfers_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json"
+          let aggregateFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month       + "/dune_transfers_aggregates_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";
+          let failedFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month          + "/dune_failed_transfers_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";
+          let checkupFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month         + "/dune_network_checkup_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";
+          let failedAggregateFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month + "/dune_failed_transfers_aggregates_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";
+          let failedCheckupFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month   + "/dune_failed_network_checkup_display" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";          
+          
+          fileListIndividualTransfers.push(individualFilePath);
+          fileListAggregateTransfers.push(aggregateFilePath);
+          fileListFailedTransfers.push(failedFilePath);
+          fileListNetworkCheckups.push(checkupFilePath);
+          fileListAggregateFailures.push(failedAggregateFilePath);
+          fileListFailedCheckups.push(failedCheckupFilePath);
         }
-    
-        //console.log("\n***\n\n\n", fileList, "\n***\n\n\n")
-    
-        for (let i=0; i < fileList.length; i++) {
+        
+        // console.log("aggreagtes: ", fileListAggregateTransfers)
+
+        //ask es_client to get the date range we want, if it's already there es_client won't download it, I think.
+        await runPython(dayList[0], dayList[dayList.length-1]);
+
+        for (let i=0; i < dayCount; i++) {
           try {
-            fs.open(fileList[i])
-          } catch (error) {
-            console.log("some files missing, setting flag to download them.")
-            allFilesPresent = false;
-            break;
-          }
-        }
-    
-        if (!allFilesPresent) {
-          await runPython(dayList[0], dayList[dayList.length-1]);
-          console.log("after async file download")
-          //console.log(await fs.promises.readdir("./backend_components/rucio/rucio_es_cache/2021/01")) // show files in directory
-    
-          for (x in fileList) {
-            console.log("trying to load: ", fileList[x])
-            let dailyData = await fs.promises.readFile(fileList[x]);
-            let jsonObject;
-            //sanitize for extra comma at end
-            if (dailyData && dailyData.toString().charAt(dailyData.toString().length-4) === ',') {
-              //Uh oh, found extra trailing comma that would have broken things, deleting...
-              console.log("\nWarning, found extraneous trailing comma and deleted it in file:", fileList[x], "\n")
-              let regex = /\,(?!\s*?[\{\[\"\'\w])/g;
-              dailyData = ( dailyData.toString() ).replace(regex, ''); // remove all trailing commas
-              jsonObject = JSON.parse(dailyData);
-              console.log(dailyData.substring(dailyData.length-10, dailyData.length))
+            
+            dailyData = await fs.promises.readFile(fileListAggregateTransfers[i]);
+            dailyDataString = dailyData.toString();
 
-              let dailyTransferRecord = {date: dayList[x], transfers: jsonObject}
-              transferObject.days.push(dailyTransferRecord)
-              transferCount += Object.keys(jsonObject).length
-              //console.log("\ntransfer: ", dailyTransferRecord.transfers);
+            if (dailyDataString.length > 0) {
+              //if we get here the file exists, and it's not blank, now check for trailing comma  
 
-            } else {
+              if (dailyDataString.charAt(dailyDataString.length-4) === ',') { //fix the trialing comma
+                console.log("\nWarning, found extraneous trailing comma in file:\n", fileListAggregateTransfers[i], "\n")
 
-              try {
-                let transferJSON = JSON.parse(dailyData);
+                syntaxErrorList.push(fileListAggregateTransfers[i])
+                let regex = /\,(?!\s*?[\{\[\"\'\w])/g;
+                dailyData = dailyDataString.replace(regex, ''); // remove all trailing commas
                 
-                if (transferJSON && Object.keys(transferJSON) > 1) {
-                  //console.log("keys", Object.keys(transferJSON))
-                  let dailyTransferRecord = {date: dayList[x], transfers: transferJSON}
-                  transferObject.days.push(dailyTransferRecord)
-                  transferCount += Object.keys(transferJSON).length
-                  // console.log("\ntransfer: ", dailyTransferRecord.transfers);
-  
-                }
-  
-              } catch (error) {
-                console.log("\nFailed to load, bad JSON syntax, file: ", fileList[x], "\n")
-                failedFiles.push(fileList[x]);
-                failedLoad += 1;
+                let jsonObject = JSON.parse(dailyData);
+                let dailyTransferRecord = {date: dayList[i], transfers: jsonObject}
+                transferObject.days.push(dailyTransferRecord)
+                transferCount += Object.keys(jsonObject).length
+
+                syntaxErrorFiles.push(fileListAggregateTransfers[i]);
+                syntaxErrorCount += 1;
               }
 
+
+            } else {
+              console.log("Warning, file ", fileListAggregateTransfers[i], " is blank, skipping.");
+              failedFiles.push(fileListAggregateTransfers[i]);
             }
-            
-
+          } catch (error) {
+            console.log("\nFailed to load, bad JSON syntax, file: ", fileListAggregateTransfers[i], "\n")
+            failedFiles.push(fileListAggregateTransfers[i]);
+            failedLoad += 1;
           }
-
-          transferObject.daysPresent = dayList
-          
-          console.log("\n", transferCount, "transfers retrieved from query");
-          console.log("\n", failedLoad , "files failed to load (likely bad JSON):\n\n", failedFiles)
-
-          console.log("transfer object sample: ", transferObject[5])
-      
-          return transferObject
         }
-}
 
+        transferObject.daysPresent = dayList
+          
+        console.log("\n", transferCount, "transfers successfuly retrieved from query");
 
+        console.log("\n", syntaxErrorCount, "transfer files had trailing commas or other syntax errors that were successfuly repaired")
+        if (syntaxErrorCount > 0){
+          console.log(" ", syntaxErrorFiles, " \n")
+        }
+        console.log("",failedLoad , "files were blank or failed to load (likely bad JSON)");
+        if (failedLoad > 0) {
+          console.log(" ",failedFiles," \n")
+        }
 
+        // console.log("\ntransfer object sample entry: ", transferObject.days[0], "\n")
+      
+        return transferObject
+
+      }
 
 
 
