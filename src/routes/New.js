@@ -19,8 +19,8 @@ function getSites() {
 function getTransfers() {
     return axios.get('http://localhost:3001/records', { //need to address bug where it crashes if fed reverse time, IE first later than second
         params: {
-            startDate: '10-24-2021',
-            endDate: "12-31-2021"
+            startDate: '01-01-2020',
+            endDate: "03-23-2022"
         }
       })
 }
