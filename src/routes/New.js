@@ -16,6 +16,8 @@ axios.defaults.baseURL = "localhost"
 function getSites() {
     return axios.get("http://localhost:3001/sites");
 }
+
+
 function getTransfers() {
     return axios.get('http://localhost:3001/records', { //need to address bug where it crashes if fed reverse time, IE first later than second
         params: {
@@ -24,11 +26,6 @@ function getTransfers() {
         }
       })
 }
-
-function getSearchResults() {
-    alert("still need to hook this up to es_caching...")
-}
-
 
 function New() {
 
@@ -160,8 +157,7 @@ function New() {
     <Button variant="contained">Get Transfers</Button> */}
     <Map></Map>
     <Button onClick={clickGetSites}>Get Just Sites</Button>
-    <Button onClick={clickGetTransfers}>Get Transfers - Cached</Button>
-    <Button onClick={getSearchResults}>Get Transfers - New Query</Button>
+    <Button onClick={clickGetTransfers}>Get Transfers from remote</Button>
 
     </>;
 }
