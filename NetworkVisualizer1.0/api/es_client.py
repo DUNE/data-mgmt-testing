@@ -5,7 +5,7 @@ import time
 import threading
 import queue
 import re
-
+#import logging
 
 from pathlib import Path
 
@@ -17,6 +17,10 @@ from dateutil import parser as date_parser
 from dateutil.relativedelta import relativedelta
 
 import argparse as ap
+
+#log_format = f"%(asctime)s | %(name)s | %(levelname)s | %(message)s"
+
+#logging.basicConfig()
 
 #Based on Simplernerd's tutorial here: https://simplernerd.com/elasticsearch-scroll-python/
 #Scrolls through all of the results in a given date range
@@ -428,7 +432,7 @@ class RucioESClient():
 	def check_args(self):
 		#Defaults only applies to optional arguments
 		default_optionals = {
-			"debug_level" : 3,
+			"debug_level" : 2,
 			"show_timing" : False,
 			"dirname" : f"{Path.cwd()}/cache",
 			"es_cluster" : "https://fifemon-es.fnal.gov",
@@ -716,7 +720,8 @@ class RucioESClient():
 		print("Timing Info")
 		print("===========")
 		print(f"Overall run time: {round(self.times['run_time'], 3)} seconds")
-		print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/self.times['es_thread_count'], 3)} seconds")
+		if self.times['es_thread_count'] != 0:
+			print(f"Average Elasticsearch thread time: {round(self.times['elasticsearch_time']/self.times['es_thread_count'], 3)} seconds")
 		print(f"Total number of Elasticsearch threads: {self.times['es_thread_count']}")
 		print(f"Simultaneous days: {self.args['simultaneous_days']}")
 		print(f"File IO Time: {round(self.times['io_time'], 3)} seconds")
@@ -782,7 +787,7 @@ class RucioESClient():
 
 			if not self.client.indices.exists(index=index):
 				curr_date += relativedelta(days=+1)
-				if self.args["debug"] >= 2:
+				if self.debug_level >= 2:
 					print(f"Error: index {index} does not exist in cluster but is needed for date {curr_date}. Skipping date.")
 				continue
 
