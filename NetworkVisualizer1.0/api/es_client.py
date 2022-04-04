@@ -661,7 +661,7 @@ class RucioESClient():
 					elif self.file_info[key]["process_type"] == "function":
 						start_time = datetime.now().timestamp()
 						res = self.file_info[key]["process_func"](next_data)
-						if len(res.keys()) == 0:
+						if res == "{}":
 							continue
 						write_start = datetime.now().timestamp()
 						files[key].write(f"{res},\n")
