@@ -28,7 +28,9 @@ background-image: linear-gradient(to right, #7CAED5 0%, #ffff 100%);
   float: right;
 }
 
-
+#searchArea{
+  position: fixed;
+}
 
 #mapTitleAnStatusRow{
 

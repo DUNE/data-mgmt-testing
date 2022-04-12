@@ -6,11 +6,17 @@ import data from '../siteOutputGeoJson.json';
 import { processGeojson, processRowObject } from "kepler.gl/dist/processors";
 import siteData from "../sitesGeoJson.json"
 import transferData from "../transfersGeoJson.json"
-import { Button } from 'reactstrap';
+import { Button,Col,Row, Container, Accordian ,Spinner, Collapse, Card, CardBody, Dropdown, DropdownToggle, DropdownItem, DropdownMenu, ButtonGroup, UncontrolledPopover, PopoverHeader, PopoverBody } from 'reactstrap';
+import DatePicker from "react-datepicker";  
+import "react-datepicker/dist/react-datepicker.css"; 
+import { keplerGlReducer, keplerGlReducerCore } from "kepler.gl/dist/reducers";
 
 const axios = require('axios').default;
 axios.defaults.baseURL = "localhost"
 // import combinedData from "../modifiedgeoJson.json"
+
+
+
 
 
 function getSites() {
@@ -27,16 +33,31 @@ function getTransfers() {
       })
 }
 
+
+
+
+
+
 function New() {
+
+
 
     const dispatch = useDispatch();
     let objectCache = false;
 
     const mapConfig = {
+        uiState: {
+            currentModal: null
+        },
         visState: {
 
         }
     };
+
+
+
+
+
 
     const clickGetSites = () => {
         getSites().then((res) => {
@@ -127,17 +148,7 @@ function New() {
                     }
                 })
             );
-
-
-
-
         });
-
-
-
-
-
-
     };
 
 
@@ -145,19 +156,72 @@ function New() {
 
 
 
-
+    //this triggers the button automatically once when the page is first/re - loaded.
     useEffect(() => {
         clickGetSites();
+
     }, []);
+
 
     return <>
 
+    <Container id="mainContainer" fluid="lg">
 
-    {/* <Button variant="contained">Get Sites Only</Button>
-    <Button variant="contained">Get Transfers</Button> */}
-    <Map></Map>
-    <Button onClick={clickGetSites}>Get Just Sites</Button>
-    <Button onClick={clickGetTransfers}>Get Transfers from remote</Button>
+        <Row id="loadingRow">
+
+            <Col>
+                <ButtonGroup size="lg" className="mb-2">
+                    <Button>View All Transfers</Button>
+                    <Button>View Failed Transfers</Button>
+                    <Button>View Network Test Results</Button>
+                </ButtonGroup>
+            </Col>
+
+            <Col>
+                <ButtonGroup size="lg" className="mb-2">
+                        <Button>View Individual Transfers</Button>
+                        <Button>View Aggregate Transfers</Button>
+                    </ButtonGroup>
+            </Col>
+
+            <Col className="bg-light border">
+                <Button
+                    id="searchPopOver"
+                    type="button"
+                >
+                    New Search
+                </Button>
+
+                
+
+                <UncontrolledPopover
+                    placement="bottom"
+                    target="searchPopOver"
+                    trigger="legacy"
+                >
+                    <PopoverHeader>Select Dates</PopoverHeader>
+                    <PopoverBody>
+                        <DatePicker></DatePicker>
+                        <DatePicker></DatePicker>
+                        <Button>Go</Button>
+                    </PopoverBody>
+
+                </UncontrolledPopover>
+
+                <Spinner></Spinner>
+            </Col>
+
+        </Row>
+
+        <Row id="mapRow">
+            <Map></Map>
+        </Row>
+
+    </Container>
+
+    {/* <Map></Map> */}
+    {/* <Button onClick={clickGetSites}>Get Just Sites</Button>
+    <Button onClick={clickGetTransfers}>Get Transfers from remote</Button> */}
 
     </>;
 }
