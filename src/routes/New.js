@@ -24,14 +24,55 @@ function getSites() {
 }
 
 
-function getTransfers(startDate, endDate) {
+function getTransfers(startDate, endDate, dataMode, aggregateMode) {
     return axios.get('http://localhost:3001/records', { //need to address bug where it crashes if fed reverse time, IE first later than second
         params: {
             startDate: startDate, //'01-01-2020',
-            endDate: endDate //"03-23-2022"
+            endDate: endDate, //"03-23-2022"
+            dataMode: dataMode,
+            aggregateMode: aggregateMode
         }
       })
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -46,6 +87,8 @@ function New() {
     const [startDate, setStartDate] = useState(sevenDaysAgo);
     const [endDate, setEndDate] = useState(new Date);
     const [closePopover, setClosePopover] = useState(true);
+    const [dataMode, setDataMode] = useState("successes");
+    const [arregateMode, setAggregateMode] = useState(true);
 
     console.log("dates: ", startDate, endDate)
 
@@ -121,7 +164,7 @@ function New() {
         let niceStartDate = dateFormatConverter(startDate);
         let niceEndDate = dateFormatConverter(endDate);
 
-        getTransfers(niceStartDate, niceEndDate).then((res) => {
+        getTransfers(niceStartDate, niceEndDate, dataMode, arregateMode).then((res) => {
 
             console.log("records/transfers:   ",res.data)
             let transfers = []
@@ -194,7 +237,7 @@ function New() {
 
             <Col>
                 <ButtonGroup size="lg" className="mb-2">
-                    <Button>View All Transfers</Button>
+                    <Button active={true}>View Completed Transfers</Button>
                     <Button>View Failed Transfers</Button>
                     <Button>View Network Test Results</Button>
                 </ButtonGroup>

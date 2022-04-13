@@ -11,7 +11,6 @@ router.get('/', async function(req, res, next) {
 
   //console.log(" REQ PARAMS: ", req.query)
   let searchParameters = req.query;
-  console.log(" /// parametesr: ", searchParameters);
 
   let result = await processController(searchParameters);
   res.status(200).send(result)

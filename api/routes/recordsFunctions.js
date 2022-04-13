@@ -5,6 +5,20 @@ const { json } = require("d3");
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 async function loadConfig() {
   let fs = require('fs');
   let configObject = {};
@@ -42,10 +56,36 @@ async function loadConfig() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 function dateFormatConverter(passedDate) {
+  console.log("got date: ", passedDate)
   const date = passedDate.toISOString().split("T")[0].replace(/-/g, "/");
   return date;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -101,37 +141,6 @@ function runPython(startDate, endDate) {
 
       process.on("close", (code) => {
           console.log("Python exited with code: ", code)
-
-          // let responseDetails = {statusCode: -42, message:"", success:false, outputFilePath:outputPath, start:searchParameters.startDate, end:searchParameters.endDate}       //TODO, discuss what data we should take from this
-
-          // //TODO here we will read the exit code and compare the value to a table below and report on the status.
-          
-          // switch (code) {
-          //     case 0:
-          //       console.log('Python reports no errors upon exit\n');
-          //       break;
-          //     case 1:
-          //         console.log("Python reports unsuccessful exit");
-          //         break;
-          //     case 666:
-          //       console.log('We can have other message codes, like server never responded, or bad credentials or something, lets consider what options to have.');
-          //       break;
-          //     default:
-          //       console.log("Python reported an unknown status code: ", code);
-          //   }
-
-          // responseDetails.statusCode=code
-          // responseDetails.message=""                          //TODO save some descriptive messages for each exit code
-          // responseDetails.typesRetrieved.push("transfers")    //TODO, read what arguments are being sent to python so we can syncronize that
-
-          // if (code==0) {
-          //   responseDetails.success=true
-          //   callbackFunction(responseDetails);
-          // }
-          // else{
-          //   callbackFunction(responseDetails);
-          // }
-
           resolve();
       });
       
@@ -156,35 +165,8 @@ function runPython(startDate, endDate) {
 
 
 
-
-
-
-
-
-
-
-  // async function checkIfFilesCached(fileList) {
-  //   console.log(" inside file checking function")
-
-  //   for (let i=0; i < fileList.length; i++) {
-  //     try {
-  //       fs.open(fileList[i])
-  //       console.log("after file check")
-  //     } catch (error) {
-  //       console.log("some files missing, setting flag to download them.")
-  //       return false;
-  //     }
-  //   }
-
-  //   console.log("all files exist");
-  //   return true;
-  // }
-
-
-
-
   function getDaysArray(start, end) {                                             //thanks to enesn on stack overflow for these 8 or so lines
-    for(var arr=[],dt=new Date(start); dt<=end; dt.setDate(dt.getDate()+1)){
+    for(var arr=[],dt=new Date(start); dt <= end; dt.setDate(dt.getDate()+1)){
         arr.push(new Date(dt));
     }
     return arr;
@@ -204,9 +186,21 @@ function runPython(startDate, endDate) {
 
 
 
+
+
+
+
   async function processSomeData(configuration) {
 
         let fs = require('fs');
+
+        console.log("\n    ----REQ TYPE DETAILS---- :    got request for  ", configuration.searchParameters.dataMode, "   data set. \n    ----Showing only aggregates?  ", configuration.searchParameters.aggregateMode, "\n")
+
+        
+        let uberFileListIndex = []
+        let aggregateFlag = configuration.searchParameters.aggregateMode;
+        let dataTypeRequested = configuration.searchParameters.dataMode;
+        let targetIndex = 0;
 
         let transferObject = {days:[]}
         let transferCount = 0;
@@ -239,15 +233,17 @@ function runPython(startDate, endDate) {
           terminatingDay.setDate(terminatingDay.getDate() + 1);
           terminatingDay = terminatingDay.toISOString().slice(0,10);
           let beginingDay = dayList[i];
+          let dayRange = beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";
           let month = dayList[i].slice(5,7);
           let year = dayList[i].slice(0,4);
+          let folderPath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month;
 
-          let individualFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month      + "/dune_transfers_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json"
-          let aggregateFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month       + "/dune_transfers_aggregates_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";
-          let failedFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month          + "/dune_failed_transfers_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";
-          let checkupFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month         + "/dune_network_checkup_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";
-          let failedAggregateFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month + "/dune_failed_transfers_aggregates_display_" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";
-          let failedCheckupFilePath = "." + configuration.download_path.substring(1) + "/" + year + "/" + month   + "/dune_failed_network_checkup_display" + beginingDay.replaceAll('-', '_') + "_to_" + terminatingDay.replaceAll('-', '_') + ".json";          
+          let individualFilePath =      folderPath + "/dune_" + "transfers_display" +                   "_" + dayRange;//
+          let aggregateFilePath =       folderPath + "/dune_" + "transfers_aggregates_display" +        "_" + dayRange;//
+          let failedFilePath =          folderPath + "/dune_" + "failed_transfers_display" +            "_" + dayRange;//
+          let checkupFilePath =         folderPath + "/dune_" + "network_checkup_display" +             "_" + dayRange;//
+          let failedAggregateFilePath = folderPath + "/dune_" + "failed_transfers_aggregates_display" + "_" + dayRange;//
+          let failedCheckupFilePath =   folderPath + "/dune_" + "failed_network_checkup_display" +      "_" + dayRange;//
           
           fileListIndividualTransfers.push(individualFilePath);
           fileListAggregateTransfers.push(aggregateFilePath);
@@ -257,7 +253,35 @@ function runPython(startDate, endDate) {
           fileListFailedCheckups.push(failedCheckupFilePath);
         }
         
-        // console.log("aggreagtes: ", fileListAggregateTransfers)
+        
+        uberFileListIndex.push(fileListIndividualTransfers)
+        uberFileListIndex.push(fileListAggregateTransfers)
+        uberFileListIndex.push(fileListFailedTransfers)
+        uberFileListIndex.push(fileListNetworkCheckups);
+        uberFileListIndex.push(fileListAggregateFailures);
+        uberFileListIndex.push(fileListFailedCheckups);
+
+        if (dataTypeRequested === "successes") {
+          if (aggregateFlag) {
+            targetIndex = 1;
+          }
+          else {
+            targetIndex = 0;
+          }
+        }
+
+        if (dataTypeRequested === "failures") {
+          if (aggregateFlag) {
+            targetIndex = 4;
+          }
+          else {
+            targetIndex = 2;
+          }
+        }
+
+        if (dataTypeRequested === "checkup") {
+          targetIndex = [3,5]
+        }
 
         //ask es_client to get the date range we want, if it's already there es_client won't download it, I think.
         await runPython(dayList[0], dayList[dayList.length-1]);
@@ -265,14 +289,14 @@ function runPython(startDate, endDate) {
         for (let i=0; i < dayCount; i++) {
           try {
             
-            dailyData = await fs.promises.readFile(fileListAggregateTransfers[i]);
+            dailyData = await fs.promises.readFile(uberFileListIndex[targetIndex][i]);
             dailyDataString = dailyData.toString();
 
             if (dailyDataString.length > 0) {
               //if we get here the file exists, and it's not blank, now check for trailing comma  
 
               if (dailyDataString.charAt(dailyDataString.length-4) === ',') { //fix the trialing comma
-                console.log("\nWarning, found extraneous trailing comma in file:\n", fileListAggregateTransfers[i], "\n")
+                console.log("\nWarning, found extraneous trailing comma in file:\n", uberFileListIndex[targetIndex][i], "\n")
 
                 syntaxErrorList.push(fileListAggregateTransfers[i])
                 let regex = /\,(?!\s*?[\{\[\"\'\w])/g;
@@ -283,18 +307,18 @@ function runPython(startDate, endDate) {
                 transferObject.days.push(dailyTransferRecord)
                 transferCount += Object.keys(jsonObject).length
 
-                syntaxErrorFiles.push(fileListAggregateTransfers[i]);
+                syntaxErrorFiles.push(uberFileListIndex[targetIndex][i]);
                 syntaxErrorCount += 1;
               }
 
 
             } else {
-              console.log("Warning, file ", fileListAggregateTransfers[i], " is blank, skipping.");
-              failedFiles.push(fileListAggregateTransfers[i]);
+              console.log("Warning, file ", uberFileListIndex[targetIndex][i], " is blank, skipping.");
+              failedFiles.push(uberFileListIndex[targetIndex][i]);
             }
           } catch (error) {
-            console.log("\nFailed to load, bad JSON syntax, file: ", fileListAggregateTransfers[i], "\n")
-            failedFiles.push(fileListAggregateTransfers[i]);
+            console.log("\nFailed to load, bad JSON syntax, file: ", uberFileListIndex[targetIndex][i], "\n")
+            failedFiles.push(uberFileListIndex[targetIndex][i]);
             failedLoad += 1;
           }
         }
@@ -312,8 +336,6 @@ function runPython(startDate, endDate) {
           console.log(" ",failedFiles," \n")
         }
 
-        // console.log("\ntransfer object sample entry: ", transferObject.days[0], "\n")
-      
         return transferObject
 
       }
@@ -496,6 +518,25 @@ function siteNameFuzzyMatching (sitesObject, adressField) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 async function buildSiteTransferRecords(sitesObject, passedTransferObject) {
 
   //setup list of unknown sites that don't match any words
@@ -571,6 +612,27 @@ async function buildSiteTransferRecords(sitesObject, passedTransferObject) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function calculateSiteMetaStats(passedSitesObject) {
 
   // console.log("      network total:          ", passedSitesObject.networkTransferTotal)
@@ -617,6 +679,25 @@ function calculateSiteMetaStats(passedSitesObject) {
 
   return passedSitesObject
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -691,6 +772,7 @@ function createGeoJsonTransferFile (passedTransferObject) {
 
 
 
+ 
 
 
 
@@ -699,19 +781,14 @@ function createGeoJsonTransferFile (passedTransferObject) {
 
 
 async function processController(searchParameters) {
-
+  
+  // console.log("search params:  ", searchParameters)
   let configObject = await loadConfig();
   configObject.searchParameters = searchParameters;
 
   let sites = await buildSites();
 
-
-
-
   let transfers = await processSomeData(configObject)
-
-
-
 
   let identifiedTransfers = await buildSiteTransferRecords(sites, transfers)
 
@@ -728,6 +805,21 @@ async function processController(searchParameters) {
   return omniObject
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // processController();
