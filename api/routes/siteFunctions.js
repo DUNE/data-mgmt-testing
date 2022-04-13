@@ -240,6 +240,7 @@ async function downloadSites() {
     siteObject.longitude = parseFloat(serializedSites[x].longitude)
 
     siteObject.names = extractNames(serializedSites[x])
+    siteObject.mapName = siteObject.names[0];
 
     // siteObject.displayName = siteObject.names[0]
 

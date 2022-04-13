@@ -224,7 +224,7 @@ function New() {
 
     //this triggers the button automatically once when the page is first/re - loaded.
     useEffect(() => {
-        //clickGetSites();
+        clickGetSites();
 
     }, []);
 

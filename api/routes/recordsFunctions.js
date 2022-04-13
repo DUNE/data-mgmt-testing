@@ -101,7 +101,7 @@ function runPython(startDate, endDate) {
     let configResult = await loadConfig();
     // console.log("\n\n\nconfigobject:", configResult ,"\n\n\n")
 
-    let executableName = configResult.executableName;
+    //let executableName = configResult.executableName;
     let downloadPath = configResult.outputFilePath
     downloadPath = downloadPath.split("/")[downloadPath.split("/").length-1]
 
@@ -798,6 +798,7 @@ async function processController(searchParameters) {
   let processedTransfers = await sortTransfers(sites, transfers)
   let finalObject = [calculateSiteMetaStats(processedTransfers[0]),processedTransfers[1]]
   let geoJsonTransferObject = await createGeoJsonTransferFile(finalObject)
+
   let omniObject = {"transferGeoJSON": geoJsonTransferObject, "siteOutputWithStats": finalObject[0].sites, "sitesGeoJSON": finalObject[0].geoJsonSites}
 
   //console.log(omniObject)
