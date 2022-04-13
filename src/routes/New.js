@@ -24,11 +24,11 @@ function getSites() {
 }
 
 
-function getTransfers() {
+function getTransfers(startDate, endDate) {
     return axios.get('http://localhost:3001/records', { //need to address bug where it crashes if fed reverse time, IE first later than second
         params: {
-            startDate: '01-01-2020',
-            endDate: "03-23-2022"
+            startDate: startDate, //'01-01-2020',
+            endDate: endDate //"03-23-2022"
         }
       })
 }
@@ -39,8 +39,15 @@ function getTransfers() {
 
 
 function New() {
+    
+    let sevenDaysAgo = new Date()
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate()-5);     //default start date for querry will be today, end date will be 7 days ago, so default search behaviour is to show the last week of activity
 
+    const [startDate, setStartDate] = useState(sevenDaysAgo);
+    const [endDate, setEndDate] = useState(new Date);
+    const [closePopover, setClosePopover] = useState(true);
 
+    console.log("dates: ", startDate, endDate)
 
     const dispatch = useDispatch();
     let objectCache = false;
@@ -96,9 +103,25 @@ function New() {
 
 
 
+    function dateFormatConverter(passedDate) {
+        const date = passedDate.toISOString().split("T")[0].replace(/-/g, "/");
+        // console.log(passedDate)
+        // console.log(date)
+        return date;
+      }
 
-    const clickGetTransfers = () => {
-        getTransfers().then((res) => {
+
+
+
+
+    const clickGetTransfers = (startDate, endDate) => {
+
+        console.log("  :",startDate.setHours(0,0,0,0),endDate.setHours(0,0,0,0))
+
+        let niceStartDate = dateFormatConverter(startDate);
+        let niceEndDate = dateFormatConverter(endDate);
+
+        getTransfers(niceStartDate, niceEndDate).then((res) => {
 
             console.log("records/transfers:   ",res.data)
             let transfers = []
@@ -158,7 +181,7 @@ function New() {
 
     //this triggers the button automatically once when the page is first/re - loaded.
     useEffect(() => {
-        clickGetSites();
+        //clickGetSites();
 
     }, []);
 
@@ -188,6 +211,7 @@ function New() {
                 <Button
                     id="searchPopOver"
                     type="button"
+                    onClick={() => setClosePopover(false)}
                 >
                     New Search
                 </Button>
@@ -197,13 +221,34 @@ function New() {
                 <UncontrolledPopover
                     placement="bottom"
                     target="searchPopOver"
-                    trigger="legacy"
+                    trigger="click"
+                    isOpen={!closePopover}
                 >
                     <PopoverHeader>Select Dates</PopoverHeader>
                     <PopoverBody>
-                        <DatePicker></DatePicker>
-                        <DatePicker></DatePicker>
-                        <Button>Go</Button>
+                        <p>start date</p>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            selectsStart
+                            startDate={startDate}
+                            endDate={endDate}
+                        />
+                        <p>end date</p>
+                        <DatePicker
+                            maxDate={new Date()}
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date)}
+                            selectsEnd
+                            startDate={startDate}
+                            endDate={endDate}
+                            minDate={startDate}
+                        />
+                        <Button onClick={() => {
+                            setClosePopover(true) 
+                            clickGetTransfers(startDate, endDate)
+                        } }>Go</Button>
+                        <Button onClick={() => (setClosePopover(true))}>Cancel</Button>
                     </PopoverBody>
 
                 </UncontrolledPopover>
