@@ -4,6 +4,8 @@ import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import math
 FAST=True
 durationcut = 50
+#vetodisks = ["golias100.farm.particle.cz","eospublic.cern.ch","fal-pygrid-30.lancs.ac.uk","lancs.ac.uk"]
+vetodisks=[]
 if not FAST:
     durationcut = 200
 DUNEPRO=False  # only dunepro
@@ -25,12 +27,27 @@ def getListOfTypes(data,key,inlist):
   l = list(inlist.keys())
   
   for item in data:
+    #if FAST and item["application"]!= "pdspana":
+    #    continue
+    if FAST and item["file_location"] in vetodisks:
+        continue
     if not key in item:
       continue
     val = item[key]#.decode('UTF-8')
     if key == "site":
       val = countrify(val)
-    
+    # try to figure out nodes without counting em all.
+    if key == "node":
+      if "sandy" in val:
+        val = "sandy.local.pr"
+      if "comp" in val:
+        val = "lancaster.uk"
+      if "gridpp.rl.ac.uk" in val:
+        val = "gridpp.rl.ac.uk"
+      tags = val.split(".")
+      if len(tags)>1:
+        val = val.replace(tags[0]+".","")
+        
     if val in l:
       continue
     
@@ -106,7 +123,8 @@ def analyze(start_date,end_date,delta , expt, pid):
   states = {}
   apps = {"unknown":0}
   start_range = start_date
-  
+  hostnames = {}
+  hostlist = open('hostnames.txt','w')
   while start_range < end_date:
     end_range = start_range + delta
     inputfilename = "data/%s_summary_%s_%s.jsonl"%(expt,start_range,end_range)
@@ -117,6 +135,7 @@ def analyze(start_date,end_date,delta , expt, pid):
     #print ("input:",inputfilename)
     start_range += delta
     data = loadjsonlines(inputfilename)
+    hostnames = getListOfTypes(data,"node",hostnames)
     apps = getListOfTypes(data,"application",apps)
     sites = getListOfTypes(data,"site",sites)
     states = getListOfTypes(data,"last_file_state",states)
@@ -126,7 +145,9 @@ def analyze(start_date,end_date,delta , expt, pid):
     
     if DUNEPRO:
       users = {"dunepro":1}
-   
+  for i in hostnames:
+    hostlist.write("%s\n"%i)
+  hostlist.close()
   print (dates)
   firstday = start_date
   lastday = end_date
@@ -138,7 +159,7 @@ def analyze(start_date,end_date,delta , expt, pid):
        out_name = out_name + "_notxroot"
   out_name = out_name.replace("-","_")
   #sites = sorted(sites,reverse=True)
- 
+  
   ns = len(sites)
   nd = len(disks)
   nu = len(users)
@@ -159,7 +180,7 @@ def analyze(start_date,end_date,delta , expt, pid):
     remtiming[app] = ROOT.TH1D(app+"_rem","log10 timing for app %s; Log10 of streaming rate, MB/sec"%app,50,-2.,3.)
   for site in sites:
     for disk in disks:
-        siterate[site+disk] = ROOT.TH1D(site+disk,"log10 timing for site %s and disk %s; Log10  of streaming rate, MB/sec"%(site,disk),40,-2.,2.)
+        siterate[site+disk] = ROOT.TH1D(site+disk,"log10 timing for site %s and disk %s; Log10  of streaming rate, MB/sec"%(site,disk),20,-2.,2.)
   cross = ROOT.TH2F("cross","transfers",nd,0,nd,ns,0,ns)
   setXYLabels(cross,disks,sites)
   state = ROOT.TH2F("state","transfers",nstate,0,nstate,ns,0,ns)
@@ -269,6 +290,10 @@ def analyze(start_date,end_date,delta , expt, pid):
         else:
           if user =="dunepro" or application == "reco":
             continue
+          if "reconstructed" not in item["data_tier"]:
+            continue
+          #if application != "pdspana":
+          #  continue
       version = "unknown"
       if "version" in item:
         version = item["version"]
@@ -276,7 +301,8 @@ def analyze(start_date,end_date,delta , expt, pid):
         version = "invalid"
       isite = float(sites[site])-.5
       disk = item["file_location"]
-      
+      if FAST and disk in vetodisks:
+        continue
       idisk = float(disks[disk])-.5
       user = item["username"]
       iuser = float(users[user])-.5
@@ -538,8 +564,14 @@ def analyze(start_date,end_date,delta , expt, pid):
   #rate.SetMaximum(100.)
   rate.Divide(consumed)
   rate.SetTitle(rate.GetTitle()+" " + out_name)
+  if FAST:
+    rate.SetMaximum(20.)
+  else:
+    rate.SetMaximum(1.)
+   
   rate.Draw("COLZ")
   #ROOT.gStyle.SetPaintTextFormat("5.2f")
+  #rate.SetMaximum(math.Log10(20.))
   rate.Draw("TEXT SAME")
   
   c.Print("pix/"+out_name+"_rate.png")
