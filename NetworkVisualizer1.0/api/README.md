@@ -1,6 +1,6 @@
-#README for es_client.py usage
+# README for es_client.py usage
 
-##Purpose
+## Purpose
 
 es_client.py is used to pull information regarding Rucio transfers for the purpose
 of monitoring the status of the overall network infrastructure related to Fermilab,
@@ -9,7 +9,7 @@ currently used to track information about Rucio transfers as its data source,
 and is designed to produce files for use with the Network Visualizer code contained
 in this same repository.
 
-##Usage
+## Usage
 python3 es_client.py --help returns:
 ```
 usage: es_client.py [-h] [-S START_DATE] [-E END_DATE] [-C ES_CLUSTER] [-D DIRNAME] [-Z SEARCH_SIZE] [--debug-level DEBUG_LEVEL] [--force-overwrite] [--simultaneous-days SIMULTANEOUS_DAYS] [--show-timing]
@@ -36,7 +36,7 @@ optional arguments:
   --show-timing         Shows timing information if set
 ```
 
-##Additional information
+## Additional information
 Format for adding a new category of searching/processing to the overall program
 ```
 <process type name> : {
