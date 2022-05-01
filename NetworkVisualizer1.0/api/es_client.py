@@ -5,6 +5,8 @@ import time
 import threading
 import queue
 import re
+
+#TODO: Proper logging still needs to implemented
 #import logging
 
 from pathlib import Path
@@ -26,7 +28,8 @@ import argparse as ap
 #Scrolls through all of the results in a given date range
 #scroll is a generator that will step through all of the page results for a
 #given index. scroll maintains its internal state and returns a new page of results
-#each time it runs.
+#each time it runs. Eventually needs to be replaced with search_after from ElasticSearch
+#API as scroll is being deprecated.
 def scroll(es, idx, body, scroll, search_size):
 	page = es.search(index=idx, body=body, scroll=scroll, size=search_size)
 	scroll_id = page['_scroll_id']
@@ -37,7 +40,49 @@ def scroll(es, idx, body, scroll, search_size):
 		scroll_id = page['_scroll_id']
 		hits = page['hits']['hits']
 
+'''
+Structure of class:
 
+get_err(transfer): Returns relevant information from a single failed transfer
+
+get_speed(transfer): Returns the transfer duration and transfer speed from a transfer
+
+get_info(transfer): Returns relevant information from a single successful transfer
+
+transfer_success(transfer): Formats information from get_info for a successful
+transfer.
+
+aggregate_success(day): Generator to aggregate successful transfer data. Is sent
+transfer data in order to add it to the aggregation.
+
+checkup_success(transfer): Formats information from get_info for a successful
+network checkup transfer.
+
+transfer_failed(transfer): Formats information from get_err for a failed transfer.
+
+aggregate_failed(day): Generator to aggregate failed transfer data. Is sent
+transfer data in order to add it to the aggregation.
+
+checkup_failed(transfer): Formats information from get_info for a failed
+network checkup transfer.
+
+data_processor(day, filetypes, data_queue, thread_list):
+Described in greater detail above function definition. In short, takes raw
+data, processes it, and then writes it to file.
+
+show_timing_info(): Displays all timing info collected through the program's run.
+Gets run at the end of the program if --show-timing is set.
+
+main(args): Handles checks for valid dates, organization
+of potentially out-of-order dates (i.e. Start date after end date),
+checks for valid indices (missing Elasticsearch indices will result
+in days being skipped. This most often happens when the Rucio transfers
+tracking breaks down temporarily, or when passed future dates, or when passed
+dates prior to initial tracking), checks for which files should be generated
+for each day, and handles startup and shutdown of day overseer threads.
+Gets passed a data structure of arguments for the run. Data structure should be
+convertable to a dictionary.
+'''
 class RucioESClient():
 	def __init__(self):
 		self.debug = 3
@@ -166,6 +211,10 @@ class RucioESClient():
 			}
 		}
 
+	'''
+	Pulls relevant data about failed transfers. Returns source and destination
+	repositories, the name of the file that failed to transfer, and the reason for
+	the transfer failing (either a transmit error or reciever error)'''
 	def get_err(self, transfer):
 		start_time = datetime.now().timestamp()
 		try:
@@ -192,66 +241,10 @@ class RucioESClient():
 			self.time_lock.release()
 			return {"name" : "ERROR"}
 
+	''' Returns the transfer duration and transfer speed from a transfer'''
 	def get_speed(self, transfer):
 		if float(transfer["duration"]) < 10 or float(transfer["duration"]) > 12 * 60 * 60:
 			return {}
-		#Pulls request creation time
-		'''c_time = transfer["created_at"]
-		#Pulls the (transfer request?) submission time, the transfer start time,
-		#and the transfer end time, as well as the file size
-		sub_time = transfer["submitted_at"]
-		start_time = transfer["started_at"]
-		fin_time = transfer["transferred_at"]
-		f_size = float(transfer["bytes"])
-
-		#Places our relevant times into an array for processing
-		time_arr = [c_time, sub_time, start_time, fin_time]
-		len_arr = []'''
-
-		#Finds the time differences for each set of times (creation to submission,
-		#submission to starting, and transmission start to transmission end)
-		#Initial time format is YYYY:M:DTH:M:SZ where T separates the year-month-day
-		#portion from the hours-minutes-second portion and the Z denotes UTC
-		'''for i in range(len(time_arr)-1):
-			#Gets our times from the JSON's format into a workable form
-			#First divides
-			split_1 = time_arr[i].split()
-			split_2 = time_arr[i + 1].split()
-			#Splits the hour-minute-second portion into individual pieces
-			#Note: In the future, with very long transmissions or transmissions
-			#started around midnight we may need to account for days, but that seems
-			#like an edge case that would be rare and unlikely to meaningfully affect results
-			t_1 = split_1[1].split(':')
-			t_2 = split_2[1].split(':')
-
-			#Pulls the difference between each individual number set
-			#The hours, minutes, and seconds being greater in the start
-			#time than in the end time are accounted for later on
-			h_diff = float(t_2[0]) - float(t_1[0])
-			m_diff = float(t_2[1]) - float(t_1[1])
-			s_diff = float(t_2[2]) - float(t_1[2])
-
-			#Accounts for the hour being higher in the start time, which would
-			#mean that the day had turned over at some point.
-			if h_diff < 0:
-				h_diff += 24
-
-			#The difference in minutes and seconds being negative is accounted
-			#for here. The hour difference (thanks to the code above) should
-			#always be 0 or greater. If the minutes and seconds are different,
-			#then the hours should always be greater than zero, so the overall
-			#time will still be positive.
-			tot_time = (h_diff * 60 + m_diff) * 60 + s_diff
-
-			#Appends each time to the time length array
-			len_arr.append(tot_time)
-
-		#Calculates the transfer speed from the transfer start to end time and
-		#the file size
-		transfer_speed = f_size/len_arr[2]
-		#Filters out transfers with abnormally short or long transfer times
-		if len_arr[2] < 10.0 or len_arr[2] > 12 * 60 * 60:
-			return {}'''
 		#Fills our speed information dictionary for this JSON object
 		info = {
 			"file_transfer_time": float(transfer["duration"]),
@@ -259,6 +252,10 @@ class RucioESClient():
 		}
 		return info
 
+	''' Function to pull and process all timing data from an individual transfer.
+	Returns the name of the file transfered, the source repository, the
+	destination repository, the size of the file, when the transfer started,
+	how long the transfer took, and the average transfer rate.'''
 	def get_info(self, transfer):
 		start_time = datetime.now().timestamp()
 		try:
@@ -292,9 +289,14 @@ class RucioESClient():
 		self.time_lock.release()
 		return new_json
 
+	''' Function to process all successful transfers directly. Returns a JSON-formatted
+	string made from the dictionary returned by get_info'''
 	def transfer_success(self, data):
 		return json.dumps(self.get_info(data))
 
+	''' Generator to aggregate all successful transfers. Store operations add data to
+	be summarized, get operations yield summarized data, and yields "FINISHED" when
+	all data has been yielded.'''
 	def aggregate_success(self, day):
 		xfer_matrix = []
 		keys = []
@@ -356,12 +358,19 @@ class RucioESClient():
 
 		yield "FINISHED"
 
+	''' Same as the transfer_success function, but specifically looks at the
+	network checkup transfers instead of all transfers'''
 	def checkup_success(self, data):
 		return json.dumps(self.get_info(data))
 
+	''' Calls the get_err function and then dumps it to a JSON-formatted string.
+	Used for general failed transfers.'''
 	def transfer_failed(self, data):
 		return json.dumps(self.get_err(data))
 
+	''' Generator to aggregate all failed transfers. Store operations add data to
+	be summarized, get operations yield summarized data, and yields "FINISHED" when
+	all data has been yielded.'''
 	def aggregate_failed(self, day):
 		xfer_matrix = [[],[]]
 		keys = []
@@ -426,9 +435,13 @@ class RucioESClient():
 
 		yield "FINISHED"
 
+	''' Function to handle failed network health checkup functions'''
 	def checkup_failed(self, data):
 		return json.dumps(self.get_err(data))
 
+	''' check_args ensures that all important arguments have either been
+	passed in or have been set to default values. Also sets up some argument-related
+	classwide variables.'''
 	def check_args(self):
 		#Defaults only applies to optional arguments
 		default_optionals = {
@@ -467,6 +480,10 @@ class RucioESClient():
 		self.client = Elasticsearch([self.args["es_cluster"]])
 		self.show_timing = self.args["show_timing"]
 
+	''' Day overseer manages the threads for an individual day, creating the search
+	templates for the day and for each individual subdivision of that day (if any).
+	Launches all threads related to that day, then waits to exit until all threads
+	related to that day have shut down.'''
 	def day_overseer(self, day, filetypes):
 		start_time = datetime.now().timestamp()
 		'''divide each day into six hour chunks
@@ -559,6 +576,10 @@ class RucioESClient():
 			self.times["longest_day"] = day.strftime("%Y-%m-%d")
 		self.time_lock.release()
 
+
+	''' es_worker takes in a query for a given day or time period within the day
+	then puts all relevant data into a queue, which serves as a pipeline to
+	the data_processor function.'''
 	def es_worker(self, index, data_queue, query, day):
 		start_time = datetime.now().timestamp()
 		'''Difference from original: Instead of writing directly, sends data to data processing queue'''
@@ -581,6 +602,36 @@ class RucioESClient():
 		self.times["es_thread_count"] += 1
 		self.time_lock.release()
 
+
+	''' Data processor function gets set up with a specific day, list of needed
+	filetypes for that day, a thread-safe data queue object (first-in, first-out),
+	and a list of elasticsearch worker threads (to make sure it doesn't shut down
+	before all elasticsearch threads have finished).
+
+	Some of the way I process data here may seem weird. There are two basic ways
+	data needs to be processed (at least for our needs as of writing this). The
+	first is a direct process-then-write. In the dictionary of file types and
+	processing methods, this method is referred to as "function". This is primarily
+	used when we want a fully detailed list of every single individual transfer record.
+	The second type of processing is store->process when out of data->write.
+	We primarily use this data for summarized data, which is primarily used to
+	reduce the strain on the frontend web application we're using. Because there
+	can be tens or hundreds of thousands of records over very short timespans,
+	we've found that boiling each set of transfers to records aggregated by
+	source-destination pairings can drastically improve performance. The processing
+	type for this method is "generator" and uses Python generator objects as makeshift
+	mini-databases that allow for automatic aggregation of transfer sizes and durations.
+	By passing "operation" : "GET" to the generators, one can then retrieve these summaries
+	after all data has been processed.
+
+	This design decision was made to make future expansion of filetypes to process
+	easier, since as long as input and output formats remain consistent the specific
+	internals of the generators and functions are completely unimportant to the
+	data processor.
+
+	Additional minutia about the function can be found in comments within the
+	function itself.
+	'''
 	def data_processor(self, day, filetypes, data_queue, thread_list):
 		'''set up summary matrices
 		set up file objects
@@ -595,30 +646,39 @@ class RucioESClient():
 		m1 = day.strftime("%m")
 		d1 = day.strftime("%d")
 
+		#Date format for files typically requires that the end date
+		#is one day after the start date, even though only a single day
+		#is processed.
 		next_day = day + relativedelta(days=+1)
 
 		y2 = next_day.strftime("%Y")
 		m2 = next_day.strftime("%m")
 		d2 = next_day.strftime("%d")
 
-
+		#Generators dict is used to store all generator objects needed for this
+		#day. Files dictionary is used to store file objects. Counts dictionary
+		#is used to store the number of entries in each file. This is used
+		#to process empty files in a different manner than files with actual entries.
 		generators = {}
 		files = {}
 		counts = {}
 
+		#Does all initial setup for each filetype that needs to be processed
 		for key in filetypes:
 			#Initializes all generators
 			if self.file_info[key]["process_type"] == "generator":
 				generators[key] = self.file_info[key]["process_func"](day)
 				next(generators[key])
 			dir_path = f"{self.args['dirname']}/{day.year}/{day.month:02}"
+			#All files should have a file format that takes two dates in the listed
+			#order
 			fname = self.file_info[key]["file_format"].format(y1, m1, d1, y2, m2, d2)
 			counts[key] = 0
 			files[key] = open(f"{dir_path}/{fname}", "w+")
 			files[key].write('[\n')
 
 		'''
-		List of filenames:
+		List of current filenames:
 		dune_transfers_display_YYYY....
 		dune_transfers_aggregates_display_YYYY...
 		dune_network_checkup_display_YYYY...
@@ -627,7 +687,8 @@ class RucioESClient():
 		dune_failed_network_checkup_display_YYYY...
 		'''
 
-		#Spins until all elasticsearch threads have been shut down or
+		#Spins until all elasticsearch threads have been shut down and the
+		#data queue is empty.
 		while any([t.is_alive() for t in thread_list]) or not data_queue.empty():
 			if data_queue.empty():
 				time.sleep(0.1)
@@ -637,6 +698,11 @@ class RucioESClient():
 			data_queue.task_done()
 
 			for key in filetypes:
+				#condition and restriction counts are used to determine
+				#whether a data entry meets the processing requirements for
+				#a given filetype. This allows processing of entries in multiple
+				#different ways, as some entries need to be processed into multiple
+				#files.
 				con_count = 0
 				res_count = 0
 				for con in self.file_info[key]["conditions"].keys():
@@ -714,6 +780,9 @@ class RucioESClient():
 		if self.debug_level > 3:
 			print(f"Data processor for day {day} ended")
 
+
+	''' Displays all timing info collected through the program's run.
+	Gets run at the end of the program if --show-timing is set.'''
 	def show_timing_info(self):
 		print("")
 		print("===========")
@@ -733,7 +802,9 @@ class RucioESClient():
 		print(f"Longest single day processing time: {round(self.times['longest_day_time'], 3)} seconds for day {self.times['longest_day']}")
 		print("")
 
-		'''self.times = {
+		'''
+		Times dictionary structure:
+		self.times = {
 			"run_time" : 0,
 			"io_time" : 0,
 			"generator_input_time" : 0,
@@ -748,6 +819,15 @@ class RucioESClient():
 		}'''
 
 
+	''' Handles checks for valid dates, organization
+	of potentially out-of-order dates (i.e. Start date after end date),
+	checks for valid indices (missing Elasticsearch indices will result
+	in days being skipped. This most often happens when the Rucio transfers
+	tracking breaks down temporarily, or when passed future dates, or when passed
+	dates prior to initial tracking), checks for which files should be generated
+	for each day, and handles startup and shutdown of day overseer threads.
+	Gets passed a data structure of arguments for the run. Data structure should be
+	convertable to a dictionary.'''
 	def main(self, args):
 		#Start time for timing info
 		start_time = datetime.now().timestamp()
