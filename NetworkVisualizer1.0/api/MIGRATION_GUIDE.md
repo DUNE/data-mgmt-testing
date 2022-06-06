@@ -45,3 +45,40 @@ It's unclear how much of this function will need to change (though a name change
 Line 792 through Line 794 in the function show_timing_info:
 
 While not strictly necessary for operation, these lines provide potentially useful statistics about overall runtime and time taken by various pieces of the program. Making sure it works with the new system might be useful.
+
+---
+Line 866 through line  in the function main:
+
+initializes the Elasticsearch index to be used on a certain day and then uses an Elasticsearch client API-specific function to check for the index's existence. May have an analog within whatever API replaces Elasticsearch.
+
+---
+Line 943:
+
+Line adds an argument pointing to the specific Elasticsearch cluster being used. May have an analog within the replacement system.
+
+---
+
+
+### Information Required from Elasticsearch/Replacement
+
+The following are data fields (accessed with data_entry[field]) looked for by the existing code and what they represent:
+
+- event_type: The type of Rucio event associated with this entry. Examples are "transfer-done", "transfer-failed", and "transfer-submission_failed"
+
+- name: The name of the file associated with that Rucio event
+
+- src-rse: The source repository the Rucio transfer originated from
+
+- dst-rse: The destination repository the file was transferred to
+
+- duration: The total time taken by the Rucio transfer
+
+- bytes: The transferred file's size in bytes
+
+- file-size: The file size in bytes (again, from what I can tell)
+
+
+
+
+
+I believe that should cover everything needed for a fairly smooth migration. Apologies if I missed anything. Best of luck to you! 
