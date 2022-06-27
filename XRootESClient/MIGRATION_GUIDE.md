@@ -158,3 +158,10 @@ The following are the specific data fields needed for different parts of SAM-rel
 
 **Line 175 to Line 216:**
 All instances of item[datafield] are taken from ElasticSearch-stored data. The data is about specific SAM events and files involved in a specific project.
+
+
+
+
+
+
+I believe that should cover everything needed for a fairly smooth migration. Apologies if I missed anything. Best of luck to you! 
