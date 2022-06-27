@@ -77,3 +77,23 @@ def gen_name(day_being_run):
 	<Your code here>
 	yield "FINISHED"
 ```
+
+
+**External Documentation**
+Top-level Python Elasticsearch client: https://elasticsearch-py.readthedocs.io/en/v7.10.1/
+
+Python Elasticsearch Scoll API: https://elasticsearch-py.readthedocs.io/en/7.10.0/api.html?highlight=scroll#elasticsearch.Elasticsearch.scroll
+
+Elasticsearch search API, including basic query template: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/search-search.html
+
+Elasticsearch wildcard query: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/query-dsl-wildcard-query.html
+
+Elasticsearch filter query: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/query-filter-context.html
+
+Elasticsearch query sorting: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/sort-search-results.html
+
+Elasticsearch boolean query (includes and/or type parameters): https://www.elastic.co/guide/en/elasticsearch/reference/7.10/query-dsl-bool-query.html
+
+Additional Elasticsearch query information: https://www.elastic.co/guide/en/elasticsearch/reference/7.10/query-dsl.html
+
+Tutorial for use of the Elasticsearch scroll API: https://simplernerd.com/elasticsearch-scroll-python/
