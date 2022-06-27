@@ -134,24 +134,25 @@ All fields whose right element takes the form next_file[field] are from ElasticS
 All fields whose right element takes the form self.pids[pid]["metadata"][field] are retrieving metadata about a specific project rather than a file. All of this data is stored by get_proj_list in a class-level dictionary.
 
 
-
 ### **Line Changes For ElasticSearch replacement**
 
 Line 20:
 
 Import statement for ElasticSearch
+
 ---
 
 Line 131 in the function check_args:
 
 Sets the default argument for the ElasticSearch cluster being used
+
 ---
 
 Line 965 to Line 1093, the function es_worker_func:
 
 This function will likely need to be completely rewritten to work with whatever replacement is used. It takes a project ID and references the current and target dates, constructs a query for the ElasticSearch cluster, then uses the scroll function/generator (defined and initialized within the es_worker_func) to request all matching records from the ElasticSearch cluster. It then appends each result to a thread-safe data queue (self.pids[pid]["write_queue"]).
 
-
+---
 
 ## Information Required for ElasticSearch replacement
 The following are the specific data fields needed for different parts of SAM-related processing as well as where they fit into this code. There are enough that it will likely be more helpful to point at their position in the code than to list them all individually.
@@ -161,7 +162,7 @@ All instances of item[datafield] are taken from ElasticSearch-stored data. The d
 
 
 
+---
 
 
-
-I believe that should cover everything needed for a fairly smooth migration. Apologies if I missed anything. Best of luck to you! 
+I believe that should cover everything needed for a fairly smooth migration. Apologies if I missed anything. Best of luck to you!
