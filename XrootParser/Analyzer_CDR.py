@@ -2,7 +2,8 @@
 # works with python2
 import os,sys,csv,string,json,datetime,dateutil,jsonlines
 import math
-FAST=True
+FAST=False
+SINGLE=True
 durationcut = 50
 #vetodisks = ["golias100.farm.particle.cz","eospublic.cern.ch","fal-pygrid-30.lancs.ac.uk","lancs.ac.uk"]
 vetodisks=[]
@@ -27,8 +28,8 @@ def getListOfTypes(data,key,inlist):
   l = list(inlist.keys())
   
   for item in data:
-    #if FAST and item["application"]!= "pdspana":
-    #    continue
+    if FAST and item["application"]!= "pdspana":
+        continue
     if FAST and item["file_location"] in vetodisks:
         continue
     if not key in item:
@@ -137,6 +138,7 @@ def analyze(start_date,end_date,delta , expt, pid):
     data = loadjsonlines(inputfilename)
     hostnames = getListOfTypes(data,"node",hostnames)
     apps = getListOfTypes(data,"application",apps)
+    
     sites = getListOfTypes(data,"site",sites)
     states = getListOfTypes(data,"last_file_state",states)
     disks = getListOfTypes(data,"file_location",disks)
@@ -187,10 +189,14 @@ def analyze(start_date,end_date,delta , expt, pid):
   setXYLabels(state,states,sites)
   consumed = ROOT.TH2F("consumed","consumed",nd,0,nd,ns,0,ns)
   setXYLabels(consumed,disks,sites)
+  invconsumed = ROOT.TH2F("invconsumed","consumed",nd,0,nd,ns,0,ns)
+  setXYLabels(invconsumed,disks,sites)
   consumed_by_app = ROOT.TH2F("consumed_by_app","consumed",na,0,na,ns,0,ns)
   setXYLabels(consumed_by_app,apps,sites)
   rate = ROOT.TH2F("rate","rate for consumed, MB/s",nd,0,nd,ns,0,ns)
   setXYLabels(rate,disks,sites)
+  inverserate = ROOT.TH2F("inverserate","1/rate for consumed, scaled to FNAL rate",nd,0,nd,ns,0,ns)
+  setXYLabels(inverserate,disks,sites)
   rate_by_app = ROOT.TH2F("rate_by_app","rate for consumed, by app, MB/s",na,0,na,ns,0,ns)
   setXYLabels(rate_by_app,apps,sites)
   ratelog10 = ROOT.TH2F("rates","rate for consumed, MB/s;;Log10 Rate",24,-3,3.,ns,0,ns)
@@ -292,8 +298,11 @@ def analyze(start_date,end_date,delta , expt, pid):
             continue
           if "reconstructed" not in item["data_tier"]:
             continue
-          #if application != "pdspana":
-          #  continue
+          if SINGLE and application != "pdspana" and user !="calcuttj":
+            continue
+          # skip unknown apps
+      if application not in apps:
+        continue
       version = "unknown"
       if "version" in item:
         version = item["version"]
@@ -388,6 +397,13 @@ def analyze(start_date,end_date,delta , expt, pid):
           totalbytes_user.Fill(iuser, item["file_size"]*0.000000001)
         
           rate.Fill(idisk,isite,item["rate"])
+          if FAST and item["rate"] > 1.0:
+            inverserate.Fill(idisk,isite,1./item["rate"])
+            invconsumed.Fill(idisk,isite,1.)
+          if not FAST and item["rate"] < 1.0:
+            inverserate.Fill(idisk,isite,1./item["rate"])
+            invconsumed.Fill(idisk,isite,1.)
+          
           rate_by_app.Fill(iapp,isite,item["rate"])
           ratelog10.Fill(math.log10(item["rate"]),isite,1.)
       if(item["last_file_state"] == "skipped" or item["last_file_state"] == "transferred"):
@@ -576,6 +592,22 @@ def analyze(start_date,end_date,delta , expt, pid):
   
   c.Print("pix/"+out_name+"_rate.png")
   c.Print("C/"+out_name+"_rate.C")
+  inverserate.Divide(invconsumed)
+  inverserate.Scale(5.0)
+  inverserate.SetTitle(inverserate.GetTitle()+" " + out_name)
+  if FAST:
+    inverserate.SetMaximum(5.)
+    inverserate.SetMinimum(0.)
+  else:
+    inverserate.SetMaximum(100.)
+   
+  inverserate.Draw("COLZ")
+  #ROOT.gStyle.SetPaintTextFormat("5.2f")
+  #rate.SetMaximum(math.Log10(20.))
+  inverserate.Draw("TEXT SAME")
+  
+  c.Print("pix/"+out_name+"_inverserate.png")
+  c.Print("C/"+out_name+"_inverserate.C")
   #rate_by_app.SetMaximum(100.)
   rate_by_app.Divide(consumed_by_app)
   rate_by_app.SetTitle(rate_by_app.GetTitle()+" " + out_name)
