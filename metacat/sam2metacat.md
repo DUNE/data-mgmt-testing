@@ -5,7 +5,7 @@ This document includes examples of `sam` queries gathered from DUNE Dataset defi
 
 ### Metacat get started
 
-First log in (from a mac with service password
+First log in:
 
 >`metacat auth login -m password $USER`
 >Password:
@@ -63,13 +63,15 @@ Another note: sam also prepends the user name to the definition so that you can'
 
 This may take a bit of setup as you will need a namespace and then make a dataset
 
-First as a user I will set up my own namespaces
+First as a user I will set up my own `dataset` namespace.  I can get files from other file namespaces and use datasets from other dataset namespaces but I can't modify those other namespaces without permissions.
 
 >  `metacat dataset create namespace $USER`
 
 Here I gave it my user name which you should too.
 
 TODO - enforce namespace name for individuals?
+
+Now I make a dataset with a good defname
 
 >  `metacat dataset create schellma:protodune-sp-physics-generic`
 
@@ -112,63 +114,3 @@ You can then ask for the subset from a particular data tier and run number.
 > 12 files
 
 Note: the syntax for a parameter wildcard is `~` for match and then `*` for any string instead of `%`
-
-First log in (from a mac with service password
-
-metacat auth login -m password $USER
-Password:
-User:    schellma
-Expires: Thu Oct 13 16:27:29 2022
-
-for now make your own namespace
-
-metacat namespace create schellma
-
-hms                             u:schellma
-
-Try to make and then fill a dataset with all physics from protodune-sp
-
-metacat dataset create hms:test   # fails on mac, works on vm
-
-then I should be able to
-
-metacat query -i -N dune:all "files where core.file_type=detector and core.run_type='protodune-sp' and core.data_stream=physics" > physics_ids.txt
-
-then I should be able to add to hms:test via
-
-metacat file add -i @physics_ids.txt hms:test
-
-
-
-# try with namespace name
-metacat dataset add -n  protodune-sp:np04_raw_run005141_0028_dl11.root hms:test
-
-
-questions and issues
-
-if you ask for a non-existent parameter category - like code.data_tier instead of core.data_tier, you just get no files.
-
-I could not make a dataset
-
-what does monotonic mean? Is it a required parameter?
-
-runs syntax is not documented core.runs[any]=5141 works but not certain how to modify
-
-This gives syntax error metacat dataset add -i 10000101 hms:test
-Invalid arguments or options for for metacat dataset add
-
-
-Usage:
-metacat dataset add <parent dataset namespace>:<parent name> <child dataset namespace>:<child name> [<child dataset namespace>:<child name> ...]
-
-TODO:
-Ui method to make a dataset based on a query  - exits in
-
-
-Origin -
-Config
-Process
-Art
-
-origin.config
-Origin.process  could be a dictionary
