@@ -11,7 +11,8 @@ https://metacat.readthedocs.io/en/latest/index.html
 
 metacat is a ups product so you can get it by
 
-`setup ups`
+`source /cvmfs/dune.opensciencegrid.org/products/dune/setup_dune.sh`   
+`setup metacat`
 
 but you can also do a local install using:
 
