@@ -25,10 +25,10 @@ Then authenticate to metacat:
 
 *Note: you can also autheticate via other methods, for example*
 
-> `kx509`
-> `export X509_USER_PROXY=/tmp/x509up_u1327`
-> `export X509_USER_KEY=$X509_USER_PROXY`
-> `metacat auth login -m x509 $USER`
+> `kx509`  
+> `export X509_USER_PROXY=/tmp/x509up_u1327`  
+> `export X509_USER_KEY=$X509_USER_PROXY`  
+> `metacat auth login -m x509 $USER`  
 
 ### Example: Get the raw data from given protodune-sp detector runs
 
