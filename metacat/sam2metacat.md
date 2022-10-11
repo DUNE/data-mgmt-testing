@@ -9,6 +9,10 @@ First find the documentation:
 
 https://metacat.readthedocs.io/en/latest/index.html
 
+metacat is a ups product but you can also do a local install using:
+
+https://metacat.readthedocs.io/en/latest/ui.html#installation
+
 Make certain you can point to the metacat server:
 
 > `export METACAT_AUTH_SERVER_URL=https://metacat.fnal.gov:8143/auth/dune`
