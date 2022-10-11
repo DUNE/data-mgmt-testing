@@ -9,7 +9,11 @@ First find the documentation:
 
 https://metacat.readthedocs.io/en/latest/index.html
 
-metacat is a ups product but you can also do a local install using:
+metacat is a ups product so you can get it by
+
+`setup ups`
+
+but you can also do a local install using:
 
 https://metacat.readthedocs.io/en/latest/ui.html#installation
 
