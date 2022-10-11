@@ -19,10 +19,10 @@ but you can also do a local install using:
 
 https://metacat.readthedocs.io/en/latest/ui.html#installation
 
-Make certain you can point to the metacat server:
+Make certain you can point to the metacat server:  
 
-> `export METACAT_AUTH_SERVER_URL=https://metacat.fnal.gov:8143/auth/dune`
-> `export METACAT_SERVER_URL=https://metacat.fnal.gov:9443/dune_meta_demo/app`
+> `export METACAT_AUTH_SERVER_URL=https://metacat.fnal.gov:8143/auth/dune`  
+> `export METACAT_SERVER_URL=https://metacat.fnal.gov:9443/dune_meta_demo/app`  
 
 
 Then authenticate to metacat:
