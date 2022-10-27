@@ -144,4 +144,4 @@ TODO - get the file size as well?
 
 > 12 files
 
-*Note: the syntax for a parameter matching is Regular Expressions, in particular '.*' matches any string*
+*Note: the syntax for a parameter matching is Regular Expressions, in particular '.\*' matches any string*
