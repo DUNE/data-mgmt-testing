@@ -58,7 +58,9 @@ add `--summary` after query if you want just the # of files
 *Notes:*
 - *many of the metadata values are now in categories like `core`*
 - *things run faster if you ask for files from a known dataset like `dune:all`*
-- *runs[any] means check any of the runs associated with the file for being 5141*
+- *core.runs[any] means check any of the runs associated with the file for being 5141*
+- *core.runs[any] in (5141, 5142, 5147) - any of these 3 runs*
+- *core.runs[any] = 5141- single run, equivalent: 5141 in core.runs*
 - *you can ask for multiple runs by using the `in (X,Y)` syntax*
 
 TODO  make the interface less dependent on exactly where the `--summary` is
