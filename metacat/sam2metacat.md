@@ -83,34 +83,19 @@ You can then ask for:
 
 ##### metacat
 
-This may take a bit of setup as you will need a dataset namespace and then create and fill a dataset
+To run a MQL query and create a new dataset with the query results:
 
-First as a user I will set up my own `dataset` namespace.  I can get files from other file namespaces and use datasets from other dataset namespaces but I can't modify those other namespaces without permissions.
+> `metacat dataset create -f "files from dune:all where ..." <dataset_namespace>:<dataset_name> <dataset description>`
 
->  `metacat dataset create namespace $USER`
+> `metacat dataset create -f @file_with_mql_query.txt <dataset_namespace>:<dataset_name> <dataset description>`
 
-Here I gave it my user name which you should too.
 
-TODO - enforce namespace name for individuals?
+To run a query and add matching files to an existing dataset:
 
-Now I make a dataset with a good name.  I can also add metadata to further describe it so I don't forget what I did.
+> `metacat dataset add-files -q "files from dune:all where ..." <dataset_namespace>:<dataset_name>`
 
->  `metacat dataset create schellma:protodune-sp-physics-generic`
-
-find the list of files matching your query
-
->   `metacat query -i  "files  from dune:all where core.file_type=detector and core.run_type='protodune-sp' and core.data_stream=physics" > physics_ids.txt`
-
-*Notes: `-i` means return a list of file id numbers, not names. This makes for a smaller txt file*
-
-add them to your dataset
-
-> `metacat file add -i @physics_ids.txt schellma:protodune-sp-physics-generic`
-
-You really want to tell metacat what you did here so I suggest adding a description, in this case I used the query used to generate the file list.
-
->`metacat dataset update schellma:protodune-sp-physics-generic "files from dune:all where core.file_type=detector and core.run_type='protodune-sp' and core.data_stream=physics"`
-
+> `metacat dataset add-files -q @file_with_mql_query.txt <dataset_namespace>:<dataset_name>
+> 
 TODO - this times out if all runs are included - I just did 5141 for this test.
 
 TODO -  a utility command that does the query, adds the files and logs the query in the dataset metadata, possibly not in the "description" field
@@ -155,8 +140,8 @@ TODO - get the file size as well?
 
 ##### metacat
 
-> `metacat query -s "files from schellma:protodune-sp-physics-generic where core.data_tier=raw and core.runs[any]=5141 -  parents(files from schellma:protodune-sp-physics-generic where core.runs[any]=5141 and core.data_tier='full-reconstructed' and core.application.version~'v08_27_*')"`
+> `metacat query -s "files from schellma:protodune-sp-physics-generic where core.data_tier=raw and 5141 in core.runs -  parents(files from schellma:protodune-sp-physics-generic where 5141 in core.runs and core.data_tier='full-reconstructed' and core.application.version~'v08_27_.*')"`
 
 > 12 files
 
-*Note: the syntax for a parameter wildcard is `~` for match and then `*` for any string instead of `%`*
+*Note: the syntax for a parameter matching is Regular Expressions, in particular '.*' matches any string*
