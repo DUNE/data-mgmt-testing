@@ -96,7 +96,7 @@ To run a query and add matching files to an existing dataset:
 
 > `metacat dataset add-files -q "files from dune:all where ..." <dataset_namespace>:<dataset_name>`
 
-> `metacat dataset add-files -q @file_with_mql_query.txt <dataset_namespace>:<dataset_name>
+> `metacat dataset add-files -q @file_with_mql_query.txt <dataset_namespace>:<dataset_name>`
 > 
 TODO - this times out if all runs are included - I just did 5141 for this test.
 
