@@ -35,14 +35,14 @@ class Loginator:
             "application_version":None,  #
             "final_state":None,  # (what happened?)
             "cpu_site":None,  # (e.g. FNAL":None,  # RAL)
-            "project_name(wkf request_id?)":None,  #
+            "project_name":None, #(wkf request_id?)"
             "file_name":None,  # (including the metacat namespace)
             "data_tier":None,  # (from metacat)
             "job_node":None,  # (name within the site)
             "job_site":None,  # (name of the site)
             "country":None,  # (nationality of the site)
             "campaign":None,  # (DUNE campaign)
-            "access_method":None #(stream/copy)
+            "access_method":None, #(stream/copy)
         }
        
 ## return the first tag or None in a line
@@ -65,7 +65,6 @@ class Loginator:
 ## read in the log file and parse it, add the info
     def readme(self):
         object = {}
-       
         for line in self.logfile:
             tag = self.findme(line)
             if tag == None:
@@ -81,6 +80,12 @@ class Loginator:
                     object[filename]["start_time"] = timestamp
                     object[filename]["Path"]=filepath
                     object[filename]["file_name"] = filename
+                    print ("filepath",filepath)
+                    if "root" in filepath[0:10]:
+                        print ("I am root")
+                        tmp = filepath.split("//")
+                        object[filename]["source_rse"] = tmp[1]
+                        object[filename]["access_method"] = "xroot"
                     for thing in self.info:
                         object[filename][thing] = self.info[thing]
                     object[filename]["final_state"] = "Opened"
