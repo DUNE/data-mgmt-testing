@@ -1,0 +1,2561 @@
+
+[1mRooFit v3.60 -- Developed by Wouter Verkerke and David Kirkby[0m 
+                Copyright (C) 2000-2013 NIKHEF, University of California & Stanford University
+                All rights reserved, please read http://roofit.sourceforge.net/license.txt
+
+DuneDeconvolutionService::ctor: DuneDeconvolutionService:
+DuneDeconvolutionService::ctor:                LogLevel: 1
+DuneRoiBuildingService::ctor: DuneRoiBuildingService:
+DuneRoiBuildingService::ctor:     LogLevel: 1
+DuneRoiBuildingService::ctor:  NSigmaStart: 3
+DuneRoiBuildingService::ctor:    NSigmaEnd: 1
+DuneRoiBuildingService::ctor:       PadLow: 50
+DuneRoiBuildingService::ctor:      PadHigh: 50
+StandardAdcWireBuildingService::ctor: StandardAdcWireBuildingService:
+StandardAdcWireBuildingService::ctor:     LogLevel: 1
+GeoApaChannelGroupService::ctor: Group 0 (apa0) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 1 (apa1) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 2 (apa2) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 3 (apa3) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 4 (apa4) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 5 (apa5) has 2560 channels from 4/4 readout planes.
+PDSP Channel Map: Building RCE TPC wiremap from file protoDUNETPCChannelMap_RCE_v4.txt
+PDSP Channel Map: Building FELIX TPC wiremap from file protoDUNETPCChannelMap_RCE_v4.txt
+PDSP Channel Map: Building SSP channel map from file protoDUNESSPChannelMap_v1.txt
+DuneToolManager::fclFilename: Taking fcl name from command line: lar -c pduneana_Prod4a_MC_sce.fcl -n100 -S list.txt
+AcdDigitReader::ctor:     LogLevel: 1
+DuneToolManager::getPrivate: Tool name is blank
+StandardRawDigitExtractService::ctor: Retrieved digit read tool digitReader
+StandardRawDigitExtractService::ctor: StandardRawDigitExtractService:
+StandardRawDigitExtractService::ctor:         LogLevel: 1
+StandardRawDigitExtractService::ctor:    DigitReadTool: digitReader
+StandardRawDigitExtractService::ctor:   PedestalOption: 1
+StandardRawDigitExtractService::ctor:     FlagStuckOff: 0
+StandardRawDigitExtractService::ctor:      FlagStuckOn: 0
+ToolBasedRawDigitPrepService::ctor:      Fetching digitReader
+AcdDigitReader::ctor:     LogLevel: 1
+ToolBasedRawDigitPrepService::ctor:     Found tool digitReader @ 0x987f4c0
+ToolBasedRawDigitPrepService::ctor:      Fetching adcSampleFiller
+AdcSampleFiller::ctor: Configuration parameters:
+AdcSampleFiller::ctor:       LogLevel: 1
+AdcSampleFiller::ctor:   AdcUnderflow: 0
+AdcSampleFiller::ctor:    AdcOverflow: 4095
+ToolBasedRawDigitPrepService::ctor:     Found tool adcSampleFiller @ 0x9ad8400
+ToolBasedRawDigitPrepService::ctor:      Fetching adcScaleAdcToKe
+AdcSampleScaler::ctor: Parameters:
+AdcSampleScaler::ctor:          LogLevel: 1
+AdcSampleScaler::ctor:       ScaleFactor: 0.02401
+AdcSampleScaler::ctor:        OutputUnit: ke/tick
+AdcSampleScaler::ctor:         InputUnit: ADC count
+ToolBasedRawDigitPrepService::ctor:     Found tool adcScaleAdcToKe @ 0x984b260
+ToolBasedRawDigitPrepService::ctor:      Fetching pdspTailPedRemovalZKe
+AdcThresholdSignalFinder::ctor: Configuration parameters:
+AdcThresholdSignalFinder::ctor:       LogLevel: 1
+AdcThresholdSignalFinder::ctor:      Threshold: 5e-1
+AdcThresholdSignalFinder::ctor:     BinsBefore: 10
+AdcThresholdSignalFinder::ctor:      BinsAfter: 20
+AdcThresholdSignalFinder::ctor:   FlagPositive: true
+AdcThresholdSignalFinder::ctor:   FlagNegative: true
+ExpTailPedRemover::ctor: Parameters:
+ExpTailPedRemover::ctor:               LogLevel: 1
+ExpTailPedRemover::ctor:             SignalFlag: 3
+ExpTailPedRemover::ctor:   SignalIterationLimit: 10
+ExpTailPedRemover::ctor:             SignalTool: adcTailSignalFinderKe
+ExpTailPedRemover::ctor:              DecayTime: 2200
+ExpTailPedRemover::ctor:                MaxTick: 21000
+ExpTailPedRemover::ctor:              PedDegree: 0
+ExpTailPedRemover::ctor:               PedTick0: 3000
+ExpTailPedRemover::ctor:               PedFreqs: []
+ExpTailPedRemover::ctor:   IncludeChannelRanges: [apa1z, apa2z, apa3z, apa4z, apa5z, apa6z, apa1c, apa2c, apa3c, apa4c, apa5c, apa6c]
+ExpTailPedRemover::ctor:   NoWarnStatuses: [1]
+ExpTailPedRemover::ctor:   ExcludeChannelRanges: []
+ExpTailPedRemover::ctor: Channel checking enabled for 5760 channels.
+ToolBasedRawDigitPrepService::ctor:     Found tool pdspTailPedRemovalZKe @ 0x8892c40
+ToolBasedRawDigitPrepService::ctor: Fetching wire building service.
+ToolBasedRawDigitPrepService::ctor:   Wire building service: @0x7f95020
+ToolBasedRawDigitPrepService::ctor: ToolBasedRawDigitPrepService:
+ToolBasedRawDigitPrepService::ctor:                     LogLevel: 3
+ToolBasedRawDigitPrepService::ctor:                      DoWires: 1
+ToolBasedRawDigitPrepService::ctor:      ADC channel tools:
+ToolBasedRawDigitPrepService::ctor:            digitReader
+ToolBasedRawDigitPrepService::ctor:            adcSampleFiller
+ToolBasedRawDigitPrepService::ctor:            adcScaleAdcToKe
+ToolBasedRawDigitPrepService::ctor:            pdspTailPedRemovalZKe
+
+**************************************************************
+ Geant4 version Name: geant4-10-06-patch-01    (14-February-2020)
+                       Copyright : Geant4 Collaboration
+                      References : NIM A 506 (2003), 250-303
+                                 : IEEE-TNS 53 (2006), 270-278
+                                 : NIM A 835 (2016), 186-225
+                             WWW : http://geant4.org/
+**************************************************************
+
+
+### ===  Deexcitation model UAtomDeexcitation is activated for 1 region:
+### ===  Auger cascade flag: 1
+### ===  Ignore cuts flag:   0
+Set Cuts
+Part def: 0xbe75510
+Transportation
+Decay
+msc
+hIoni
+hBrems
+hPairProd
+CoulombScat
+Part def: 0xbe75510
+Transportation
+Decay
+msc
+hIoni
+hBrems
+hPairProd
+CoulombScat
+Transportation
+msc
+hIoni
+hBrems
+hPairProd
+CoulombScat
+Transportation
+Decay
+msc
+hIoni
+hBrems
+hPairProd
+CoulombScat
+Transportation
+Decay
+nCapture
+15-Nov-2022 19:16:34 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/83/24/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_0_20210414T102106Z.root"
+15-Nov-2022 19:16:41 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/83/24/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_0_20210414T102106Z.root"
+Setting applicationFamily: "art"
+Setting process_name: "PDSPAna"
+db: runtime 376812157
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:17:04 CST  run: 42911577 subRun: 33 event: 1
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1
+evttime: 376812157
+fApplyNormCorrection: 0
+fApplyXCorrection: 1
+fApplyYZCorrection: 1
+fApplyLifetimeCorrection: 0
+fUseLifetimeFromDatabase: 0
+Plane	Reference dQ/dx	Global median dQ/dx	Calorimetry constant
+DBWeb query: https://dbdata0vm.fnal.gov:9443/dune_con_prod/app/get?table=pdunesp.distcorrnorm&type=mc&tag=prod4&t=42911577&columns=norm,norm_err
+Got 3 rows from database
+Plane[0]	0.000000	59.291100	0.001040
+Plane[1]	0.000000	59.646700	0.001040
+Plane[2]	0.000000	58.470800	0.001016
+DBWeb query: https://dbdata0vm.fnal.gov:9443/dune_con_prod/app/get?table=pdunesp.distcorrx&type=mc&tag=prod4&t=42911577&columns=shape,shape_err,x,dx
+Got 432 rows from database
+fXcorrHist[0] binning: Nbins = 144 Xmin = -360 Xmax = 360
+fXcorrHist[1] binning: Nbins = 144 Xmin = -360 Xmax = 360
+fXcorrHist[2] binning: Nbins = 144 Xmin = -360 Xmax = 360
+DBWeb query: https://dbdata0vm.fnal.gov:9443/dune_con_prod/app/get?table=pdunesp.distcorryz&type=mc&tag=prod4&t=42911577&columns=corr,corr_err,y,z
+Got 100080 rows from database
+fYZcorrHist[0] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[1] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[10] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[11] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[20] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[21] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+run: 42911577 ; subrun: 33 ; event: 1
+evttime: 376812157
+fApplyNormCorrection: 0
+fApplyXCorrection: 1
+fApplyYZCorrection: 1
+fApplyLifetimeCorrection: 0
+fUseLifetimeFromDatabase: 0
+Plane	Reference dQ/dx	Global median dQ/dx	Calorimetry constant
+Plane[0]	0.000000	59.291100	0.001040
+Plane[1]	0.000000	59.646700	0.001040
+Plane[2]	0.000000	58.470800	0.001016
+########## EvtNo.1
+63
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.8955e-01  5.3747e-03  1.8114e+00  2.3727e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.191924 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.4484e-05  1.3704e-06  1.6547e+00  2.3453e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002360 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 5.85763 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.3645e+00  1.1536e+00  1.4141e+00  3.7968e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 2.368270 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 4892.55 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.2348e+01  1.0002e+00  1.0014e+00  3.4346e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 32.382029 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:18:21 CST  run: 42911577 subRun: 33 event: 2
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 2
+evttime: 376812158
+run: 42911577 ; subrun: 33 ; event: 2
+evttime: 376812158
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:18:42 CST  run: 42911577 subRun: 33 event: 3
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 3
+evttime: 376812159
+run: 42911577 ; subrun: 33 ; event: 3
+evttime: 376812159
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:19:06 CST  run: 42911577 subRun: 33 event: 4
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 4
+evttime: 376812160
+run: 42911577 ; subrun: 33 ; event: 4
+evttime: 376812160
+########## EvtNo.4
+33
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.8201e-02  3.2591e-03  1.7512e+00  2.2837e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.040485 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 8.1915e+13 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.9681e+06  1.0365e+00  1.1822e+00  5.9681e+06
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 5974076.913331 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.0543e-01  7.8148e-04  1.7951e+00  2.3096e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.107742 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.29473e+13 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.0092e+06  1.0270e+00  1.1192e+00  6.0092e+06
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 6015210.318411 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 299563 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.8183e+02  1.0017e+00  1.0064e+00  5.8382e+02
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 582.409578 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.1640e-04  9.6805e-05  1.6276e+00  2.3729e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002989 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+1
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:19:43 CST  run: 42911577 subRun: 33 event: 5
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 5
+evttime: 376812161
+run: 42911577 ; subrun: 33 ; event: 5
+evttime: 376812161
+########## EvtNo.5
+113
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.8726e-02  3.4375e-03  1.7844e+00  2.2809e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.071007 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.3289e-07  5.9110e-06  1.5806e+00  2.4194e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002420 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 7.1452 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.7749e+00  1.1212e+00  1.3625e+00  7.2913e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 5.782220 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 24750.1 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.7301e+01  1.0000e+00  1.0004e+00  2.9301e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 27.330249 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:20:23 CST  run: 42911577 subRun: 33 event: 6
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 6
+evttime: 376812162
+run: 42911577 ; subrun: 33 ; event: 6
+evttime: 376812162
+########## EvtNo.6
+121
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -9.9240e-02  3.8898e-03  1.8146e+00  2.2808e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.101520 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.7529e-07  1.7021e-06  1.5765e+00  2.4235e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002424 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.17856 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.4926e+00  1.1701e+00  1.4479e+00  4.8746e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.497493 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 50451.9 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.1081e+01  1.0000e+00  1.0004e+00  8.3081e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 81.164077 TO DIAGONAL.
+Getting reco beam calo
+%MSG-e TrackMomentumCalculator:  PDSPAnalyzer:pduneana@BeginModule  15-Nov-2022 19:20:47 CST run: 42911577 subRun: 33 event: 6
+Invalid track range -999 return -1
+%MSG
+%MSG-e TrackMomentumCalculator:  PDSPAnalyzer:pduneana@BeginModule  15-Nov-2022 19:20:47 CST run: 42911577 subRun: 33 event: 6
+Invalid track range -999 return -1
+%MSG
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:21:04 CST  run: 42911577 subRun: 33 event: 7
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 7
+evttime: 376812163
+run: 42911577 ; subrun: 33 ; event: 7
+evttime: 376812163
+########## EvtNo.7
+104
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.4977e-02  2.0305e-03  1.7537e+00  2.2892e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.047266 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 17.4805 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.5960e+00  7.7620e-01  1.2286e+00  4.5912e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 2.600640 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.8395e-07  1.4511e-06  1.5648e+00  2.4352e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002436 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.6080e-02  2.9337e-03  1.7620e+00  2.3012e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.068382 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 17.3692 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.7612e+00  9.0219e-01  1.1217e+00  5.7374e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.766961 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 11867.4 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.2444e+01  1.0000e+00  1.0005e+00  1.4444e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 12.458536 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:21:37 CST  run: 42911577 subRun: 33 event: 8
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 8
+evttime: 376812164
+run: 42911577 ; subrun: 33 ; event: 8
+evttime: 376812164
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:21:59 CST  run: 42911577 subRun: 33 event: 9
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 9
+evttime: 376812164
+run: 42911577 ; subrun: 33 ; event: 9
+evttime: 376812164
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:22:22 CST  run: 42911577 subRun: 33 event: 10
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 10
+evttime: 376812165
+run: 42911577 ; subrun: 33 ; event: 10
+evttime: 376812165
+15-Nov-2022 19:22:31 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/83/24/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_0_20210414T102106Z.root"
+15-Nov-2022 19:22:31 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/44/75/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_86_20210414T102527Z.root"
+15-Nov-2022 19:22:35 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/44/75/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_86_20210414T102527Z.root"
+db: runtime 376812199
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:22:58 CST  run: 42911577 subRun: 33 event: 861
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 861
+evttime: 376812199
+run: 42911577 ; subrun: 33 ; event: 861
+evttime: 376812199
+########## EvtNo.861
+71
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.4381e-01  5.7095e-03  1.8049e+00  2.3332e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.146142 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -9.9083e-07  2.8478e-06  1.6627e+00  2.3373e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002338 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 5.82771 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.7064e+00  1.1841e+00  1.4806e+00  4.0417e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 2.710443 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 10177.8 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.8290e+01  1.0001e+00  1.0011e+00  4.0289e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 38.329963 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.3946e-05  2.6665e-06  1.6276e+00  2.3724e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002396 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:24:09 CST  run: 42911577 subRun: 33 event: 862
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 862
+evttime: 376812200
+run: 42911577 ; subrun: 33 ; event: 862
+evttime: 376812200
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:24:29 CST  run: 42911577 subRun: 33 event: 863
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 863
+evttime: 376812201
+run: 42911577 ; subrun: 33 ; event: 863
+evttime: 376812201
+########## EvtNo.863
+28
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.1105e-02  2.0184e-02  1.7794e+00  2.2815e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.083387 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.9476e-05  4.1066e-05  1.7147e+00  2.2853e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002375 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 11.6971 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.6030e+00  1.0866e+00  1.2550e+00  5.2615e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.608289 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 4706.14 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.4714e+01  1.0006e+00  1.0072e+00  2.6706e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 24.740374 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:25:04 CST  run: 42911577 subRun: 33 event: 864
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 864
+evttime: 376812202
+run: 42911577 ; subrun: 33 ; event: 864
+evttime: 376812202
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:25:32 CST  run: 42911577 subRun: 33 event: 865
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 865
+evttime: 376812203
+run: 42911577 ; subrun: 33 ; event: 865
+evttime: 376812203
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:26:01 CST  run: 42911577 subRun: 33 event: 866
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 866
+evttime: 376812203
+run: 42911577 ; subrun: 33 ; event: 866
+evttime: 376812203
+########## EvtNo.866
+252
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.0096e-01  3.0685e-03  1.7506e+00  2.3473e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.103304 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 83.3847 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.1832e+00  9.7215e-01  1.0412e+00  6.1698e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 4.189358 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 98655.9 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.9840e+01  1.0000e+00  1.0001e+00  7.1840e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 69.912185 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 8.10233 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.1756e+00  1.1993e+00  1.5090e+00  4.4673e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.180106 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 32924.5 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.9830e+01  1.0000e+00  1.0001e+00  4.1830e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 39.872159 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 25916.7 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.5538e+01  9.9963e-01  1.0004e+00  1.7538e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 15.555665 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.8571e-05  8.1705e-06  1.9121e+00  2.0879e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002106 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+3
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:26:48 CST  run: 42911577 subRun: 33 event: 867
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 867
+evttime: 376812204
+run: 42911577 ; subrun: 33 ; event: 867
+evttime: 376812204
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:27:13 CST  run: 42911577 subRun: 33 event: 868
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 868
+evttime: 376812205
+run: 42911577 ; subrun: 33 ; event: 868
+evttime: 376812205
+########## EvtNo.868
+We found no beam particles for this event... moving on
+Making trajs 
+1
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:28:03 CST  run: 42911577 subRun: 33 event: 869
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 869
+evttime: 376812206
+run: 42911577 ; subrun: 33 ; event: 869
+evttime: 376812206
+########## EvtNo.869
+We found no beam particles for this event... moving on
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:28:39 CST  run: 42911577 subRun: 33 event: 870
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 870
+evttime: 376812206
+run: 42911577 ; subrun: 33 ; event: 870
+evttime: 376812206
+########## EvtNo.870
+43
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.5504e-02  1.7283e-03  1.6875e+00  2.3862e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.077891 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 40.9363 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.9565e+00  9.4945e-01  1.0719e+00  8.9352e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 6.965472 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.0875e-05  7.8961e-07  1.4731e+00  2.5269e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002538 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.9779e-02  1.8046e-03  1.6879e+00  2.3901e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.082169 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 17.7675 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.0821e+00  9.4294e-01  1.0908e+00  9.0483e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 7.091165 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.1143e-05  5.9409e-07  1.4730e+00  2.5271e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002608 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+15-Nov-2022 19:29:11 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/44/75/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_86_20210414T102527Z.root"
+15-Nov-2022 19:29:11 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/f1/77/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_7_20210414T102107Z.root"
+15-Nov-2022 19:29:12 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/f1/77/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_7_20210414T102107Z.root"
+db: runtime 376812141
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:29:38 CST  run: 42911577 subRun: 33 event: 71
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 71
+evttime: 376812141
+run: 42911577 ; subrun: 33 ; event: 71
+evttime: 376812141
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:30:20 CST  run: 42911577 subRun: 33 event: 72
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 72
+evttime: 376812142
+run: 42911577 ; subrun: 33 ; event: 72
+evttime: 376812142
+########## EvtNo.72
+We found no beam particles for this event... moving on
+Making trajs 
+7
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:30:54 CST  run: 42911577 subRun: 33 event: 73
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 73
+evttime: 376812143
+run: 42911577 ; subrun: 33 ; event: 73
+evttime: 376812143
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:31:16 CST  run: 42911577 subRun: 33 event: 74
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 74
+evttime: 376812144
+run: 42911577 ; subrun: 33 ; event: 74
+evttime: 376812144
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:31:42 CST  run: 42911577 subRun: 33 event: 75
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 75
+evttime: 376812144
+run: 42911577 ; subrun: 33 ; event: 75
+evttime: 376812144
+########## EvtNo.75
+34
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.0466e-01  3.7645e-03  1.7793e+00  2.3216e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.106983 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.8263e-05  5.0515e-06  1.6576e+00  2.3425e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002421 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.49023 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.2237e+00  1.1629e+00  1.4859e+00  4.5749e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.228313 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1285.88 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.5303e+01  1.0005e+00  1.0045e+00  1.7298e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 15.319965 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:32:34 CST  run: 42911577 subRun: 33 event: 76
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 76
+evttime: 376812145
+run: 42911577 ; subrun: 33 ; event: 76
+evttime: 376812145
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:32:59 CST  run: 42911577 subRun: 33 event: 77
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 77
+evttime: 376812146
+run: 42911577 ; subrun: 33 ; event: 77
+evttime: 376812146
+########## EvtNo.77
+127
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.3128e-02  2.6714e-03  1.7951e+00  2.2854e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.085413 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.2062e-07  5.7082e-06  1.5786e+00  2.4214e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002422 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.3415e-01  3.9908e-03  1.8142e+00  2.3160e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.136467 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 72.4974 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.5908e+00  9.8807e-01  1.0133e+00  5.5894e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.596368 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.6464e-06  8.1219e-07  1.5782e+00  2.4218e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002424 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:33:52 CST  run: 42911577 subRun: 33 event: 78
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 78
+evttime: 376812147
+run: 42911577 ; subrun: 33 ; event: 78
+evttime: 376812147
+########## EvtNo.78
+247
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.4892e-02  1.1324e-03  1.6637e+00  2.3700e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.037262 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 24.0035 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.3093e+00  8.5061e-01  1.1728e+00  1.0286e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 8.319598 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.8865e-07  3.6974e-06  1.6803e+00  2.3197e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002320 TO DIAGONAL.
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002149 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.8521e-02  1.5455e-03  1.6684e+00  2.3786e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.050900 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 103.895 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.5733e+01  9.8780e-01  1.0325e+00  1.7713e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 15.750660 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.4602e-07  3.1975e-06  1.6801e+00  2.3199e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002320 TO DIAGONAL.
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002149 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+-13
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:34:42 CST  run: 42911577 subRun: 33 event: 79
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 79
+evttime: 376812147
+run: 42911577 ; subrun: 33 ; event: 79
+evttime: 376812147
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:35:09 CST  run: 42911577 subRun: 33 event: 80
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 80
+evttime: 376812148
+run: 42911577 ; subrun: 33 ; event: 80
+evttime: 376812148
+########## EvtNo.80
+119
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.9622e-01  8.1324e-03  1.8394e+00  2.4487e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.298667 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 18038 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.9253e+01  1.0000e+00  1.0004e+00  6.1253e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 59.314283 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 303584 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.3445e+02  1.0001e+00  1.0004e+00  4.3645e+02
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 434.887736 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 5.93664 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.7957e+00  1.1314e+00  1.3539e+00  3.3104e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 1.799005 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 7504.91 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.7777e+01  1.0000e+00  1.0004e+00  3.9777e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 37.816929 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+15-Nov-2022 19:35:41 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/f1/77/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_7_20210414T102107Z.root"
+15-Nov-2022 19:35:41 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/ac/bb/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_1_20210414T102103Z.root"
+15-Nov-2022 19:35:47 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/ac/bb/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_1_20210414T102103Z.root"
+db: runtime 376812135
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:36:20 CST  run: 42911577 subRun: 33 event: 11
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 11
+evttime: 376812135
+run: 42911577 ; subrun: 33 ; event: 11
+evttime: 376812135
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:37:15 CST  run: 42911577 subRun: 33 event: 12
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 12
+evttime: 376812137
+run: 42911577 ; subrun: 33 ; event: 12
+evttime: 376812137
+########## EvtNo.12
+We found no beam particles for this event... moving on
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:38:04 CST  run: 42911577 subRun: 33 event: 13
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 13
+evttime: 376812138
+run: 42911577 ; subrun: 33 ; event: 13
+evttime: 376812138
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:38:37 CST  run: 42911577 subRun: 33 event: 14
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 14
+evttime: 376812139
+run: 42911577 ; subrun: 33 ; event: 14
+evttime: 376812139
+########## EvtNo.14
+58
+2
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 11.7889 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.2574e+00  1.1749e+00  1.3454e+00  3.7371e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 2.261172 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 44.3182 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.7606e+00  1.0032e+00  1.0287e+00  6.7287e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 4.767313 TO DIAGONAL.
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002504 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 4.61523 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.0183e+00  1.2576e+00  1.5393e+00  3.2214e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 2.021495 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.9402e-06  3.5281e-06  1.4952e+00  2.5048e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002512 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+1
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:39:30 CST  run: 42911577 subRun: 33 event: 15
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 15
+evttime: 376812140
+run: 42911577 ; subrun: 33 ; event: 15
+evttime: 376812140
+########## EvtNo.15
+191
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.2049e+00  1.6280e-02  1.9266e+00  3.2620e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 1.208185 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.9507e-07  4.2236e-06  1.6543e+00  2.3457e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002346 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.5993e-01  9.3926e-03  1.8641e+00  2.4864e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.362419 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 63383.1 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.9563e+01  1.0000e+00  1.0002e+00  7.1563e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 69.634953 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+1
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:40:04 CST  run: 42911577 subRun: 33 event: 16
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 16
+evttime: 376812142
+run: 42911577 ; subrun: 33 ; event: 16
+evttime: 376812142
+########## EvtNo.16
+10
+2
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== 1.24735 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.6306e-04  7.5678e-04  1.1759e+00  2.8240e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.003487 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 2.47169 added to diagonal of error matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 25.4467 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.0705e-01  1.0051e+00  1.0587e+00  2.7433e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.809789 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+0
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:40:47 CST  run: 42911577 subRun: 33 event: 17
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 17
+evttime: 376812143
+run: 42911577 ; subrun: 33 ; event: 17
+evttime: 376812143
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:41:13 CST  run: 42911577 subRun: 33 event: 18
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 18
+evttime: 376812144
+run: 42911577 ; subrun: 33 ; event: 18
+evttime: 376812144
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:41:45 CST  run: 42911577 subRun: 33 event: 19
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 19
+evttime: 376812146
+run: 42911577 ; subrun: 33 ; event: 19
+evttime: 376812146
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:42:17 CST  run: 42911577 subRun: 33 event: 20
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 20
+evttime: 376812146
+run: 42911577 ; subrun: 33 ; event: 20
+evttime: 376812146
+15-Nov-2022 19:42:27 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/ac/bb/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_1_20210414T102103Z.root"
+15-Nov-2022 19:42:27 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/95/c4/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_127_20210414T102257Z.root"
+15-Nov-2022 19:42:32 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/95/c4/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_127_20210414T102257Z.root"
+db: runtime 376812169
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:42:56 CST  run: 42911577 subRun: 33 event: 1271
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1271
+evttime: 376812169
+run: 42911577 ; subrun: 33 ; event: 1271
+evttime: 376812169
+########## EvtNo.1271
+20
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.6248e-05  1.9048e-05  1.2888e+00  2.7112e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002727 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.1251e-05  2.0035e-06  1.2869e+00  2.7131e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002734 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.8752e-04 -2.5684e-07  1.2888e+00  2.7115e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002999 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.6932e-05 -6.6789e-07  1.2869e+00  2.7131e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002780 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 4490.07 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.9192e+00  1.0000e+00  1.0055e+00  1.0914e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 8.930089 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:44:37 CST  run: 42911577 subRun: 33 event: 1272
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1272
+evttime: 376812170
+run: 42911577 ; subrun: 33 ; event: 1272
+evttime: 376812170
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:45:16 CST  run: 42911577 subRun: 33 event: 1273
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1273
+evttime: 376812171
+run: 42911577 ; subrun: 33 ; event: 1273
+evttime: 376812171
+########## EvtNo.1273
+147
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.0759e-01  5.8170e-03  1.8170e+00  2.3848e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.209978 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 2.5153 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.0896e-06  4.9020e-06  1.5914e+00  2.4086e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002410 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 243405 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.6765e+01  1.0000e+00  1.0003e+00  8.8765e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 86.854053 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 5.84133 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.1958e+00  1.1842e+00  1.4646e+00  3.5469e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 2.199305 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.4994e-06  1.6651e-06  1.5910e+00  2.4090e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002413 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:45:53 CST  run: 42911577 subRun: 33 event: 1274
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1274
+evttime: 376812172
+run: 42911577 ; subrun: 33 ; event: 1274
+evttime: 376812172
+########## EvtNo.1274
+86
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.6228e-01  1.6461e-02  1.9055e+00  2.8403e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.765125 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.3971e-06  2.2721e-07  1.5459e+00  2.4541e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002456 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 7.62479 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.1295e+00  1.1657e+00  1.4708e+00  4.4929e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.133956 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 11843.1 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.1848e+01  1.0000e+00  1.0007e+00  2.3847e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 21.872058 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 12415.1 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.4434e+01  9.9523e-01  1.0034e+00  1.6435e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 14.450167 TO DIAGONAL.
+Getting reco beam calo
+%MSG-e TrackMomentumCalculator:  PDSPAnalyzer:pduneana@BeginModule  15-Nov-2022 19:46:12 CST run: 42911577 subRun: 33 event: 1274
+Invalid track range -999 return -1
+%MSG
+%MSG-e TrackMomentumCalculator:  PDSPAnalyzer:pduneana@BeginModule  15-Nov-2022 19:46:12 CST run: 42911577 subRun: 33 event: 1274
+Invalid track range -999 return -1
+%MSG
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:46:37 CST  run: 42911577 subRun: 33 event: 1275
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1275
+evttime: 376812174
+run: 42911577 ; subrun: 33 ; event: 1275
+evttime: 376812174
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:47:00 CST  run: 42911577 subRun: 33 event: 1276
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1276
+evttime: 376812175
+run: 42911577 ; subrun: 33 ; event: 1276
+evttime: 376812175
+########## EvtNo.1276
+87
+2
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1.12091e+15 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.8594e+06  1.0016e+00  1.0335e+00  8.8594e+06
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 8868227.534910 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.6920e-07  3.7579e-08  1.4656e-06  4.0000e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.004000 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.5977e-07  3.7367e-08  1.4540e-06  4.0000e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.004000 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 622.954 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.4934e+01  1.0002e+00  1.0008e+00  2.6933e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 24.961018 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.87199e+12 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.1227e+05  1.0000e+00  1.0007e+00  4.1228e+05
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 412687.022661 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.1720e-09  3.7843e-08  1.4849e-06  4.0000e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.004000 TO DIAGONAL.
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.004000 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1.14372e+14 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.6681e+06  1.0012e+00  1.0283e+00  2.6681e+06
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 2670758.249690 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.1563e-07  5.2091e-08  1.5078e-06  4.0000e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.004000 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.5023e-07  3.2459e-08  1.4672e-06  4.0000e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.004000 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 392.806 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.2082e+01  1.0002e+00  1.0008e+00  2.4081e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 22.106176 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.8068e-04  6.6446e-04  5.6868e-01  3.4309e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.003712 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 2.07782e+13 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.1267e+06  1.0000e+00  1.0007e+00  1.1267e+06
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 1127846.682098 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:47:41 CST  run: 42911577 subRun: 33 event: 1277
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1277
+evttime: 376812176
+run: 42911577 ; subrun: 33 ; event: 1277
+evttime: 376812176
+########## EvtNo.1277
+103
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -9.9485e-02  3.4576e-03  1.7938e+00  2.3023e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.101787 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.7874e-06  2.0403e-06  1.5475e+00  2.4525e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002454 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.0675e-01  3.6517e-03  1.7959e+00  2.3072e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.109060 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 13898.9 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.4855e+01  1.0001e+00  1.0005e+00  5.6855e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 54.912044 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:48:22 CST  run: 42911577 subRun: 33 event: 1278
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1278
+evttime: 376812177
+run: 42911577 ; subrun: 33 ; event: 1278
+evttime: 376812177
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:48:47 CST  run: 42911577 subRun: 33 event: 1279
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1279
+evttime: 376812178
+run: 42911577 ; subrun: 33 ; event: 1279
+evttime: 376812178
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:49:10 CST  run: 42911577 subRun: 33 event: 1280
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1280
+evttime: 376812179
+run: 42911577 ; subrun: 33 ; event: 1280
+evttime: 376812179
+########## EvtNo.1280
+220
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -9.6241e-02  4.4794e-03  1.7505e+00  2.3413e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.098582 TO DIAGONAL.
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002339 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.73181 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.0519e+00  1.2185e+00  1.6339e+00  6.1995e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 5.058108 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 325598 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.2502e+02  1.0000e+00  1.0001e+00  1.2702e+02
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 125.145660 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+15-Nov-2022 19:49:33 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/95/c4/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_127_20210414T102257Z.root"
+15-Nov-2022 19:49:33 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/5f/9f/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_14_20210414T102110Z.root"
+15-Nov-2022 19:49:38 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/5f/9f/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_14_20210414T102110Z.root"
+db: runtime 376812170
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:50:00 CST  run: 42911577 subRun: 33 event: 141
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 141
+evttime: 376812170
+run: 42911577 ; subrun: 33 ; event: 141
+evttime: 376812170
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:50:42 CST  run: 42911577 subRun: 33 event: 142
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 142
+evttime: 376812171
+run: 42911577 ; subrun: 33 ; event: 142
+evttime: 376812171
+########## EvtNo.142
+75
+2
+ MINUIT WARNING IN HESSE   
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN HESSE   
+ ============== 1.12785 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.1529e-07  8.8660e-06  1.6667e+00  2.3333e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002334 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 4.61608 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.1487e-06  2.5716e-06  1.6671e+00  2.3329e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002339 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:51:42 CST  run: 42911577 subRun: 33 event: 143
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 143
+evttime: 376812172
+run: 42911577 ; subrun: 33 ; event: 143
+evttime: 376812172
+########## EvtNo.143
+We found no beam particles for this event... moving on
+Making trajs 
+3
+-13
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:52:12 CST  run: 42911577 subRun: 33 event: 144
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 144
+evttime: 376812173
+run: 42911577 ; subrun: 33 ; event: 144
+evttime: 376812173
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:52:34 CST  run: 42911577 subRun: 33 event: 145
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 145
+evttime: 376812174
+run: 42911577 ; subrun: 33 ; event: 145
+evttime: 376812174
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:52:52 CST  run: 42911577 subRun: 33 event: 146
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 146
+evttime: 376812175
+run: 42911577 ; subrun: 33 ; event: 146
+evttime: 376812175
+########## EvtNo.146
+116
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.6255e-02  3.0258e-03  1.7308e+00  2.3524e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.088607 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.1774e-06  3.1743e-06  1.5534e+00  2.4466e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002449 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 26183.7 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.6486e+01  1.0000e+00  1.0004e+00  1.8485e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 16.504098 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.92439 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.0078e+00  1.1656e+00  1.5032e+00  6.3391e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 5.014176 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.8204e-06  6.8657e-07  1.5529e+00  2.4471e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002452 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:53:32 CST  run: 42911577 subRun: 33 event: 147
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 147
+evttime: 376812176
+run: 42911577 ; subrun: 33 ; event: 147
+evttime: 376812176
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:53:56 CST  run: 42911577 subRun: 33 event: 148
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 148
+evttime: 376812178
+run: 42911577 ; subrun: 33 ; event: 148
+evttime: 376812178
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:54:19 CST  run: 42911577 subRun: 33 event: 149
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 149
+evttime: 376812179
+run: 42911577 ; subrun: 33 ; event: 149
+evttime: 376812179
+########## EvtNo.149
+90
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.3347e-01  4.7954e-03  1.7749e+00  2.3538e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.135826 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.2777e-06  9.9212e-07  1.5307e+00  2.4693e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002472 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.71464 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.7005e+00  1.1980e+00  1.5082e+00  3.9942e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 2.704504 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 9940.33 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.0514e+01  1.0001e+00  1.0007e+00  5.2513e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 50.566338 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.1079e-05  6.2424e-06  1.2895e+00  2.7105e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002732 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:54:57 CST  run: 42911577 subRun: 33 event: 150
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 150
+evttime: 376812180
+run: 42911577 ; subrun: 33 ; event: 150
+evttime: 376812180
+########## EvtNo.150
+Making trajs 
+2
+2212
+Weights; 2
+15-Nov-2022 19:55:20 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/5f/9f/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_14_20210414T102110Z.root"
+15-Nov-2022 19:55:20 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/ef/7e/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_124_20210414T102530Z.root"
+15-Nov-2022 19:55:28 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/ef/7e/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_124_20210414T102530Z.root"
+db: runtime 376812421
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:55:48 CST  run: 42911577 subRun: 33 event: 1241
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1241
+evttime: 376812421
+run: 42911577 ; subrun: 33 ; event: 1241
+evttime: 376812421
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:56:30 CST  run: 42911577 subRun: 33 event: 1242
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1242
+evttime: 376812423
+run: 42911577 ; subrun: 33 ; event: 1242
+evttime: 376812423
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:56:53 CST  run: 42911577 subRun: 33 event: 1243
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1243
+evttime: 376812424
+run: 42911577 ; subrun: 33 ; event: 1243
+evttime: 376812424
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:57:14 CST  run: 42911577 subRun: 33 event: 1244
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1244
+evttime: 376812426
+run: 42911577 ; subrun: 33 ; event: 1244
+evttime: 376812426
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:57:38 CST  run: 42911577 subRun: 33 event: 1245
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1245
+evttime: 376812427
+run: 42911577 ; subrun: 33 ; event: 1245
+evttime: 376812427
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:57:58 CST  run: 42911577 subRun: 33 event: 1246
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1246
+evttime: 376812428
+run: 42911577 ; subrun: 33 ; event: 1246
+evttime: 376812428
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:58:20 CST  run: 42911577 subRun: 33 event: 1247
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1247
+evttime: 376812429
+run: 42911577 ; subrun: 33 ; event: 1247
+evttime: 376812429
+########## EvtNo.1247
+72
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -9.8759e-02  4.0628e-03  1.8372e+00  2.2575e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.101016 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.7928e-07  5.1879e-06  1.7127e+00  2.2873e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002288 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 12.8141 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.0472e+00  1.1793e+00  1.3857e+00  4.4822e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.051662 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.6880e-05  1.9786e-06  1.7129e+00  2.2871e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002304 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:59:17 CST  run: 42911577 subRun: 33 event: 1248
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1248
+evttime: 376812431
+run: 42911577 ; subrun: 33 ; event: 1248
+evttime: 376812431
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 19:59:39 CST  run: 42911577 subRun: 33 event: 1249
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1249
+evttime: 376812431
+run: 42911577 ; subrun: 33 ; event: 1249
+evttime: 376812431
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:00:04 CST  run: 42911577 subRun: 33 event: 1250
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 1250
+evttime: 376812433
+run: 42911577 ; subrun: 33 ; event: 1250
+evttime: 376812433
+########## EvtNo.1250
+207
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.0124e-01  3.9431e-03  1.7688e+00  2.3285e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.103564 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 109393 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.0298e+01  1.0000e+00  1.0001e+00  6.2297e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 60.359819 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 5.66935 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.6599e+00  1.2172e+00  1.6308e+00  5.8119e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 4.665685 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 37735 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.5190e+01  1.0000e+00  1.0001e+00  3.7190e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 35.227029 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+15-Nov-2022 20:00:29 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/ef/7e/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_124_20210414T102530Z.root"
+15-Nov-2022 20:00:29 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/6b/81/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_5_20210414T102107Z.root"
+15-Nov-2022 20:00:37 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/6b/81/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_5_20210414T102107Z.root"
+db: runtime 376812151
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:00:59 CST  run: 42911577 subRun: 33 event: 51
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 51
+evttime: 376812151
+run: 42911577 ; subrun: 33 ; event: 51
+evttime: 376812151
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:01:45 CST  run: 42911577 subRun: 33 event: 52
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 52
+evttime: 376812152
+run: 42911577 ; subrun: 33 ; event: 52
+evttime: 376812152
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:02:07 CST  run: 42911577 subRun: 33 event: 53
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 53
+evttime: 376812153
+run: 42911577 ; subrun: 33 ; event: 53
+evttime: 376812153
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:02:33 CST  run: 42911577 subRun: 33 event: 54
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 54
+evttime: 376812154
+run: 42911577 ; subrun: 33 ; event: 54
+evttime: 376812154
+########## EvtNo.54
+112
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.8243e-02  2.7235e-03  1.7573e+00  2.3183e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.080561 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 34.9915 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.5177e+00  9.4638e-01  1.0831e+00  8.4882e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 6.526147 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.2444e-07  4.5194e-06  1.5461e+00  2.4539e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002455 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.72181 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.4173e+00  1.1835e+00  1.5392e+00  4.6946e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.421981 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 52103.3 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.3405e+02  1.0001e+00  1.0005e+00  1.3605e+02
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 134.182081 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.7996e-06  1.4928e-06  1.5451e+00  2.4549e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002461 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:03:24 CST  run: 42911577 subRun: 33 event: 55
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 55
+evttime: 376812154
+run: 42911577 ; subrun: 33 ; event: 55
+evttime: 376812154
+########## EvtNo.55
+116
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -8.6558e-01  1.5802e-02  1.8599e+00  2.9898e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.868569 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1.26981 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.4085e-07  5.4055e-06  1.5500e+00  2.4500e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002450 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.0208 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.4063e+00  1.1355e+00  1.3392e+00  2.9316e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 1.409206 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.6797e-06  6.5296e-07  1.5496e+00  2.4504e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002452 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:04:09 CST  run: 42911577 subRun: 33 event: 56
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 56
+evttime: 376812155
+run: 42911577 ; subrun: 33 ; event: 56
+evttime: 376812155
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:04:37 CST  run: 42911577 subRun: 33 event: 57
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 57
+evttime: 376812156
+run: 42911577 ; subrun: 33 ; event: 57
+evttime: 376812156
+########## EvtNo.57
+We found no beam particles for this event... moving on
+Making trajs 
+0
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:05:17 CST  run: 42911577 subRun: 33 event: 58
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 58
+evttime: 376812157
+run: 42911577 ; subrun: 33 ; event: 58
+evttime: 376812157
+########## EvtNo.58
+409
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.0134e-02  1.5926e-03  1.7034e+00  2.3351e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.042469 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 57.4438 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.1455e+01  9.4518e-01  1.0877e+00  2.3422e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 21.478406 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.9303e-07  2.7584e-06  1.8243e+00  2.1757e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002176 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 741363 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.0383e+01  1.0000e+00  1.0000e+00  5.2383e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 50.435871 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 10.0214 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.2418e+00  1.1281e+00  1.4121e+00  4.7016e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.246548 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.5807e-07  2.1905e-06  1.8240e+00  2.1760e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002176 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 181736 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.4586e+01  1.0000e+00  1.0000e+00  2.6586e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 24.612442 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+-13
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:06:05 CST  run: 42911577 subRun: 33 event: 59
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 59
+evttime: 376812159
+run: 42911577 ; subrun: 33 ; event: 59
+evttime: 376812159
+########## EvtNo.59
+172
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -9.8221e-02  4.0549e-03  1.6965e+00  2.3977e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.100618 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.7141e-07  5.6084e-06  1.5960e+00  2.4040e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002405 TO DIAGONAL.
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002128 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 5.91527 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.9018e+00  1.2666e+00  1.7406e+00  5.8946e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 4.907667 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -6.1255e-07  2.9570e-06  1.5957e+00  2.4043e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002405 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:06:51 CST  run: 42911577 subRun: 33 event: 60
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 60
+evttime: 376812159
+run: 42911577 ; subrun: 33 ; event: 60
+evttime: 376812159
+########## EvtNo.60
+55
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.2216e-04  6.4828e-06  1.8916e+00  2.1085e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002231 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1030.4 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.5476e+00  9.9983e-01  1.0077e+00  9.5400e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 7.557099 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.4604e-04  2.2346e-05  1.7464e+00  2.2537e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002400 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.5654e-04  7.3964e-06  1.8807e+00  2.1195e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002376 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.6756e-04  2.5530e-05  1.7445e+00  2.2558e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002623 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 19743.8 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.9045e+01  1.0006e+00  1.0111e+00  4.1033e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 39.085806 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+1
+211
+Weights; 12
+15-Nov-2022 20:07:25 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/6b/81/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_5_20210414T102107Z.root"
+15-Nov-2022 20:07:25 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/ef/ad/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_51_20210414T102118Z.root"
+15-Nov-2022 20:07:33 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/ef/ad/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_51_20210414T102118Z.root"
+db: runtime 376812131
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:07:54 CST  run: 42911577 subRun: 33 event: 511
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 511
+evttime: 376812131
+run: 42911577 ; subrun: 33 ; event: 511
+evttime: 376812131
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:08:35 CST  run: 42911577 subRun: 33 event: 512
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 512
+evttime: 376812132
+run: 42911577 ; subrun: 33 ; event: 512
+evttime: 376812132
+########## EvtNo.512
+19
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.0141e+00  1.7125e-02  1.8404e+00  3.1566e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 1.017252 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.1439e-04  2.2029e-05  1.6401e+00  2.3603e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002775 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 5.83231 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.2588e+00  1.1490e+00  1.3032e+00  2.8066e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 1.261583 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 280.881 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.6384e+00  9.9986e-01  1.0122e+00  3.6263e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 1.641995 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.6904e-03  1.0924e-03  1.3730e+00  2.6276e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.004318 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:09:20 CST  run: 42911577 subRun: 33 event: 513
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 513
+evttime: 376812133
+run: 42911577 ; subrun: 33 ; event: 513
+evttime: 376812133
+########## EvtNo.513
+Making trajs 
+1
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:10:10 CST  run: 42911577 subRun: 33 event: 514
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 514
+evttime: 376812134
+run: 42911577 ; subrun: 33 ; event: 514
+evttime: 376812134
+########## EvtNo.514
+414
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -7.2065e-02  2.6015e-03  1.7480e+00  2.3215e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.074386 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 20.5107 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.3343e+00  9.0716e-01  1.1268e+00  7.3003e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 5.341624 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.1528e-07  2.4762e-06  1.7957e+00  2.2043e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002204 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 1.90205e+06 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.6094e+01  1.0000e+00  1.0000e+00  4.8093e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 46.141622 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.85106 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.1474e+00  1.1993e+00  1.5768e+00  4.3713e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 3.151769 TO DIAGONAL.
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002204 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 614732 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -3.2640e+01  1.0000e+00  1.0000e+00  3.4640e+01
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 32.674667 TO DIAGONAL.
+Getting reco beam calo
+Making trajs 
+2
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:10:52 CST  run: 42911577 subRun: 33 event: 515
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 515
+evttime: 376812135
+run: 42911577 ; subrun: 33 ; event: 515
+evttime: 376812135
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:11:13 CST  run: 42911577 subRun: 33 event: 516
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 516
+evttime: 376812136
+run: 42911577 ; subrun: 33 ; event: 516
+evttime: 376812136
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 20:11:42 CST  run: 42911577 subRun: 33 event: 517
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 517
+evttime: 376812137

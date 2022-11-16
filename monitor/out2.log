@@ -1,0 +1,427 @@
+
+[1mRooFit v3.60 -- Developed by Wouter Verkerke and David Kirkby[0m 
+                Copyright (C) 2000-2013 NIKHEF, University of California & Stanford University
+                All rights reserved, please read http://roofit.sourceforge.net/license.txt
+
+DuneDeconvolutionService::ctor: DuneDeconvolutionService:
+DuneDeconvolutionService::ctor:                LogLevel: 1
+DuneRoiBuildingService::ctor: DuneRoiBuildingService:
+DuneRoiBuildingService::ctor:     LogLevel: 1
+DuneRoiBuildingService::ctor:  NSigmaStart: 3
+DuneRoiBuildingService::ctor:    NSigmaEnd: 1
+DuneRoiBuildingService::ctor:       PadLow: 50
+DuneRoiBuildingService::ctor:      PadHigh: 50
+StandardAdcWireBuildingService::ctor: StandardAdcWireBuildingService:
+StandardAdcWireBuildingService::ctor:     LogLevel: 1
+Warning in <TGeoManager>: Changing system of units to ROOT units (cm, s, GeV).
+Info in <TGeoManager::Import>: Reading geometry from file: /cvmfs/dune.opensciencegrid.org/products/dune/dunecore/v09_58_02d00/gdml/protodune_v7.gdml
+Info in <TGeoManager::TGeoManager>: Geometry GDMLImport, Geometry imported from GDML created
+Info in <TGeoManager::SetTopVolume>: Top volume is volWorld. Master volume is volWorld
+Info in <TGeoNavigator::BuildCache>: --- Maximum geometry depth set to 100
+Info in <TGeoManager::CheckGeometry>: Fixing runtime shapes...
+Info in <TGeoManager::CheckGeometry>: ...Nothing to fix
+Info in <TGeoManager::CloseGeometry>: Counting nodes...
+Info in <TGeoManager::Voxelize>: Voxelizing...
+Info in <TGeoManager::CloseGeometry>: Building cache...
+Info in <TGeoManager::CountLevels>: max level = 5, max placements = 1148
+Info in <TGeoManager::CloseGeometry>: 36176 nodes/ 5435 volume UID's in Geometry imported from GDML
+Info in <TGeoManager::CloseGeometry>: ----------------modeler ready----------------
+GeoApaChannelGroupService::ctor: Group 0 (apa0) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 1 (apa1) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 2 (apa2) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 3 (apa3) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 4 (apa4) has 2560 channels from 4/4 readout planes.
+GeoApaChannelGroupService::ctor: Group 5 (apa5) has 2560 channels from 4/4 readout planes.
+PDSP Channel Map: Building RCE TPC wiremap from file protoDUNETPCChannelMap_RCE_v4.txt
+PDSP Channel Map: Building FELIX TPC wiremap from file protoDUNETPCChannelMap_RCE_v4.txt
+PDSP Channel Map: Building SSP channel map from file protoDUNESSPChannelMap_v1.txt
+DuneToolManager::fclFilename: Taking fcl name from command line: lar -c pduneana_Prod4a_MC_sce.fcl -n10 root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/22/9c/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_80_20210414T102221Z.root
+AcdDigitReader::ctor:     LogLevel: 1
+DuneToolManager::getPrivate: Tool name is blank
+StandardRawDigitExtractService::ctor: Retrieved digit read tool digitReader
+StandardRawDigitExtractService::ctor: StandardRawDigitExtractService:
+StandardRawDigitExtractService::ctor:         LogLevel: 1
+StandardRawDigitExtractService::ctor:    DigitReadTool: digitReader
+StandardRawDigitExtractService::ctor:   PedestalOption: 1
+StandardRawDigitExtractService::ctor:     FlagStuckOff: 0
+StandardRawDigitExtractService::ctor:      FlagStuckOn: 0
+ToolBasedRawDigitPrepService::ctor:      Fetching digitReader
+AcdDigitReader::ctor:     LogLevel: 1
+ToolBasedRawDigitPrepService::ctor:     Found tool digitReader @ 0x95defe0
+ToolBasedRawDigitPrepService::ctor:      Fetching adcSampleFiller
+AdcSampleFiller::ctor: Configuration parameters:
+AdcSampleFiller::ctor:       LogLevel: 1
+AdcSampleFiller::ctor:   AdcUnderflow: 0
+AdcSampleFiller::ctor:    AdcOverflow: 4095
+ToolBasedRawDigitPrepService::ctor:     Found tool adcSampleFiller @ 0x9795050
+ToolBasedRawDigitPrepService::ctor:      Fetching adcScaleAdcToKe
+AdcSampleScaler::ctor: Parameters:
+AdcSampleScaler::ctor:          LogLevel: 1
+AdcSampleScaler::ctor:       ScaleFactor: 0.02401
+AdcSampleScaler::ctor:        OutputUnit: ke/tick
+AdcSampleScaler::ctor:         InputUnit: ADC count
+ToolBasedRawDigitPrepService::ctor:     Found tool adcScaleAdcToKe @ 0xd3138e0
+ToolBasedRawDigitPrepService::ctor:      Fetching pdspTailPedRemovalZKe
+AdcThresholdSignalFinder::ctor: Configuration parameters:
+AdcThresholdSignalFinder::ctor:       LogLevel: 1
+AdcThresholdSignalFinder::ctor:      Threshold: 5e-1
+AdcThresholdSignalFinder::ctor:     BinsBefore: 10
+AdcThresholdSignalFinder::ctor:      BinsAfter: 20
+AdcThresholdSignalFinder::ctor:   FlagPositive: true
+AdcThresholdSignalFinder::ctor:   FlagNegative: true
+ExpTailPedRemover::ctor: Parameters:
+ExpTailPedRemover::ctor:               LogLevel: 1
+ExpTailPedRemover::ctor:             SignalFlag: 3
+ExpTailPedRemover::ctor:   SignalIterationLimit: 10
+ExpTailPedRemover::ctor:             SignalTool: adcTailSignalFinderKe
+ExpTailPedRemover::ctor:              DecayTime: 2200
+ExpTailPedRemover::ctor:                MaxTick: 21000
+ExpTailPedRemover::ctor:              PedDegree: 0
+ExpTailPedRemover::ctor:               PedTick0: 3000
+ExpTailPedRemover::ctor:               PedFreqs: []
+ExpTailPedRemover::ctor:   IncludeChannelRanges: [apa1z, apa2z, apa3z, apa4z, apa5z, apa6z, apa1c, apa2c, apa3c, apa4c, apa5c, apa6c]
+ExpTailPedRemover::ctor:   NoWarnStatuses: [1]
+ExpTailPedRemover::ctor:   ExcludeChannelRanges: []
+ExpTailPedRemover::ctor: Channel checking enabled for 5760 channels.
+ToolBasedRawDigitPrepService::ctor:     Found tool pdspTailPedRemovalZKe @ 0x94464b0
+ToolBasedRawDigitPrepService::ctor: Fetching wire building service.
+ToolBasedRawDigitPrepService::ctor:   Wire building service: @0x7ae3bb0
+ToolBasedRawDigitPrepService::ctor: ToolBasedRawDigitPrepService:
+ToolBasedRawDigitPrepService::ctor:                     LogLevel: 3
+ToolBasedRawDigitPrepService::ctor:                      DoWires: 1
+ToolBasedRawDigitPrepService::ctor:      ADC channel tools:
+ToolBasedRawDigitPrepService::ctor:            digitReader
+ToolBasedRawDigitPrepService::ctor:            adcSampleFiller
+ToolBasedRawDigitPrepService::ctor:            adcScaleAdcToKe
+ToolBasedRawDigitPrepService::ctor:            pdspTailPedRemovalZKe
+Warning in <TFile::Append>: Replacing existing TH1: FieldResponse_U (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: FieldResponse_V (Potential memory leak).
+Warning in <TFile::Append>: Replacing existing TH1: FieldResponse_Y (Potential memory leak).
+
+**************************************************************
+ Geant4 version Name: geant4-10-06-patch-01    (14-February-2020)
+                       Copyright : Geant4 Collaboration
+                      References : NIM A 506 (2003), 250-303
+                                 : IEEE-TNS 53 (2006), 270-278
+                                 : NIM A 835 (2016), 186-225
+                             WWW : http://geant4.org/
+**************************************************************
+
+
+### ===  Deexcitation model UAtomDeexcitation is activated for 1 region:
+### ===  Auger cascade flag: 1
+### ===  Ignore cuts flag:   0
+Set Cuts
+Part def: 0xb996920
+Transportation
+Decay
+msc
+hIoni
+hBrems
+hPairProd
+CoulombScat
+Part def: 0xb996920
+Transportation
+Decay
+msc
+hIoni
+hBrems
+hPairProd
+CoulombScat
+Transportation
+msc
+hIoni
+hBrems
+hPairProd
+CoulombScat
+Transportation
+Decay
+msc
+hIoni
+hBrems
+hPairProd
+CoulombScat
+Transportation
+Decay
+nCapture
+15-Nov-2022 17:24:38 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/22/9c/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_80_20210414T102221Z.root"
+15-Nov-2022 17:24:38 CST  Initiating request to open input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/22/9c/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_80_20210414T102221Z.root"
+15-Nov-2022 17:24:41 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/22/9c/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_80_20210414T102221Z.root"
+15-Nov-2022 17:24:41 CST  Opened input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/22/9c/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_80_20210414T102221Z.root"
+Setting applicationFamily: "art"
+Setting process_name: "PDSPAna"
+db: runtime 376812225
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:25:05 CST  run: 42911577 subRun: 33 event: 801
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 801
+evttime: 376812225
+fApplyNormCorrection: 0
+fApplyXCorrection: 1
+fApplyYZCorrection: 1
+fApplyLifetimeCorrection: 0
+fUseLifetimeFromDatabase: 0
+Plane	Reference dQ/dx	Global median dQ/dx	Calorimetry constant
+DBWeb query: https://dbdata0vm.fnal.gov:9443/dune_con_prod/app/get?table=pdunesp.distcorrnorm&type=mc&tag=prod4&t=42911577&columns=norm,norm_err
+[Tue Nov 15 17:25:10 2022] perform_with_timeout: Warning: CA verification is off. URL='https://dbdata0vm.fnal.gov:9443/dune_con_prod/app/get?table=pdunesp.distcorrnorm&type=mc&tag=prod4&t=42911577&columns=norm,norm_err'
+Table::Load(distcorrnorm): query took 35 ms
+Got 3 rows from database
+Table::Load(distcorrnorm): parsing took 0 ms
+Plane[0]	0.000000	59.291100	0.001040
+Plane[1]	0.000000	59.646700	0.001040
+Plane[2]	0.000000	58.470800	0.001016
+DBWeb query: https://dbdata0vm.fnal.gov:9443/dune_con_prod/app/get?table=pdunesp.distcorrx&type=mc&tag=prod4&t=42911577&columns=shape,shape_err,x,dx
+[Tue Nov 15 17:25:16 2022] perform_with_timeout: Warning: CA verification is off. URL='https://dbdata0vm.fnal.gov:9443/dune_con_prod/app/get?table=pdunesp.distcorrx&type=mc&tag=prod4&t=42911577&columns=shape,shape_err,x,dx'
+Table::Load(distcorrx): query took 64 ms
+Got 432 rows from database
+Table::Load(distcorrx): parsing took 0 ms
+fXcorrHist[0] binning: Nbins = 144 Xmin = -360 Xmax = 360
+fXcorrHist[1] binning: Nbins = 144 Xmin = -360 Xmax = 360
+fXcorrHist[2] binning: Nbins = 144 Xmin = -360 Xmax = 360
+DBWeb query: https://dbdata0vm.fnal.gov:9443/dune_con_prod/app/get?table=pdunesp.distcorryz&type=mc&tag=prod4&t=42911577&columns=corr,corr_err,y,z
+[Tue Nov 15 17:25:16 2022] perform_with_timeout: Warning: CA verification is off. URL='https://dbdata0vm.fnal.gov:9443/dune_con_prod/app/get?table=pdunesp.distcorryz&type=mc&tag=prod4&t=42911577&columns=corr,corr_err,y,z'
+Table::Load(distcorryz): query took 2809 ms
+Got 100080 rows from database
+Table::Load(distcorryz): parsing took 122 ms
+fYZcorrHist[0] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[1] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[10] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[11] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[20] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+fYZcorrHist[21] binning: Nbins = 139 Xmin = 0 Xmax = 695 Ymin = 0 Ymax = 600
+run: 42911577 ; subrun: 33 ; event: 801
+evttime: 376812225
+fApplyNormCorrection: 0
+fApplyXCorrection: 1
+fApplyYZCorrection: 1
+fApplyLifetimeCorrection: 0
+fUseLifetimeFromDatabase: 0
+Plane	Reference dQ/dx	Global median dQ/dx	Calorimetry constant
+Plane[0]	0.000000	59.291100	0.001040
+Plane[1]	0.000000	59.646700	0.001040
+Plane[2]	0.000000	58.470800	0.001016
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:25:54 CST  run: 42911577 subRun: 33 event: 802
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 802
+evttime: 376812226
+run: 42911577 ; subrun: 33 ; event: 802
+evttime: 376812226
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:26:18 CST  run: 42911577 subRun: 33 event: 803
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 803
+evttime: 376812229
+run: 42911577 ; subrun: 33 ; event: 803
+evttime: 376812229
+########## EvtNo.803
+694
+2
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -2.6507e-01  7.6196e-03  1.8552e+00  2.4022e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.267475 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -5.7481e-08  1.5237e-06  1.8232e+00  2.1768e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002177 TO DIAGONAL.
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -4.1786e-07  2.3181e-07  1.9262e+00  2.0738e+00
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002074 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 6.6019 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.9161e+00  1.1507e+00  1.3868e+00  3.3786e+00
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 1.919494 TO DIAGONAL.
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 1 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 2 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 3 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== Negative diagonal element 4 in Error Matrix
+ MINUIT WARNING IN MIGRAD  
+ ============== 322996 added to diagonal of error matrix
+ EIGENVALUES OF SECOND-DERIVATIVE MATRIX:
+        -1.7798e+02  1.0000e+00  1.0000e+00  1.7998e+02
+ MINUIT WARNING IN MIGRAD  
+ ============== MATRIX FORCED POS-DEF BY ADDING 178.158155 TO DIAGONAL.
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002177 TO DIAGONAL.
+ MINUIT WARNING IN HESSE   
+ ============== MATRIX FORCED POS-DEF BY ADDING 0.002074 TO DIAGONAL.
+Getting reco beam calo
+%MSG-e TrackMomentumCalculator:  PDSPAnalyzer:pduneana@BeginModule  15-Nov-2022 17:26:55 CST run: 42911577 subRun: 33 event: 803
+Invalid track range -999 return -1
+%MSG
+%MSG-e TrackMomentumCalculator:  PDSPAnalyzer:pduneana@BeginModule  15-Nov-2022 17:26:55 CST run: 42911577 subRun: 33 event: 803
+Invalid track range -999 return -1
+%MSG
+%MSG-e TrackMomentumCalculator:  PDSPAnalyzer:pduneana@BeginModule  15-Nov-2022 17:26:55 CST run: 42911577 subRun: 33 event: 803
+Invalid track range -999 return -1
+%MSG
+%MSG-e TrackMomentumCalculator:  PDSPAnalyzer:pduneana@BeginModule  15-Nov-2022 17:26:55 CST run: 42911577 subRun: 33 event: 803
+Invalid track range -999 return -1
+%MSG
+Making trajs 
+2
+-13
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:27:21 CST  run: 42911577 subRun: 33 event: 804
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 804
+evttime: 376812231
+run: 42911577 ; subrun: 33 ; event: 804
+evttime: 376812231
+########## EvtNo.804
+We found no beam particles for this event... moving on
+Making trajs 
+2
+2212
+Weights; 2
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:27:56 CST  run: 42911577 subRun: 33 event: 805
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 805
+evttime: 376812234
+run: 42911577 ; subrun: 33 ; event: 805
+evttime: 376812234
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:28:24 CST  run: 42911577 subRun: 33 event: 806
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 806
+evttime: 376812236
+run: 42911577 ; subrun: 33 ; event: 806
+evttime: 376812236
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:28:50 CST  run: 42911577 subRun: 33 event: 807
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 807
+evttime: 376812238
+run: 42911577 ; subrun: 33 ; event: 807
+evttime: 376812238
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:29:22 CST  run: 42911577 subRun: 33 event: 808
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 808
+evttime: 376812241
+run: 42911577 ; subrun: 33 ; event: 808
+evttime: 376812241
+########## EvtNo.808
+We found no beam particles for this event... moving on
+Making trajs 
+1
+211
+Weights; 12
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:30:09 CST  run: 42911577 subRun: 33 event: 809
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 809
+evttime: 376812243
+run: 42911577 ; subrun: 33 ; event: 809
+evttime: 376812243
+%MSG-w PhotonBackTrackerService:  ProcessEvent 15-Nov-2022 17:30:36 CST  run: 42911577 subRun: 33 event: 810
+Rebuild failed to get the OpDetBTRs. This is expected when running on a generation or simulation step.
+%MSG
+run: 42911577 ; subrun: 33 ; event: 810
+evttime: 376812246
+run: 42911577 ; subrun: 33 ; event: 810
+evttime: 376812246
+15-Nov-2022 17:30:45 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/22/9c/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_80_20210414T102221Z.root"
+15-Nov-2022 17:30:45 CST  Closed input file "root://fal-pygrid-30.lancs.ac.uk//dpm/lancs.ac.uk/home/dune/pdsp_mc_reco/22/9c/PDSPProd4a_protoDUNE_sp_reco_stage1_p1GeV_35ms_sce_datadriven_42911577_80_20210414T102221Z.root"
+
+================================================================================================================================
+TimeTracker printout (sec)                        Min           Avg           Max         Median          RMS         nEvts   
+================================================================================================================================
+Full event                                      7.77661       17.2536       46.4776       9.82434       12.4561        10     
+--------------------------------------------------------------------------------------------------------------------------------
+source:RootInput(read)                        0.00103636     0.0749711     0.215844      0.0632962     0.0774612       10     
+reco:pandoracali:CalibrationdEdXPDSP            4.92522       6.26592       13.7498       5.32381       2.54205        10     
+reco:pandoracalipid:Chi2ParticleID            0.00285862    0.00358869    0.00603504    0.00322707    0.000899049      10     
+reco:pandora2cali:CalibrationdEdXPDSP           2.77158       3.93614       7.75601       3.60805       1.42414        10     
+reco:pandora2calipid:Chi2ParticleID            0.0042177    0.00564787    0.00737459    0.00556654    0.000995007      10     
+fpath:fTruth:ProtoDUNETruthBeamFilter         0.000803894    0.578609       5.07087      0.109058       1.49837        10     
+[art]:TriggerResults:TriggerResultInserter    4.3476e-05    8.54394e-05   0.000242579   7.3669e-05    5.41553e-05      10     
+end_path:pduneana:PDSPAnalyzer                 6.731e-05      6.38742       36.6174     0.000115856     11.876         10     
+================================================================================================================================
+
+================================================================================================================================
+TimeTracker printout (sec)                        Min           Avg           Max         Median          RMS         nEvts   
+================================================================================================================================
+Full event                                      7.77661       17.2536       46.4776       9.82434       12.4561        10     
+--------------------------------------------------------------------------------------------------------------------------------
+source:RootInput(read)                        0.00103636     0.0749711     0.215844      0.0632962     0.0774612       10     
+reco:pandoracali:CalibrationdEdXPDSP            4.92522       6.26592       13.7498       5.32381       2.54205        10     
+reco:pandoracalipid:Chi2ParticleID            0.00285862    0.00358869    0.00603504    0.00322707    0.000899049      10     
+reco:pandora2cali:CalibrationdEdXPDSP           2.77158       3.93614       7.75601       3.60805       1.42414        10     
+reco:pandora2calipid:Chi2ParticleID            0.0042177    0.00564787    0.00737459    0.00556654    0.000995007      10     
+fpath:fTruth:ProtoDUNETruthBeamFilter         0.000803894    0.578609       5.07087      0.109058       1.49837        10     
+[art]:TriggerResults:TriggerResultInserter    4.3476e-05    8.54394e-05   0.000242579   7.3669e-05    5.41553e-05      10     
+end_path:pduneana:PDSPAnalyzer                 6.731e-05      6.38742       36.6174     0.000115856     11.876         10     
+================================================================================================================================
+
+====================================================================================================
+MemoryTracker summary (base-10 MB units used)
+
+  Peak virtual memory usage (VmPeak)  : 4321.78 MB
+  Peak resident set size usage (VmHWM): 2666.25 MB
+====================================================================================================
+
+====================================================================================================
+MemoryTracker summary (base-10 MB units used)
+
+  Peak virtual memory usage (VmPeak)  : 4321.78 MB
+  Peak resident set size usage (VmHWM): 2666.25 MB
+====================================================================================================
+
+TrigReport ---------- Event summary -------------
+TrigReport Events total = 10 passed = 10 failed = 0
+
+TrigReport ---------- Modules in End-path ----------
+TrigReport        Run    Success      Error Name
+TrigReport          3          3          0 pduneana
+
+TimeReport ---------- Time summary [sec] -------
+TimeReport CPU = 106.820988 Real = 359.946779
+
+MemReport  ---------- Memory summary [base-10 MB] ------
+MemReport  VmPeak = 4321.78 VmHWM = 2666.25
+
+ToolBasedRawDigitPrepService:dtor: Event count: 0
+ToolBasedRawDigitPrepService:dtor:  Call count: 0
+ToolBasedRawDigitPrepService:dtor: Time report for 4 tools.
+ToolBasedRawDigitPrepService:dtor:                    digitReader:   0.00 sec
+ToolBasedRawDigitPrepService:dtor:                adcSampleFiller:   0.00 sec
+ToolBasedRawDigitPrepService:dtor:                adcScaleAdcToKe:   0.00 sec
+ToolBasedRawDigitPrepService:dtor:          pdspTailPedRemovalZKe:   0.00 sec
+Art has completed and will exit with status 0.
+======================================================================
+======          Radioactive Decay Physics Parameters           =======
+======================================================================
+Max life time                                     1.4427e+06 ps
+Internal e- conversion flag                       1
+Stored internal conversion coefficients           1
+Enable correlated gamma emission                  0
+Max 2J for sampling of angular correlations       10
+Atomic de-excitation enabled                      1
+Auger electron emission enabled                   1
+Auger cascade enabled                             1
+Check EM cuts disabled for atomic de-excitation   1
+Use Bearden atomic level energies                 0
+======================================================================
+WARNING - Attempt to delete the physical volume store while geometry closed !
+WARNING - Attempt to delete the logical volume store while geometry closed !
+WARNING - Attempt to delete the solid store while geometry closed !
+WARNING - Attempt to delete the region store while geometry closed !
