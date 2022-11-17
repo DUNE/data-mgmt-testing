@@ -43,6 +43,7 @@ class Loginator:
             "country":None,  # (nationality of the site)
             "campaign":None,  # (DUNE campaign)
             "access_method":None, #(stream/copy)
+            "workflow_method":None
         }
        
 ## return the first tag or None in a line
@@ -76,7 +77,7 @@ class Loginator:
                 filename = os.path.basename(filefull).strip()
                 filepath = os.path.dirname(filefull).strip()
                 if "Opened" in tag and not filename in object.keys():
-                    object[filename] = {}
+                    object[filename] = self.template
                     object[filename]["start_time"] = timestamp
                     object[filename]["Path"]=filepath
                     object[filename]["file_name"] = filename
@@ -109,9 +110,6 @@ class Loginator:
             outfile = open(outname,'w')
             json.dump(self.outobject[thing],outfile,indent=4)
             outfile.close()
-
-
-
 
 parse = Loginator(sys.argv[1])
 parse.readme()
