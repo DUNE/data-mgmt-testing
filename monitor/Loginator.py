@@ -13,6 +13,8 @@
 
 import string,time,datetime,json,os,sys
 
+DEBUG=False
+
 class Loginator:
     def __init__(self,logname):
         if not os.path.exists(logname):
@@ -27,8 +29,8 @@ class Loginator:
             "source_rse":None,  #
             "user":None,  # (who’s request is this)
             "job_id":None, # (jobsubXXX03@fnal.gov)
-            "timestamp for start":None,  #
-            "timestamp for end":None,  #
+            "timestamp_for_start":None,  #
+            "timestamp_for_end":None,  #
             "duration":None,  # (difference between end and start)
             "input_file_size":None,  #
             "application_name":None,  #
@@ -43,13 +45,16 @@ class Loginator:
             "country":None,  # (nationality of the site)
             "campaign":None,  # (DUNE campaign)
             "access_method":None, #(stream/copy)
-            "workflow_method":None
+            "workflow_method":None,
+            "path":None,
+            "real_memory":None
         }
        
 ## return the first tag or None in a line
     def findme(self,line):
         for tag in self.tags:
             if tag in line:
+                if DEBUG: print (tag,line)
                 return tag
         return None
         
@@ -68,6 +73,7 @@ class Loginator:
         object = {}
         for line in self.logfile:
             tag = self.findme(line)
+            if DEBUG: print (tag,line)
             if tag == None:
                 continue
             if "file" in tag:
@@ -78,7 +84,7 @@ class Loginator:
                 filepath = os.path.dirname(filefull).strip()
                 if "Opened" in tag and not filename in object.keys():
                     object[filename] = self.template
-                    object[filename]["start_time"] = timestamp
+                    object[filename]["timestamp_for_start"] = timestamp
                     object[filename]["Path"]=filepath
                     object[filename]["file_name"] = filename
                     print ("filepath",filepath)
@@ -91,7 +97,7 @@ class Loginator:
                         object[filename][thing] = self.info[thing]
                     object[filename]["final_state"] = "Opened"
                 if "Closed" in tag:
-                    object[filename]["end_time"] = timestamp
+                    object[filename]["timestamp_for_end"] = timestamp
                     object[filename]["final_state"] = "Closed"
                 continue
             if "size usage" in tag:
@@ -111,28 +117,27 @@ class Loginator:
             json.dump(self.outobject[thing],outfile,indent=4)
             outfile.close()
 
+def envScraper():
+    env = os.environ
+    if "apple" in env["CLANGXX"]:
+        f = open("bigenv.txt")
+        env = {}
+        for a in f.readlines():
+            line = a.split("=")
+            env[line[0]] = line[1]
+    digest = {}
+    for k in env.keys():
+        if "SETUP_" in k:
+            it = env[k].split(" ")
+            digest[k] = {"Product":it[0],"Version":it[1]}
+    return digest
+    
+
+
 parse = Loginator(sys.argv[1])
+print ("looking at",sys.argv[1])
 parse.readme()
 parse.writeme()
 
 
 
-#source_rse,
-#user, (who’s request is this)
-#job_id(jobsubXXX03@fnal.gov),
-#timestamp for start,
-#timestamp for end,
-#duration, (difference between end and start)
-#input_file_size,
-#application_name,
-#application_version,
-#final_state, (what happened?)
-#cpu_site, (e.g. FNAL, RAL)
-#project_name(wkf request_id?),
-#file_name, (including the metacat namespace)
-#data_tier, (from metacat)
-#job_node, (name within the site)
-#job_site, (name of the site)
-#country, (nationality of the site)
-#campaign, (DUNE campaign)
-#access_method (stream/copy)
