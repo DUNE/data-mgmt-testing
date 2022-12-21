@@ -4,7 +4,7 @@
 
 To store data you need to provide at least minimal metadata.
 
-Here is an annotated example of finding and listing the metadata for recent coldbox data using metacat.  Any new raw data needs to supply similar information in hdf5 format.
+Here is an annotated example of finding and listing the metadata for recent coldbox data using metacat.  Any new raw data needs to supply similar information in `json` format.
 
 ## how do set up metacat and find example files:
 
