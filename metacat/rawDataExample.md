@@ -69,18 +69,20 @@ Contents of the metadata part of metacat
 
 metadata contents:
 
-metadata have an X.Y structure
+metacat also allows you to add additional information.
+
+metadata have an X.Y structure. The major ones that used to be in sam are in core. 
 
 |core.data_stream    | data stream  | [physics,test] |
 | ----------| ----------- | --------- |
 |    core.data_tier  |  data tier  | [raw,full-reconstructed ...] |
 | core.event_count    | # of events in file | |
 |    core.file_content_status |  good | |
-|    core.file_format    | hdf5 | [hdf5, binary, root, artroot ...]  |
+|    core.file_format    | hdf5 | [hdf5, binary, root, artroot ...] |
 |    core.file_type      | mc vs data | [mc, detector]  |
 |    core.run_type       | run type| [protodune-sp, hd-coldbox ...] |
-|    core.runs           | [list of runs]   | |
-|    core.runs_subruns   | [list of subruns] | in run*1000000 + subrun format|
-|    core.events      | list of event numbers | [optional] |
+|    core.runs           | [list of runs]   |  |
+|    core.runs_subruns   | [list of subruns] | in run*100000 + subrun format|
+|    core.events      | list of event numbers | [optional list] |
 |    core.first_event_number|  | optional|
 |    core.last_event_number|   | optional |
