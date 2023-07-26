@@ -19,7 +19,7 @@
             }
         ],
         "last_update": [
-            "2023-07-26T20:22:05Z"
+            "2021-04-15T02:37:05Z"
         ],
         "vo": [
             "dune"
@@ -67,21 +67,6 @@
                             "endpoint": "ce03.cat.cbpf.br:9619",
                             "flavour": "HTCONDOR-CE",
                             "hostname": "ce03.cat.cbpf.br"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "ce04.cat.cbpf.br:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "ce04.cat.cbpf.br"
                         },
                         "ce_resource": [
                             {
@@ -473,56 +458,6 @@
             },
             {
                 "$": {
-                    "latitude": "46.57",
-                    "longitude": "7.28",
-                    "name": "UNIBE-LHEP"
-                },
-                "service": [
-                    {
-                        "$": {
-                            "endpoint": "ce01.lhep.unibe.ch",
-                            "flavour": "ARC-CE",
-                            "hostname": "ce01.lhep.unibe.ch"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "CLUSTER-HM"
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "group": [
-                    {
-                        "$": {
-                            "name": "CH_UNIBE-LHEP",
-                            "type": "All sites"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "CH_UNIBE-LHEP",
-                            "type": "DUNE_Site"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Tier-3",
-                            "type": "DUNE_Tier"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "CH_UNIBE-LHEP",
-                            "type": "Tier3s"
-                        }
-                    }
-                ]
-            },
-            {
-                "$": {
                     "latitude": "50.123424",
                     "longitude": "14.468787",
                     "name": "FZU"
@@ -718,20 +653,6 @@
                     },
                     {
                         "$": {
-                            "endpoint": "picperfsonar-bandwidth.pic.es",
-                            "flavour": "Bandwidth",
-                            "hostname": "picperfsonar-bandwidth.pic.es"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "picperfsonar-latency.pic.es",
-                            "flavour": "Latency",
-                            "hostname": "picperfsonar-latency.pic.es"
-                        }
-                    },
-                    {
-                        "$": {
                             "endpoint": "psb01.pic.es",
                             "flavour": "Bandwidth",
                             "hostname": "psb01.pic.es"
@@ -767,84 +688,6 @@
                     {
                         "$": {
                             "name": "ES_PIC",
-                            "type": "Tier3s"
-                        }
-                    }
-                ]
-            },
-            {
-                "$": {
-                    "latitude": "41.841368",
-                    "longitude": "-88.255057",
-                    "name": "USCMS-FNAL-WC1"
-                },
-                "service": [
-                    {
-                        "$": {
-                            "endpoint": "cmsosgce-opp1.fnal.gov:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "cmsosgce-opp1.fnal.gov"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "psonar3.fnal.gov",
-                            "flavour": "Bandwidth",
-                            "hostname": "psonar3.fnal.gov"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "psonar4.fnal.gov",
-                            "flavour": "Latency",
-                            "hostname": "psonar4.fnal.gov"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "psonartest1.fnal.gov",
-                            "flavour": "Bandwidth",
-                            "hostname": "psonartest1.fnal.gov"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "psonartest2.fnal.gov",
-                            "flavour": "Latency",
-                            "hostname": "psonartest2.fnal.gov"
-                        }
-                    }
-                ],
-                "group": [
-                    {
-                        "$": {
-                            "name": "FNAL",
-                            "type": "All sites"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "FNAL",
-                            "type": "DUNE_Site"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Tier-3",
-                            "type": "DUNE_Tier"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "FNAL",
                             "type": "Tier3s"
                         }
                     }
@@ -931,8 +774,8 @@
             },
             {
                 "$": {
-                    "latitude": "18.90757",
-                    "longitude": "72.80802",
+                    "latitude": "0.0",
+                    "longitude": "0.0",
                     "name": "IN_TIFR"
                 },
                 "service": [
@@ -1119,107 +962,6 @@
                 "$": {
                     "latitude": "0.0",
                     "longitude": "0.0",
-                    "name": "SURFsara"
-                },
-                "service": [
-                    {
-                        "$": {
-                            "endpoint": "arc01.gina.surfsara.nl",
-                            "flavour": "ARC-CE",
-                            "hostname": "arc01.gina.surfsara.nl"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "medium"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "arc02.gina.surfsara.nl",
-                            "flavour": "ARC-CE",
-                            "hostname": "arc02.gina.surfsara.nl"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "medium"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "arc03.gina.surfsara.nl",
-                            "flavour": "ARC-CE",
-                            "hostname": "arc03.gina.surfsara.nl"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "medium"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "creamce.gina.sara.nl:8443/cream-pbs-medium",
-                            "flavour": "CREAM-CE",
-                            "hostname": "creamce.gina.sara.nl"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "creamce2.gina.sara.nl:8443/cream-pbs-medium",
-                            "flavour": "CREAM-CE",
-                            "hostname": "creamce2.gina.sara.nl"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "creamce3.gina.sara.nl:8443/cream-pbs-medium",
-                            "flavour": "CREAM-CE",
-                            "hostname": "creamce3.gina.sara.nl"
-                        }
-                    }
-                ],
-                "group": [
-                    {
-                        "$": {
-                            "name": "NL_SURFsara",
-                            "type": "All sites"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "NL_SURFsara",
-                            "type": "DUNE_Site"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Tier-3",
-                            "type": "DUNE_Tier"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "NL_SURFsara",
-                            "type": "Tier3s"
-                        }
-                    }
-                ]
-            },
-            {
-                "$": {
-                    "latitude": "0.0",
-                    "longitude": "0.0",
                     "name": "JINR_CONDOR_CE"
                 },
                 "service": [
@@ -1261,106 +1003,6 @@
                     {
                         "$": {
                             "name": "RU_JINR",
-                            "type": "Tier3s"
-                        }
-                    }
-                ]
-            },
-            {
-                "$": {
-                    "latitude": "0.0",
-                    "longitude": "0.0",
-                    "name": "Swan-CE1"
-                },
-                "service": [
-                    {
-                        "$": {
-                            "endpoint": "swan-gw1.unl.edu:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "swan-gw1.unl.edu"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "group": [
-                    {
-                        "$": {
-                            "name": "Swan",
-                            "type": "All sites"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Swan",
-                            "type": "DUNE_Site"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Tier-3",
-                            "type": "DUNE_Tier"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Swan",
-                            "type": "Tier3s"
-                        }
-                    }
-                ]
-            },
-            {
-                "$": {
-                    "latitude": "41.8084",
-                    "longitude": "-72.2495",
-                    "name": "UConn-HPC"
-                },
-                "service": [
-                    {
-                        "$": {
-                            "endpoint": "osgce.storrs.hpc.uconn.edu:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "osgce.storrs.hpc.uconn.edu"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "group": [
-                    {
-                        "$": {
-                            "name": "UConn-HPC",
-                            "type": "All sites"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "UConn-HPC",
-                            "type": "DUNE_Site"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Tier-3",
-                            "type": "DUNE_Tier"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "UConn-HPC",
                             "type": "Tier3s"
                         }
                     }
@@ -1541,7 +1183,7 @@
             },
             {
                 "$": {
-                    "latitude": "55.855",
+                    "latitude": "55.9",
                     "longitude": "-3.2",
                     "name": "UKI-SCOTGRID-ECDF"
                 },
@@ -1815,21 +1457,6 @@
                     },
                     {
                         "$": {
-                            "endpoint": "hepgrid6.ph.liv.ac.uk:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "hepgrid6.ph.liv.ac.uk"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
                             "endpoint": "hepsonar1.ph.liv.ac.uk",
                             "flavour": "Bandwidth",
                             "hostname": "hepsonar1.ph.liv.ac.uk"
@@ -2072,12 +1699,6 @@
                             {
                                 "$": {
                                     "etf_default": "false",
-                                    "queue": "centos7_gpu"
-                                }
-                            },
-                            {
-                                "$": {
-                                    "etf_default": "false",
                                     "queue": "centos7_long"
                                 }
                             }
@@ -2317,34 +1938,6 @@
                     },
                     {
                         "$": {
-                            "endpoint": "cta-ps01-bw.scd.rl.ac.uk",
-                            "flavour": "Bandwidth",
-                            "hostname": "cta-ps01-bw.scd.rl.ac.uk"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "cta-ps01-lt.scd.rl.ac.uk",
-                            "flavour": "Latency",
-                            "hostname": "cta-ps01-lt.scd.rl.ac.uk"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "lcg-ps01-bw.gridpp.rl.ac.uk",
-                            "flavour": "Bandwidth",
-                            "hostname": "lcg-ps01-bw.gridpp.rl.ac.uk"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "lcg-ps01-lt.gridpp.rl.ac.uk",
-                            "flavour": "Latency",
-                            "hostname": "lcg-ps01-lt.gridpp.rl.ac.uk"
-                        }
-                    },
-                    {
-                        "$": {
                             "endpoint": "lcgps01.gridpp.rl.ac.uk",
                             "flavour": "Latency",
                             "hostname": "lcgps01.gridpp.rl.ac.uk"
@@ -2355,20 +1948,6 @@
                             "endpoint": "lcgps02.gridpp.rl.ac.uk",
                             "flavour": "Bandwidth",
                             "hostname": "lcgps02.gridpp.rl.ac.uk"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "t1-ps01-bw.gridpp.rl.ac.uk",
-                            "flavour": "Bandwidth",
-                            "hostname": "t1-ps01-bw.gridpp.rl.ac.uk"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "t1-ps01-lt.gridpp.rl.ac.uk",
-                            "flavour": "Latency",
-                            "hostname": "t1-ps01-lt.gridpp.rl.ac.uk"
                         }
                     }
                 ],
@@ -2532,21 +2111,6 @@
                             "endpoint": "spce01.sdcc.bnl.gov:9619",
                             "flavour": "HTCONDOR-CE",
                             "hostname": "spce01.sdcc.bnl.gov"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "spce02.sdcc.bnl.gov:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "spce02.sdcc.bnl.gov"
                         },
                         "ce_resource": [
                             {
@@ -2723,21 +2287,6 @@
                 "service": [
                     {
                         "$": {
-                            "endpoint": "heposg01-colorado.sites.opensciencegrid.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "heposg01-colorado.sites.opensciencegrid.org"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
                             "endpoint": "heposg01.colorado.edu:9619",
                             "flavour": "HTCONDOR-CE",
                             "hostname": "heposg01.colorado.edu"
@@ -2814,20 +2363,6 @@
                             "flavour": "Latency",
                             "hostname": "perfsonar1.ihepa.ufl.edu"
                         }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "perfsonar1.rc.ufl.edu",
-                            "flavour": "Latency",
-                            "hostname": "perfsonar1.rc.ufl.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "perfsonar2.rc.ufl.edu",
-                            "flavour": "Latency",
-                            "hostname": "perfsonar2.rc.ufl.edu"
-                        }
                     }
                 ],
                 "group": [
@@ -2917,149 +2452,6 @@
                     {
                         "$": {
                             "name": "US_FNAL",
-                            "type": "Tier3s"
-                        }
-                    }
-                ]
-            },
-            {
-                "$": {
-                    "latitude": "0.0",
-                    "longitude": "0.0",
-                    "name": "GPGrid"
-                },
-                "service": [
-                    {
-                        "$": {
-                            "endpoint": "gpce03.fnal.gov:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "gpce03.fnal.gov"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "gpce04.fnal.gov:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "gpce04.fnal.gov"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "group": [
-                    {
-                        "$": {
-                            "name": "US_FNAL-FermiGrid",
-                            "type": "All sites"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "US_FNAL-FermiGrid",
-                            "type": "DUNE_Site"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Tier-3",
-                            "type": "DUNE_Tier"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "US_FNAL-FermiGrid",
-                            "type": "Tier3s"
-                        }
-                    }
-                ]
-            },
-            {
-                "$": {
-                    "latitude": "41.841368",
-                    "longitude": "-88.255057",
-                    "name": "USCMS-FNAL-WC1"
-                },
-                "service": [
-                    {
-                        "$": {
-                            "endpoint": "cmsosgce-opp1.fnal.gov:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "cmsosgce-opp1.fnal.gov"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "psonar3.fnal.gov",
-                            "flavour": "Bandwidth",
-                            "hostname": "psonar3.fnal.gov"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "psonar4.fnal.gov",
-                            "flavour": "Latency",
-                            "hostname": "psonar4.fnal.gov"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "psonartest1.fnal.gov",
-                            "flavour": "Bandwidth",
-                            "hostname": "psonartest1.fnal.gov"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "psonartest2.fnal.gov",
-                            "flavour": "Latency",
-                            "hostname": "psonartest2.fnal.gov"
-                        }
-                    }
-                ],
-                "group": [
-                    {
-                        "$": {
-                            "name": "US_FNAL-T1",
-                            "type": "All sites"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "US_FNAL-T1",
-                            "type": "DUNE_Site"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Tier-3",
-                            "type": "DUNE_Tier"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "US_FNAL-T1",
                             "type": "Tier3s"
                         }
                     }
@@ -3273,79 +2665,9 @@
                     },
                     {
                         "$": {
-                            "endpoint": "iut2-gk02.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "iut2-gk02.mwt2.org"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-gki02.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "iut2-gki02.mwt2.org"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net09.iu.edu",
-                            "flavour": "Latency",
-                            "hostname": "iut2-net09.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
                             "endpoint": "iut2-net1.iu.edu",
                             "flavour": "Latency",
                             "hostname": "iut2-net1.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net10.iu.edu",
-                            "flavour": "Bandwidth",
-                            "hostname": "iut2-net10.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net11.iu.edu",
-                            "flavour": "Latency",
-                            "hostname": "iut2-net11.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net12.iu.edu",
-                            "flavour": "Bandwidth",
-                            "hostname": "iut2-net12.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net13.iu.edu",
-                            "flavour": "Latency",
-                            "hostname": "iut2-net13.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net14.iu.edu",
-                            "flavour": "Bandwidth",
-                            "hostname": "iut2-net14.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net15.iu.edu",
-                            "flavour": "Latency",
-                            "hostname": "iut2-net15.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net16.iu.edu",
-                            "flavour": "Bandwidth",
-                            "hostname": "iut2-net16.iu.edu"
                         }
                     },
                     {
@@ -3449,13 +2771,6 @@
                     },
                     {
                         "$": {
-                            "endpoint": "uct2-gk02.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "uct2-gk02.mwt2.org"
-                        }
-                    },
-                    {
-                        "$": {
                             "endpoint": "uct2-net1.mwt2.org",
                             "flavour": "Latency",
                             "hostname": "uct2-net1.mwt2.org"
@@ -3480,20 +2795,6 @@
                             "endpoint": "uct2-net4.mwt2.org",
                             "flavour": "Bandwidth",
                             "hostname": "uct2-net4.mwt2.org"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "uiuc-gk.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "uiuc-gk.mwt2.org"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "uiuc-gk02.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "uiuc-gk02.mwt2.org"
                         }
                     }
                 ],
@@ -3899,56 +3200,6 @@
             },
             {
                 "$": {
-                    "latitude": "0.0",
-                    "longitude": "0.0",
-                    "name": "Swan-CE1"
-                },
-                "service": [
-                    {
-                        "$": {
-                            "endpoint": "swan-gw1.unl.edu:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "swan-gw1.unl.edu"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "group": [
-                    {
-                        "$": {
-                            "name": "US_Swan",
-                            "type": "All sites"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "US_Swan",
-                            "type": "DUNE_Site"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Tier-3",
-                            "type": "DUNE_Tier"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "US_Swan",
-                            "type": "Tier3s"
-                        }
-                    }
-                ]
-            },
-            {
-                "$": {
                     "latitude": "41.779384",
                     "longitude": "-87.7",
                     "name": "MWT2"
@@ -3971,95 +3222,9 @@
                     },
                     {
                         "$": {
-                            "endpoint": "iut2-gk02.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "iut2-gk02.mwt2.org"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-gki02.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "iut2-gki02.mwt2.org"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net09.iu.edu",
-                            "flavour": "Latency",
-                            "hostname": "iut2-net09.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
                             "endpoint": "iut2-net1.iu.edu",
                             "flavour": "Latency",
                             "hostname": "iut2-net1.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net10.iu.edu",
-                            "flavour": "Bandwidth",
-                            "hostname": "iut2-net10.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net11.iu.edu",
-                            "flavour": "Latency",
-                            "hostname": "iut2-net11.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net12.iu.edu",
-                            "flavour": "Bandwidth",
-                            "hostname": "iut2-net12.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net13.iu.edu",
-                            "flavour": "Latency",
-                            "hostname": "iut2-net13.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net14.iu.edu",
-                            "flavour": "Bandwidth",
-                            "hostname": "iut2-net14.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net15.iu.edu",
-                            "flavour": "Latency",
-                            "hostname": "iut2-net15.iu.edu"
-                        }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "iut2-net16.iu.edu",
-                            "flavour": "Bandwidth",
-                            "hostname": "iut2-net16.iu.edu"
                         }
                     },
                     {
@@ -4163,21 +3328,6 @@
                     },
                     {
                         "$": {
-                            "endpoint": "uct2-gk02.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "uct2-gk02.mwt2.org"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
                             "endpoint": "uct2-net1.mwt2.org",
                             "flavour": "Latency",
                             "hostname": "uct2-net1.mwt2.org"
@@ -4203,36 +3353,6 @@
                             "flavour": "Bandwidth",
                             "hostname": "uct2-net4.mwt2.org"
                         }
-                    },
-                    {
-                        "$": {
-                            "endpoint": "uiuc-gk.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "uiuc-gk.mwt2.org"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        "$": {
-                            "endpoint": "uiuc-gk02.mwt2.org:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "uiuc-gk02.mwt2.org"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
                     }
                 ],
                 "group": [
@@ -4257,56 +3377,6 @@
                     {
                         "$": {
                             "name": "US_UChicago",
-                            "type": "Tier3s"
-                        }
-                    }
-                ]
-            },
-            {
-                "$": {
-                    "latitude": "41.8084",
-                    "longitude": "-72.2495",
-                    "name": "UConn-HPC"
-                },
-                "service": [
-                    {
-                        "$": {
-                            "endpoint": "osgce.storrs.hpc.uconn.edu:9619",
-                            "flavour": "HTCONDOR-CE",
-                            "hostname": "osgce.storrs.hpc.uconn.edu"
-                        },
-                        "ce_resource": [
-                            {
-                                "$": {
-                                    "etf_default": "false",
-                                    "queue": "default"
-                                }
-                            }
-                        ]
-                    }
-                ],
-                "group": [
-                    {
-                        "$": {
-                            "name": "US_UConn-HPC",
-                            "type": "All sites"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "US_UConn-HPC",
-                            "type": "DUNE_Site"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "Tier-3",
-                            "type": "DUNE_Tier"
-                        }
-                    },
-                    {
-                        "$": {
-                            "name": "US_UConn-HPC",
                             "type": "Tier3s"
                         }
                     }

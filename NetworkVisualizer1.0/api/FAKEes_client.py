@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-#Developed by Lydia Brynmoor
 import sys
 import json
 import pprint

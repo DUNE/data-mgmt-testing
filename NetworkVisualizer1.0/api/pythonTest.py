@@ -1,4 +1,3 @@
-#Developed by Lydia Brynmoor
 import wget
 
 print("\n\nNow inside Python script...\n")
