@@ -698,7 +698,7 @@ class XRootESClient():
 
     #site_finder code here taken from XRootParser code by Dr. Heidi Schellman
     def site_finder(self, source):
-        knownsites = [".gov",".fr",".es",".br",".edu",".in",".cz",".uk",".fr",".ch",".nl",".ru",".pr"]
+        knownsites = [".gov",".fr",".es",".br",".edu",".in",".cz",".uk",".fr",".ch",".nl",".ru",".pr", ".org", ".ca"]
         specials = {"dice":"dice.bristol.uk","CRUSH":"crush.syracuse.edu","gridpp.rl.ac.uk":"gridpp.rl.ac.uk","comp20-":"lancaster.uk","discovery":"nmsu.edu","nid":"nersc.lbnl.gov","wn-2":"unibe-lhcp.bern.ch","qmul":"esc.qmul.uk","uct2":"uct2-mwt2.uchicago.edu","nubes.stfc.ac.uk":"nubes.stfc.ac.uk","unl.edu":"unl.edu","wn0":"sheffield.uk","wn1":"sheffield.uk","wn2":"sheffield.uk","local-":"uprm:pr","arbutus":"arbutus.ca","axion":"axion.ca","local":"uprm.pr"}
         if "node" in source:
             node = source["node"]
