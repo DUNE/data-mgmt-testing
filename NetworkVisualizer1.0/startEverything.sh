@@ -1,7 +1,13 @@
 #!/bin/bash
 #forever --sourceDir "api"  start -c "npm start" ./
 #forever start -c "npm start" ./
+#export HTTPS=true
+#export SSL_CRT_FILE=/etc/grid-security/hostcert.pem
+#export SSL_KEY_FILE=/etc/grid-security/hostkey.pem
 forever --sourceDir "api"  start -c "npm start" ./
+#export HTTPS=true
+#export SSL_CRT_FILE=/etc/grid-security/hostcert.pem
+#export SSL_KEY_FILE=/etc/grid-security/hostkey.pem
 forever start -c "npm start" ./
 
 echo ""

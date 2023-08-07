@@ -18,6 +18,7 @@ import {
   CardSubtitle,
 } from "reactstrap";
 import ReactTooltip from "react-tooltip";
+import { HelpModal } from "./components/HelpModal";
 import ReactDOM from "react-dom";
 import Tooltip from "react-simple-tooltip";
 import DayPicker, { DateUtils } from "react-day-picker";
@@ -35,6 +36,9 @@ import {
 } from "react-simple-maps";
 import "./css/bootstrap.min.css";
 import "./App.css";
+import { QuestionMarkOutlined } from "@mui/icons-material";
+import { Button as MuiButton, Tooltip as MuiTooltip } from "@mui/material";
+// import { HelpModal } from "./components/HelpModal";
 // import siteData from "./data/duneSiteList.json"
 
 // var fs = require('fs');
@@ -84,19 +88,20 @@ function dateFormatConverter(passedDate) {
   return date;
 }
 
-function checkIfResultsFound() {
-  // console.log("results found flag says: " + resultsFound)
+// function checkIfResultsFound() {
+//   // console.log("results found flag says: " + resultsFound)
 
-  if (resultsFound == undefined) {
-    return;
-  }
+//   if (resultsFound == undefined) {
+//     return;
+//   }
 
-  if (resultsFound) {
-    return "Results Found";
-  } else {
-    return "No Results";
-  }
-}
+//   if (resultsFound) {
+//     return "Results Found";
+//   } else {
+//     return "No Results";
+//   }
+
+// }
 
 //longitude first, then latitude
 
@@ -138,6 +143,18 @@ const markers = [
     markerOffset: 1,
     otherName: "DUNE_FR_CCIN2P3",
     name: "DUNE_FR_CCIN2P3_XROOTD",
+    coordinates: [4.87, 45.78],
+  },
+  {
+    markerOffset: 1,
+    otherName: "",
+    name: "DUNE_FR_CCIN2P3_DISK",
+    coordinates: [4.87, 45.78],
+  },
+  {
+    markerOffset: 1,
+    otherName: "",
+    name: "DUNE_FR_CCIN2P3_TAPE",
     coordinates: [4.87, 45.78],
   },
   {
@@ -220,7 +237,7 @@ const markers = [
   },
   {
     markerOffset: 1,
-    otherName: "",
+    otherName: "DUNE_IN_TIFR",
     name: "IN_TIFR",
     coordinates: [72.806, 18.907],
   },
@@ -273,6 +290,36 @@ const markers = [
     name: "SWAN-CE1",
     coordinates: [-96.016817, 41.247321],
   },
+  {
+    markerOffset: 1,
+    otherName: "",
+    name: "DUNE_US_FNAL_DISK_STAGE",
+    coordinates: [-88.255, 41.841],
+  },
+  {
+    markerOffset: 1,
+    otherName: "pic",
+    name: "DUNE_ES_PIC",
+    coordinates: [2.11, 41.5],
+  },
+  {
+    markerOffset: 1,
+    otherName: "",
+    name: "DUNE_CERN_EOS",
+    coordinates: [6.04, 46.23],
+  },
+  {
+    markerOffset: 1,
+    otherName: "",
+    name: "SURFSARA",
+    coordinates: [4.953, 52.356],
+  },
+  {
+    markerOffset: 1,
+    otherName: "",
+    name: "No data for these dates",
+    coordinates: [0, 0],
+  },
 
   //stuff commented out below has been found in the API results from CRIC API so I figure we should favor that
 
@@ -302,12 +349,46 @@ function App() {
   // Current transfer types
   const SAM = "SAM" //
   const RUCIO = "RUCIO" //
+  const RUCIO_AGGREGATE = "RUCIO_AGGREGATE" //
+  const RUCIO_FAILED = "RUCIO_FAILED" //
+  const RUCIO_AGGREGATE_FAILED = "RUCIO_AGGREGATE_FAILED"
+  const TEST_MODE = "TEST_MODE" //
+  const TEST_MODE_FAILED = "TEST_MODE_FAILED"
 
   const [transferType, setTransferType] = useState(SAM) //
 
   const [mode, setMode] = useState("Select Transfer Mode") //
   const resetCalendarDateClick = () => {
     setDateRange({ from: undefined, to: undefined });
+  };
+
+  const [openHelp, setOpenHelp] = useState(false)
+
+  // testing
+  const [textTransfer, setTextTransfer] = useState("Transfers")
+  const [logText, setLogText] = useState() //
+
+  const [checkIfResultsFound, setCheckIfResultsFound] = useState("No Results")
+
+  const [entryOne, setEntryOne] = useState("Speed (MB/s)")
+  const [entryTwo, setEntryTwo] = useState("Filesize (MB)")
+
+  const handleGetTransfersClick = () => {
+    if (mode === "Select Transfer Mode") {
+      setMode("SAM Transfers"); // change if default changes to something other than SAM
+      setTextTransfer("SAM Transfers"); // change if default changes to something other than SAM
+    } else {
+      setTextTransfer(mode)
+    };
+    proccessTransferAndCollapse();
+    
+    if (mode.includes("Failed")) {
+      setEntryOne("Reason")
+      setEntryTwo("Count")
+    } else {
+      setEntryOne("Speed (MB/s)")
+      setEntryTwo("Filesize (MB)")
+    }
   };
 
   const handleDateClick = (day) => {
@@ -432,6 +513,8 @@ function App() {
     setSavedStartDate(dateFormatConverter(dateRange.from));
     setSavedEndDate(dateFormatConverter(dateRange.to));
 
+    setLogText(`${dateFormatConverter(dateRange.from)} - ${dateFormatConverter(dateRange.to)}`);
+
     var dateParameters = new URLSearchParams({
       startDate: dateFormatConverter(dateRange.from),
       endDate: dateFormatConverter(dateRange.to),
@@ -452,6 +535,12 @@ function App() {
 
         console.log("result: ");
         console.log(res.data);
+
+        if (res.data[0]["source"] !== "No data for these dates") {
+          setCheckIfResultsFound('Results Found')
+        } else {
+          setCheckIfResultsFound('No Results')
+        }
 
         if (
           res.data[0].hasOwnProperty("name") &&
@@ -479,6 +568,12 @@ function App() {
 
             allTransferedAmount += entry.file_size;
 
+            // trying to account for error here
+
+            const failCount = entry["count"];
+
+            const failReason = entry["reason"];
+
             // console.log(entry.file_size)
 
             if (!sourceLocation && !destinationLocation) {
@@ -488,7 +583,9 @@ function App() {
                 fromCoord: mysteryCoordinates,
                 toCoord: mysteryCoordinates,
                 speedInMB: speedInMB,
-                sentToDestSizeMB: entry.file_size / 1048576,
+                sentToDestSizeMB: entry.file_size / 1000000,
+                count: failCount, //
+                reason: failReason, //
               };
             } else if (!sourceLocation) {
               return {
@@ -497,7 +594,9 @@ function App() {
                 fromCoord: mysteryCoordinates,
                 toCoord: destinationLocation.coordinates,
                 speedInMB: speedInMB,
-                sentToDestSizeMB: entry.file_size / 1048576,
+                sentToDestSizeMB: entry.file_size / 1000000,
+                count: failCount, //
+                reason: failReason, //
               };
             } else if (!destinationLocation) {
               return {
@@ -506,7 +605,9 @@ function App() {
                 fromCoord: sourceLocation.coordinates,
                 toCoord: mysteryCoordinates,
                 speedInMB: speedInMB,
-                sentToDestSizeMB: entry.file_size / 1048576,
+                sentToDestSizeMB: entry.file_size / 1000000,
+                count: failCount, //
+                reason: failReason, //
               };
             } else {
               return {
@@ -515,7 +616,9 @@ function App() {
                 fromCoord: sourceLocation.coordinates,
                 toCoord: destinationLocation.coordinates,
                 speedInMB: speedInMB,
-                sentToDestSizeMB: entry.file_size / 1048576,
+                sentToDestSizeMB: entry.file_size / 1000000,
+                count: failCount, //
+                reason: failReason, //
               };
             }
           });
@@ -523,7 +626,7 @@ function App() {
           console.log("mapped transfers: ");
           console.log(mappedTransfers);
 
-          allTransferedAmount /= 1048576; //adjusting to mb
+          allTransferedAmount /= 1000000; //adjusting to mb
 
           settransfers(mappedTransfers);
 
@@ -546,7 +649,7 @@ function App() {
                 return jsonThing.source === entry.name;
               })
               .forEach((item, i) => {
-                entry.totalSent += item.file_size / 1048576; //dividing the total bytes into megabytes 1024 b to kb, 1024 kb to mb
+                entry.totalSent += item.file_size / 1000000; //dividing the total bytes into megabytes 1024 b to kb, 1024 kb to mb
               });
 
             res.data
@@ -554,7 +657,7 @@ function App() {
                 return jsonThing.destination === entry.name;
               })
               .forEach((item, i) => {
-                entry.totalReceived += item.file_size / 1048576; //dividing the total bytes into megabytes 1024 b to kb, 1024 kb to mb
+                entry.totalReceived += item.file_size / 1000000; //dividing the total bytes into megabytes 1024 b to kb, 1024 kb to mb
               });
 
             entry.fractionOfDataSent = entry.totalSent / allTransferedAmount;
@@ -590,6 +693,11 @@ function App() {
 
   const collapseLegend = () => {
     toggleLegendCard();
+
+    const buttonElement = document.getElementById("collapseLegendButton");
+    if (buttonElement) {
+      buttonElement.textContent = legendOpen ? "Collapse Legend" : "Expand Legend";
+    }
   };
 
   const [tooltip, setTooltip] = useState("");
@@ -777,7 +885,7 @@ function App() {
                         <CardTitle class="cardTitle" tag="h5">
                           Legend
                           <Button id="collapseLegendButton" color="primary" onClick={collapseLegend}>
-                            Collapse Legend
+                            {legendOpen ? "Collapse Legend" : "Expand Legend"}
                           </Button>
                         </CardTitle>
                       </div>
@@ -895,7 +1003,7 @@ function App() {
                           Transfer Map{" "}
                         </CardTitle>
                       </div>
-                      <div class="col-md-3" id="mapModeSwitchCol">
+                      {/* <div class="col-md-3" id="mapModeSwitchCol">
                         <Button
                           color="primary"
                           onClick={console.log(
@@ -904,7 +1012,7 @@ function App() {
                         >
                           Toggle Failure View
                         </Button>
-                      </div>
+                      </div> */}
                     </div>
 
                     <CardSubtitle tag="h6" className="mb-2 text-muted">
@@ -933,11 +1041,25 @@ function App() {
                 <Card id="statusCard">
                   <div class="row">
                     <div class="col-md-12">
-                      <CardTitle class="cardTitle" tag="h5">
-                        Log of Transfers
-                      </CardTitle>
+                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <div style={{ textAlign: 'left' }}>
+                          <CardTitle className="cardTitle" tag="h5">
+                            Log of {textTransfer}
+                          </CardTitle>
+                        </div>
+                        <div style={{ textAlign: 'right' }}>
+                          <CardTitle className="cardTitle" tag="h5">
+                            {logText}
+                          </CardTitle>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                      {/* <CardTitle class="cardTitle" tag="h5">
+                        Log of {textTransfer} {logText}
+                      </CardTitle>
+                    </div>
+                  </div> */}
 
                   <div class="row">
                     <div class="col-md-12">
@@ -947,20 +1069,35 @@ function App() {
                             <tr>
                               <th>To</th>
                               <th>From</th>
-                              <th>Speed</th>
-                              <th>Filesize</th>
+                              <th>{entryOne}</th>
+                              <th>{entryTwo}</th>
                             </tr>
                           </thead>
                           <tbody>
                             {transfers.map((transfer, i) => {
-                              return (
-                                <tr key={i}>
+                              let logContent;
+
+                              if (transfer.speedInMB !== "NaN") {
+                                logContent = (
+                                  <tr key={i}>
                                   <td>{transfer.to}</td>
                                   <td>{transfer.from}</td>
                                   <td>{transfer.speedInMB}</td>
-                                  <td>{transfer.sentToDestSizeMB}</td>
+                                  <td>{transfer.sentToDestSizeMB.toFixed(0)}</td>
                                 </tr>
-                              );
+                                );
+                              } else {
+                                logContent = (
+                                  <tr key={i}>
+                                  <td>{transfer.to}</td>
+                                  <td>{transfer.from}</td>
+                                  <td>{transfer.reason}</td>
+                                  <td>{transfer.count}</td>
+                                </tr>
+                                );
+                              }
+
+                              return logContent;
                             })}
                           </tbody>
                         </Table>
@@ -1014,10 +1151,19 @@ function App() {
                     <Card id="searchCard">
                       <div class="row">
                         <div class="col-md-12">
-                          <CardTitle class="cardTitle" tag="h5">
+                          <div style={{display: "flex", alignItems: "center", flexDirection:"row", justifyContent:"space-between"}}>
+                          <CardTitle class="cardTitle" style={{margin: 0}}tag="h5">
                             Search
+                            
                           </CardTitle>
-                          <p style={{margin: "8px 0px"}}>Last Query: {checkIfResultsFound()}</p>
+                          <MuiTooltip title="Help" placement="top">
+                          <MuiButton sx={{minWidth:0}}style={{color: "#F2682B47",  margin: 0, padding: 0}} onClick={() => setOpenHelp(true)}><QuestionMarkOutlined fontSize={"20px"} style={{margin: 0, padding:2, height: "24px", width: "24px", backgroundColor: "#777777", color: "#cdcdcd", border: "1px solid #777777", borderRadius: 100}}/></MuiButton>
+                          </MuiTooltip>
+                          
+                          </div>
+                          
+                          
+                          <p style={{margin: "8px 0px"}}>Last Query: {checkIfResultsFound}</p>
                         </div>
                       </div>
 
@@ -1025,7 +1171,7 @@ function App() {
                         <div class="col-md-12">
                           {resultsFound && (
                             <p>
-                              Showing Transfers from: <b> {savedStartDate} </b>{" "}
+                              Showing <b> {textTransfer} </b> from: <b> {savedStartDate} </b>{" "}
                               to <b> {savedEndDate} </b>
                             </p>
                           )}
@@ -1059,27 +1205,37 @@ function App() {
                                     {mode}
                                   </DropdownToggle>
                                   <DropdownMenu>
-                                    <DropdownItem onClick={() => {setMode("Global Transfers Completed")}}value="0">
-                                      Global Transfers Completed
+                                    <DropdownItem header>
+                                      Successful Transfers{" "}
                                     </DropdownItem>
-                                    <DropdownItem onClick={() => {setMode("Global Transfers Failed")}} value="1">
-                                      Global Transfers Failed
-                                    </DropdownItem> 
-                                    <DropdownItem onClick={() => { setMode("SAM Transfers"); setTransferType(SAM)}}value="3">
+                                    <DropdownItem onClick={() => {setMode("SAM Transfers"); setTransferType(SAM)}}value="3">
                                       SAM Transfers
                                     </DropdownItem>
                                     <DropdownItem value="5" onClick={() => {setMode("Rucio Transfers"); setTransferType(RUCIO)}}>
                                       Rucio Transfers
                                     </DropdownItem>
+                                    <DropdownItem value="6" onClick={() => {setMode("Rucio Aggregate Transfers"); setTransferType(RUCIO_AGGREGATE)}}>
+                                      Rucio Aggregate Transfers
+                                    </DropdownItem>
+                                    <DropdownItem divider />
+                                    <DropdownItem header>
+                                      Failed Transfers{" "}
+                                    </DropdownItem>
+                                    <DropdownItem value="7" onClick={() => {setMode("Rucio Failed Transfers"); setTransferType(RUCIO_FAILED)}}>
+                                      Rucio Failed Transfers
+                                    </DropdownItem>
+                                    <DropdownItem value="7" onClick={() => {setMode("Rucio Aggregate Failed Transfers"); setTransferType(RUCIO_AGGREGATE_FAILED)}}>
+                                      Rucio Aggregate Failed Transfers
+                                    </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem header>
                                       Diagnostic Mode Tests{" "}
                                     </DropdownItem>
-                                    <DropdownItem onClick={() => {setMode("Only Test Mode Done")}} value="2">
-                                      Only Test Mode Done
+                                    <DropdownItem onClick={() => {setMode("Test Mode Successful"); setTransferType(TEST_MODE)}}  value="2">
+                                      Test Mode Successful
                                     </DropdownItem>
-                                    <DropdownItem onClick={() => {setMode("Only Test Mode Failed")}} value="4">
-                                      Only Test Mode Failed
+                                    <DropdownItem onClick={() => {setMode("Test Mode Failed"); setTransferType(TEST_MODE_FAILED)}}  value="4">
+                                      Test Mode Failed
                                     </DropdownItem>
                                   </DropdownMenu>
                                 </Dropdown>
@@ -1123,7 +1279,7 @@ function App() {
                                               marginBottom: "8px"
                                             }}
                                             onClick={
-                                              proccessTransferAndCollapse
+                                              () => {handleGetTransfersClick()}
                                             }
                                           >
                                             Get Transfers
@@ -1203,7 +1359,9 @@ function App() {
           </div>
         </div>
       </div>
+          <HelpModal open={openHelp} onClose={() => setOpenHelp(false)}/>
     </div>
+
   );
 }
 

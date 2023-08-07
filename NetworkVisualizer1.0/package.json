@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/material": "^5.14.3",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
@@ -23,6 +27,7 @@
     "react-tooltip": "^4.2.14",
     "reactstrap": "^8.9.0",
     "topojson-client": "^3.1.0",
+    "typescript": "^5.1.6",
     "web-vitals": "^0.2.4",
     "xml2js": "^0.4.23"
   },

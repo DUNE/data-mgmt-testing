@@ -1,0 +1,85 @@
+{
+  "data": [
+    {
+      "name": "1gbtestfile.20230802",
+      "source": "DUNE_US_FNAL_DISK_STAGE",
+      "destination": "MANCHESTER",
+      "file_size": 1024000000,
+      "start_time": "2023-08-02 08:00:45",
+      "file_transfer_time": "44.0",
+      "transfer_speed(MB/s)": "22.19"
+    },
+    {
+      "name": "1gbtestfile.20230802",
+      "source": "DUNE_US_FNAL_DISK_STAGE",
+      "destination": "LANCASTER",
+      "file_size": 1024000000,
+      "start_time": "2023-08-02 08:00:44",
+      "file_transfer_time": "271.0",
+      "transfer_speed(MB/s)": "3.6"
+    },
+    {
+      "name": "1gbtestfile.20230802",
+      "source": "DUNE_US_FNAL_DISK_STAGE",
+      "destination": "DUNE_FR_CCIN2P3_DISK",
+      "file_size": 1024000000,
+      "start_time": "2023-08-02 08:00:44",
+      "file_transfer_time": "41.0",
+      "transfer_speed(MB/s)": "23.82"
+    },
+    {
+      "name": "1gbtestfile.20230802",
+      "source": "DUNE_US_FNAL_DISK_STAGE",
+      "destination": "NIKHEF",
+      "file_size": 1024000000,
+      "start_time": "2023-08-02 08:00:48",
+      "file_transfer_time": "41.0",
+      "transfer_speed(MB/s)": "23.82"
+    },
+    {
+      "name": "1gbtestfile.20230802",
+      "source": "DUNE_US_FNAL_DISK_STAGE",
+      "destination": "RAL_ECHO",
+      "file_size": 1024000000,
+      "start_time": "2023-08-02 08:00:50",
+      "file_transfer_time": "107.0",
+      "transfer_speed(MB/s)": "9.13"
+    },
+    {
+      "name": "1gbtestfile.20230802",
+      "source": "MANCHESTER",
+      "destination": "RAL-PP",
+      "file_size": 1024000000,
+      "start_time": "2023-08-02 08:06:11",
+      "file_transfer_time": "10.0",
+      "transfer_speed(MB/s)": "97.66"
+    },
+    {
+      "name": "1gbtestfile.20230802",
+      "source": "DUNE_CERN_EOS",
+      "destination": "DUNE_US_BNL_SDCC",
+      "file_size": 1024000000,
+      "start_time": "2023-08-02 10:02:48",
+      "file_transfer_time": "41.0",
+      "transfer_speed(MB/s)": "23.82"
+    },
+    {
+      "name": "1gbtestfile.20230802",
+      "source": "MANCHESTER",
+      "destination": "QMUL",
+      "file_size": 1024000000,
+      "start_time": "2023-08-02 10:02:48",
+      "file_transfer_time": "19.0",
+      "transfer_speed(MB/s)": "51.4"
+    },
+    {
+      "name": "1gbtestfile.20230802",
+      "source": "MANCHESTER",
+      "destination": "DUNE_ES_PIC",
+      "file_size": 1024000000,
+      "start_time": "2023-08-02 10:01:50",
+      "file_transfer_time": "352.0",
+      "transfer_speed(MB/s)": "2.77"
+    }
+  ]
+}

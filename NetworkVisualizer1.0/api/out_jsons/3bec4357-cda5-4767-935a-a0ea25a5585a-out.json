@@ -1,0 +1,27 @@
+{
+  "data": [
+    {
+      "source": "No data for these dates",
+      "user": "N/A",
+      "date": "N/A",
+      "process_id": "N/A",
+      "start_time": "N/A",
+      "file_transfer_time": "N/A",
+      "file_size": "N/A",
+      "username": "N/A",
+      "application": "N/A",
+      "version": "N/A",
+      "final_state": "N/A",
+      "destination": "No data for these dates",
+      "transfer_speed(MB/s)": "N/A",
+      "transfer_speed(B/s)": "N/A",
+      "project_name": "N/A",
+      "name": "N/A",
+      "data_tier": [
+        "N/A"
+      ],
+      "node": "N/A",
+      "file_count": "N/A"
+    }
+  ]
+}

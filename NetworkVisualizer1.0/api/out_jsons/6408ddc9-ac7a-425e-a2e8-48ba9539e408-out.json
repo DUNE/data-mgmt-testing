@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "name": "DUNE_US_FNAL_DISK_STAGE_to_RAL-PP",
+      "source": "DUNE_US_FNAL_DISK_STAGE",
+      "destination": "RAL-PP",
+      "count": 1,
+      "reason": "rx_error"
+    },
+    {
+      "name": "DUNE_US_FNAL_DISK_STAGE_to_FNAL_DCACHE",
+      "source": "DUNE_US_FNAL_DISK_STAGE",
+      "destination": "FNAL_DCACHE",
+      "count": 1,
+      "reason": "rx_error"
+    },
+    {
+      "name": "DUNE_FR_CCIN2P3_DISK_to_SURFSARA",
+      "source": "DUNE_FR_CCIN2P3_DISK",
+      "destination": "SURFSARA",
+      "count": 8,
+      "reason": "rx_error"
+    },
+    {
+      "name": "LANCASTER_to_SURFSARA",
+      "source": "LANCASTER",
+      "destination": "SURFSARA",
+      "count": 4,
+      "reason": "rx_error"
+    },
+    {
+      "name": "DUNE_CERN_EOS_to_SURFSARA",
+      "source": "DUNE_CERN_EOS",
+      "destination": "SURFSARA",
+      "count": 5,
+      "reason": "rx_error"
+    },
+    {
+      "name": "RAL_ECHO_to_SURFSARA",
+      "source": "RAL_ECHO",
+      "destination": "SURFSARA",
+      "count": 2,
+      "reason": "rx_error"
+    },
+    {
+      "name": "PRAGUE_to_SURFSARA",
+      "source": "PRAGUE",
+      "destination": "SURFSARA",
+      "count": 1,
+      "reason": "rx_error"
+    },
+    {
+      "name": "MANCHESTER_to_SURFSARA",
+      "source": "MANCHESTER",
+      "destination": "SURFSARA",
+      "count": 1,
+      "reason": "rx_error"
+    }
+  ]
+}
