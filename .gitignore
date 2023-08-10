@@ -6,3 +6,6 @@ NetworkVisualizer1.0/api/duneSiteList.json
 
 # Ignore .eslintcache as it is also constantly updating
 NetworkVisualizer1.0/.eslintcache
+
+# Ignore __pycache__ in samweb_client directory
+ESClient/samweb_client/__pycache__
