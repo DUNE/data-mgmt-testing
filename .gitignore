@@ -1,2 +1,5 @@
 # Ignore out_jsons
 NetworkVisualizer1.0/api/out_jsons
+
+# Ignore duneSiteList as it is constantly updating
+NetworkVisualizer1.0/api/duneSiteList.json
