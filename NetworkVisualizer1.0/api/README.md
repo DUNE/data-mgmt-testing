@@ -1,4 +1,4 @@
-# README for es_client.py usage
+# README for json_concatenate.py usage
 
 ## Purpose
 
