@@ -103,7 +103,7 @@ if (args.transferType == "RUCIO") or (args.transferType == "RUCIO_AGGREGATE") or
         prefix = 'dune_failed_network_checkup_display_'
     
     # current cache is in leeza directory
-    path = '/dune/data/users/leeza/rucio_es_cache/'
+    path = '/srv/dune/data/users/dunepro/dunedatamap/rucio_es_cache/'
     if end == "0":
         shutil.copyfile((path + str(day.year) + '/' + str(day.month).zfill(2) + '/' + prefix + day.strftime("%Y-%m-%d").replace('-', '_') + '_to_' + (day+delta).strftime("%Y-%m-%d").replace('-', '_') + '.json'), (os.getcwd() + '/out.json'))
     else:
@@ -140,7 +140,7 @@ if (args.transferType == "RUCIO") or (args.transferType == "RUCIO_AGGREGATE") or
 # if frotend input is SAM Transfers
 else:
     # current cache is in leeza directory
-    path = '/dune/data/users/leeza/sam_es_cache/'
+    path = '/srv/dune/data/users/dunepro/dunedatamap/sam_es_cache/'
     if end == "0":
         shutil.copyfile((path + str(day.year) + '/' + str(day.month).zfill(2) + '/' + 'out_dune_' + day.strftime("%Y-%m-%d") + '_to_' + (day+delta).strftime("%Y-%m-%d") + '.json'), (os.getcwd() + '/out.json'))
     else:
