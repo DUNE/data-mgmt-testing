@@ -12,9 +12,24 @@ ___
 
 ## Step 0, ensure NPM and Python3 are installed on the host machine:
 
-On linux run something like (package manager dependant): "sudo apt-get install NPM", "sudo dnf install NPM", "yum install NPM", etc...
+On linux run something like (package manager dependant): 
+
+```
+sudo apt-get install npm
+sudo dnf install npm
+yum install NPM 
+etc...
+```
+
 <br>
-Similiar syntax for python "sudo apt-get install Python3", "sudo dnf install Python3", "yum install Python3", etc...
+Similiar syntax for python:
+
+```
+sudo apt-get install Python3 
+sudo dnf install Python3
+yum install Python3
+etc...
+```
 
 **On mac use homebrew, type: "brew install node"**
 
@@ -25,16 +40,23 @@ Similiar syntax for python "sudo apt-get install Python3", "sudo dnf install Pyt
 
 (from root or with SUDO)
 
-Ex: **sudo npm install forever -g**
+Ex: 
+
+```
+sudo npm install forever -g
+```
 
 <br>
 <br>
 
 ## First step if you haven't run the demo thus far is to run setupEverything.sh
 
-To do first time setup run "sh setupEverything.sh"
+To do first time setup run 
 
-*estimated time: ~5 minuets*
+```
+sh setupEverything.sh
+```
+*estimated time: ~1-2 minutes*
 
 <br>
 <br>
@@ -43,9 +65,12 @@ To do first time setup run "sh setupEverything.sh"
 
 To start: run "sh startEverything.sh"
 
-Ex: **sh startEverything.sh**
+Ex: 
+```
+startEverything.sh
+```
 
-*estimated time: ~3 minuets*
+*estimated time: ~1-3 minutes*
 
 After which a browser window should launch with the network visualization.
 
@@ -54,4 +79,7 @@ After which a browser window should launch with the network visualization.
 
 **At this point the software will stay running, even after logout, until stopped with the "stopEverything.sh" script is run**
 
-To stop: run **"sh stopEverything.sh"**
+To stop, run:
+```
+sh stopEverything.sh
+```

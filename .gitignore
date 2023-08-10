@@ -1,5 +1,5 @@
 # Ignore out_jsons
-NetworkVisualizer1.0/api/out_jsons
+#NetworkVisualizer1.0/api/out_jsons
 
 # Ignore duneSiteList
 NetworkVisualizer1.0/api/duneSiteList.json
