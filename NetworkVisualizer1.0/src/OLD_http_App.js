@@ -438,8 +438,7 @@ function App() {
     console.log(
       "fetching DUNE site date from backend fermicloud855.fnal.gov:3001/getsites"
     );
-    // fetch("http://fermicloud855.fnal.gov:3001"+"/getsites")
-    fetch("https://fermicloud855.fnal.gov/getsites")
+    fetch("http://fermicloud855.fnal.gov:3001"+"/getsites")
       .then((res) => res.json())
       .then((res) => {
         //res.root.atp_site[0].$.latitude
@@ -527,8 +526,7 @@ function App() {
         dateParameters.toString()
     );
 
-    // fetch("http://fermicloud855.fnal.gov:3001" + "/test?" + dateParameters.toString())
-    fetch("https://fermicloud855.fnal.gov" + "/test?" + dateParameters.toString())
+    fetch("http://fermicloud855.fnal.gov:3001" + "/test?" + dateParameters.toString())
       //TODO: set a timeout on the promise above so that if there is just NO out.json file it won't hang
 
       .then((res) => res.json())
