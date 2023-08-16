@@ -4,7 +4,7 @@ Data management testing Software developed by:
 - Heidi Schellman (Fermilab)
 - Steven Timm (Fermilab)
 - Luke Penner (Oregon State University)
-- Zachery Lee (Oregon State University)
+- Zachary Lee (Oregon State University)
 - Lydia Brynmoor (Oregon State University)
 - Sean Gilligan (Oregon State University)
 - Lisa Paton (University of Alaska Anchorage)
