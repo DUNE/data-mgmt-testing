@@ -49,6 +49,16 @@ sudo npm install forever -g
 <br>
 <br>
 
+
+## Also ensure that firefox is installed
+
+```
+yum install firefox
+```
+
+<br>
+<br>
+
 ## First step if you haven't run the demo thus far is to run setupEverything.sh
 
 To do first time setup run 
